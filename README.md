@@ -18,3 +18,4 @@ More information about how this project has been setup is available [in the wiki
 - [Marcos Álvarez García](https://github.com/alvarezGarciaMarcos)
 - [Eduardo Lamas Suarez](https://github.com/lamasumas)
 - [Íñigo Gutiérrez Fernández](https://github.com/InigoGutierrez)
+- [Álvaro García Infante](https://github.com/alvarogarinf)
