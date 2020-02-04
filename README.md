@@ -15,3 +15,4 @@ More information about how this project has been setup is available [in the wiki
 ## Contributors
 
 - César García Cabeza
+- [Eduardo Lamas Suarez] https://github.com/lamasumas
