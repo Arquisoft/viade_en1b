@@ -16,4 +16,4 @@ More information about how this project has been setup is available [in the wiki
 
 - César García Cabeza
 - [Marcos Álvarez García](https://github.com/alvarezGarciaMarcos)
-- [Eduardo Lamas Suarez] (https://github.com/lamasumas)
+- [Eduardo Lamas Suarez](https://github.com/lamasumas)
