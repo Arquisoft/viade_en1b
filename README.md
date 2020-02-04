@@ -15,4 +15,8 @@ More information about how this project has been setup is available [in the wiki
 ## Contributors
 
 - César García Cabeza
+<<<<<<< HEAD
 - [Marcos Álvarez García](https://github.com/alvarezGarciaMarcos)
+=======
+- [Eduardo Lamas Suarez] https://github.com/lamasumas
+>>>>>>> a02affe8a7cc2b2f51d50fb1109476c63f8d4c27
