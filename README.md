@@ -15,3 +15,4 @@ More information about how this project has been setup is available [in the wiki
 ## Contributors
 
 - César García Cabeza
+- [Marcos Álvarez García](https://github.com/alvarezGarciaMarcos)
