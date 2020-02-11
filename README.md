@@ -12,15 +12,6 @@ The app is deployed at [https://arquisoft.github.io/viade_en1b/](https://arquiso
 
 More information about how this project has been setup is available [in the wiki](https://github.com/Arquisoft/viade_en1b/wiki).
 
-## Contributors
-
-- [César García Cabeza](https://github.com/themrcesi)
-- [Marcos Álvarez García](https://github.com/alvarezGarciaMarcos)
-- [Eduardo Lamas Suarez](https://github.com/lamasumas)
-- [Íñigo Gutiérrez Fernández](https://github.com/InigoGutierrez)
-- [Álvaro García Infante](https://github.com/alvarogarinf)
-- [Pelayo García Álvarez](https://github.com/garciaAlvarezPelayo)
-
 ## Building Instructions
 In order to run this project, you will need to follow these steps:
 1. Install [Ruby](https://www.ruby-lang.org/es/)
@@ -41,3 +32,12 @@ Once you have all the dependencies installed, you should issue the following com
 ```shell
 npm start
 ```
+
+## Contributors
+
+- [Marcos Álvarez García](https://github.com/alvarezGarciaMarcos)
+- [Pelayo García Álvarez](https://github.com/garciaAlvarezPelayo)
+- [César García Cabeza](https://github.com/themrcesi)
+- [Álvaro García Infante](https://github.com/alvarogarinf)
+- [Íñigo Gutiérrez Fernández](https://github.com/InigoGutierrez)
+- [Eduardo Lamas Suarez](https://github.com/lamasumas)
