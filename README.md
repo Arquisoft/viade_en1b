@@ -20,3 +20,24 @@ More information about how this project has been setup is available [in the wiki
 - [Íñigo Gutiérrez Fernández](https://github.com/InigoGutierrez)
 - [Álvaro García Infante](https://github.com/alvarogarinf)
 - [Pelayo García Álvarez](https://github.com/garciaAlvarezPelayo)
+
+## Building Instructions
+In order to run this project, you will need to follow these steps:
+1. Install [Ruby](https://www.ruby-lang.org/es/)
+
+1. Install [Node](https://nodejs.org/) & [NPM](https://www.npmjs.com/)
+
+1. Install [asciidoctor](https://asciidoctor.org/)
+    1. Install asciidoctor-diagram:
+    ```shell
+    sudo gem install asciidoctor-diagram
+    ```
+1. Run 
+    ```shell
+    npm install 
+    ```
+
+Once you have all the dependencies installed, you should issue the following command:
+```shell
+npm start
+```
