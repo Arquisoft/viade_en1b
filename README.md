@@ -28,7 +28,7 @@ In order to run this project, you will need to follow these steps:
 1. Install [Node](https://nodejs.org/) & [NPM](https://www.npmjs.com/)
 
 1. Install [asciidoctor](https://asciidoctor.org/)
-    1. Install asciidoctor-diagram:
+    1. Then, install [asciidoctor-diagram](https://asciidoctor.org/docs/asciidoctor-diagram/):
     ```shell
     sudo gem install asciidoctor-diagram
     ```
