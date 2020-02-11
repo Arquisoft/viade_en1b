@@ -12,26 +12,33 @@ The app is deployed at [https://arquisoft.github.io/viade_en1b/](https://arquiso
 
 More information about how this project has been setup is available [in the wiki](https://github.com/Arquisoft/viade_en1b/wiki).
 
+---
+
 ## Building Instructions
+### Dependencies
 In order to run this project, you will need to follow these steps:
 1. Install [Ruby](https://www.ruby-lang.org/es/)
+    > We recommend to install ruby using [RubyInstaller](https://rubyinstaller.org/)
 
 1. Install [Node](https://nodejs.org/) & [NPM](https://www.npmjs.com/)
 
 1. Install [asciidoctor](https://asciidoctor.org/)
     1. Then, install [asciidoctor-diagram](https://asciidoctor.org/docs/asciidoctor-diagram/):
-    ```shell
-    sudo gem install asciidoctor-diagram
-    ```
+        ``` shell
+        gem install asciidoctor-diagram
+        ```
+        > In windows issue this command using the terminal provided by RubyInstaller. In linux 'sudo' may be needed, depending on the installation.
+
 1. Run 
     ```shell
     npm install 
     ```
-
+### Running the project
 Once you have all the dependencies installed, you should issue the following command:
 ```shell
 npm start
 ```
+---
 
 ## Contributors
 
