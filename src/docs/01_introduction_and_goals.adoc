@@ -98,6 +98,6 @@ Table with role names, person names, and their expectations with respect to the 
 | SOLID Developers | _Help us with our doubts concerning the SOLID specifications._
 | Course professors | _Evaluate our work and follow our progress throughout the course._
 | End users | _Be able to use our application and take advantage of the functionalities._
-| Project sponsor | __
+| Project sponsor | _Spread decentralized applications so as they get known by the community._
 |===
 
