@@ -17,3 +17,34 @@ If needed you can subdivide them into
 technical constraints, organizational and political constraints and
 conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
 ****
+
+=== Technical Constraints
+
+[options="header", cols="0,4"]
+|===
+|Constraint | Explanation
+| ReactJS  |    The application must be developed using the <<react_definition, React>> Library.
+| SOLID | The application must be developed using SOLID standards
+|GitHub | The process of the development must be tracked through https://github.com[this] platform.
+|===
+
+=== Organizational Constraints
+
+[options="header", cols="0,4"]
+|===
+|Constraint | Explanation 
+|Time | The project must be delivered the 5th of May, 2020
+|Minute writting| The team should have a weekly based meeting that should be documented.
+|===
+
+
+=== Conventional Constraints
+[options="header", cols="0,4"]
+|===
+|Constraint | Explanation 
+|Language | The project, including code, comments, pull-requests, and documentation, must be done in English. 
+|Documentation| Documentation must be done using the <<arch42_definition,arc42>> template.
+|===
+
+
+
