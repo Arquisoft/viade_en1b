@@ -57,7 +57,23 @@ In the best case you will get away with examples or simple signatures.
 
 ****
 
-_**<Overview Diagram>**_
+[plantuml,"Whitebox overall system",png]
+----
+node ViaDe {
+    [Node module] as nodemod
+    [Route interpretation] as routes
+    [React] as react
+}
+
+node "Solid server" {
+    database "User's POD" as pod
+}
+
+nodemod --> pod
+routes --> nodemod
+react --> routes
+react --> nodemod
+----
 
 Motivation::
 
