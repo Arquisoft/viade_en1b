@@ -155,11 +155,17 @@ Quality/Performance Characteristics::
 The graphical interface must accord to the Solid style guide. It must also be
 responsive enough for final users to interact with the system without problem.
 
-_<(Optional) Directory/File Location>_
+Directory/File Location::
 
-_<(Optional) Fulfilled Requirements>_
+_WIP_
 
-_<(optional) Open Issues/Problems/Risks>_
+Fulfilled Requirements::
+
+_WIP_ 
+
+Open Issues/Problems/Risks::
+
+_WIP_  
 
 ==== Map module
 
@@ -176,11 +182,20 @@ Quality/Performance Characteristics::
 The maps must be precise and expressive enough for the routes to be easily
 interpreted by as many final users as possible.
 
-_<(Optional) Directory/File Location>_
+Directory/File Location::
 
-_<(Optional) Fulfilled Requirements>_
+_WIP_
 
-_<(optional) Open Issues/Problems/Risks>_
+Fulfilled Requirements::
+
+_WIP_ 
+
+Open Issues/Problems/Risks::
+
+_WIP_  
+
+
+
 
 ==== Route interpretation
 
@@ -197,11 +212,17 @@ Quality/Performance Characteristics::
 Handling of routes must be responsive enough to not affect the flow of the
 application.
 
-_<(Optional) Directory/File Location>_
+Directory/File Location::
 
-_<(Optional) Fulfilled Requirements>_
+_WIP_
 
-_<(optional) Open Issues/Problems/Risks>_
+Fulfilled Requirements::
+
+_WIP_ 
+
+Open Issues/Problems/Risks::
+
+_WIP_  
 
 
 ==== Solid module
@@ -219,11 +240,18 @@ Quality/Performance Characteristics::
 Must fit the standards of Solid data representation and exploit the benefits of
 linked data.
 
-_<(Optional) Directory/File Location>_
+Directory/File Location::
 
-_<(Optional) Fulfilled Requirements>_
+_WIP_
 
-_<(optional) Open Issues/Problems/Risks>_
+Fulfilled Requirements::
+
+_WIP_ 
+
+Open Issues/Problems/Risks::
+
+_WIP_  
+
 
 
 ==== <Name interface 1>
