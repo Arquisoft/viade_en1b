@@ -8,7 +8,7 @@
 A list of identified technical risks or technical debts, ordered by priority
 
 .Motivation
-“Risk management is project management for grown-ups” (Tim Lister, Atlantic Systems Guild.) 
+“Risk management is project management for grown-ups” (Tim Lister, Atlantic Systems Guild.)
 
 This should be your motto for systematic detection and evaluation of risks and technical debts in the architecture, which will be needed by management stakeholders (e.g. project managers, product owners) as part of the overall risk analysis and measurement planning.
 
@@ -16,9 +16,10 @@ This should be your motto for systematic detection and evaluation of risks and t
 List of risks and/or technical debts, probably including suggested measures to minimize it, mitigate or avoid risks or reduce technical debts.
 ****
 
-On the developing of this application for the managing in a decentralized way of the routes a user, there are several risks and technical debts.
+There are several risks and practical debts in the developing of this
+application for the managing, in a decentralized way, of the routes of an user.
 
-.Table with Risks and Technical debs, and a possible way to minimized
+.Table with Risks and Technical debs and a possible way of minimizing them
 |===
 |Possible Risk |Risk description | Possible solution/hotfix
 |Solid
@@ -26,14 +27,14 @@ On the developing of this application for the managing in a decentralized way of
 |Keeping a record every action in the project and the use of a version control system, so a possible rollback could be done.
 
 |React
-|The developers didn't use ever this framework
+|The developers didn't ever use this framework.
 |The only way to solve this is expending time of the project learning how to use it, and by try-and-fail.
 
 |University
-|As the members involve in this project  are currently attending the University, and some of them might be in several years at the same time, it's difficult to focus a lot of time in this project.
-|A possible way to mitigate this huge problem is being extremely careful of how the developers expends their time. So they must be professionals and organized.
+|As the members involved in this project are currently attending the University, and some of them might be in several years at the same time, it's difficult to focus a lot of time in this project.
+|A possible way to mitigate this huge problem is being extremely careful of how the developers expend their time, so they must be professional and organized.
 
-|Travis-ci 
+|Travis-ci
 |The use of a continuous integration tool is new for the developer team.
 |A solution would be the familiarization with the configuration file of the tool.
 |===
