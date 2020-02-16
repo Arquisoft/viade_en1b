@@ -22,3 +22,33 @@ Motivate what you have decided and why you decided that way,
 based upon your problem statement, the quality goals and key constraints.
 Refer to details in the following sections.
 ****
+
+=== Introduction
+
+In this section you will find the software decisions and solutions strategies taken in order to ensure a great system's architecture
+
+
+=== Decisions
+The project is developed using the following technologies:
+
+[options="header", cols="0,4", title="Technologies used for developing"]
+|===
+|Technology | Purpose
+| ReactJS  | We will use this JavaScript library to build the user interfaces
+| Solid | We have to store the user data in a Solid POD
+|Node JS | We will use it for the server-side
+|===
+
+[options="header", cols="0,4", title="Technologies used for developing"]
+|===
+|Technology | Purpose
+| TBD | TBD
+|===
+
+[options="header", cols="0,4", title="Continuous Integration Services"]
+|===
+|Technology | Purpose
+| Travis  | Automatically build code, test code and provide and inmediate feedback of the success of the changes
+| Coveralls | Hosted analysis tool which provide stadistics about our code coverage
+|Code Quality | Write quality code and make it understandable
+|===
