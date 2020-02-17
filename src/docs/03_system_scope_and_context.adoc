@@ -19,7 +19,11 @@ Various options:
 * Context diagrams
 * Lists of communication partners and their interfaces.
 ****
-Our routes aplication will be manage following the SOLID standards, so in other words, this tool will be descentralized, the users will control their own data. This application will allow to each user, to store and share their own personal routes without fearing any company stealing their data.
+Our routes application will be managed following the SOLID standards. In other
+words, this tool will be decentralized: the users will control their own data.
+This application will allow each user to store and share their own personal
+routes without fearing any company using their data in ways they have not
+approved.
 
 === Business Context
 
@@ -39,10 +43,13 @@ Alternatively (or additionally) you can use a table.
 The title of the table is the name of your system, the three columns contain the name of the communication partner, the inputs, and the outputs.
 ****
 
-**<Diagram or Table>**
-
-
-**<optionally: Explanation of external domain interfaces>**
+[options="header", cols="0,4"]
+|===
+|Partner | Role
+| End users | People wanting to store and share their routes with control over their storage.
+| inrupt | The group behind Solid. This system will promote use of their technology and make use of PODs provided by them.
+| Maps API provider | The system will make use of a maps system yet to be determined.
+|===
 
 === Technical Context
 
@@ -60,8 +67,4 @@ together with a mapping table showing the relationships between channels and inp
 
 ****
 
-**<Diagram or Table>**
-
-**<optionally: Explanation of technical interfaces>**
-
-**<Mapping Input/Output to Channels>**
+WIP (add only if it makes sense).
