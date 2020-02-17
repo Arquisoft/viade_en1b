@@ -59,6 +59,10 @@ together with a mapping table showing the relationships between channels and inp
 
 ****
 
+=== Business Context
+
+image:03-Business Context.png["Business Context"]
+
 **<Diagram or Table>**
 
 **<optionally: Explanation of technical interfaces>**
