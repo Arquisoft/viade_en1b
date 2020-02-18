@@ -30,4 +30,5 @@ Potentially more columns in case you need translations.
 | [[solid_definition]]SOLID | <definition-2>
 | [[react_definition]] React | A Facebook mantained library to build graphical user interfaces. For further information visit https://reactjs.org/[the oficial page].
 |[[arch42_definition]]arc42 | Template to communicate and document software architecture. For further information visit https://www.arc42.org[the oficial page].
+| TBD    | To Be Done
 |===
