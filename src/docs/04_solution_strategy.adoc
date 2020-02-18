@@ -36,10 +36,10 @@ The project is developed using the following technologies:
 |Technology | Purpose
 | ReactJS  | We will use this JavaScript library to build the user interfaces
 | Solid | We have to store the user data in a Solid POD
-|Node JS | We will use it for the server-side
+|Node JS | We will use it for modules management
 |===
 
-[options="header", cols="0,4", title="Technologies used for developing"]
+[options="header", cols="0,4", title="Technologies used for testing"]
 |===
 |Technology | Purpose
 | TBD | TBD
