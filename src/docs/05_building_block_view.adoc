@@ -59,28 +59,7 @@ In the best case you will get away with examples or simple signatures.
 
 [plantuml,"Whitebox overall system",png]
 ----
-node ViaDe {
-    [Solid module] as solidmod
-    [Map module] as map
-    [Route interpretation] as routes
-    [React] as react
-}
-
-node "Solid server" {
-    database "User's POD" as pod
-}
-
-node "Maps service" {
-    () "Maps API" as imaps
-}
-
-:User: --> react
-react --> map
-map --> routes
-map --> imaps
-routes --> solidmod
-react --> solidmod
-solidmod --> pod
+include::diagrams/05-01_whiteboxOverallSystem.puml[]
 ----
 
 Motivation::
@@ -161,11 +140,11 @@ _WIP_
 
 Fulfilled Requirements::
 
-_WIP_ 
+_WIP_
 
 Open Issues/Problems/Risks::
 
-_WIP_  
+_WIP_
 
 ==== Map module
 
@@ -188,11 +167,11 @@ _WIP_
 
 Fulfilled Requirements::
 
-_WIP_ 
+_WIP_
 
 Open Issues/Problems/Risks::
 
-_WIP_  
+_WIP_
 
 
 
@@ -218,11 +197,11 @@ _WIP_
 
 Fulfilled Requirements::
 
-_WIP_ 
+_WIP_
 
 Open Issues/Problems/Risks::
 
-_WIP_  
+_WIP_
 
 
 ==== Solid module
@@ -246,11 +225,11 @@ _WIP_
 
 Fulfilled Requirements::
 
-_WIP_ 
+_WIP_
 
 Open Issues/Problems/Risks::
 
-_WIP_  
+_WIP_
 
 
 
