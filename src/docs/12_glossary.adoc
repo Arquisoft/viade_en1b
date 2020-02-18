@@ -27,7 +27,7 @@ Potentially more columns in case you need translations.
 |===
 | Term                      | Definition
 | [[pod_definition]]POD     | Personal Online Datastore
-| [[solid_definition]]SOLID | <definition-2>
+| [[solid_definition]]SOLID | Social Linked Data is a web decentralization project led by Tim Berners-Lee, the inventor of the World Wide Web. For further information visit https://solid.mit.edu/[the oficial page].
 | [[react_definition]] React | A Facebook mantained library to build graphical user interfaces. For further information visit https://reactjs.org/[the oficial page].
 |[[arch42_definition]]arc42 | Template to communicate and document software architecture. For further information visit https://www.arc42.org[the oficial page].
 |===
