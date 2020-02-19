@@ -30,22 +30,14 @@ There are many notations for describing scenarios, e.g.
 
 ****
 
-=== <Runtime Scenario 1>
+=== Upload a route
 
+Currently, one action that we know is the action of uploading a route from the user´s storage to the user´s pod.
+We only know very abstract details about this action at the moment, that´s why we have decided to represent this action with a basic activitity diagram.
 
-* _<insert runtime diagram or textual description of the scenario>_
-* _<insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.>_
-
-It is possible to use a sequence diagram:
-
-[plantuml,"Sequence diagram",png]
+[plantuml,"Uploading a route",png]
 ----
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+include::diagrams/06-01_uploadRoute.puml[]
 ----
 === <Runtime Scenario 2>
 

@@ -1,0 +1,12 @@
+title Uploading a user´s route - Activity Diagram 
+
+
+start
+
+:Click import route;
+
+:Select route to upload;
+
+:Add route to the user´s POD;
+
+stop
