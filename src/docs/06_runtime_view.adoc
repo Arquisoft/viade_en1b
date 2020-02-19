@@ -30,17 +30,33 @@ There are many notations for describing scenarios, e.g.
 
 ****
 
+We only know very abstract and few details about these actions at the moment, that's why we have decided to represent these actions with a basic activitity diagram.
+
 === Upload a route
 
-Currently, one action that we know is the action of uploading a route from the user´s storage to the user´s pod.
-We only know very abstract details about this action at the moment, that´s why we have decided to represent this action with a basic activitity diagram.
+One action that we know is the action of uploading a route from the user´s storage to the user's pod.
+
+* A user will click a button or similar to import the route.
+* Then, he will choose the rout to upload from his files system.
+* Finally, the route will be uploaded to the user's POD and shown in our application.
 
 [plantuml,"Uploading a route",png]
 ----
 include::diagrams/06-01_uploadRoute.puml[]
 ----
-=== <Runtime Scenario 2>
 
+=== Share a route
+
+A user can also share a route with any friend he wants. 
+
+. Firstly, the user must select the route he want to share.
+. Then, he must select the friend he wants to share the route with.
+. Finally, the route must be added to the friend´s POD and be able to be displayed.
+
+[plantuml,"Sharing a route",png]
+----
+include::diagrams/06-02_shareRoute.puml[]
+----
 === ...
 
 === <Runtime Scenario n>
