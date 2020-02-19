@@ -57,6 +57,5 @@ A user can also share a route with any friend he wants.
 ----
 include::diagrams/06-02_shareRoute.puml[]
 ----
-=== ...
 
-=== <Runtime Scenario n>
+=== TODO
