@@ -62,10 +62,10 @@ A table with quality goals and concrete scenarios, ordered by priorities
 [options="header", cols="0,0,4,3"]
 |===
 |Priority| Goal         | Motivation | Scenarios
-|1| Usability |The app must be easy to use by non-technical people. | 
-|2| Privacy    | Users must be the owners of their own data. |
-|3| Effectiveness | Users must be able to share their routes according to the functionalities of the system. |
-|4| Interoperability | The system must be able to communicate with other similar SOLID apps |
+|1| Usability |The app must be easy to use by non-technical people. | As a new user, I want to be able to use the app without needing any external help.
+|2| Privacy    | Users must be the owners of their own data. | As a user, I want to be able to choose where I want my own data to be.
+|3| Effectiveness | Users must be able to share their routes according to the functionalities of the system. | As a user, I want to be able to share my routes with my contacts.
+|4| Interoperability | The system must be able to communicate with other similar SOLID apps | As a user, I want to be able to share the routes loaded in my application with other similar SOLID apps.
 
 |===
 
@@ -98,6 +98,6 @@ Table with role names, person names, and their expectations with respect to the 
 | SOLID Developers | _Help us with our doubts concerning the SOLID specifications._
 | Course professors | _Evaluate our work and follow our progress throughout the course._
 | End users | _Be able to use our application and take advantage of the functionalities._
-| Project sponsor | __
+| Project sponsor | _Spread decentralized applications so as they get known by the community._
 |===
 

@@ -68,3 +68,9 @@ together with a mapping table showing the relationships between channels and inp
 ****
 
 WIP (add only if it makes sense).
+
+**<Diagram or Table>**
+
+**<optionally: Explanation of technical interfaces>**
+
+**<Mapping Input/Output to Channels>**
