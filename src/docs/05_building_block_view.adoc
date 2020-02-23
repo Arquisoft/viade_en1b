@@ -57,17 +57,31 @@ In the best case you will get away with examples or simple signatures.
 
 ****
 
-_**<Overview Diagram>**_
+[plantuml,"Whitebox overall system",png]
+----
+include::diagrams/05-01_whiteboxOverallSystem.puml[]
+----
 
 Motivation::
 
-_<text explanation>_
-
+The system must handle routes defined externally, communicate with a Solid POD
+where they are stored and present a user interface built with React. These are
+three separated responsibilities and each of them can be contained in its own
+module.
 
 Contained Building Blocks::
-_<Description of contained building block (black boxes)>_
+
+[options="header"]
+|==============================
+| Building block       | Description
+| React                | Offers an interface to the system for the final user.
+| Route interpretation | Offers an interface to routes to other modules.
+| Node module          | Offers an interface to the Solid POD.
+|==============================
+
 
 Important Interfaces::
+
 _<Description of important interfaces>_
 
 [role="arc42help"]
@@ -91,7 +105,7 @@ Its headline is the name of the black box.
 ****
 
 
-==== <Name black box 1>
+==== React graphical interface
 
 [role="arc42help"]
 ****
@@ -107,28 +121,116 @@ according the the following black box template:
 
 ****
 
-_<Purpose/Responsibility>_
+Responsibility::
 
-_<Interface(s)>_
+Offers an interface into the system for the final user.
 
-_<(Optional) Quality/Performance Characteristics>_
+Interface::
 
-_<(Optional) Directory/File Location>_
+This module does not provide interfaces to other modules of the system.
 
-_<(Optional) Fulfilled Requirements>_
+Quality/Performance Characteristics::
 
-_<(optional) Open Issues/Problems/Risks>_
+The graphical interface must accord to the Solid style guide. It must also be
+responsive enough for final users to interact with the system without problem.
+
+Directory/File Location::
+
+_WIP_
+
+Fulfilled Requirements::
+
+_WIP_
+
+Open Issues/Problems/Risks::
+
+_WIP_
+
+==== Map module
+
+Responsibility::
+
+Provides a map for the routes to be represented on.
+
+Interface::
+
+Provides an interface to show and interact with routes.
+
+Quality/Performance Characteristics::
+
+The maps must be precise and expressive enough for the routes to be easily
+interpreted by as many final users as possible.
+
+Directory/File Location::
+
+_WIP_
+
+Fulfilled Requirements::
+
+_WIP_
+
+Open Issues/Problems/Risks::
+
+_WIP_
 
 
 
 
-==== <Name black box 2>
+==== Route interpretation
 
-_<black box template>_
+Responsibility::
 
-==== <Name black box n>
+Deals with the routes format.
 
-_<black box template>_
+Interface::
+
+Offers representable routes.
+
+Quality/Performance Characteristics::
+
+Handling of routes must be responsive enough to not affect the flow of the
+application.
+
+Directory/File Location::
+
+_WIP_
+
+Fulfilled Requirements::
+
+_WIP_
+
+Open Issues/Problems/Risks::
+
+_WIP_
+
+
+==== Solid module
+
+Responsibility::
+
+Knows the Solid protocol and interacts directly with PODs.
+
+Interface::
+
+Offers an interface to Solid data.
+
+Quality/Performance Characteristics::
+
+Must fit the standards of Solid data representation and exploit the benefits of
+linked data.
+
+Directory/File Location::
+
+_WIP_
+
+Fulfilled Requirements::
+
+_WIP_
+
+Open Issues/Problems/Risks::
+
+_WIP_
+
 
 
 ==== <Name interface 1>
@@ -204,3 +306,5 @@ _<white box template>_
 ==== White Box <_building block y.1_>
 
 _<white box template>_
+
+
