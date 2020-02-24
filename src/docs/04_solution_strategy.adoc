@@ -1,54 +1,23 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
-
-[role="arc42help"]
-****
-.Contents
-A short summary and explanation of the fundamental decisions and solution strategies, that shape the system's architecture. These include
-
-* technology decisions
-* decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern
-* decisions on how to achieve key quality goals
-* relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.
-
-.Motivation
-These decisions form the cornerstones for your architecture. They are the basis for many other detailed decisions or implementation rules.
-
-.Form
-Keep the explanation of these key decisions short.
-
-Motivate what you have decided and why you decided that way,
-based upon your problem statement, the quality goals and key constraints.
-Refer to details in the following sections.
-****
-
 === Introduction
 
-In this section you will find the software decisions and solutions strategies taken in order to ensure a great system's architecture
-
+In this section you will find the technology decisions and solutions strategies like architectural patterns. Futhermore, we have reasoned why we chose them.
 
 === Decisions
 The project is developed using the following technologies:
 
 [options="header", cols="0,4", title="Technologies used for developing"]
 |===
-|Technology | Purpose
+| Decision | Purpose
 | ReactJS  | We will use this JavaScript library to build the user interfaces
-| Solid | We have to store the user data in a Solid POD
-|Node JS | We will use it for modules management
-|===
-
-[options="header", cols="0,4", title="Technologies used for testing"]
-|===
-|Technology | Purpose
-| TBD | TBD
-|===
-
-[options="header", cols="0,4", title="Continuous Integration Services"]
-|===
-|Technology | Purpose
+| Solid | We have to store the user data in a Solid POD, which will allow us to make the application interoperable and descentralized
+| Node JS | We will use it for modules management
+| Model-View-Controller | We will use this architectural pattern in order to insolate the presentation layer from the business layer allowing us to be for flexible
+| Organizational decisions | We have decided to work in an incremental way, using braches for each new functionality and when it comes to push it to the master branch we need to put a pull request.
+| Test-Driven-Development | We agreed to write the tests first, so this will allow us to work faster when we have to extend the functionality of the application and be always sure if what we are doing is right
 | Travis  | Automatically build code, test code and provide and inmediate feedback of the success of the changes
 | Coveralls | Hosted analysis tool which provide stadistics about our code coverage
-|Code Quality | Write quality code and make it understandable
+| Code Quality | Write quality code and make it understandable, using the readme for external users understand how the application works and provides information
 |===
