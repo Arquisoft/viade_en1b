@@ -1,11 +1,11 @@
 import React, {useState, useEffect, useContext } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./App.css";
-import MyNavBar from "./components/Layout/NavBar/NavBar";
-import MyProfile from "./components/user/profile/MyProfile";
-import Login from "./components/Layout/login/Login";
-import Dashboard from "./components/Dashboard/Dashboard";
-import { ThemeContext } from './components/Layout/themeContext/ThemeContext'
+import MyNavBar from "./components/layout/navbar/NavBar";
+import MyProfile from "./components/user/myProfile/MyProfile";
+import Login from "./components/layout/login/Login";
+import Dashboard from "./components/dashboard/Dashboard";
+import { ThemeContext } from './components/layout/themeContext/ThemeContext'
 
 const App = (props) => {
 
