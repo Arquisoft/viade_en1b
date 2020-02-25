@@ -14,7 +14,7 @@ const store = createStore(rootReducer,
 
 ReactDOM.render(
   <ThemeContext.Provider value={themes.green}>
-    <Provider store={store}><App /></Provider>
+    <Provider store={store}><App/></Provider>
   </ThemeContext.Provider>
   ,
   document.getElementById('root')

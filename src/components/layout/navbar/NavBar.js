@@ -30,8 +30,8 @@ let MyNavBar = React.memo(props => {
       <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
         <Nav className="justify-content-end" activeKey="/home">
           {links.map(link => {
-            return (<span  id={link.id}>
-              <Nav.Link className={getNavLinkClass(link.href)} href={link.href}>
+            return (<span key={link.id}>
+              <Nav.Link key={link.id} className={getNavLinkClass(link.href)} href={link.href}>
                 {link.icon}
                 {link.text}
               </Nav.Link>
@@ -41,7 +41,7 @@ let MyNavBar = React.memo(props => {
 
           <NavDropdown variant="secondary" drop="left" title={<BsPerson className="icon"></BsPerson>}>
             {dropDownElements.map(element => {
-              return (<NavDropdown.Item href={element.href} id={element.id}>{element.text}</NavDropdown.Item>)
+              return (<NavDropdown.Item key={element.id} href={element.href}>{element.text}</NavDropdown.Item>)
             })}
 
           </NavDropdown>

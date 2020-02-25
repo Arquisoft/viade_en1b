@@ -7,10 +7,10 @@ import {connect} from 'react-redux'
 function Dashboard(props) {
     const {routes} = props
     const {selectedRoute} = props
-    console.log(selectedRoute)
+    //console.log(selectedRoute)
     const currentSelectedMap = selectedRoute == null ? <div id='titleHolder'><h1>Routes List</h1></div> : (<div id='titleHolder'>
-    <h1>{selectedRoute.name}</h1> <p> by {selectedRoute.author}</p>
-</div>)
+        <h1>{selectedRoute.name}</h1> <p> by {selectedRoute.author}</p>
+    </div>)
 
     return (
         <div className="dashboard container">
