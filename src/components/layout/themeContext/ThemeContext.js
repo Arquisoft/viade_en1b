@@ -5,13 +5,26 @@ export const themes = {
       "--color-secondary": 'white',
       "--color-primary": '#008080'
     },
+    red: {
+      "--color-secondary": 'white',
+      "--color-primary": '#E85165'
+    },
+    
     purple: {
       "--color-secondary": 'white',
       "--color-primary": '#A875FF'
     },
+    yellow: {
+      "--color-secondary": 'black',
+      "--color-primary": "#FFEE5E"
+    },
+    pink: {
+      "--color-secondary": 'black',
+      "--color-primary": "#FF65C7"
+    },
     lightBlue: {
       "--color-secondary": 'black',
-      "--color-primary": '#38F9FF'
+      "--color-primary": '#82A2FF'
     },
     lightGreen: {
       "--color-secondary" : 'black',
@@ -19,7 +32,7 @@ export const themes = {
     },
     lightOrange: {
       "--color-secondary" : 'white',
-      '--color-primary': '#E8684D'
+      '--color-primary': '#FF8E54'
     }
   }
   

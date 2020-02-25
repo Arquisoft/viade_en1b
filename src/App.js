@@ -19,18 +19,18 @@ const App = (props) => {
     })
     return
   })
+  
+  const navBar = userLoggedIn ? (
+    <MyNavBar brandName="Viade_en1b"></MyNavBar>
+  ) : null;
   return (
       <BrowserRouter>
         <div className="App">
-        <MyNavBar brandName="Viade_en1b"></MyNavBar>
+          {navBar}
           <Switch>
-            <Route
-              exact
-              path="/"
-              render={props => <Login {...props} />}
-            ></Route>
-            <Route path="/profile" component={MyProfile}></Route>
-            <Route exact path="/dashboard" component={Dashboard}></Route>
+            <Route exact path="/" render={props => <Login {...props} />}></Route>
+            <Route path="/profile" render={() => <MyProfile {...props}/>}></Route>
+            <Route exact path="/dashboard" render={() => <Dashboard {...props} />}></Route>
           </Switch>
         </div>
       </BrowserRouter>

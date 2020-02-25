@@ -7,13 +7,13 @@ import "./NavBar.css";
 let MyNavBar = React.memo(props => {
 
   const links = [
-    { text: 'My routes', href: '/routes', icon: <BsMap className="icon"></BsMap>, testId: ' navbar-my-routes'},
-    { text: 'Upload route', href: '/routes/upload', icon: <BsArrowBarUp className="icon"></BsArrowBarUp>, testId: 'navbar-upload-route'}
+    { id: 0, text: 'My routes', href: '/routes', icon: <BsMap className="icon"></BsMap>, testId: ' navbar-my-routes'},
+    { id: 1, text: 'Upload route', href: '/routes/upload', icon: <BsArrowBarUp className="icon"></BsArrowBarUp>, testId: 'navbar-upload-route'}
   ]
 
   const dropDownElements = [
-    { text: 'My Profile', href: '/profile', testId: 'navbar-my-profile'},
-    { text: 'Log Out', href: '/logout', testId: 'navbar-logout'},
+    { id: 0, text: 'My Profile', href: '/profile', testId: 'navbar-my-profile'},
+    { id: 1, text: 'Log Out', href: '/logout', testId: 'navbar-logout'},
 
   ]
 
@@ -30,8 +30,8 @@ let MyNavBar = React.memo(props => {
       <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
         <Nav className="justify-content-end" activeKey="/home">
           {links.map(link => {
-            return (<span  >
-              <Nav.Link data-testid={link.testId} className={getNavLinkClass(link.href)} href={link.href}>
+            return (<span key={link.id}>
+              <Nav.Link data-testid={link.testId} key={link.id} className={getNavLinkClass(link.href)} href={link.href}>
                 {link.icon}
                 {link.text}
               </Nav.Link>
@@ -41,7 +41,7 @@ let MyNavBar = React.memo(props => {
 
           <NavDropdown variant="secondary" drop="left" title={<BsPerson className="icon"></BsPerson>}>
             {dropDownElements.map(element => {
-              return (<NavDropdown.Item data-testid={element.testId} href={element.href}>{element.text}</NavDropdown.Item>)
+              return (<NavDropdown.Item data-testid={element.testId} key={element.id} href={element.href}>{element.text}</NavDropdown.Item>)
             })}
 
           </NavDropdown>

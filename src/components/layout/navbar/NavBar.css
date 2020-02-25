@@ -31,5 +31,5 @@ nav.navbar{
 
 .nav-link:hover{
     color: var(--color-secondary) !important;
-    font-weight: bold;
+    
 }

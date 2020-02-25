@@ -2,6 +2,17 @@
     cursor: pointer;
     transition: all 200ms ease-in-out;
     margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .card:hover{
@@ -25,9 +36,6 @@
         z-index: -1;
     }
 
-    .card:last-child{
-        
-    }
     #active{
         opacity: .9;
     }
