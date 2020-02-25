@@ -1,7 +1,7 @@
 import React from 'react'
 import MyMap from './myMap/MyMap'
 import './Dashboard.css'
-import RouteList from '../routes/routelist/RouteList';
+import RouteList from './../routes/routeList/RouteList';
 import {connect} from 'react-redux'
 
 function Dashboard(props) {

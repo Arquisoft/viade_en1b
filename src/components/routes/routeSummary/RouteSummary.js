@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
-import {showRoute} from './../../../store/actions/routeActions'
+import {showRoute} from './../../../store/actions/RouteActions'
 import { connect } from "react-redux";
 import './RouteSummary.css'
 

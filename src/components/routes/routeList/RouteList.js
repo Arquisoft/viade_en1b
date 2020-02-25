@@ -1,5 +1,5 @@
 import React from "react";
-import RouteSummary from "./../routesummary/RouteSummary";
+import RouteSummary from "./../routeSummary/RouteSummary";
 import './RouteList.css'
 
 const RouteList = React.memo(({ routes, onClick, currentMap }) => {
