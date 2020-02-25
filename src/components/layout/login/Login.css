@@ -1,0 +1,53 @@
+#container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    color: black;
+    position: relative;
+}
+
+button {
+    background-color: var(--color-primary) !important;
+    border-style: none !important;
+    transition: all 200ms ease-in-out;
+    opacity: .8;
+}
+
+button:hover{
+    opacity: 1;
+}
+
+.background-image{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    background-image: url('./images/mountains.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -2;
+    filter: blur(3px);   
+}
+
+.background-div{
+ position: absolute;
+ height: 45vh;
+ width: 25vw;
+ background-color: #F8F9FA;
+ z-index: -1;
+ border-radius: 10px;
+ box-shadow: 10px 10px 50px;
+}
+
+@media (max-width: 800px) {
+    .background-div {
+        height: 100vh;
+        width: 100vw;
+        border-radius: 0;
+    }
+  }

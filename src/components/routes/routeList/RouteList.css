@@ -1,0 +1,37 @@
+#routeList{
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    height: 80%;
+    margin-right: 3em;
+}
+
+#routeList::-webkit-scrollbar{
+    display: none;
+}
+
+@media (max-width: 800px){
+    #routeList{
+        scroll-snap-type: x mandatory;
+        scroll-padding: 10%;
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+        display: flex;
+        flex-direction: row;
+        overflow: scroll;
+        margin-right: 0;
+        margin: 0;
+        z-index: 3;  
+        align-items: center; 
+        margin: 1em;
+    }
+    
+
+
+    #routeList::-webkit-scrollbar{
+        display: none;
+    }
+
+}
