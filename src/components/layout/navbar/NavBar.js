@@ -7,13 +7,13 @@ import "./NavBar.css";
 let MyNavBar = React.memo(props => {
 
   const links = [
-    { text: 'My routes', href: '/routes', icon: <BsMap className="icon"></BsMap> },
-    { text: 'Upload route', href: '/routes/upload', icon: <BsArrowBarUp class="icon"></BsArrowBarUp> }
+    { text: 'My routes', href: '/routes', icon: <BsMap className="icon"></BsMap>, testId: ' navbar-my-routes'},
+    { text: 'Upload route', href: '/routes/upload', icon: <BsArrowBarUp className="icon"></BsArrowBarUp>, testId: 'navbar-upload-route'}
   ]
 
   const dropDownElements = [
-    { text: 'My Profile', href: '/profile' },
-    { text: 'Log Out', href: '/logout' },
+    { text: 'My Profile', href: '/profile', testId: 'navbar-my-profile'},
+    { text: 'Log Out', href: '/logout', testId: 'navbar-logout'},
 
   ]
 
@@ -25,13 +25,13 @@ let MyNavBar = React.memo(props => {
 
   return (
     <Navbar className="bg-light" fixed="top" bg="light" expand="lg">
-      <Navbar.Brand href="/dashboard">{props.brandName}</Navbar.Brand>
+      <Navbar.Brand data-testid="navbar-brand" href="/dashboard">{props.brandName}</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
         <Nav className="justify-content-end" activeKey="/home">
           {links.map(link => {
             return (<span  >
-              <Nav.Link className={getNavLinkClass(link.href)} href={link.href}>
+              <Nav.Link data-testid={link.testId} className={getNavLinkClass(link.href)} href={link.href}>
                 {link.icon}
                 {link.text}
               </Nav.Link>
@@ -41,7 +41,7 @@ let MyNavBar = React.memo(props => {
 
           <NavDropdown variant="secondary" drop="left" title={<BsPerson className="icon"></BsPerson>}>
             {dropDownElements.map(element => {
-              return (<NavDropdown.Item href={element.href}>{element.text}</NavDropdown.Item>)
+              return (<NavDropdown.Item data-testid={element.testId} href={element.href}>{element.text}</NavDropdown.Item>)
             })}
 
           </NavDropdown>

@@ -19,15 +19,10 @@ const App = (props) => {
     })
     return
   })
-  const navBar = userLoggedIn ? (
-    <MyNavBar brandName="Viade_en1b"></MyNavBar>
-  ) : null;
-
   return (
       <BrowserRouter>
         <div className="App">
-          {navBar}
-
+        <MyNavBar brandName="Viade_en1b"></MyNavBar>
           <Switch>
             <Route
               exact
