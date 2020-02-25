@@ -10,12 +10,13 @@ import { ThemeContext, themes } from './components/layout/themeContext/ThemeCont
 
 const store = createStore(rootReducer,
   applyMiddleware(thunk))
-  
+
 
 ReactDOM.render(
-  <ThemeContext.Provider value={themes.green}>
-    
-  <Provider store={store}><App /></Provider>
+  <ThemeContext.Provider value={themes.lightGreen}>
+    <Provider store={store}>
+      <App />
+    </Provider>
   </ThemeContext.Provider>
   ,
   document.getElementById('root')

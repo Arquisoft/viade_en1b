@@ -11,6 +11,7 @@
 
 button {
     background-color: var(--color-primary) !important;
+    color: var(--color-secondary) !important;
     border-style: none !important;
     transition: all 200ms ease-in-out;
     opacity: .8;
