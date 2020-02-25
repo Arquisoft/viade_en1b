@@ -27,13 +27,8 @@ const App = (props) => {
       <BrowserRouter>
         <div className="App">
           {navBar}
-
           <Switch>
-            <Route
-              exact
-              path="/"
-              render={props => <Login {...props} />}
-            ></Route>
+            <Route exact path="/" render={props => <Login {...props} />}></Route>
             <Route path="/profile" component={MyProfile}></Route>
             <Route exact path="/dashboard" component={Dashboard}></Route>
           </Switch>

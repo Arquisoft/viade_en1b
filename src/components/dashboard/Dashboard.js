@@ -17,7 +17,6 @@ function Dashboard(props) {
             {currentSelectedMap}
             <RouteList currentMap={selectedRoute} routes={routes} />
             <MyMap />
-
         </div>
     )
 }
