@@ -6,11 +6,12 @@ import MyProfile from "./components/user/myProfile/MyProfile";
 import Login from "./components/layout/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import { ThemeContext } from './components/layout/themeContext/ThemeContext'
+import { connect } from "react-redux";
+import { useLoggedIn } from "@solid/react";
 
 const App = (props) => {
 
   const theme = useContext(ThemeContext)
-  const [userLoggedIn] = useState(true)
   useEffect(() => {
     Object.keys(theme).map(key => {
       const value = theme[key]
@@ -20,9 +21,8 @@ const App = (props) => {
     return
   })
   
-  const navBar = userLoggedIn ? (
-    <MyNavBar brandName="Viade_en1b"></MyNavBar>
-  ) : null;
+  const navBar = useLoggedIn() === true ? <MyNavBar brandName="Viade_en1b"></MyNavBar> :null
+
   return (
       <BrowserRouter>
         <div className="App">
@@ -38,4 +38,4 @@ const App = (props) => {
   );
 }
 
-export default App;
+export default (App)

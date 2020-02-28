@@ -13,7 +13,7 @@ const store = createStore(rootReducer,
   
 
 ReactDOM.render(
-  <ThemeContext.Provider value={themes.lightGreen}>
+  <ThemeContext.Provider value={themes.purple}>
     <Provider store={store}><App/></Provider>
   </ThemeContext.Provider>
   ,

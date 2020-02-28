@@ -3,6 +3,7 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { BsPerson, BsArrowBarUp, BsMap } from "react-icons/bs";
 import { withRouter } from 'react-router-dom'
 import "./NavBar.css";
+import { LogoutButton } from "@solid/react";
 
 let MyNavBar = React.memo(props => {
 
@@ -13,7 +14,7 @@ let MyNavBar = React.memo(props => {
 
   const dropDownElements = [
     { id: 0, text: 'My Profile', href: '/profile', testId: 'navbar-my-profile'},
-    { id: 1, text: 'Log Out', href: '/logout', testId: 'navbar-logout'},
+    { id: 1, text: 'Log Out', href: '/', testId: 'navbar-logout'},
 
   ]
 
@@ -41,7 +42,10 @@ let MyNavBar = React.memo(props => {
 
           <NavDropdown variant="secondary" drop="left" title={<BsPerson className="icon"></BsPerson>}>
             {dropDownElements.map(element => {
-              return (<NavDropdown.Item data-testid={element.testId} key={element.id} href={element.href}>{element.text}</NavDropdown.Item>)
+              return (<NavDropdown.Item data-testid={element.testId} key={element.id} href={element.href}>
+                {element.id===1 ? <LogoutButton>{element.name}</LogoutButton>:
+                element.text}
+              </NavDropdown.Item>)
             })}
 
           </NavDropdown>
