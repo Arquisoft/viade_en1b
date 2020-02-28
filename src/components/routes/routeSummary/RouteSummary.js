@@ -6,9 +6,9 @@ import './RouteSummary.css'
 
 function RouteSummary(props) {
     const {route} = props
-    //console.log(props)
+    const {onClickHandle} = props
     return (
-        <Card id={props.id} onClick={() => props.showRoute(route)}>
+        <Card id={props.id} onClick={() => onClickHandle(route)}>
             <div id="blurryBackground"></div>
             <Card.Body>
                 <Card.Title>{route.name}</Card.Title>
@@ -18,10 +18,4 @@ function RouteSummary(props) {
     )
 }
 
-const mapDispatchToProps = (dispatch) =>{
-    return {
-      showRoute: (route) => dispatch(showRoute(route))
-    }
-  }
-  
-  export default connect(null, mapDispatchToProps)(RouteSummary)
+export default (RouteSummary)
