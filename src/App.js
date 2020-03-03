@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./App.css";
 import MyNavBar from "./components/layout/navbar/NavBar";
@@ -6,7 +6,7 @@ import MyProfile from "./components/user/myProfile/MyProfile";
 import Login from "./components/layout/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import { ThemeContext } from './components/layout/themeContext/ThemeContext'
-import { connect } from "react-redux";
+
 import { useLoggedIn } from "@solid/react";
 
 const App = (props) => {

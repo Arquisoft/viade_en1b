@@ -7,7 +7,7 @@ const authReducer = (state = initState, action) => {
         case 'LOG_IN':
             console.log("user loggedin", action.userWebId)
             return {...state}
-        case 'LOG_IN':
+        case 'LOG_OUT':
             console.log("user loggedOUT")
             return {...state}
         default:
