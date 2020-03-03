@@ -33,3 +33,12 @@ nav.navbar{
     color: var(--color-secondary) !important;
     
 }
+
+.solid.auth.logout{
+    background-color: transparent !important;
+    color: black !important;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    padding: 0;
+}

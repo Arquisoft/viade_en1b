@@ -4,7 +4,6 @@ import { BsPerson, BsArrowBarUp, BsMap } from "react-icons/bs";
 import { withRouter } from 'react-router-dom'
 import "./NavBar.css";
 import { LogoutButton } from "@solid/react";
-import { logOut } from "../../../store/actions/AuthActions";
 
 let MyNavBar = React.memo(props => {
 
