@@ -21,7 +21,7 @@ const App = (props) => {
     return
   })
   
-  const navBar = useLoggedIn() === true ? <MyNavBar brandName="Viade_en1b"></MyNavBar> :null
+  const navBar = useLoggedIn() === true ? <MyNavBar brandName="Viade_en1b"></MyNavBar> : null
 
   return (
       <BrowserRouter>

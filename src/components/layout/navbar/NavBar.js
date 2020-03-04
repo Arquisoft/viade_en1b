@@ -1,15 +1,14 @@
 import React from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { BsPerson, BsArrowBarUp, BsMap } from "react-icons/bs";
-import { withRouter } from 'react-router-dom'
 import "./NavBar.css";
 import { LogoutButton } from "@solid/react";
 
-let MyNavBar = React.memo(props => {
+let MyNavBar = props => {
 
   const links = [
-    { id: 0, text: 'My routes', href: '/routes', icon: <BsMap className="icon"></BsMap>, testId: ' navbar-my-routes'},
-    { id: 1, text: 'Upload route', href: '/routes/upload', icon: <BsArrowBarUp className="icon"></BsArrowBarUp>, testId: 'navbar-upload-route'}
+    { id: 0, text: 'My routes', href: '/routes', icon: <BsMap className="icon"></BsMap>, testId: 'navbar-my-routes'},
+    { id: 1, text: 'Upload route', href: '/upload', icon: <BsArrowBarUp className="icon"></BsArrowBarUp>, testId: 'navbar-upload-route'}
   ]
 
   const dropDownElements = [
@@ -18,8 +17,11 @@ let MyNavBar = React.memo(props => {
 
   ]
 
+
   const getNavLinkClass = path => {
-    return props.location.pathname === path ? 'nav-link active' : 'nav-link'
+    let route_array = window.location.href.split('/')
+    let path_array = path.split('/')
+    return route_array[route_array.length - 1] === path_array[path_array.length - 1] ? 'nav-link active' : 'nav-link'
   }
 
 
@@ -32,7 +34,7 @@ let MyNavBar = React.memo(props => {
         <Nav className="justify-content-end" activeKey="/home">
           {links.map(link => {
             return (<span key={link.id}>
-              <Nav.Link data-testid={link.testId} key={link.id} className={getNavLinkClass(link.href)} href={link.href}>
+              <Nav.Link data-testid={link.testId} key={link.id} href={link.href} className={getNavLinkClass(link.href)} >
                 {link.icon}
                 {link.text}
               </Nav.Link>
@@ -53,6 +55,5 @@ let MyNavBar = React.memo(props => {
       </Navbar.Collapse>
     </Navbar>
   );
-});
-MyNavBar = withRouter(MyNavBar)
-export default MyNavBar;
+};
+export default React.memo(MyNavBar);
