@@ -9,7 +9,6 @@
 
 	border-style:solid; 
 	border-radius: 10px; 
-	background-color: lightgrey; 
 
 
 }
@@ -31,11 +30,16 @@
 	margin-bottom:2%; 
 	border-style:solid;
 }
-
-
-button{
-
-	margin: 1%; 
+section{
+	background-color: lightgrey; 
+	border-style: solid;
+	border-radius: 10px;
+	margin-left: 15%;
+	margin-right:5%;
+	margin-top:5%; 
+	display: inline-block; 
 
 }
+
+
 
