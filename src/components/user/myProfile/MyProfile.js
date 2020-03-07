@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image,  useWebId, Value } from '@solid/react';
 import './MyProfile.css';
 export default function MyProfile() {
     return (
@@ -6,8 +7,9 @@ export default function MyProfile() {
 		<section>
         		<h1> Profile </h1> 
 			<div className="ProfileData">
-				<p>Name: </p>
-	    			<p>WebID: </p>
+				<p>Name: <Value  src="user.name"/> </p>
+	    			<p>WebID: {useWebId()} </p>
+	    			<p>Role: <Value src="user.role"/> </p>
 	    			<p>Country: </p>
 	    			<p>Email: </p>
 	    			<p>Nº friends: </p>
