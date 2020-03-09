@@ -3,7 +3,6 @@ import MyMap from './myMap/MyMap'
 import './Dashboard.css'
 import RouteList from './../routes/routeList/RouteList';
 import {connect} from 'react-redux'
-import { getWebId } from '../../solid/auth';
 import { showRoute } from '../../store/actions/RouteActions';
 
 function Dashboard(props) {
