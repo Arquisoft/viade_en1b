@@ -1,11 +1,11 @@
 import React from 'react'
 import { render, waitForElement, fireEvent, queryByTestId } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import MyNavBar from '../NavBar'
+import App from '../../../../App'
 
 let rendered = null
 beforeEach( () => {
-    const { container } = render(<MyNavBar></MyNavBar>)
+    const { container } = render(<App></App>)
     rendered = container
 })
 
