@@ -1,5 +1,5 @@
 const initState = {
-    routes : [
+    routes: [
         { id: 0, name: "Hiking Naranco ", author: "César" },
         { id: 1, name: "Hiking Ruta de las Xanas", author: "Marcos" },
         { id: 2, name: "Senda del Oso", author: "César" },
@@ -19,10 +19,16 @@ const initState = {
 }
 
 const routeReducer = (state = initState, action) => {
-    switch(action.type){
+    switch (action.type) {
         case 'SHOW_ROUTE':
             console.log("routed shown", action.route)
-            return {...state}
+            return { ...state }
+        case 'UPLOAD_ROUTE':
+            console.log("routed uploaded", action.route)
+            let newRoutes = state.routes.filter(route => { 
+                return route.id !== action.id
+            });
+            return { ...state, routes: newRoutes }
         default:
             return state
     }

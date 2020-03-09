@@ -1,5 +1,5 @@
-export const createRoute = (route) =>{
-    return (dispatch, getState) =>{
+export const createRoute = (route) => {
+    return (dispatch, getState) => {
         //make async code
         dispatch({
             type: 'CREATE_ROUTE',
@@ -8,13 +8,20 @@ export const createRoute = (route) =>{
     }
 }
 
-export const showRoute = (route) =>{
-    return (dispatch, getState) =>{
+export const showRoute = (route) => {
+    return (dispatch, getState) => {
         getState().route.selectedRoute = route
         console.log(getState())
         dispatch({
             type: 'SHOW_ROUTE',
             route
         })
+    }
+}
+
+export const uploadRoute = (route) => {
+    return {
+        type: 'UPLOAD_ROUTE',
+        route
     }
 }

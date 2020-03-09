@@ -1,13 +1,14 @@
 import React from "react";
 import "./UploadRoute.css";
 import { connect } from "react-redux";
+import { uploadRoute } from './../../../store/actions/RouteActions'
 
 class UploadRoute extends React.Component {
 
     constructor(props) {
         super();
         this.state = {
-            form: {
+            route: {
                 name_route: {
                     value: ''
                 },
@@ -35,22 +36,24 @@ class UploadRoute extends React.Component {
         const value = e.target.value;
 
         this.setState({
-            form: {
-                ...this.state.form, [name]:
+            route: {
+                ...this.state.route, [name]:
                 {
-                    ...this.state.form[name], value
+                    ...this.state.route[name], value
                 }
             }
         });
     }
 
     submitForm = () => {
-        console.dir(this.state.form);
-        document.getElementsByClassName("formToSubmit").reset();
+        console.dir(this.state.route);
+        this.props.uploadRoute(this.props.route.id);
+        //document.getElementsByClassName("formToSubmit").reset();
+        this.props.history.push('/');
     }
     render() {
-        return (
-            <div className="formToSubmit">
+        const route = this.props.route ? (
+            <div className="route">
                 <form>
                     <div>
                         <label>
@@ -76,7 +79,7 @@ class UploadRoute extends React.Component {
                         <label>
                             Upload images
                         </label>
-                        <input type="file" name="images" onChange={this.changeHandler} multiple/>
+                        <input type="file" name="images" onChange={this.changeHandler} multiple />
                     </div>
                     <div>
                         <label>
@@ -85,22 +88,35 @@ class UploadRoute extends React.Component {
                         <input type="file" name="videos" onChange={this.changeHandler} multiple />
                     </div>
                     <div>
-                    <button type="submit" onClick={this.submitForm}>
-                    Submit
+                        <button type="submit" onClick={this.submitForm}>
+                            Submit
                 </button>
-                </div>
+                    </div>
                 </form>
-                
+
+            </div>
+        ) : (
+                <div className="center">Loading...</div>
+            );
+        return (
+            <div className="formToSubmit">
+                {route}
             </div>
         )
     }
 }
 
-function mapStatetoProps(state){
+const mapStateToProps = (state, ownProps) => {
     return {
-        form: state.form
-    };
+        route: state.route
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        uploadRoute: (id) => dispatch(uploadRoute(id))
+    }
 }
 
 
-export default connect(mapStatetoProps)(UploadRoute);
+export default connect(mapStateToProps, mapDispatchToProps)(UploadRoute);
