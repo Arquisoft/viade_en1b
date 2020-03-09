@@ -3,7 +3,7 @@ import { Image, useWebId, Value } from '@solid/react';
 import data from '@solid/query-ldflex' 
 import './MyProfile.css';
 import { Button,  Row, Col, Container } from 'react-bootstrap';
-
+import  FriendList from './FriendList.js' 
 
 
 
@@ -44,13 +44,13 @@ export default function MyProfile() {
 						<p>WebID: {useWebId()} </p>
 						<p>Role: <Value src="user.vcard_role"/> </p>
 						<p>Email: {theEmail} </p>
-						<p>Friends list:  </p>
 					</div>
 					<h1> Routes data </h1>
 					<div className="ProfileData">			
 						<p>Nº of routes stored: </p>
 						<p>Nº of routes shared: </p>
 					</div>
+					<FriendList />
 				</div>
 				</Col>
 				<Col>

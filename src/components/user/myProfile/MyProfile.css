@@ -38,4 +38,8 @@ button{
 	margin: 1%; 
 
 }
+.FriendList{
+	overflow-y: auto; 
+	max-height: 150px 
+}
 
