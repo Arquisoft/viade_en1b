@@ -16,7 +16,6 @@ const App = (props) => {
     Object.keys(theme).map(key => {
       const value = theme[key]
       return document.documentElement.style.setProperty(key, value)
-      
     })
     return
   })

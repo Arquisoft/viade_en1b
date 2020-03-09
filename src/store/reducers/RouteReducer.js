@@ -1,6 +1,6 @@
 const initState = {
     routes : [
-        { id: 0, name: "Hiking Naranco ", author: "César" },
+        { id: 0, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]] },
         { id: 1, name: "Hiking Ruta de las Xanas", author: "Marcos" },
         { id: 2, name: "Senda del Oso", author: "César" },
         { id: 3, name: "Hiking Naranco", author: "César" },
