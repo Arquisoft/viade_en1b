@@ -1,3 +1,5 @@
+import { getWebId } from "../../solid/auth"
+
 export const createRoute = (route) => {
     return (dispatch, getState) => {
         //make async code
@@ -20,8 +22,21 @@ export const showRoute = (route) => {
 }
 
 export const uploadRoute = (route) => {
-    return {
-        type: 'UPLOAD_ROUTE',
-        route
+    return (dispatch, getState) => {
+        const newRoute = {
+            id: Object.keys(getState().route.routes).length,
+            name: route.name,
+            description: route.description,
+            author: getWebId(), //we need to change this,
+            positions: route.file,
+            images: route.images,
+            videos: route.videos
+        }
+        getState().route.routes[getState().route.routes.length]=newRoute
+        console.log(getState())
+        dispatch({
+            type: 'UPLOAD_ROUTE',
+            newRoute
+        })
     }
 }

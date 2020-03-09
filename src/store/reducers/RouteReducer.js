@@ -22,13 +22,12 @@ const routeReducer = (state = initState, action) => {
     switch (action.type) {
         case 'SHOW_ROUTE':
             console.log("routed shown", action.route)
-            return { ...state }
+            console.log(state)
+            return {...state}
         case 'UPLOAD_ROUTE':
-            console.log("routed uploaded", action.route)
-            let newRoutes = state.routes.filter(route => { 
-                return route.id !== action.id
-            });
-            return { ...state, routes: newRoutes }
+            console.log("routed uploaded", action.newRoute)
+            console.log(state)
+            return {...state}
         default:
             return state
     }

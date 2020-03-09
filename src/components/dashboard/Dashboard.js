@@ -17,6 +17,13 @@ function Dashboard(props) {
         <h1>{selectedRoute.name}</h1> <p> by {selectedRoute.author}</p>
     </div>)
 
+    const componentDidUpdate = (prevProps) => {
+        if(prevProps.routes!==routes)
+        {
+            routes = props
+        }
+    }
+
     return (
         <div className="dashboard container">
             {currentSelectedMap}
@@ -27,6 +34,7 @@ function Dashboard(props) {
 }
 
 const mapStateToProps = (state) =>{
+    console.log(state)
     return {
         routes : state.route.routes,
         selectedRoute : state.route.selectedRoute
