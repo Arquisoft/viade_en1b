@@ -8,14 +8,16 @@ import data from '@solid/query-ldflex'
 
 
 
-function getFriendName(friendWebId){
-
-		
-
-}
 
 export default function MyProfile() {
 	
+
+async function getFriendName(friendWebId){
+	
+		const fixedFriendWebId = friendWebId + "profile/card#me";
+		return  await data[fixedFriendWebId].name; 
+}
+const getProfileUrl = (podUrl) =>{ return podUrl + "profile/card#me" }
 
 
 
@@ -29,11 +31,12 @@ export default function MyProfile() {
 			(item, i) => 
 
 				<Card>
-					<Card.Body> { getFriendName( `${item}` )} </Card.Body> 
+					<Card.Body> 
+						<Card.Link href= {getProfileUrl(`${item}` ) } >
+							<Value src={ getFriendName( `${item}` )}/> 
+						</Card.Link> 
+					</Card.Body> 
 				</Card>
-
-
-
 
 		}
 
