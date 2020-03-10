@@ -5,16 +5,18 @@ import data from '@solid/query-ldflex' ;
 
 
 export default function MyProfile() {
+	var  uniqueKey = 0; 
+
+	async function getFriendName(friendWebId){
+		
+			const fixedFriendWebId = friendWebId + "profile/card#me";
+			uniqueKey = uniqueKey +1;
+			return  await data[fixedFriendWebId].name; 
+	}
+	const getProfileUrl = (podUrl) =>{ return podUrl + "profile/card#me" }
 	
 
-async function getFriendName(friendWebId){
 	
-		const fixedFriendWebId = friendWebId + "profile/card#me";
-		return  await data[fixedFriendWebId].name; 
-}
-const getProfileUrl = (podUrl) =>{ return podUrl + "profile/card#me" }
-
-
 
 	return (
         <div>
@@ -25,7 +27,7 @@ const getProfileUrl = (podUrl) =>{ return podUrl + "profile/card#me" }
 		{
 			(item, i) => 
 
-				<Card>
+				<Card id={uniqueKey.toString()}>
 					<Card.Body> 
 						<Card.Link href= {getProfileUrl(`${item}` ) } >
 							<Value src={ getFriendName( `${item}` )}/> 
