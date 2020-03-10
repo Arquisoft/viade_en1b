@@ -1,7 +1,7 @@
 const initState = {
     routes : [
-        { id: 0, name: "Hiking Naranco ", author: "César" },
-        { id: 1, name: "Hiking Ruta de las Xanas", author: "Marcos" },
+        { id: 0, name: "Hiking Naranco ", author: "César", description: "hola"},
+        { id: 1, name: "Hiking Ruta de las Xanas", author: "Marcos", description: "adios"},
         { id: 2, name: "Senda del Oso", author: "César" },
         { id: 3, name: "Hiking Naranco", author: "César" },
         { id: 4, name: "Senda del Oso", author: "César" },

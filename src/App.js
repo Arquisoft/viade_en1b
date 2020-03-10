@@ -8,6 +8,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import { ThemeContext } from './components/layout/themeContext/ThemeContext'
 
 import { useLoggedIn } from "@solid/react";
+import MyRoutes from "./components/routes/myRoutes/MyRoutes";
 
 const App = (props) => {
 
@@ -31,6 +32,7 @@ const App = (props) => {
             <Route exact path="/" render={props => <Login {...props} />}></Route>
             <Route path="/profile" render={() => <MyProfile {...props}/>}></Route>
             <Route exact path="/dashboard" render={() => <Dashboard {...props} />}></Route>
+            <Route exact path="/routes/myRoutes" render={() => <MyRoutes {...props} />}></Route>
           </Switch>
         </div>
       </BrowserRouter>

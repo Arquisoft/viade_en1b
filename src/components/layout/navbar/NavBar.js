@@ -8,7 +8,7 @@ import { LogoutButton } from "@solid/react";
 let MyNavBar = React.memo(props => {
 
   const links = [
-    { id: 0, text: 'My routes', href: '/routes', icon: <BsMap className="icon"></BsMap>, testId: ' navbar-my-routes'},
+    { id: 0, text: 'My routes', href: '/routes/myRoutes', icon: <BsMap className="icon"></BsMap>, testId: ' navbar-my-routes'},
     { id: 1, text: 'Upload route', href: '/routes/upload', icon: <BsArrowBarUp className="icon"></BsArrowBarUp>, testId: 'navbar-upload-route'}
   ]
 
