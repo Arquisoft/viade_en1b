@@ -9,7 +9,7 @@ let MyNavBar = props => {
 
   const links = [
     { id: 0, text: 'My routes', href: '/routes', icon: <BsMap className="icon"></BsMap>, testId: 'navbar-my-routes'},
-    { id: 1, text: 'Upload route', href: '/upload', icon: <BsArrowBarUp className="icon"></BsArrowBarUp>, testId: 'navbar-upload-route'}
+    { id: 1, text: 'Upload route', href: '/routes/upload', icon: <BsArrowBarUp className="icon"></BsArrowBarUp>, testId: 'navbar-upload-route'}
   ]
 
   const dropDownElements = [

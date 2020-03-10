@@ -27,7 +27,7 @@ export const uploadRoute = (route) => {
             id: Object.keys(getState().route.routes).length,
             name: route.name,
             description: route.description,
-            author: getWebId(), //we need to change this,
+            author: 'alvaro', //we need to change this,
             positions: route.file,
             images: route.images,
             videos: route.videos
