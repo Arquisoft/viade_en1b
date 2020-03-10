@@ -20,7 +20,7 @@ export default function MyProfile() {
 			const firstEmail = await data[emailsId].vcard_value.value; 
 			const emailParsed = firstEmail.split(":")
 			const emailFixed = emailParsed.shift(); 
-			setTheEmail(emailParsed.join());
+			setTheEmail(emailParsed.join(":"));
 		} catch (err)
 		{
 			setTheEmail("No email");
