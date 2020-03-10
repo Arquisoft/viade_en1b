@@ -19,11 +19,22 @@ class UploadRoute extends React.Component {
         })
     }
 
+    resetState()
+    {
+        return {
+            name: '',
+            description: '',
+            file: '',
+            images: [],
+            videos: []
+        }
+    }
+
 
     submitForm = (e) => {
         e.preventDefault()
         this.props.uploadRoute(this.state);
-        //document.getElementsByClassName("formToSubmit").reset();
+        this.setState(this.resetState())
         //this.props.history.push('/');
     }
 
@@ -36,33 +47,33 @@ class UploadRoute extends React.Component {
                             <label>
                                 Name of the route:
                         </label>
-                            <input type="text" id="name" onChange={this.changeHandler} />
+                            <input type="text" id="name" value = {this.state.name} onChange={this.changeHandler} />
                         </div>
 
                         <div>
                             <label>
                                 Description of the route:
                         </label>
-                            <input type="text" id="description" onChange={this.changeHandler} />
+                            <input type="text" id="description" value = {this.state.description} onChange={this.changeHandler} />
                         </div>
                         <div>
                             <label>
                                 Select the route file
                         </label>
-                            <input type="file" id="file" onChange={this.changeHandler} />
+                            <input type="file" id="file" value = {this.state.file} onChange={this.changeHandler} />
                         </div>
 
                         <div>
                             <label>
                                 Upload images
                         </label>
-                            <input type="file" id="images" onChange={this.changeHandler} multiple />
+                            <input type="file" id="images" value = {this.state.images} onChange={this.changeHandler} multiple />
                         </div>
                         <div>
                             <label>
                                 Upload videos
                         </label>
-                            <input type="file" id="videos" onChange={this.changeHandler} multiple />
+                            <input type="file" id="videos" value = {this.state.videos} onChange={this.changeHandler} multiple />
                         </div>
                         <div>
                             <button type="submit" onClick={this.submitForm}>
