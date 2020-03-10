@@ -15,11 +15,15 @@ export default function MyProfile() {
 
 
 	const getEmail = async () =>  {
-
-		const  emailsId = await data.user[ 'http://www.w3.org/2006/vcard/ns#hasEmail' ].value ;	
-		const firstEmail = await data[emailsId].vcard_value.value; 
-		const emailParsed = firstEmail.split(":")[1]
-		setTheEmail(emailParsed) 
+		try{
+			const  emailsId = await data.user[ 'http://www.w3.org/2006/vcard/ns#hasEmail' ].value ;	
+			const firstEmail = await data[emailsId].vcard_value.value; 
+			const emailParsed = firstEmail.split(":")[1]	
+			setTheEmail(emailParsed) 
+		} catch (err)
+		{
+			setTheEmail("No email")
+		}
 
 	}
 	getEmail() ; 
