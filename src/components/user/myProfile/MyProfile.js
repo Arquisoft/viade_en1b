@@ -1,8 +1,8 @@
-import React, { useState}  from 'react';
+import React, {useEffect, useContext,   setState, useState, useRef}  from 'react';
 import { Image, useWebId, Value } from '@solid/react';
 import data from '@solid/query-ldflex' ;
 import './MyProfile.css';
-import {   Row, Col, Container } from 'react-bootstrap';
+import { Button,  Row, Col, Container } from 'react-bootstrap';
 import  FriendList from './FriendList.js' ;
 
 
@@ -19,7 +19,7 @@ export default function MyProfile() {
 			const  emailsId = await data.user[ 'http://www.w3.org/2006/vcard/ns#hasEmail' ].value ;	
 			const firstEmail = await data[emailsId].vcard_value.value; 
 			const emailParsed = firstEmail.split(":")
-			emailParsed.shift(); 
+			const emailFixed = emailParsed.shift(); 
 			setTheEmail(emailParsed.join(":"));
 		} catch (err)
 		{
