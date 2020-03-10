@@ -1,12 +1,7 @@
 import React, {useEffect, useContext,   setState, useState, useRef}  from 'react';
 import { Card    } from 'react-bootstrap';
 import { Image, useWebId, List, Value} from '@solid/react';
-import data from '@solid/query-ldflex' 
-
-
-
-
-
+import data from '@solid/query-ldflex' ;
 
 
 export default function MyProfile() {
