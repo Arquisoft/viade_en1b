@@ -6,7 +6,8 @@ import data from '@solid/query-ldflex' ;
 
 export default function MyProfile() {
 	var  uniqueKey = 0; 
-
+	
+	
 	async function getFriendName(friendWebId){
 		
 			const fixedFriendWebId = friendWebId + "profile/card#me";
@@ -14,7 +15,12 @@ export default function MyProfile() {
 			return  await data[fixedFriendWebId].name; 
 	}
 	const getProfileUrl = (podUrl) =>{ return podUrl + "profile/card#me" }
+	const openProfile = (friendProfile) => {
 	
+
+    		window.location.href = friendProfile + "profile/card#me" ; 
+
+	}	
 
 	
 
@@ -25,9 +31,8 @@ export default function MyProfile() {
 		<div className="FriendList">
 		<List src="user.foaf_knows" >
 		{
-			(item, i) => 
-
-				<Card id={uniqueKey.toString()}>
+			(item, i) =>
+				<Card id={uniqueKey.toString()} onClick={() => openProfile(`${item}` )}>
 					<Card.Body> 
 						<Card.Link href= {getProfileUrl(`${item}` ) } >
 							<Value src={ getFriendName( `${item}` )}/> 
