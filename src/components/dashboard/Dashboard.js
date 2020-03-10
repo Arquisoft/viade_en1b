@@ -32,6 +32,7 @@ function Dashboard(props) {
 }
 
 const mapStateToProps = (state) =>{
+    console.log(state)
     return {
         routes : state.route.routes,
         selectedRoute : state.route.selectedRoute

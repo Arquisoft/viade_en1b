@@ -10,9 +10,14 @@ const initState = {
 }
 
 const routeReducer = (state = initState, action) => {
-    switch(action.type){
+    switch (action.type) {
         case 'SHOW_ROUTE':
-            //console.log("routed shown", action.route)
+            console.log("routed shown", action.route)
+            console.log(state)
+            return {...state}
+        case 'UPLOAD_ROUTE':
+            console.log("routed uploaded", action.newRoute)
+            console.log(state)
             return {...state}
         default:
             return state
