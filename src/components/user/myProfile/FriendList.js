@@ -1,28 +1,18 @@
 import React from 'react';
 import { Card    } from 'react-bootstrap';
 import {  List, Value} from '@solid/react';
-import data from '@solid/query-ldflex' ;
-
+import {getFriendName} from '../../../solid/profileInfo.js'
 
 export default function MyProfile() {
 	var  uniqueKey = 0; 
 	
 	
-	async function getFriendName(friendWebId){
-		
-			const fixedFriendWebId = friendWebId + "profile/card#me";
-			uniqueKey = uniqueKey +1;
-			return  await data[fixedFriendWebId].name; 
-	}
 	const getProfileUrl = (podUrl) =>{ return podUrl + "profile/card#me" }
-	const openProfile = (friendProfile) => {
-	
-
-    		window.location.href = friendProfile + "profile/card#me" ; 
-
-	}	
-
-	
+	const openProfile = (friendProfile) => {window.location.href = friendProfile + "profile/card#me" ; }	
+	const setFriendName = async (friendUrl) => {
+		uniqueKey++;
+		return await getFriendName(friendUrl);
+	};
 
 	return (
         <div>
@@ -35,7 +25,7 @@ export default function MyProfile() {
 				<Card id={uniqueKey.toString()} onClick={() => openProfile(`${item}` )}>
 					<Card.Body> 
 						<Card.Link href= {getProfileUrl(`${item}` ) } >
-							<Value src={ getFriendName( `${item}` )}/> 
+							<Value src={setFriendName( `${item}` )}/> 
 						</Card.Link> 
 					</Card.Body> 
 				</Card>

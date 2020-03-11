@@ -16,3 +16,10 @@ export async function getEmail(theEmail){
 	}
 
 }
+
+
+export async function getFriendName(friendWebId){
+		
+			const fixedFriendWebId = friendWebId + "profile/card#me";
+			return  await data[fixedFriendWebId].name; 
+}
