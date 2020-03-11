@@ -7,7 +7,7 @@ const UploadButton = (props) => {
 
     const [state, setState] = useState({
         filename: '',
-        numberOfFiles: ''
+        numberOfFiles: 0
     })
     const file = useRef()
 

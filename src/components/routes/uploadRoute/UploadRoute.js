@@ -18,7 +18,7 @@ class UploadRoute extends React.Component {
 
     changeHandlerRoute = (e) => {
         console.log(e.target.name)
-        
+
         this.setState({
             [e.target.id]: e.target.value
         })
@@ -27,14 +27,14 @@ class UploadRoute extends React.Component {
     changeHandlerImages = e => {
         let docs = []
         Array.from(e.target.files).forEach(file => docs.push(file.name))
-        this.setState({...this.state, images: docs})
+        this.setState({ ...this.state, images: docs })
     }
 
 
     changeHandlerVideos = e => {
         let docs = []
         Array.from(e.target.files).forEach(file => docs.push(file.name))
-        this.setState({...this.state, videos: docs})
+        this.setState({ ...this.state, videos: docs })
     }
 
 
@@ -60,29 +60,32 @@ class UploadRoute extends React.Component {
         return (
             <div className="uploadContainer">
                 <Form>
-                    <Form.Group controlId="routeName">
-                        <Form.Label>Name of the route</Form.Label>
-                        <Form.Control id='name' onChange={this.changeHandlerRoute} placeholder="Route name" value={this.state.name} type="text" />
+                    <div id="form-info">
+                        <Form.Group controlId="routeName">
+                            <Form.Label for="name">Name of the route</Form.Label>
+                            <Form.Control id='name' onChange={this.changeHandlerRoute} placeholder="Route name" value={this.state.name} type="text" />
 
-                    </Form.Group>
+                        </Form.Group>
 
-                    <Form.Group controlId="routeDescription">
-                        <Form.Label>Description</Form.Label>
-                        <Form.Control id="description" onChange={this.changeHandlerRoute} value={this.state.description} as="textarea" rows="4" placeholder="Description..." />
-                    </Form.Group>
+                        <Form.Group controlId="routeDescription">
+                            <Form.Label for="description">Description</Form.Label>
+                            <Form.Control id="description" onChange={this.changeHandlerRoute} value={this.state.description} as="textarea" rows="4" placeholder="Description..." />
+                        </Form.Group>
+                        <Button id="uploadButton" onClick={this.submitForm} variant="primary" type="submit">
+                            Submit
+                    </Button>
+
+                    </div>
 
                     <div id="buttonHolder">
 
-                    <UploadButton onChange={this.changeHandlerRoute} id="file" text="Choose a route"></UploadButton>
+                        <UploadButton onChange={this.changeHandlerRoute} id="file" text="Choose a route"></UploadButton>
 
-                    <UploadButton onChange={this.changeHandlerImages} id="images" multiple text="Pick some images" ></UploadButton>
-                    
-                    <UploadButton onChange={this.changeHandlerVideos} id="video" multiple text="Choose a video"></UploadButton>
-                    
+                        <UploadButton onChange={this.changeHandlerImages} id="images" text="Pick some images" multiple ></UploadButton>
+
+                        <UploadButton onChange={this.changeHandlerVideos} id="video" multiple text="Choose a video"></UploadButton>
+
                     </div>
-                    <Button id="uploadButton" onClick={this.submitForm} variant="primary" type="submit">
-                        Submit
-                    </Button>
                 </Form>
             </div>
 
