@@ -1,6 +1,6 @@
-import React, {useEffect, useContext,   setState, useState, useRef}  from 'react';
+import React from 'react';
 import { Card    } from 'react-bootstrap';
-import { Image, useWebId, List, Value} from '@solid/react';
+import {  List, Value} from '@solid/react';
 import data from '@solid/query-ldflex' ;
 
 
