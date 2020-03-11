@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Form } from 'react-bootstrap'
 import { BsUpload } from 'react-icons/bs'
-
+import './UploadButton.css'
 
 const UploadButton = (props) => {
 
@@ -9,6 +9,17 @@ const UploadButton = (props) => {
         filename: '',
         numberOfFiles: 0
     })
+
+    useEffect(() => {
+        if(props.reset) resetState()
+    }, [props.reset])
+
+    const resetState = () => {
+        setState({
+            filename: '',
+            numberOfFiles: 0
+        })
+    }
     const file = useRef()
 
     const handleSingleFileChanged = e => {
@@ -27,18 +38,19 @@ const UploadButton = (props) => {
                             ? 
                             <Form.Group>
                                 <Form.Control ref={file} onChange={handleSingleFileChanged} id={props.id} type="file"></Form.Control>
-                                <Form.Label for={props.id}>
+                                <Form.Label className="uploadLabel" for={props.id}>
+                                    <p>{state.filename !== '' ? state.filename : props.text}</p>
                                     <BsUpload></BsUpload>
-                                    {state.filename !== '' ? state.filename : props.text}
+                                    
                                 </Form.Label>
                             </Form.Group>
 
                             : 
                             <Form.Group>
                                 <Form.Control multiple ref={file} onChange={handleMultipleFileChanged} id={props.id} type="file"></Form.Control>
-                                <Form.Label for={props.id}>
+                                <Form.Label className="uploadLabel" for={props.id}>
+                                    <p>{state.numberOfFiles !== 0 ? state.numberOfFiles + ' files selected': props.text }</p>
                                     <BsUpload></BsUpload>
-                                    {state.numberOfFiles !== 0 ? state.numberOfFiles + ' files selected': props.text }
                                 </Form.Label>
                             </Form.Group>
 

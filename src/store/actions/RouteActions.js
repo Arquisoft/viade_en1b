@@ -1,4 +1,3 @@
-import { getWebId } from "../../solid/auth"
 
 export const createRoute = (route) => {
     return (dispatch, getState) => {

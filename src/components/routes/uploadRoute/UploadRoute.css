@@ -7,6 +7,7 @@
     width: 100%;
     padding-top: 3em;
     overflow-y: scroll;
+    margin: 0 auto;
 }
 
 form{
@@ -20,10 +21,9 @@ label{
     float: left;
 }
 
-label svg{
-    padding: 0 auto;
-    font-size: 1.5em;
-    margin-right: .2em;
+#buttonHolder svg{
+    font-size: 1.2em;
+    margin: 0 auto;
 }
 
 
@@ -72,13 +72,29 @@ input[type="file"] + label:hover{
 }
 
 #buttonHolder{
-    width: 40%;
+    width: 25%;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-around;
+    margin: 1em;
     
-    
+}
+
+#buttonHolder div{
+    width: 100%;
+}
+
+#buttonHolder label{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0 auto;
+}
+
+#buttonHolder p{
+    margin: 0 auto;
 }
 
 #uploadButton{
@@ -89,5 +105,9 @@ input[type="file"] + label:hover{
     display: flex;
     flex-direction: column;
     width: 50%;
+}
+
+.form-group label{
+    width: 100%;
 }
 
