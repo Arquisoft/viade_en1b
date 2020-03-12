@@ -65,14 +65,14 @@ class UploadRoute extends React.Component {
             <div className="uploadContainer">
                 <Form>
                     <div id="form-info">
-                        <Form.Group controlId="routeName">
-                            <Form.Label for="name">Name of the route</Form.Label>
+                        <Form.Group htmlFor="routeName">
+                            <Form.Label htmlFor="name">Name of the route</Form.Label>
                             <Form.Control id='name' onChange={this.changeHandlerRoute} placeholder="Route name" value={this.state.name} type="text" />
 
                         </Form.Group>
 
-                        <Form.Group controlId="routeDescription">
-                            <Form.Label for="description">Description</Form.Label>
+                        <Form.Group htmlFor="routeDescription">
+                            <Form.Label htmlFor="description">Description</Form.Label>
                             <Form.Control id="description" onChange={this.changeHandlerRoute} value={this.state.description} as="textarea" rows="4" placeholder="Description..." />
                         </Form.Group>
                         <Button id="uploadButton" onClick={this.submitForm} variant="primary" type="submit">
@@ -83,11 +83,11 @@ class UploadRoute extends React.Component {
 
                     <div id="buttonHolder">
 
-                        <UploadButton reset={this.state.reset} ref="file" onChange={this.changeHandlerRoute} id="file" text="Choose a route"></UploadButton>
+                        <UploadButton reset={this.state.reset}  onChange={this.changeHandlerRoute} id="file" text="Choose a route"></UploadButton>
 
-                        <UploadButton reset={this.state.reset} ref="images" onChange={this.changeHandlerImages} id="images" text="Pick some images" multiple ></UploadButton>
+                        <UploadButton reset={this.state.reset}  onChange={this.changeHandlerImages} id="images" text="Pick some images" multiple ></UploadButton>
 
-                        <UploadButton reset={this.state.reset} ref="videos" onChange={this.changeHandlerVideos} id="videos" multiple text="Choose a video"></UploadButton>
+                        <UploadButton reset={this.state.reset}  onChange={this.changeHandlerVideos} id="videos" multiple text="Choose a video"></UploadButton>
 
                     </div>
                 </Form>
