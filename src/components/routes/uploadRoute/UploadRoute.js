@@ -1,7 +1,9 @@
 import React from "react";
 import "./UploadRoute.css";
 import { connect } from "react-redux";
+import { Form, Button } from 'react-bootstrap'
 import { uploadRoute } from './../../../store/actions/RouteActions'
+import UploadButton from './uploadButton/UploadButton'
 
 class UploadRoute extends React.Component {
 
@@ -10,80 +12,87 @@ class UploadRoute extends React.Component {
         description: '',
         file: '',
         images: [],
-        videos: []
+        videos: [],
+        reset: false
     }
 
-    changeHandler = (e) => {
+    changeHandlerRoute = (e) => {
         this.setState({
             [e.target.id]: e.target.value
         })
     }
 
-    resetState()
-    {
+    changeHandlerImages = e => {
+        let docs = []
+        Array.from(e.target.files).forEach(file => docs.push(file.name))
+        this.setState({ ...this.state, images: docs })
+    }
+
+
+    changeHandlerVideos = e => {
+        let docs = []
+        Array.from(e.target.files).forEach(file => docs.push(file.name))
+        this.setState({ ...this.state, videos: docs })
+    }
+
+
+    resetState() {
         return {
             name: '',
             description: '',
             file: '',
             images: [],
-            videos: []
+            videos: [],
+            reset: false
+
         }
+    }
+
+    componentDidUpdate(){
+        if(this.state.reset) this.setState(this.resetState())
     }
 
 
     submitForm = (e) => {
         e.preventDefault()
         this.props.uploadRoute(this.state);
-        this.setState(this.resetState())
-        //this.props.history.push('/');
+        alert("Your file has been submitted")
+        this.setState({...this.state, reset: true})
     }
 
     render() {
         return (
-            <div className="formToSubmit">
-                <div className="route">
-                    <form>
-                        <div>
-                            <label>
-                                Name of the route:
-                        </label>
-                            <input type="text" id="name" value = {this.state.name} onChange={this.changeHandler} />
-                        </div>
+            <div className="uploadContainer">
+                <Form>
+                    <div id="form-info">
+                        <Form.Group controlId="routeName">
+                            <Form.Label for="name">Name of the route</Form.Label>
+                            <Form.Control id='name' onChange={this.changeHandlerRoute} placeholder="Route name" value={this.state.name} type="text" />
 
-                        <div>
-                            <label>
-                                Description of the route:
-                        </label>
-                            <input type="text" id="description" value = {this.state.description} onChange={this.changeHandler} />
-                        </div>
-                        <div>
-                            <label>
-                                Select the route file
-                        </label>
-                            <input type="file" id="file" value = {this.state.file} onChange={this.changeHandler} />
-                        </div>
+                        </Form.Group>
 
-                        <div>
-                            <label>
-                                Upload images
-                        </label>
-                            <input type="file" id="images" value = {this.state.images} onChange={this.changeHandler} multiple />
-                        </div>
-                        <div>
-                            <label>
-                                Upload videos
-                        </label>
-                            <input type="file" id="videos" value = {this.state.videos} onChange={this.changeHandler} multiple />
-                        </div>
-                        <div>
-                            <button type="submit" onClick={this.submitForm}>
-                                Submit
-                </button>
-                        </div>
-                    </form>
+                        <Form.Group controlId="routeDescription">
+                            <Form.Label for="description">Description</Form.Label>
+                            <Form.Control id="description" onChange={this.changeHandlerRoute} value={this.state.description} as="textarea" rows="4" placeholder="Description..." />
+                        </Form.Group>
+                        <Button id="uploadButton" onClick={this.submitForm} variant="primary" type="submit">
+                            Submit
+                    </Button>
 
-                </div>
+                    </div>
+
+                    <div id="buttonHolder">
+
+                        <UploadButton reset={this.state.reset} ref="file" onChange={this.changeHandlerRoute} id="file" text="Choose a route"></UploadButton>
+
+                        <UploadButton reset={this.state.reset} ref="images" onChange={this.changeHandlerImages} id="images" text="Pick some images" multiple ></UploadButton>
+
+                        <UploadButton reset={this.state.reset} ref="videos" onChange={this.changeHandlerVideos} id="videos" multiple text="Choose a video"></UploadButton>
+
+                    </div>
+                </Form>
             </div>
+
         )
     }
 }
