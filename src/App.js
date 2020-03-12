@@ -1,14 +1,9 @@
 import React, { useEffect, useContext } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./App.css";
 import MyNavBar from "./components/layout/navbar/NavBar";
-import MyProfile from "./components/user/myProfile/MyProfile";
-import Login from "./components/layout/login/Login";
-import Dashboard from "./components/dashboard/Dashboard";
-import UploadRoute from "./components/routes/uploadRoute/UploadRoute"
 import { ThemeContext } from './components/layout/themeContext/ThemeContext'
-
 import { useLoggedIn } from "@solid/react";
+import Routing from "./components/routing/Routing";
 
 const App = (props) => {
 
@@ -24,17 +19,9 @@ const App = (props) => {
   const navBar = useLoggedIn() === true ? <MyNavBar brandName="Viade_en1b"></MyNavBar> : null
 
   return (
-      <BrowserRouter>
-        <div className="App">
-          {navBar}
-          <Switch>
-            <Route exact path="/" render={props => <Login {...props} />}></Route>
-            <Route path="/profile" render={() => <MyProfile {...props}/>}></Route>
-            <Route exact path="/dashboard" render={() => <Dashboard {...props} />}></Route>
-            <Route path="/routes/upload" render={() => <UploadRoute {...props}/>}></Route>
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <div className="App">
+        <Routing navBar = {navBar}/>
+      </div>
 
   );
 }

@@ -4,6 +4,7 @@ import './MyProfile.css';
 import {  Row, Col, Container } from 'react-bootstrap';
 import  FriendList from './FriendList.js' ;
 import {getEmail} from '../../../solid/profileInfo.js'
+import { Button } from 'react-bootstrap';
 
 
 
@@ -15,11 +16,6 @@ export default function MyProfile() {
 		setTheEmail(await getEmail())		
 	};
 
-	const redirect = () => {
-
-    		window.location.href = "/dashboard" ;
-
-	}
 	setAllStates();
 
 	return (
@@ -48,7 +44,7 @@ export default function MyProfile() {
 				</Col>
 			</Row>
 	
-	<button onClick={redirect}> Return  </button>	
+			<Button href='#/dashboard'> Return  </Button>	
 	    	</Container>
         </div>
     )
