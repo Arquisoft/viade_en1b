@@ -49,7 +49,7 @@ let MyNavBar = props => {
             )
           })}
 
-          <NavDropdown activeClass='active' variant="secondary" drop="left" title={<BsPerson className="icon"></BsPerson>}>
+          <NavDropdown activeClassName='active' variant="secondary" drop="left" title={<BsPerson className="icon"></BsPerson>}>
             {dropDownElements.map(element => {
               return (<NavDropdown.Item data-testid={element.testId} key={element.id} href={element.href}>
                 { element.id===1
