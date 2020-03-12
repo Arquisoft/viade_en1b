@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card    } from 'react-bootstrap';
+import { Card  } from 'react-bootstrap';
 import {  List, Value} from '@solid/react';
 import {getFriendName} from '../../../solid/profileInfo.js'
+import './FriendList.css'
 
 export default function MyProfile() {
 	var  uniqueKey = 0; 
@@ -15,14 +16,14 @@ export default function MyProfile() {
 	};
 
 	return (
-        <div>
-		<h1>Friends list:  </h1>
+        <div id="friendListContainer">
+		<h1>Friends list:</h1>
 		
 		<div className="FriendList">
 		<List src="user.foaf_knows" >
 		{
 			(item, i) =>
-				<Card key={uniqueKey.toString()} onClick={() => openProfile(`${item}` )}>
+				<Card id={uniqueKey.toString()} onClick={() => openProfile(`${item}` )}>
 					<Card.Body> 
 						<Card.Link href= {getProfileUrl(`${item}` ) } >
 							<Value src={setFriendName( `${item}` )}/> 
