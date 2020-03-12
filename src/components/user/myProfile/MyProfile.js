@@ -1,41 +1,31 @@
-import React, {useEffect, useContext,   setState, useState, useRef}  from 'react';
+import React, { useState }  from 'react';
 import { Image, useWebId, Value } from '@solid/react';
-import data from '@solid/query-ldflex' 
 import './MyProfile.css';
-import { Button,  Row, Col, Container } from 'react-bootstrap';
-import  FriendList from './FriendList.js' 
-
+import {  Row, Col, Container } from 'react-bootstrap';
+import  FriendList from './FriendList.js' ;
+import {getEmail} from '../../../solid/profileInfo.js'
 
 
 
 
 export default function MyProfile() {
+	const  [theEmail , setTheEmail] = useState("");
 
-	const  [theEmail , setTheEmail] = useState(""); 
+	const setAllStates = async () => {
+		setTheEmail(await getEmail())		
+	};
 
-
-	const getEmail = async () =>  {
-
-		const  emailsId = await data.user[ 'http://www.w3.org/2006/vcard/ns#hasEmail' ].value ;	
-		const firstEmail = await data[emailsId].vcard_value.value; 
-		const emailParsed = firstEmail.split(":")[1]
-		setTheEmail(emailParsed) 
-
-	}
-	getEmail() ; 
-	
 	const redirect = () => {
 
     		window.location.href = "/dashboard" ;
 
 	}
-
-
+	setAllStates();
 
 	return (
         <div className="GeneralComponent " >
 		<Container className="Container">
-			<Row>
+		<Row>
 				<Col>
 				<div className="AllData">
 					<h1> Profile </h1> 
