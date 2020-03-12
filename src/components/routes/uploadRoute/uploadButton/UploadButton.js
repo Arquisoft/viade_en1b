@@ -38,7 +38,7 @@ const UploadButton = (props) => {
                             ? 
                             <Form.Group>
                                 <Form.Control ref={file} onChange={handleSingleFileChanged} id={props.id} type="file"></Form.Control>
-                                <Form.Label className="uploadLabel" for={props.id}>
+                                <Form.Label className="uploadLabel" htmlFor={props.id}>
                                     <p>{state.filename !== '' ? state.filename : props.text}</p>
                                     <BsUpload></BsUpload>
                                     
@@ -48,7 +48,7 @@ const UploadButton = (props) => {
                             : 
                             <Form.Group>
                                 <Form.Control multiple ref={file} onChange={handleMultipleFileChanged} id={props.id} type="file"></Form.Control>
-                                <Form.Label className="uploadLabel" for={props.id}>
+                                <Form.Label className="uploadLabel" htmlFor={props.id}>
                                     <p>{state.numberOfFiles !== 0 ? state.numberOfFiles + ' files selected': props.text }</p>
                                     <BsUpload></BsUpload>
                                 </Form.Label>
