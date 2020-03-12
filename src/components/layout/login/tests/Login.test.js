@@ -4,7 +4,7 @@ import '@testing-library/jest-dom'
 import Login from '../Login.js'
 
 let rendered = null
-beforeEach( () => {
+beforeEach(() => {
     const { container } = render(<Login></Login>)
     rendered = container
 })
@@ -21,9 +21,12 @@ describe('login component', () => {
     })
 
     test('pop up opens up', () => {
-        global.open = jest.fn();
-        fireEvent.click(queryByText(rendered, 'Login here!'))
-        expect(global.open).toBeCalled();
+        waitForElement(() => {
+            global.open = jest.fn();
+            fireEvent.click(queryByText(rendered, 'Login here!'))
+            expect(global.open).toBeCalled();
+        })
+
     })
 
 
