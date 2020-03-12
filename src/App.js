@@ -5,6 +5,7 @@ import MyNavBar from "./components/layout/navbar/NavBar";
 import MyProfile from "./components/user/myProfile/MyProfile";
 import Login from "./components/layout/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
+import UploadRoute from "./components/routes/uploadRoute/UploadRoute"
 import { ThemeContext } from './components/layout/themeContext/ThemeContext'
 
 import { useLoggedIn } from "@solid/react";
@@ -16,12 +17,11 @@ const App = (props) => {
     Object.keys(theme).map(key => {
       const value = theme[key]
       return document.documentElement.style.setProperty(key, value)
-      
     })
     return
   })
   
-  const navBar = useLoggedIn() === true ? <MyNavBar brandName="Viade_en1b"></MyNavBar> :null
+  const navBar = useLoggedIn() === true ? <MyNavBar brandName="Viade_en1b"></MyNavBar> : null
 
   return (
       <BrowserRouter>
@@ -31,6 +31,7 @@ const App = (props) => {
             <Route exact path="/" render={props => <Login {...props} />}></Route>
             <Route path="/profile" render={() => <MyProfile {...props}/>}></Route>
             <Route exact path="/dashboard" render={() => <Dashboard {...props} />}></Route>
+            <Route path="/routes/upload" render={() => <UploadRoute {...props}/>}></Route>
           </Switch>
         </div>
       </BrowserRouter>
