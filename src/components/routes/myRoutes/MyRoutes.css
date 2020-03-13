@@ -9,16 +9,6 @@
     
 }
 
-#titleHolder{
-    grid-column: 1 / 5;
-    grid-row: 1 / 1;
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-}
-
 h1{
     font-size: 1.5em;
 }
@@ -36,23 +26,6 @@ p{
         margin: 0;
         padding: 0;
     
-    }
-
-    #titleHolder{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        grid-column: 1 / 5;
-        grid-row: 1 / 1;
-        background-color: white;
-        margin: 0 auto;
-        margin-top: 5em;
-        height: 150%;
-        width: 90%;
-        padding: .5em 0;
-        
-        border-radius: 5px;
     }
 
     .details{

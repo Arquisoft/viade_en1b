@@ -8,11 +8,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 let MyNavBar = props => {
 
   const links = [
-<<<<<<< HEAD
-    { id: 0, text: 'My routes', href: '/routes/myRoutes', icon: <BsMap className="icon"></BsMap>, testId: ' navbar-my-routes'},
-=======
-    { id: 0, text: 'My routes', href: '/routes', icon: <BsMap className="icon"></BsMap>, testId: 'navbar-my-routes'},
->>>>>>> a9e9b72223f043b5dd3c6ad4b8bdd3a066d78a0f
+    { id: 0, text: 'My routes', href: '/routes/MyRoutes', icon: <BsMap className="icon"></BsMap>, testId: 'navbar-my-routes'},
     { id: 1, text: 'Upload route', href: '/routes/upload', icon: <BsArrowBarUp className="icon"></BsArrowBarUp>, testId: 'navbar-upload-route'}
   ]
 
