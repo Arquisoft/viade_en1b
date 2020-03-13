@@ -1,3 +1,4 @@
+import { uploadRouteToPod } from './../../solid/uploadRouteToPod.js'
 
 export const createRoute = (route) => {
     return (dispatch, getState) => {
@@ -26,11 +27,12 @@ export const uploadRoute = (route) => {
             id: Object.keys(getState().route.routes).length,
             name: route.name,
             description: route.description,
-            author: 'alvaro', //we need to change this,
-            positions: route.file,
+            author: route.author,
+            positions: route.positions === "" ? "" : JSON.parse(route.positions),
             images: route.images,
             videos: route.videos
         }
+        uploadRouteToPod("writeToPodTest")
         getState().route.routes[getState().route.routes.length]=newRoute
         console.log(getState())
         dispatch({
