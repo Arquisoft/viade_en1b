@@ -5,7 +5,7 @@ const RouteDetails=({selectedRoute})=>{
     if (selectedRoute != null){
 
         const photos = selectedRoute.images.map((e) => {
-            return <img src={e} alt="No found image"></img>
+            return <img src={e} alt="not found"></img>
         });
         const videos = selectedRoute.videos.map((e) => {
             return <video width="320" height="240" controls>
