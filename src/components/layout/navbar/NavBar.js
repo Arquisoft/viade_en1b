@@ -13,8 +13,9 @@ let MyNavBar = props => {
   ]
 
   const dropDownElements = [
-    { id: 0, text: 'My Profile', href: '/profile', testId: 'navbar-my-profile'},
-    { id: 1, text: 'Log Out', href: '/', testId: 'navbar-logout'},
+    { id: 0, text: 'My Profile', href: '/profile', testId: 'navbar-my-profile'},	  
+    { id: 1, text: 'Settings', href: '/settings', testId: 'navbar-settings'},
+    { id: 2, text: 'Log Out', href: '/', testId: 'navbar-logout'},
 
   ]
 
@@ -52,7 +53,7 @@ let MyNavBar = props => {
           <NavDropdown activeClassName='active' variant="secondary" drop="left" title={<BsPerson className="icon"></BsPerson>}>
             {dropDownElements.map(element => {
               return (<NavDropdown.Item data-testid={element.testId} key={element.id} href={element.href}>
-                { element.id===1
+                { element.id===2
                 ? <LogoutButton>{element.text}</LogoutButton>
                 : <LinkContainer to={element.href}><Nav.Link>{element.text}</Nav.Link></LinkContainer>
                 }
