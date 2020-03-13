@@ -1,7 +1,7 @@
 ---
-name: Coding Work
+name: Coding related
 about: Issues related to coding work
-title: "[CODING]"
+title: "[CODING] <your title goes here>"
 labels: development
 assignees: ''
 

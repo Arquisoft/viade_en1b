@@ -1,4 +1,5 @@
 import React from 'react'
+<<<<<<< HEAD
 import MyMap from '../../dashboard/myMap/MyMap'
 import './MyRoutes.css'
 import RouteList from '../routeList/RouteList';
@@ -43,3 +44,13 @@ const mapDispatchToProps = (dispatch) =>{
   }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyRoutes)
+=======
+
+export default function MyRoutes() {
+    return (
+        <div>
+            
+        </div>
+    )
+}
+>>>>>>> a9e9b72223f043b5dd3c6ad4b8bdd3a066d78a0f

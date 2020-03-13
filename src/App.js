@@ -1,14 +1,9 @@
 import React, { useEffect, useContext } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./App.css";
 import MyNavBar from "./components/layout/navbar/NavBar";
-import MyProfile from "./components/user/myProfile/MyProfile";
-import Login from "./components/layout/login/Login";
-import Dashboard from "./components/dashboard/Dashboard";
 import { ThemeContext } from './components/layout/themeContext/ThemeContext'
-
 import { useLoggedIn } from "@solid/react";
-import MyRoutes from "./components/routes/myRoutes/MyRoutes";
+import Routing from "./components/routing/Routing";
 
 const App = (props) => {
 
@@ -17,25 +12,16 @@ const App = (props) => {
     Object.keys(theme).map(key => {
       const value = theme[key]
       return document.documentElement.style.setProperty(key, value)
-      
     })
     return
   })
   
-  const navBar = useLoggedIn() === true ? <MyNavBar brandName="Viade_en1b"></MyNavBar> :null
+  const navBar = useLoggedIn() === true ? <MyNavBar brandName="Viade_en1b"></MyNavBar> : null
 
   return (
-      <BrowserRouter>
-        <div className="App">
-          {navBar}
-          <Switch>
-            <Route exact path="/" render={props => <Login {...props} />}></Route>
-            <Route path="/profile" render={() => <MyProfile {...props}/>}></Route>
-            <Route exact path="/dashboard" render={() => <Dashboard {...props} />}></Route>
-            <Route exact path="/routes/myRoutes" render={() => <MyRoutes {...props} />}></Route>
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <div className="App">
+        <Routing navBar = {navBar}/>
+      </div>
 
   );
 }
