@@ -1,6 +1,9 @@
-import { useLDflexValue } from '@solid/react';
-import data from '@solid/query-ldflex' ;
+import { getWebId } from './auth'
+const $rdf = require('rdflib')
+const store = $rdf.graph()
 
-export async function uploadRouteToPod(newRoute) {
-    await data.user.nick.add(newRoute);
+export function uploadRouteToPod(newRoute) {
+    let webId = getWebId() // ?? How to obtain the id?
+    const me = store.sym('https://example.com/alice/card#me');
 }
+

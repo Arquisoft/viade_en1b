@@ -33,7 +33,7 @@ export const uploadRoute = (route) => {
             images: route.images,
             videos: route.videos
         }
-        uploadRouteToPod("writeToPodTest")
+        uploadRouteToPod(newRoute)
         getState().route.routes[getState().route.routes.length]=newRoute
         console.log(getState())
         dispatch({
