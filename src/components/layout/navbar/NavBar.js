@@ -40,7 +40,7 @@ let MyNavBar = props => {
           {links.map(link => {
             return (<span key={link.id}>
               <LinkContainer to={link.href}>
-                <Nav.Link activeClassName="active" data-testid={link.testId} key={link.id} href={link.href} className={getNavLinkClass(link.href)} >
+                <Nav.Link  data-testid={link.testId} key={link.id} href={link.href} className={getNavLinkClass(link.href)} >
                   {link.icon}
                   {link.text}
                 </Nav.Link>
@@ -49,7 +49,7 @@ let MyNavBar = props => {
             )
           })}
 
-          <NavDropdown activeClassName='active' variant="secondary" drop="left" title={<BsPerson className="icon"></BsPerson>}>
+          <NavDropdown  variant="secondary" drop="left" title={<BsPerson className="icon"></BsPerson>}>
             {dropDownElements.map(element => {
               return (<NavDropdown.Item data-testid={element.testId} key={element.id} href={element.href}>
                 { element.id===1

@@ -4,21 +4,21 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	
 }
 
 #card{
-	margin: 0 auto;
+	
 	display: grid;
-	grid-template-areas: "image image friends "
-						 "profile profile friends"
-						 "profile profile friends"
-						 "profile profile friends"
+	grid-template-areas: "image image friends friends"
+						 "profile profile friends friends"
+						 "profile profile friends friends"
+						 "profile profile friends friends"
 	;
 	width: 85%;
 	height: 70%;
-	
-	
+	grid-auto-columns: 3fr;
+	align-items: center;
+	justify-items: center;
 }
 
 #image-cropper{
@@ -29,8 +29,6 @@
 	overflow: hidden;
 	border-radius: 50%;
 	grid-area: image;
-	margin: 0 auto;
-
 }
 
 #profilePicture{
@@ -44,10 +42,7 @@
 #friendListContainer{
 	float: right;
 	grid-area: friends;
-	margin: 0 auto;
-	padding: 3em;
-	
-	
+	justify-self: start;
 	
 }
 

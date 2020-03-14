@@ -23,7 +23,7 @@ export default function MyProfile() {
 		<List src="user.foaf_knows" >
 		{
 			(item, i) =>
-				<Card id={uniqueKey.toString()} onClick={() => openProfile(`${item}` )}>
+				<Card key={uniqueKey.toString()} onClick={() => openProfile(`${item}` )}>
 					<Card.Body> 
 						<Card.Link href= {getProfileUrl(`${item}` ) } >
 							<Value src={setFriendName( `${item}` )}/> 
