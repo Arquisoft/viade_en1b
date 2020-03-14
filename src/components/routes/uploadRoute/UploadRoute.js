@@ -72,20 +72,20 @@ class UploadRoute extends React.Component {
                         <label>
                             Select the route file
                         </label>
-                        <input type="file" name="route_file" onChange={this.changeHandler} />
+                        <input type="file" name="route_file" accept=".kml,.gpx" onChange={this.changeHandler} />
                     </div>
 
                     <div>
                         <label>
                             Upload images
                         </label>
-                        <input type="file" name="images" onChange={this.changeHandler} multiple />
+                        <input type="file" name="images" accept="image/*" onChange={this.changeHandler} multiple />
                     </div>
                     <div>
                         <label>
                             Upload videos
                         </label>
-                        <input type="file" name="videos" onChange={this.changeHandler} multiple />
+                        <input type="file" name="videos" accept="video/*" onChange={this.changeHandler} multiple />
                     </div>
                     <div>
                         <button type="submit" onClick={this.submitForm}>
