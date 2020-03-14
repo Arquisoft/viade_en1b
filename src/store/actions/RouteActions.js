@@ -29,6 +29,7 @@ export const uploadRoute = (route) => {
             description: route.description,
             author: route.author,
             positions: route.positions === "" ? "" : JSON.parse(route.positions),
+            file: route.file,
             images: route.images,
             videos: route.videos
         }
@@ -41,3 +42,4 @@ export const uploadRoute = (route) => {
         })
     }
 }
+
