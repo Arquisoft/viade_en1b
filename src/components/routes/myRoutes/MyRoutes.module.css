@@ -1,0 +1,23 @@
+.routesContainer {
+    margin-top: 5em;
+    display: grid;
+    grid-template-columns: [routes-start]1fr [routes-end]1fr [details-start]1fr [details-end]1fr ;
+    grid-template-rows: auto;
+    justify-content: center;
+    
+}
+
+.routeList{
+    margin-right: 0;
+    margin-left: 2em;
+    grid-column-start: routes-start;
+    grid-column-end: routes-end;
+}
+
+.routeDetails{
+    transition: all 1s ease-in-out;
+    width: 50%;
+    grid-column-start: details-start;
+    grid-column-end: details-end;
+}
+

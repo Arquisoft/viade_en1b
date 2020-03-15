@@ -1,6 +1,6 @@
 import React from "react";
 import RouteSummary from "./../routeSummary/RouteSummary";
-import './RouteList.css'
+import styles from './RouteList.module.css'
 
 const RouteList = React.memo(({ routes, onClick, currentMap }) => {
 
@@ -9,7 +9,7 @@ const RouteList = React.memo(({ routes, onClick, currentMap }) => {
     : <RouteSummary key={route.id} onClickHandle={onClick} route={route}></RouteSummary>
   });
   return (
-    <div id="routeList">
+    <div className={ props.style ? props.style : styles.routeList}>
       {summaries}
     </div>
     

@@ -1,12 +1,15 @@
 import React from 'react'
-import './RouteDetails.css'
+import styles from './RouteDetails.module.css'
+import Slideshow from '../../layout/slideshow/SlideShow'
 
-const RouteDetails=({selectedRoute})=>{
+
+const RouteDetails=({selectedRoute}) => {
     if (selectedRoute != null){
 
         const photos = selectedRoute.images.map((e) => {
-            return <img src={e} alt="No found"></img>
+            return <img src={e} alt="Not found"></img>
         });
+
         const videos = selectedRoute.videos.map((e) => {
             return <video width="320" height="240" controls>
                 <source src={e} type="video/mp4"/>
@@ -14,16 +17,20 @@ const RouteDetails=({selectedRoute})=>{
             </video>
         });
 
+        const videosContainer = <div id="videosContainer">
+            {videos}
+        </div>
+
+
         return(
-        <div id="description">
-            <h2>Nombre : Autor</h2>
-            <p>{selectedRoute.name} : {selectedRoute.author}</p>
+        <div className={styles.details}>
             <h3>Descripción</h3>
             <p>{selectedRoute.description}</p>
             <h3>Fotos</h3>
-            {photos}
+            <Slideshow images={photos}>
+            </Slideshow>
             <h3>Videos</h3>
-            {videos}
+            {videosContainer}
         </div>)
     }
     return (<div></div>)

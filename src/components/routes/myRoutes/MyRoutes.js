@@ -1,5 +1,5 @@
 import React from 'react'
-import './MyRoutes.css'
+import styles from './MyRoutes.module.css'
 import RouteList from '../routeList/RouteList';
 import RouteDetails from '../routeDetails/RouteDetails';
 import {connect} from 'react-redux'
@@ -11,10 +11,9 @@ function MyRoutes(props) {
     const {showRoute} = props
 
     return (
-        <div className="myroutes container">
-            <h2>Lista de Rutas</h2>
-            <RouteList currentMap={selectedRoute} routes={routes} onClick = {showRoute} />
-            <RouteDetails selectedRoute={selectedRoute}></RouteDetails>
+        <div className={styles.routesContainer}>
+            <RouteList className={styles.routeList} currentMap={selectedRoute} routes={routes} onClick = {showRoute} />
+            <RouteDetails className={styles.routeDetails} selectedRoute={selectedRoute}></RouteDetails>
         </div>
     )
 }
