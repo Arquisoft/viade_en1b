@@ -19,6 +19,10 @@ const routeReducer = (state = initState, action) => {
             console.log("routed uploaded", action.newRoute)
             console.log(state)
             return {...state}
+        case 'DELETE_ROUTE':
+            console.log("routed deleted", action.route)
+            console.log(state)
+            return {...state}
         default:
             return state
     }

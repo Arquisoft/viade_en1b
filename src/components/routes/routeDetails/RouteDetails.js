@@ -19,7 +19,6 @@ const RouteDetails=(props) => {
         });
 
         const description = selectedRoute.description ? selectedRoute.description : 'There is not description for this route'
-        
 
         return(
         <div className={props.style ? props.style : styles.details}>

@@ -9,6 +9,21 @@ export const createRoute = (route) => {
     }
 }
 
+export const deleteRoute = () => {
+    return (dispatch, getState) => {
+
+        const r = getState().route.routes
+        r.splice(getState().route.selectedRoute.id, 1)
+        getState().route.routes = r
+        alert("Has borrado la ruta")
+        getState().route.selectedRoute = r[0]
+        dispatch({
+            type: 'DELETE_ROUTE',
+            r
+        })
+    }
+}
+
 export const showRoute = (route) => {
     return (dispatch, getState) => {
         getState().route.selectedRoute = route
