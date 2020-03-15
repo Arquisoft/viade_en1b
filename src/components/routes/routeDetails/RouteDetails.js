@@ -1,9 +1,10 @@
 import React from 'react'
 import styles from './RouteDetails.module.css'
-import Slideshow from '../../layout/slideshow/SlideShow'
+import Slideshow from '../../layout/slideshow/Slideshow'
 
 
-const RouteDetails=({selectedRoute}) => {
+const RouteDetails=(props) => {
+    const {selectedRoute} = props
     if (selectedRoute != null){
 
         const photos = selectedRoute.images.map((e) => {
@@ -17,20 +18,21 @@ const RouteDetails=({selectedRoute}) => {
             </video>
         });
 
-        const videosContainer = <div id="videosContainer">
-            {videos}
-        </div>
-
+        const description = selectedRoute.description ? selectedRoute.description : 'There is not description for this route'
+        
 
         return(
-        <div className={styles.details}>
+        <div className={props.style ? props.style : styles.details}>
             <h3>Descripción</h3>
-            <p>{selectedRoute.description}</p>
+
+            <p>{description}</p>
             <h3>Fotos</h3>
             <Slideshow images={photos}>
             </Slideshow>
             <h3>Videos</h3>
-            {videosContainer}
+            <Slideshow images={videos}>
+            </Slideshow>
+            
         </div>)
     }
     return (<div></div>)

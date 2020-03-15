@@ -16,7 +16,6 @@ const RouteList = React.memo((props) => {
     <div className={ props.style ? props.style : styles.routeList}>
       {summaries}
     </div>
-    
   );
 })
 

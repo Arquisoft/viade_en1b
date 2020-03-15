@@ -1,23 +1,32 @@
 .routesContainer {
-    margin-top: 5em;
+    position: absolute;
+    top: 4em;
     display: grid;
-    grid-template-columns: [routes-start]1fr [routes-end]1fr [details-start]1fr [details-end]1fr ;
-    grid-template-rows: auto;
-    justify-content: center;
+    grid-template-areas: "routes routes info info"
+                         "routes routes info info"
+                         "routes routes info info"
+                        ;
     
+    max-height: 90vh;
+    width: 100%;
+    justify-items: center;
+    align-items: start;
 }
 
-.routeList{
-    margin-right: 0;
-    margin-left: 2em;
-    grid-column-start: routes-start;
-    grid-column-end: routes-end;
+.routesContainer h3{
+    text-align: left;
 }
 
 .routeDetails{
-    transition: all 1s ease-in-out;
-    width: 50%;
-    grid-column-start: details-start;
-    grid-column-end: details-end;
+    grid-area: info;
+    padding: 2em;
+}
+
+.routeList{
+    margin-top: 2em;
+    grid-area: routes;
+    padding: 1em;
+    overflow: scroll;
+    max-height: 80%;
 }
 

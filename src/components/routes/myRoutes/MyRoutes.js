@@ -12,8 +12,8 @@ function MyRoutes(props) {
 
     return (
         <div className={styles.routesContainer}>
-            <RouteList className={styles.routeList} currentMap={selectedRoute} routes={routes} onClick = {showRoute} />
-            <RouteDetails className={styles.routeDetails} selectedRoute={selectedRoute}></RouteDetails>
+            <RouteList style={styles.routeList} currentMap={selectedRoute} routes={routes} onClick = {showRoute} />
+            <RouteDetails style={styles.routeDetails} selectedRoute={selectedRoute}></RouteDetails>
         </div>
     )
 }
