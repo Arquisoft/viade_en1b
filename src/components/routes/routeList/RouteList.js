@@ -2,7 +2,11 @@ import React from "react";
 import RouteSummary from "./../routeSummary/RouteSummary";
 import './RouteList.css'
 
-const RouteList = React.memo(({ routes, onClick, currentMap }) => {
+const RouteList = React.memo((props) => {
+
+  const {routes} = props
+  const {onClick} = props
+  const {currentMap} = props
 
   const summaries = routes.map((route) => {
     return (currentMap) ? <RouteSummary key={route.id} id={route.id === currentMap.id ? 'active' : ''} onClickHandle={onClick} route={route}></RouteSummary>
