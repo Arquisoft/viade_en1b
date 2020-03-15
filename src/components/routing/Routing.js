@@ -18,7 +18,7 @@ export default function Routing(props) {
             <Route exact path="/profile" render={() => <MyProfile {...props}/>}></Route>
             <Route exact path="/dashboard" render={() => <Dashboard {...props} />}></Route>
             <Route exact path="/routes/upload" render={() => <UploadRoute {...props}/>}></Route>
-            <Route exact path="/routes" render={() => <MyRoutes {...props}/>}></Route>
+            <Route exact path="/routes/MyRoutes" render={() => <MyRoutes {...props}/>}></Route>
             <Redirect to="/404" />
           </Switch>
     </HashRouter>
