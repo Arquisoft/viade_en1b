@@ -1,0 +1,27 @@
+#slideshow-container{
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+
+#slideshow-container img{
+    width: 30%;
+    z-index: 2;
+}
+
+#slideshow-buttons {
+    margin: 0 auto;
+    width: 50%;
+    display: flex;
+    transition: opacity 200ms ease-in-out;
+}
+
+#slideshow-buttons button{
+    margin: 1em;
+    width: 100%;
+}
+
+#slideshow-buttons button:disabled{
+    opacity: .3;
+}

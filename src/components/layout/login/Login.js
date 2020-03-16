@@ -5,15 +5,25 @@ import { Redirect } from "react-router-dom";
 
 function Login(props) {
   return (
-    <div id="container">
+    <div id="login-container">
       <LoggedOut>
-        <div className="background-image"></div>
-        <div className="background-div"></div>
-        <h1 data-testid="login-header">Login</h1>
-        <AuthButton popup="https://solid.github.io/solid-auth-client/dist/popup.html" login="Login here!" logout="Log me out" />
+        
+        <div id="login-card">
+          <img alt="Viade logo" src={process.env.PUBLIC_URL + '/viade-logo.svg'}></img>
+          <h1>Manage your routes like never before.</h1>
+          <p>A new descentralized system where your information is truly yours.</p>
+
+        </div>
+        <div id="clipped"></div>
+          <div id="login-another-div">
+            <h3 data-testid="login-header">Login</h3>
+            <AuthButton popup="https://solid.github.io/solid-auth-client/dist/popup.html" login="Login here!" logout="Log me out" />
+          </div>
+
+
       </LoggedOut>
       <LoggedIn>
-          <Redirect to='/dashboard'></Redirect>
+        <Redirect to='/dashboard'></Redirect>
       </LoggedIn>
     </div>
   );

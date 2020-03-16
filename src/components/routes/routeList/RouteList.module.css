@@ -1,18 +1,16 @@
-
-
-#routeList{
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
+.routeList{
+    
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
     
     height: 80%;
     margin-right: 3em;
-    /* Custo scrollbar for firefox*/
+    /* Custom scrollbar for firefox*/
     scrollbar-color: var(--color-primary) transparent;
     scrollbar-base-color: var(--color-primary);
     scroll-behavior: smooth;
+    
 }
 
 ::-webkit-scrollbar {
