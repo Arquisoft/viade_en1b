@@ -31,7 +31,8 @@ let MyNavBar = props => {
     <Navbar className="bg-light" fixed="top" bg="light" expand="lg">
         <LinkContainer to='/dashboard'>
           <Navbar.Brand data-testid="navbar-brand" href="/dashboard">
-              {props.brandName}
+              <img alt="Viade logo" src={process.env.PUBLIC_URL + "/viade-logo.svg"}></img>
+              <span>{props.brandName}</span>
           </Navbar.Brand>
         </LinkContainer>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
