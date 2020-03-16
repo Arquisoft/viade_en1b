@@ -3,15 +3,12 @@ import styles from './RouteDetails.module.css'
 import Slideshow from '../../layout/slideshow/Slideshow'
 import { Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { deleteRoute, shareRoute } from '../../../store/actions/RouteActions'
-
+import { deleteRoute } from '../../../store/actions/RouteActions'
 
 const RouteDetails=(props) => {
 
     const {selectedRoute} = props
     const {deleteRoute} = props
-    const {shareRoute} = props
-
 
     if (selectedRoute != null){
 
@@ -31,7 +28,6 @@ const RouteDetails=(props) => {
         return(
             <div className={props.style ? props.style : styles.details}>
                 <h3>Descripción</h3>
-
                 <p>{description}</p>
                 <h3>Fotos</h3>
                 <Slideshow images={photos}>
@@ -42,7 +38,7 @@ const RouteDetails=(props) => {
 
                 <div id="buttons">
                     <Button id="deleteButton" onClick = {() => deleteRoute(selectedRoute)}>Eliminar</Button>
-                    <Button id="shareButton" onClick = {() => shareRoute(selectedRoute)}>Compartir</Button>
+                    <Button id="shareButton">Compartir</Button>
                 </div>
 
             </div>)
@@ -53,7 +49,6 @@ const RouteDetails=(props) => {
 const mapDispatchToProps = (dispatch) =>{
     return {
       deleteRoute: (route) => dispatch(deleteRoute(route)),
-      shareRoute: (route) => dispatch(shareRoute(route))
     }
   }
 
