@@ -1,25 +1,21 @@
-
-export const createRoute = (route) => {
+export const deleteRoute = (route) => {
     return (dispatch, getState) => {
-        //make async code
+        let routes = getState().route.routes.filter(r => r.id!==route.id)
+        getState().route.routes = routes // actualizar el estado
+        getState().route.selectedRoute = null //deseleccionamos la ruta
+        //alert("Has borrado la ruta")
         dispatch({
-            type: 'CREATE_ROUTE',
-            route: route
+            type: 'DELETE_ROUTE',
+            routes
         })
     }
 }
 
-export const deleteRoute = () => {
+export const shareRoute = (route) => {
     return (dispatch, getState) => {
-
-        const r = getState().route.routes
-        r.splice(getState().route.selectedRoute.id, 1)
-        getState().route.routes = r
-        alert("Has borrado la ruta")
-        getState().route.selectedRoute = r[0]
         dispatch({
-            type: 'DELETE_ROUTE',
-            r
+            type: 'SHARE_ROUTE',
+            route
         })
     }
 }
@@ -42,7 +38,7 @@ export const uploadRoute = (route) => {
             name: route.name,
             description: route.description,
             author: 'alvaro', //we need to change this,
-            positions: route.file,
+            positions: route.file, //here parser should get the positions
             images: route.images,
             videos: route.videos
         }

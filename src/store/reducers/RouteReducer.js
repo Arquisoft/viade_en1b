@@ -23,6 +23,10 @@ const routeReducer = (state = initState, action) => {
             console.log("routed deleted", action.route)
             console.log(state)
             return {...state}
+        case 'SHARE_ROUTE':
+            console.log("routed shared", action.route)
+            console.log(state)
+            return {...state}
         default:
             return state
     }
