@@ -5,17 +5,18 @@ import RouteDetails from '../routeDetails/RouteDetails';
 import {connect} from 'react-redux'
 import { showRoute } from '../../../store/actions/RouteActions';
 
+
 function MyRoutes(props) {
     const {routes} = props
     const {selectedRoute} = props
     const {showRoute} = props
 
     return (
-        <div className={styles.routesContainer}>
-            <RouteList style={styles.routeList} currentMap={selectedRoute} routes={routes} onClick = {showRoute} />
-            <RouteDetails style={styles.routeDetails} selectedRoute={selectedRoute}></RouteDetails>
-        </div>
-    )
+            <div className={styles.routesContainer}>
+                <RouteList style={styles.routeList} currentMap={selectedRoute} routes={routes} onClick = {showRoute} />
+                <RouteDetails style={styles.routeDetails} selectedRoute={selectedRoute}></RouteDetails>
+            </div>
+        )
 }
 
 const mapStateToProps = (state) =>{
@@ -28,7 +29,7 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch) =>{
     return {
-      showRoute: (route) => dispatch(showRoute(route))
+      showRoute: (route) => dispatch(showRoute(route)),
     }
   }
 
