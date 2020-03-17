@@ -1,45 +1,55 @@
-
-.GeneralComponent{
-	margin-top: 5em; 
-	padding-top:3%;
-
-}
-.Container{
-
-
-	border-style:solid; 
-	border-radius: 10px; 
-	background-color: lightgrey; 
-
-
-}
-.ProfileData{
-	text-align: left; 
-	margin-left : 25%;
-
-}
-.AllData{
-
-	margin-top: 5%;
-
-}
-.profilePicture{
-	height: auto; 
-	width: auto; 
-	max-width: 55%; 	
-	margin-top: 2%;
-	margin-bottom:2%; 
-	border-style:solid;
+#generalComponent{
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-
-button{
-
-	margin: 1%; 
-
+#card{
+	
+	display: grid;
+	grid-template-areas: "image image friends friends"
+						 "profile profile friends friends"
+						 "profile profile friends friends"
+						 "profile profile friends friends"
+	;
+	width: 85%;
+	height: 70%;
+	grid-auto-columns: 3fr;
+	align-items: center;
+	justify-items: center;
 }
-.FriendList{
-	overflow-y: auto; 
-	max-height: 150px 
+
+#image-cropper{
+	width: 150px;
+	height: 150px;
+	background-color: red;
+	position: relative;
+	overflow: hidden;
+	border-radius: 50%;
+	grid-area: image;
 }
 
+#profilePicture{
+	margin: 0 auto;
+	width: 150%;
+	object-fit: cover;
+	
+	
+}
+
+#friendListContainer{
+	float: right;
+	grid-area: friends;
+	justify-self: start;
+	
+}
+
+#profileData *{
+	margin: .5em;
+}
+
+#allData{
+	grid-area: profile;
+}

@@ -1,7 +1,7 @@
 {
   "name": "viade_0",
   "version": "0.1.0",
-  "homepage": "https://arquisoft.github.io/viade_0/",
+  "homepage": "https://arquisoft.github.io/viade_en1b/",
   "private": true,
   "dependencies": {
     "@solid/react": "^1.8.0",
@@ -9,6 +9,7 @@
     "@testing-library/react": "^9.4.0",
     "@testing-library/react-hooks": "^3.2.1",
     "@testing-library/user-event": "^7.2.1",
+    "babel-plugin-react-css-modules": "^5.2.6",
     "bootstrap": "^4.4.1",
     "leaflet": "^1.6.0",
     "react": "^16.12.0",

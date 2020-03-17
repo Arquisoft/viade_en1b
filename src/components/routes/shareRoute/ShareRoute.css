@@ -1,0 +1,31 @@
+#shareRoute {
+    position: absolute;
+    top: 4em;
+    display: grid;
+    grid-template-areas: "routes routes info info"
+                         "routes routes info info"
+                         "routes routes info info"
+                        ;
+    
+    max-height: 90vh;
+    width: 100%;
+    justify-items: center;
+    align-items: start;
+}
+
+#friendList{
+    text-align: left;
+}
+
+#friendList{
+    grid-area: info;
+    padding: 2em;
+}
+
+#friendList{
+    margin-top: 2em;
+    grid-area: routes;
+    padding: 1em;
+    overflow: scroll;
+    max-height: 80%;
+}

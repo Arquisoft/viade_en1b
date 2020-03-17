@@ -11,7 +11,7 @@ function Dashboard(props) {
     const {showRoute} = props
     //console.log(selectedRoute)
     //getWebId().then(x=> console.log(x))
-
+    
     // header of the currently selected  route
     const currentSelectedMap = selectedRoute == null ? <div id='titleHolder'><h1>Routes List</h1></div> : (<div id='titleHolder'>
         <h1>{selectedRoute.name}</h1> <p> by {selectedRoute.author}</p>
