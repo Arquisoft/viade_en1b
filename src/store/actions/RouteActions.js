@@ -1,4 +1,4 @@
-import { uploadRouteToPod } from './../../solid/uploadRouteToPod.js'
+import { uploadRouteToPod } from './../../solid/routes.js'
 
 export const createRoute = (route) => {
     return (dispatch, getState) => {
