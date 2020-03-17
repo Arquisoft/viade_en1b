@@ -1,15 +1,16 @@
-import { uploadRouteToPod } from './../../solid/routes.js'
+import { uploadRouteToPod } from "./../../solid/routes.js";
+
 export const deleteRoute = (route) => {
     return (dispatch, getState) => {
-        let routes = getState().route.routes.filter(r => r.id!==route.id)
-        getState().route.routes = routes // actualizar el estado
-        getState().route.selectedRoute = null //deseleccionamos la ruta
+        let routes = getState().route.routes.filter(r => r.id!==route.id);
+        getState().route.routes = routes; // actualizar el estado
+        getState().route.selectedRoute = null; //deseleccionamos la ruta
         //alert("Has borrado la ruta")
         dispatch({
             type: 'DELETE_ROUTE',
             routes
-        })
-    }
+        });
+    };
 }
 
 export const shareRoute = (route) => {
@@ -17,19 +18,19 @@ export const shareRoute = (route) => {
         dispatch({
             type: 'SHARE_ROUTE',
             route
-        })
-    }
+        });
+    };
 }
 
 export const showRoute = (route) => {
     return (dispatch, getState) => {
-        getState().route.selectedRoute = route
-        console.log(getState())
+        getState().route.selectedRoute = route;
+        console.log(getState());
         dispatch({
             type: 'SHOW_ROUTE',
             route
-        })
-    }
+        });
+    };
 }
 
 export const uploadRoute = (route) => {
@@ -43,14 +44,14 @@ export const uploadRoute = (route) => {
             file: route.file,
             images: route.images,
             videos: route.videos
-        }
-        uploadRouteToPod(newRoute)
-        getState().route.routes[getState().route.routes.length]=newRoute
-        console.log(getState())
+        };
+        uploadRouteToPod(newRoute);
+        getState().route.routes[getState().route.routes.length]=newRoute;
+        console.log(getState());
         dispatch({
             type: 'UPLOAD_ROUTE',
             newRoute
-        })
-    }
+        });
+    };
 }
 

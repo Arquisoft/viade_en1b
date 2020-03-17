@@ -1,6 +1,6 @@
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client';
-import { getWebId } from './auth'
+import auth from "solid-auth-client";
+import FC from "solid-file-client";
+import { getWebId } from "./auth";
 
 export async function uploadRouteToPod(route) {
     var session = await getWebId();
@@ -10,7 +10,6 @@ export async function uploadRouteToPod(route) {
         await fc.createFolder(url);
     }
     await fc.createFile(url + route.name, JSON.stringify(route), "text/plain");
-    getRoutesFromPod()
 }
 
 export async function getRoutesFromPod() {
@@ -18,7 +17,7 @@ export async function getRoutesFromPod() {
     var url = session.split("/profile")[0] + "/public/routes/";
     var fc = new FC(auth);
     var folder = await fc.readFolder(url);
-    var routesTexts = await Promise.all(folder.files.map(async f => await fc.readFile(url + f.name)));
+    var routesTexts = await Promise.all(folder.files.map(async (f) => await fc.readFile(url + f.name)));
     var routes = routesTexts.map(JSON.parse);
     return routes;
 }

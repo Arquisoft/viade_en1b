@@ -1,18 +1,18 @@
 import React from "react";
 import "./UploadRoute.css";
 import { connect } from "react-redux";
-import { Form, Button } from 'react-bootstrap'
-import { uploadRoute } from './../../../store/actions/RouteActions'
-import UploadButton from './uploadButton/UploadButton'
+import { Form, Button } from "react-bootstrap";
+import { uploadRoute } from "./../../../store/actions/RouteActions";
+import UploadButton from "./uploadButton/UploadButton";
 
 class UploadRoute extends React.Component {
 
     state = {
-        name: '',
-        description: '',
-        author: '',
-        positions: '',
-        file: '',
+        name: "",
+        description: "",
+        author: "",
+        positions: "",
+        file: "",
         images: [],
         videos: [],
         reset: false
@@ -40,11 +40,11 @@ class UploadRoute extends React.Component {
 
     resetState() {
         return {
-            name: '',
-            description: '',
-            positions: '',
-            file: '',
-            author: '',
+            name: "",
+            description: "",
+            positions: "",
+            file: "",
+            author: "",
             images: [],
             videos: [],
             reset: false
