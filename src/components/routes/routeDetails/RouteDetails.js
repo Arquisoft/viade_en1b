@@ -13,7 +13,7 @@ const RouteDetails=(props) => {
     if (selectedRoute != null){
 
         const photos = selectedRoute.images.map((e) => {
-            return <img src={e} alt="Not found"></img>
+            return <img data-testid="current-image-slideshow" src={e} alt="Not found"></img>
         });
 
         const videos = selectedRoute.videos.map((e) => {
