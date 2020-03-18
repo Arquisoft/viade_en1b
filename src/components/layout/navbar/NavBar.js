@@ -14,7 +14,7 @@ let MyNavBar = props => {
 
   const dropDownElements = [
     { id: 0, text: 'My Profile', href: '/profile', testId: 'navbar-my-profile'},
-    { id: 1, text: 'Log Out', href: '/', testId: 'navbar-logout'},
+    { id: 1, text: 'Log Out', href: '#/', testId: 'navbar-logout'},
 
   ]
 
