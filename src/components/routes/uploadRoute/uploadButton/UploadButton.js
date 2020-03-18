@@ -39,7 +39,7 @@ const UploadButton = (props) => {
                             <Form.Group>
                                 <Form.Control ref={file} onChange={handleSingleFileChanged} id={props.id} type="file"></Form.Control>
                                 <Form.Label className="uploadLabel" htmlFor={props.id}>
-                                    <p>{state.filename !== '' ? state.filename : props.text}</p>
+                                    <p data-testid='upload-button-label'>{state.filename !== '' ? state.filename : props.text}</p>
                                     <BsUpload></BsUpload>
                                     
                                 </Form.Label>
