@@ -1,28 +1,19 @@
 import React from 'react'
 import './Settings.css'
-import { ToggleButton, ButtonGroup } from 'react-bootstrap';
+import { DropdownButton, Dropdown,  ToggleButton, ButtonGroup } from 'react-bootstrap';
 
 
 
 export default function Settings(props) {
 	
 
-	const setTheme = (params) => {
-
-	var paramValue = params.target.value;
-
-
-	}
-
-
-
-
 
 	return(
 		<div className="GeneralComponent">
 
-			<h1> Settings </h1>
-			<ButtonGroup toggle onChange={setTheme} > 
+			<h2> Settings </h2>
+			<h1> Themes</h1>
+			<ButtonGroup toggle  > 
 				<ToggleButton type="radio" name="radio" defaultChecked value="Normal">
 					Normal
 			    	</ToggleButton>
@@ -34,6 +25,12 @@ export default function Settings(props) {
 				</ToggleButton>
 
 			</ButtonGroup>
+			<h1> Language </h1>
+			<DropdownButton
+				id="dopdown-basic-button" title="Available Languages">
+				<Dropdown.Item active href="#"> English</Dropdown.Item>
+				<Dropdown.Item href="#"> Spanish </Dropdown.Item>
+			</DropdownButton> 
 		</div> 
 	)
 }
