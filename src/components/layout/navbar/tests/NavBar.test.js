@@ -1,11 +1,13 @@
 import React from 'react'
 import { render, waitForElement, fireEvent, queryByTestId } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import App from '../../../../App'
+//import App from '../../../../App'
+import Navbar from '../NavBar'
+import { HashRouter } from "react-router-dom";
 
 let rendered = null
 beforeEach( () => {
-    const { container } = render(<App></App>)
+    const { container } = render(<HashRouter><Navbar></Navbar></HashRouter>)
     rendered = container
 })
 
