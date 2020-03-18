@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { deleteRoute } from '../../../store/actions/RouteActions'
 
-const RouteDetails=(props) => {
+export const RouteDetails = (props) => {
 
     const {selectedRoute} = props
     const {deleteRoute} = props
@@ -28,17 +28,17 @@ const RouteDetails=(props) => {
         return(
             <div className={props.style ? props.style : styles.details}>
                 <h3>Descripción</h3>
-                <p>{description}</p>
+                <p data-testid='route-details-description'>{description}</p>
                 <h3>Fotos</h3>
-                <Slideshow images={photos}>
+                <Slideshow data-testid='route-details-photos' images={photos}>
                 </Slideshow>
                 <h3>Videos</h3>
-                <Slideshow images={videos}>
+                <Slideshow data-testid='route-details-videos' images={videos}>
                 </Slideshow>
 
                 <div id="buttons">
-                    <Button id="deleteButton" onClick = {() => deleteRoute(selectedRoute)}>Eliminar</Button>
-                    <Button id="shareButton">Compartir</Button>
+                    <Button data-testid='route-details-button-delete' id="deleteButton" onClick = {() => deleteRoute(selectedRoute)}>Delete</Button>
+                    <Button data-testid='route-details-button-share' id="shareButton">Share</Button>
                 </div>
 
             </div>)
