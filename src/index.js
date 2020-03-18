@@ -8,8 +8,16 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk'
 import { ThemeContext, themes } from './components/layout/themeContext/ThemeContext'
 
+const myLogger = store => next => action => {
+    console.group(action.type)
+    console.log('previous state', store.getState())
+    next(action)
+    console.log('actual state', store.getState())
+    console.groupEnd()
+}
+
 const store = createStore(rootReducer,
-  applyMiddleware(thunk))
+  applyMiddleware(thunk, myLogger))
   
 
 ReactDOM.render(
