@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { Form, Button } from 'react-bootstrap'
 import { uploadRoute } from './../../../store/actions/RouteActions'
 import UploadButton from './uploadButton/UploadButton'
+import { LoggedIn, LoggedOut } from "@solid/react";
+import { Redirect } from "react-router-dom";
 
 class UploadRoute extends React.Component {
 
@@ -63,34 +65,39 @@ class UploadRoute extends React.Component {
     render() {
         return (
             <div className="uploadContainer">
-                <Form>
-                    <div id="form-info">
-                        <Form.Group htmlFor="routeName">
-                            <Form.Label htmlFor="name">Name of the route</Form.Label>
-                            <Form.Control id='name' onChange={this.changeHandlerRoute} placeholder="Route name" value={this.state.name} type="text" />
+                <LoggedIn>
+                    <Form>
+                        <div id="form-info">
+                            <Form.Group htmlFor="routeName">
+                                <Form.Label htmlFor="name">Name of the route</Form.Label>
+                                <Form.Control id='name' onChange={this.changeHandlerRoute} placeholder="Route name" value={this.state.name} type="text" />
 
-                        </Form.Group>
+                            </Form.Group>
 
-                        <Form.Group htmlFor="routeDescription">
-                            <Form.Label htmlFor="description">Description</Form.Label>
-                            <Form.Control id="description" onChange={this.changeHandlerRoute} value={this.state.description} as="textarea" rows="4" placeholder="Description..." />
-                        </Form.Group>
-                        <Button id="uploadButton" onClick={this.submitForm} variant="primary" type="submit">
-                            Submit
+                            <Form.Group htmlFor="routeDescription">
+                                <Form.Label htmlFor="description">Description</Form.Label>
+                                <Form.Control id="description" onChange={this.changeHandlerRoute} value={this.state.description} as="textarea" rows="4" placeholder="Description..." />
+                            </Form.Group>
+                            <Button id="uploadButton" onClick={this.submitForm} variant="primary" type="submit">
+                                Submit
                     </Button>
 
-                    </div>
+                        </div>
 
-                    <div id="buttonHolder">
+                        <div id="buttonHolder">
 
-                        <UploadButton reset={this.state.reset}  onChange={this.changeHandlerRoute} id="file" text="Choose a route"></UploadButton>
+                            <UploadButton reset={this.state.reset} onChange={this.changeHandlerRoute} id="file" text="Choose a route"></UploadButton>
 
-                        <UploadButton reset={this.state.reset}  onChange={this.changeHandlerImages} id="images" text="Pick some images" multiple ></UploadButton>
+                            <UploadButton reset={this.state.reset} onChange={this.changeHandlerImages} id="images" text="Pick some images" multiple ></UploadButton>
 
-                        <UploadButton reset={this.state.reset}  onChange={this.changeHandlerVideos} id="videos" multiple text="Choose a video"></UploadButton>
+                            <UploadButton reset={this.state.reset} onChange={this.changeHandlerVideos} id="videos" multiple text="Choose a video"></UploadButton>
 
-                    </div>
-                </Form>
+                        </div>
+                    </Form>
+                </LoggedIn>
+                <LoggedOut>
+                    <Redirect to='/'></Redirect>
+                </LoggedOut>
             </div>
 
         )

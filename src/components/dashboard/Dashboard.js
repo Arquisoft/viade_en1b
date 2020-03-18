@@ -4,6 +4,8 @@ import './Dashboard.css'
 import RouteList from './../routes/routeList/RouteList';
 import {connect} from 'react-redux'
 import { showRoute } from '../../store/actions/RouteActions';
+import { LoggedIn, LoggedOut } from '@solid/react';
+import { Redirect } from 'react-router-dom';
 
 function Dashboard(props) {
     const {routes} = props
@@ -24,9 +26,14 @@ function Dashboard(props) {
 
     return (
         <div className="dashboard container">
-            {currentSelectedMap}
-            <RouteList currentMap={selectedRoute} routes={routes} onClick = {showRoute} />
-            <MyMap center = {center} positions={positions}/>
+            <LoggedIn>
+                {currentSelectedMap}
+                <RouteList currentMap={selectedRoute} routes={routes} onClick={showRoute} />
+                <MyMap center={center} positions={positions} />
+            </LoggedIn>
+            <LoggedOut>
+                <Redirect to='/'></Redirect>
+            </LoggedOut>
         </div>
     )
 }

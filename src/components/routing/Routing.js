@@ -14,14 +14,14 @@ export default function Routing(props) {
     <HashRouter>
         {navBar}
         <Switch>
-            <Route exact path="/404" component={PageNotFound} />
-            <Route exact path="/" render={props => <Login {...props} />}></Route>
-            <Route exact path="/profile" render={() => <MyProfile {...props}/>}></Route>
-            <Route exact path="/dashboard" render={() => <Dashboard {...props} />}></Route>
-            <Route exact path="/routes/upload" render={() => <UploadRoute {...props}/>}></Route>
-            <Route exact path="/routes/MyRoutes" render={() => <MyRoutes {...props}/>}></Route>
-            <Route exact path="/routes/ShareRoute" render={() => <ShareRoute {...props}/>}></Route>
-            <Redirect to="/404" />
+                <Route exact path="/404" render={props => <PageNotFound {...props} />}></Route>
+                <Route exact path="/profile" render={() => <MyProfile {...props} />}></Route>
+                <Route exact path="/dashboard" render={() => <Dashboard {...props} />}></Route>
+                <Route exact path="/routes/upload" render={() => <UploadRoute {...props} />}></Route>
+                <Route exact path="/routes/MyRoutes" render={() => <MyRoutes {...props} />}></Route>
+                <Route exact path="/routes/ShareRoute" render={() => <ShareRoute {...props} />}></Route>
+                <Route exact path="/" render={props => <Login {...props} />}></Route>
+                <Redirect to="/404" />
           </Switch>
     </HashRouter>
     )
