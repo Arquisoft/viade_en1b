@@ -6,9 +6,6 @@ import { uploadRoute } from "./../../../store/actions/RouteActions";
 import UploadButton from "./uploadButton/UploadButton";
 
 export class UploadRoute extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   state = {
     name: "",
     description: "",
