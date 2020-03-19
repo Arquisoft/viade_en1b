@@ -8,7 +8,7 @@ export const deleteRoute = (route) => {
         //alert("Has borrado la ruta")
         dispatch({
             type: 'DELETE_ROUTE',
-            routes
+            payload: route
         });
     };
 }
@@ -17,7 +17,7 @@ export const shareRoute = (route) => {
     return (dispatch, getState) => {
         dispatch({
             type: 'SHARE_ROUTE',
-            route
+            payload: route
         });
     };
 }
@@ -28,7 +28,7 @@ export const showRoute = (route) => {
         console.log(getState());
         dispatch({
             type: 'SHOW_ROUTE',
-            route
+            payload: route
         });
     };
 }
@@ -50,7 +50,7 @@ export const uploadRoute = (route) => {
         console.log(getState());
         dispatch({
             type: 'UPLOAD_ROUTE',
-            newRoute
+            payload: newRoute
         });
     };
 }
