@@ -15,11 +15,10 @@ beforeAll( () => {
 
 });
 
-	console.log(emptyComponent)
 describe("Checking the correct behaviour of the FriendList", ()=>{
 	   
 	 
-	test("If it loads the mock card  correctly", () => {
+	test("If it loads the  cards  correctly", () => {
 
 		waitForElement(() => {
 
