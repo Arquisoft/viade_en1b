@@ -109,7 +109,7 @@ class UploadRoute extends React.Component {
 
                         <UploadButton reset={this.state.reset}  onChange={this.changeHandlerRoute} id="file" text="Choose a route"></UploadButton>
 
-                        <UploadButton reset={this.state.reset}  onChange={this.changeHandlerImages} id="images" text="Pick some images" multiple ></UploadButton>
+                        <UploadButton reset={this.state.reset}  onChange={this.changeHandlerImages} id="images" text="Pick some images" multiple image></UploadButton>
 
                         <UploadButton reset={this.state.reset}  onChange={this.changeHandlerVideos} id="videos" multiple text="Choose a video"></UploadButton>
 
