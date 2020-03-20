@@ -12,6 +12,18 @@ nav.navbar{
     
 }
 
+nav.navbar img{
+    width: 20%;
+    transform: scale(2.6);
+    padding-right: 1em;
+    
+}
+
+nav.navbar span{
+    padding: 0;
+    margin: 0;
+}
+
 #basic-nav-dropdown{
     display:block !important;
     opacity:0;

@@ -1,13 +1,86 @@
-#container{
+#login-container{
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     width: 100vw;
     color: black;
     position: relative;
+    background-color: var(--color-primary);
 }
+
+
+#clipped{
+    position: absolute;
+    top: 20%;
+    left: 70%;
+    width: 20%;
+    clip-path: polygon(31% 0, 100% 0, 100% 100%, 0% 100%);
+    background-color: white;
+    height: 50%;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    z-index: 100;
+    box-shadow: 0 100px 16px 0px rgba(0,0,0,0.75);
+
+    
+}
+
+
+#login-card{
+    width: 50%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    padding-top: 5em;
+    padding-left: 5em;
+    padding-bottom: 5em;
+    border-radius: 5px;
+    margin-left: 2em;
+    
+    position: relative;
+    height: 400px;
+    z-index: 101;
+
+    
+}
+
+#login-another-div{
+    z-index: 101;
+    height: 50%;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 5em;
+}
+
+
+#login-card h1{
+    grid-column: 1 / 2;
+    grid-row: 1 / 1;
+    font-size: 2.5em;
+    text-align: left;
+}
+
+#login-card p{
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    text-align: left;
+}
+
+
+#login-card img{
+    grid-column: 1 / 2;
+    grid-row: 4 / 5;
+    width: 30%;
+    transform: scale(2);
+    
+    
+}
+
+
 
 button {
     background-color: var(--color-primary) !important;
@@ -23,30 +96,6 @@ button:hover{
     opacity: 1;
 }
 
-.background-image{
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    width: 100vw;
-    background-image: url('./../../../assets/mountains.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    z-index: -2;
-    filter: blur(3px);   
-}
-
-.background-div{
- position: absolute;
- height: 45vh;
- width: 25vw;
- background-color: #F8F9FA;
- z-index: -1;
- border-radius: 10px;
- box-shadow: 10px 10px 50px;
-
-}
 
 @media (max-width: 800px) {
     .background-div {

@@ -1,7 +1,7 @@
 ---
-name: Styling Work
+name: Styling work
 about: Modification of the styling of a component
-title: "[STYLING]"
+title: "[STYLING] <your title goes here>"
 labels: style
 assignees: ''
 
