@@ -1,4 +1,4 @@
-import { render, queryByTestId, fireEvent } from "@testing-library/react";
+import { render, queryByTestId, fireEvent, waitForDomChange } from "@testing-library/react";
 import Settings from "../Settings";
 import React from "react";
 
@@ -53,6 +53,32 @@ describe('Settings Component', () => {
         });
     });
 
+    beforeEach(() => {
+        let dropdown = queryByTestId(wrapper, 'settings-language-dropdown');
+        fireEvent.click(dropdown);
+    });
+
     //TODO: test dropdown
+    describe('Change theme function', () => {
+
+        test('english', () => {
+            waitForDomChange(() => {
+                let language = queryByTestId(wrapper, 'settings-language-english');
+                expect(language).not.toBeNull();
+                fireEvent.click(language);
+                expect(myMockLanguage).toBeCalled();
+            });
+        });
+
+        test('english', () => {
+            waitForDomChange(() => {
+                let language = queryByTestId(wrapper, 'settings-language-spanish');
+                expect(language).not.toBeNull();
+                fireEvent.click(language);
+                expect(myMockLanguage).toBeCalled();
+            });
+        });
+
+    });
 
 });
