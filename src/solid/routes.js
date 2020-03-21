@@ -3,12 +3,13 @@ import FC from "solid-file-client";
 import { getWebId } from "./auth";
 
 /**
- * Functions in this file present an interface to add, get and manipulate routes stored in a pod.
- * They are intented to keep a consistent signature over time so they act as a coherent module
- * for other parts of the application to use.
+ * Functions in this file present an interface to add, get and manipulate routes
+ * stored in a pod. They are intented to keep a consistent signature over time
+ * so they act as a coherent module for other parts of the application to use.
  */
 
 export async function uploadRouteToPod(route) {
+    route.id = await getNextId();
     let url = await getRoutesFolder();
     let fc = new FC(auth);
     if(!await fc.itemExists(url)){
@@ -55,5 +56,14 @@ export async function clearRouteFromPod(routeName) {
 export async function getRoutesFolder() {
     let session = await getWebId();
     return session.split("/profile")[0] + "/public/routes/";
+}
+
+async function getNextId() {
+    let routes = await getRoutesFromPod();
+    routes = routes.sort( (a, b) => { return a.id - b.id } );
+    for (let i = 0; i < routes.length; i++)
+        if (i !== routes[i].id)
+            return i;
+    return routes.length;
 }
 
