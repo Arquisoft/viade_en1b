@@ -2,6 +2,12 @@ import auth from "solid-auth-client";
 import FC from "solid-file-client";
 import { getWebId } from "./auth";
 
+/**
+ * Functions in this file present an interface to add, get and manipulate routes stored in a pod.
+ * They are intented to keep a consistent signature over time so they act as a coherent module
+ * for other parts of the application to use.
+ */
+
 export async function uploadRouteToPod(route) {
     let url = await getRoutesFolder();
     let fc = new FC(auth);
