@@ -17,7 +17,7 @@ export default function Settings(props) {
                     Dark
                 </ToggleButton>
                 <ToggleButton type="radio" name="radio" value="Colorblind">
-                    Blind
+                    Colorblind
                 </ToggleButton>
 
             </ButtonGroup>
