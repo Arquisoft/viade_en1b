@@ -1,13 +1,13 @@
-import React from 'react'
+import React from "react"
 import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
-import Login from '../layout/login/Login';
-import MyProfile from '../user/myProfile/MyProfile';
-import Dashboard from '../dashboard/Dashboard';
-import UploadRoute from '../routes/uploadRoute/UploadRoute';
-import PageNotFound from '../pageNotFound/PageNotFound';
-import MyRoutes from '../routes/myRoutes/MyRoutes';
-import Settings from '../settings/Settings.js';
-import ShareRoute from '../routes/shareRoute/ShareRoute';
+import Login from "../layout/login/Login";
+import MyProfile from "../user/myProfile/MyProfile";
+import Dashboard from "../dashboard/Dashboard";
+import UploadRoute from "../routes/uploadRoute/UploadRoute";
+import PageNotFound from "../pageNotFound/PageNotFound";
+import MyRoutes from "../routes/myRoutes/MyRoutes";
+import Settings from "../settings/Settings.js";
+import ShareRoute from "../routes/shareRoute/ShareRoute";
 
 export default function Routing(props) {
     const {navBar} = props
