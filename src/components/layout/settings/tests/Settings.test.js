@@ -58,7 +58,6 @@ describe('Settings Component', () => {
         fireEvent.click(dropdown);
     });
 
-    //TODO: test dropdown
     describe('Change theme function', () => {
 
         test('english', () => {
@@ -70,7 +69,7 @@ describe('Settings Component', () => {
             });
         });
 
-        test('english', () => {
+        test('spanish', () => {
             waitForDomChange(() => {
                 let language = queryByTestId(wrapper, 'settings-language-spanish');
                 expect(language).not.toBeNull();
