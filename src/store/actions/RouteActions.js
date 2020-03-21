@@ -25,10 +25,20 @@ export const shareRoute = (route) => {
 export const showRoute = (route) => {
     return (dispatch, getState) => {
         getState().route.selectedRoute = route;
-        console.log(getState());
+        //console.log(getState());
         dispatch({
             type: 'SHOW_ROUTE',
             payload: route
+        });
+    };
+}
+
+export const clearRoute = () => {
+    return (dispatch, getState) => {
+        getState().route.selectedRoute = null;
+        dispatch({
+            type: 'CLEAR_ROUTE',
+            payload: null
         });
     };
 }
@@ -40,14 +50,14 @@ export const uploadRoute = (route) => {
             name: route.name,
             description: route.description,
             author: route.author,
-            positions: route.positions === "" ? "" : JSON.parse(route.positions),
+            positions: route.positions,
             file: route.file,
             images: route.images,
             videos: route.videos
         };
         uploadRouteToPod(newRoute);
         getState().route.routes[getState().route.routes.length]=newRoute;
-        console.log(getState());
+        //console.log(getState());
         dispatch({
             type: 'UPLOAD_ROUTE',
             payload: newRoute

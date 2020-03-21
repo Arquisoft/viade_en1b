@@ -12,20 +12,24 @@ const initState = {
 const routeReducer = (state = initState, action) => {
     switch (action.type) {
         case 'SHOW_ROUTE':
-            console.log("routed shown", action.payload)
-            console.log(state)
+            //console.log("routed shown", action.payload)
+            //console.log(state)
             return {...state}
         case 'UPLOAD_ROUTE':
-            console.log("routed uploaded", action.payload)
-            console.log(state)
+            //console.log("routed uploaded", action.payload)
+            //console.log(state)
             return {...state}
         case 'DELETE_ROUTE':
-            console.log("routed deleted", action.payload)
-            console.log(state)
+            //console.log("routed deleted", action.payload)
+            //console.log(state)
             return {...state}
+        case 'CLEAR_ROUTE':
+            //console.log("routed cleared", action.payload)
+            //console.log(state)
+            return {...state}   
         case 'SHARE_ROUTE':
-            console.log("routed shared", action.payload)
-            console.log(state)
+            //console.log("routed shared", action.payload)
+            //console.log(state)
             return {...state}
         default:
             return state
