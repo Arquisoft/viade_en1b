@@ -30,7 +30,7 @@ Important Interfaces::
 
 _<Description of important interfaces>_
 
-==== React graphical interface
+=== React graphical interface
 
 Responsibility::
 
@@ -57,7 +57,7 @@ Open Issues/Problems/Risks::
 
 _WIP_
 
-==== Map module
+=== Map module
 
 Responsibility::
 
@@ -87,7 +87,7 @@ _WIP_
 
 
 
-==== Route interpretation
+=== Route interpretation
 
 Responsibility::
 
@@ -115,7 +115,7 @@ Open Issues/Problems/Risks::
 _WIP_
 
 
-==== Solid module
+=== Solid module
 
 Responsibility::
 
