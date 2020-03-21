@@ -123,7 +123,16 @@ Knows the Solid protocol and interacts directly with PODs.
 
 Interface::
 
-Offers an interface to Solid data.
+[options="header"]
+|==============================
+| Method                        | Description
+| uploadRouteToPod(route)       | Uploads a route object to the user's POD
+| getRouteFromPod(routeName)    | Gets a route from the user's POD by name
+| getRoutesFromPod()            | Gets a list with all the routes from the user's POD
+| clearRoutesFromPod()          | Deletes all routes from the user's POD
+| clearRouteFromPod(routeName)  | Deletes a route from the user's POD by name
+| getRoutesFolder()             | Gets the URL of the routes storage as a string
+|==============================
 
 Quality/Performance Characteristics::
 
@@ -132,11 +141,11 @@ linked data.
 
 Directory/File Location::
 
-_WIP_
+`src/solid/`
 
 Fulfilled Requirements::
 
-_WIP_
+Basic interface to interact with profile and routes stored in a user's POD.
 
 Open Issues/Problems/Risks::
 
