@@ -6,8 +6,8 @@ import Dashboard from "../dashboard/Dashboard";
 import UploadRoute from "../routes/uploadRoute/UploadRoute";
 import PageNotFound from "../pageNotFound/PageNotFound";
 import MyRoutes from "../routes/myRoutes/MyRoutes";
-import Settings from "../settings/Settings.js";
 import ShareRoute from "../routes/shareRoute/ShareRoute";
+import Settings from "../settings/Settings";
 
 export default function Routing(props) {
     const {navBar} = props
