@@ -16,3 +16,5 @@ export const RouteSummary = (props) => {
     )
 }
 
+export default RouteSummary;
+

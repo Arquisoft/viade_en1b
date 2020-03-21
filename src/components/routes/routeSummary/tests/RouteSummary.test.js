@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, queryByTestId, waitForElement } from '@testing-library/react'
+import { render, fireEvent, queryByTestId } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { RouteSummary } from '../RouteSummary'
 
