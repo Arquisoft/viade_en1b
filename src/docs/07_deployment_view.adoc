@@ -13,7 +13,7 @@ image:07-DeploymentView1.png["Deployment View 1"]
 |===
 | Element | Description
 | User | People wanting to store and share their routes with control over their storage.
-| Web browser | It is used by the user to access Viade throw his computer, for example, Chrome.
+| Web browser | It is used by the user to access Viade through his computer, for example, Chrome.
 | GitHub pages | Where the application is deployed.
 | Viade | Our application that use Solid and is deployed using GitHub pages.
 | POD | Each user has a personal pod which stores all his information.
