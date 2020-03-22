@@ -12,7 +12,7 @@ function Dashboard(props) {
     //console.log(selectedRoute)
     //getWebId().then(x=> console.log(x))
     
-    // header of the currently selected  route
+    //header of the currently selected  route
     const currentSelectedMap = selectedRoute == null ? <div id='titleHolder'><h1>Routes List</h1></div> : (<div id='titleHolder'>
         <h1>{selectedRoute.name}</h1> <p> by {selectedRoute.author}</p>
     </div>)
@@ -32,7 +32,7 @@ function Dashboard(props) {
 }
 
 const mapStateToProps = (state) =>{
-    console.log(state)
+    //console.log(state)
     return {
         routes : state.route.routes,
         selectedRoute : state.route.selectedRoute
