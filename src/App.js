@@ -4,6 +4,7 @@ import MyNavBar from "./components/layout/navbar/NavBar";
 import { ThemeContext } from './components/layout/themeContext/ThemeContext'
 import { useLoggedIn } from "@solid/react";
 import Routing from "./components/routing/Routing";
+import Footer from "./components/layout/footer/Footer";
 
 const App = (props) => {
 
@@ -21,6 +22,7 @@ const App = (props) => {
   return (
       <div className="App">
         <Routing navBar = {navBar}/>
+        <Footer></Footer>
       </div>
 
   );

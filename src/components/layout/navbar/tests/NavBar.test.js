@@ -1,11 +1,13 @@
 import React from 'react'
 import { render, waitForElement, fireEvent, queryByTestId } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import App from '../../../../App'
+//import App from '../../../../App'
+import Navbar from '../NavBar'
+import { HashRouter } from "react-router-dom";
 
 let rendered = null
 beforeEach( () => {
-    const { container } = render(<App></App>)
+    const { container } = render(<HashRouter><Navbar></Navbar></HashRouter>)
     rendered = container
 })
 
@@ -19,6 +21,7 @@ describe('Navbar is correctly rendered', () => {
             expect(queryByTestId(rendered, 'navbar-my-profile')).not.toBeNull();
             expect(queryByTestId(rendered, 'navbar-logout')).not.toBeNull();
             expect(queryByTestId(rendered, 'navbar-brand')).not.toBeNull();
+            expect(queryByTestId(rendered, 'navbar-settingsks')).not.toBeNull();
         })
     })
 
@@ -29,6 +32,7 @@ describe('Navbar is correctly rendered', () => {
             let profile = queryByTestId(rendered, 'navbar-my-profile')
             let brand = queryByTestId(rendered, 'navbar-brand')
             let logout = queryByTestId(rendered, 'navbar-logout')
+            let settings = queryByTestId(rendered, 'navbar-settings')
 
             fireEvent.click(routes);
             expect(getCurrentPage()).toEqual('routes');
@@ -44,6 +48,9 @@ describe('Navbar is correctly rendered', () => {
 
             fireEvent.click(logout)
             expect(getCurrentPage()).toEqual('')
+
+            fireEvent.click(settings)
+            expect(getCurrentPage()).toEqual('settings')
             
         })
     })
