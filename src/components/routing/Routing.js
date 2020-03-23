@@ -10,7 +10,7 @@ import Settings from "../layout/settings/Settings";
 import ShareRoute from "../routes/shareRoute/ShareRoute";
 
 export default function Routing(props) {
-    const {navBar} = props
+    const {navBar} = props;
     return (
     <HashRouter>
         {navBar}
@@ -26,5 +26,5 @@ export default function Routing(props) {
             <Redirect to="/404" />
           </Switch>
     </HashRouter>
-    )
-}
+    );
+};
