@@ -1,17 +1,12 @@
 import React from "react";
 import "./UploadRoute.css";
 import { connect } from "react-redux";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { uploadRoute } from "./../../../store/actions/RouteActions";
 import UploadButton from "./uploadButton/UploadButton";
 import ViadeModal from "../../layout/modal/Modal";
 
-<<<<<<< HEAD
-class UploadRoute extends React.Component {
-=======
-
 export class UploadRoute extends React.Component {
->>>>>>> dev
   state = {
     name: "",
     description: "",
@@ -23,25 +18,6 @@ export class UploadRoute extends React.Component {
     reset: false
   };
 
-<<<<<<< HEAD
-  changeHandlerRoute = e => {
-    this.setState({
-      [e.target.id]: e.target.value
-    });
-  };
-
-  changeHandlerImages = e => {
-    let docs = [];
-    Array.from(e.target.files).forEach(file => docs.push(file.name));
-    this.setState({ ...this.state, images: docs });
-  };
-
-  changeHandlerVideos = e => {
-    let docs = [];
-    Array.from(e.target.files).forEach(file => docs.push(file.name));
-    this.setState({ ...this.state, videos: docs });
-  };
-=======
   changeHandlerRoute(e) {
     this.setState({
       [e.target.id]: e.target.value
@@ -63,7 +39,6 @@ export class UploadRoute extends React.Component {
     Array.from(e.target.files).forEach(file => docs.push(file.name));
     this.setState({ ...this.state, videos: docs });
   }
->>>>>>> dev
 
   resetState() {
     return {
@@ -78,7 +53,6 @@ export class UploadRoute extends React.Component {
     };
   }
 
-<<<<<<< HEAD
   isEmpty = () => {
     return (
       this.state.name === "" &&
@@ -87,17 +61,15 @@ export class UploadRoute extends React.Component {
     );
   };
 
-=======
->>>>>>> dev
   componentDidUpdate() {
     if (this.state.reset) this.setState(this.resetState());
   }
 
-  submitForm = e => {
+  submitForm(e) {
     e.preventDefault();
     this.props.uploadRoute(this.state);
-    this.setState(this.resetState());
-  };
+    this.setState({ ...this.state, reset: true });
+  }
 
   render() {
     return (
@@ -143,7 +115,7 @@ export class UploadRoute extends React.Component {
             <ViadeModal
               disabled={this.isEmpty()}
               toggleText="Submit"
-              onClick={this.submitForm}
+              onClick={this.submitForm.bind(this)}
               title="Submitted"
               closeText="Close"
             >

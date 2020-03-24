@@ -28,10 +28,26 @@ beforeEach(() => {
 describe("All renders correctly with normal settings", () => {
   test("title is rendered", () => {
     fireEvent.click(queryByTestId(modal, "modalButton"));
-    expect(mock).toBeCalled();
     waitForDomChange(() => {
       expect(queryByTestId(modal, "modalTitle").textContent).not.toBeNull();
       expect(queryByTestId(modal, "modalTitle").textContent).toBe("Submitted");
+    });
+  });
+
+  test("on click function is triggered", () => {
+    fireEvent.click(queryByTestId(modal, "modalButton"));
+    expect(mock).toBeCalled();
+  });
+
+  test("children are rendered", () => {
+    let paragraph = <p>Hello there!</p>;
+    rerenderFunc(
+      <ViadeModal onClick={mock} title="Submit">
+        {paragraph}
+      </ViadeModal>
+    );
+    waitForElement(() => {
+      expect(paragraph).toBeInTheDocument();
     });
   });
 
