@@ -6,7 +6,12 @@ import { uploadRoute } from "./../../../store/actions/RouteActions";
 import UploadButton from "./uploadButton/UploadButton";
 import ViadeModal from "../../layout/modal/Modal";
 
+<<<<<<< HEAD
 class UploadRoute extends React.Component {
+=======
+
+export class UploadRoute extends React.Component {
+>>>>>>> dev
   state = {
     name: "",
     description: "",
@@ -18,6 +23,7 @@ class UploadRoute extends React.Component {
     reset: false
   };
 
+<<<<<<< HEAD
   changeHandlerRoute = e => {
     this.setState({
       [e.target.id]: e.target.value
@@ -35,6 +41,29 @@ class UploadRoute extends React.Component {
     Array.from(e.target.files).forEach(file => docs.push(file.name));
     this.setState({ ...this.state, videos: docs });
   };
+=======
+  changeHandlerRoute(e) {
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  }
+
+  //This is part of the state, and states should not be tested.
+  //This behaviour is tested in the upload button
+  changeHandlerImages(e) {
+    let docs = [];
+    Array.from(e.target.files).forEach(file => docs.push(file.name));
+    this.setState({ ...this.state, images: docs });
+  }
+
+  //This is part of the state, and states should not be tested.
+  //This behaviour is tested in the upload button
+  changeHandlerVideos(e) {
+    let docs = [];
+    Array.from(e.target.files).forEach(file => docs.push(file.name));
+    this.setState({ ...this.state, videos: docs });
+  }
+>>>>>>> dev
 
   resetState() {
     return {
@@ -49,6 +78,7 @@ class UploadRoute extends React.Component {
     };
   }
 
+<<<<<<< HEAD
   isEmpty = () => {
     return (
       this.state.name === "" &&
@@ -57,6 +87,8 @@ class UploadRoute extends React.Component {
     );
   };
 
+=======
+>>>>>>> dev
   componentDidUpdate() {
     if (this.state.reset) this.setState(this.resetState());
   }
@@ -76,7 +108,7 @@ class UploadRoute extends React.Component {
               <Form.Label htmlFor="name">Name of the route</Form.Label>
               <Form.Control
                 id="name"
-                onChange={this.changeHandlerRoute}
+                onChange={this.changeHandlerRoute.bind(this)}
                 placeholder="Route name"
                 value={this.state.name}
                 type="text"
@@ -87,7 +119,7 @@ class UploadRoute extends React.Component {
               <Form.Label htmlFor="description">Description</Form.Label>
               <Form.Control
                 id="description"
-                onChange={this.changeHandlerRoute}
+                onChange={this.changeHandlerRoute.bind(this)}
                 value={this.state.description}
                 as="textarea"
                 rows="4"
@@ -99,7 +131,7 @@ class UploadRoute extends React.Component {
               <Form.Label htmlFor="positions">Positions</Form.Label>
               <Form.Control
                 id="positions"
-                onChange={this.changeHandlerRoute}
+                onChange={this.changeHandlerRoute.bind(this)}
                 value={this.state.positions}
                 as="textarea"
                 rows="4"
@@ -122,14 +154,14 @@ class UploadRoute extends React.Component {
           <div id="buttonHolder">
             <UploadButton
               reset={this.state.reset}
-              onChange={this.changeHandlerRoute}
+              onChange={this.changeHandlerRoute.bind(this)}
               id="file"
               text="Choose a route"
             ></UploadButton>
 
             <UploadButton
               reset={this.state.reset}
-              onChange={this.changeHandlerImages}
+              onChange={this.changeHandlerImages.bind(this)}
               id="images"
               text="Pick some images"
               multiple
@@ -137,7 +169,7 @@ class UploadRoute extends React.Component {
 
             <UploadButton
               reset={this.state.reset}
-              onChange={this.changeHandlerVideos}
+              onChange={this.changeHandlerVideos.bind(this)}
               id="videos"
               multiple
               text="Choose a video"

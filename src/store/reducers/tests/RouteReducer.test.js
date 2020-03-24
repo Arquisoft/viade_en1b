@@ -37,6 +37,14 @@ describe('Routes Reducer', () => {
             expect(newState).toEqual(route);
         })
 
+        test('Type CLEAR_ROUTE', () => {
+            const newState = routesReducer(route, {
+                type : 'CLEAR_ROUTE',
+                payload: null
+            });
+            expect(newState).toEqual(route);
+        })
+
         test('Type DELETE_ROUTE', () => {
             const newState = routesReducer(route, {
                 type : 'DELETE_ROUTE',
