@@ -13,7 +13,9 @@
     background-color: var(--color-primary) !important;
     color: var(--color-secondary) !important;
     font-size: 110%;
-  
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 
