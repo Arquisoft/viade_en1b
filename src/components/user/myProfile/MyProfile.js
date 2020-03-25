@@ -3,10 +3,8 @@ import { Image, useWebId, Value, LoggedIn, LoggedOut } from "@solid/react";
 import "./MyProfile.css";
 import { BsBoxArrowUpRight } from "react-icons/bs";
 import FriendList from "./FriendList.js";
-import { connect } from "react-redux";
 import { Button, Badge } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
-import { showProfileRequest } from "../../../store/actions/UserActions";
 
 export function MyProfile(props) {
   useEffect(() => {
@@ -76,13 +74,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    showProfileRequest: () => dispatch(showProfileRequest())
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(React.memo(MyProfile));
+export default React.memo(MyProfile);

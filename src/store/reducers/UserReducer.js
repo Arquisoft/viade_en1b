@@ -7,17 +7,17 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SHOW_PROFILE_REQUEST":
+    case "LOAD_EMAIL_REQUEST":
       return {
         ...state,
         loading: action.payload
       };
-    case "SHOW_PROFILE_ERROR":
+    case "LOAD_EMAIL_ERROR":
       return {
         ...state,
         emailError: action.payload
       };
-    case "SHOW_PROFILE_SUCCESS":
+    case "LOAD_EMAIL_SUCCESS":
       return {
         ...state,
         loading: false,

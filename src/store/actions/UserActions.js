@@ -1,20 +1,20 @@
-export const showProfileRequest = () => {
+export const loadEmailRequest = () => {
   return {
-    type: "SHOW_PROFILE_REQUEST",
+    type: "LOAD_EMAIL_REQUEST",
     payload: true
   };
 };
 
-export const showProfileSuccess = email => {
+export const loadEmailSuccess = email => {
   return {
-    type: "SHOW_PROFILE_SUCCESS",
+    type: "LOAD_EMAIL_SUCCESS",
     payload: email
   };
 };
 
-export const showProfileError = error => {
+export const loadEmailError = error => {
   return {
-    type: "SHOW_PROFILE_ERROR",
+    type: "LOAD_EMAIL_ERROR",
     payload: error
   };
 };

@@ -1,8 +1,8 @@
 import { getEmail } from "../solid/profileInfo";
 import { getFriends, getName } from "rdf-query/rdf-query";
 import {
-  showProfileError,
-  showProfileSuccess,
+  loadEmailError,
+  loadEmailSuccess,
   loadFriendsSuccess
 } from "../store/actions/UserActions";
 
@@ -19,12 +19,12 @@ export const asyncRouteFetch = store => next => action => {
 
 export const asyncProfileFetch = store => next => action => {
   switch (action.type) {
-    case "SHOW_PROFILE_REQUEST":
+    case "LOAD_EMAIL_REQUEST":
       getEmail()
         .then(email => {
-          store.dispatch(showProfileSuccess(email));
+          store.dispatch(loadEmailSuccess(email));
         })
-        .catch(error => store.dispatch(showProfileError(error.message)));
+        .catch(error => store.dispatch(loadEmailError(error.message)));
       break;
     case "LOAD_FRIENDS_REQUEST":
       let webId = store.getState().auth.userWebId;

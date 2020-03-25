@@ -6,7 +6,10 @@ import { connect } from "react-redux";
 import { showRoute } from "../../store/actions/RouteActions";
 import { LoggedIn, LoggedOut } from "@solid/react";
 import { Redirect } from "react-router-dom";
-import { loadFriendsRequest } from "../../store/actions/UserActions";
+import {
+  loadFriendsRequest,
+  loadEmailRequest
+} from "../../store/actions/UserActions";
 import { useEffect } from "react";
 import { useWebId } from "@solid/react";
 import { updateWebId } from "../../store/actions/AuthActions";
@@ -23,6 +26,7 @@ function Dashboard(props) {
   useEffect(() => {
     props.updateWebId(webId);
     props.loadFriendsRequest();
+    props.loadEmailRequest();
   }, [webId, props]);
   const currentSelectedMap =
     selectedRoute == null ? (
@@ -72,7 +76,8 @@ const mapDispatchToProps = dispatch => {
   return {
     showRoute: route => dispatch(showRoute(route)),
     loadFriendsRequest: () => dispatch(loadFriendsRequest()),
-    updateWebId: webId => dispatch(updateWebId(webId))
+    updateWebId: webId => dispatch(updateWebId(webId)),
+    loadEmailRequest: () => dispatch(loadEmailRequest())
   };
 };
 
