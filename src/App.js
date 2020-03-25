@@ -8,19 +8,19 @@ import Footer from "./components/layout/footer/Footer";
 
 const App = (props) => {
 
-  const theme = useContext(ThemeContext)
+  const theme = useContext(ThemeContext);
   useEffect(() => {
     Object.keys(theme).map(key => {
-      const value = theme[key]
-      return document.documentElement.style.setProperty(key, value)
+      const value = theme[key];
+      return document.documentElement.style.setProperty(key, value);
     })
-    return
+    return;
   })
   
-  const navBar = useLoggedIn() === true ? <MyNavBar brandName="Viade_en1b"></MyNavBar> : null
+  const navBar = useLoggedIn() === true ? <MyNavBar data-testid="theNavBar" brandName="Viade_en1b"></MyNavBar> : null
 
   return (
-      <div className="App">
+      <div  data-testid="theApp" className="App">
         <Routing navBar = {navBar}/>
         <Footer></Footer>
       </div>
