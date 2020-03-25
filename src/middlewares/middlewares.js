@@ -11,3 +11,5 @@ export const asyncRouteFetch = store => next => action => {
   }
   next(action);
 };
+
+export const asyncProfileFetch = store => next => action => {};
