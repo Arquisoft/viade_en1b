@@ -1,5 +1,5 @@
 import { getEmail } from "../solid/profileInfo";
-import { getFriends } from "rdf-query/rdf-query";
+import { getFriends, getName } from "rdf-query/rdf-query";
 import {
   showProfileError,
   showProfileSuccess,
@@ -31,8 +31,24 @@ export const asyncProfileFetch = store => next => action => {
       if (webId)
         getFriends(webId)
           .then(response => {
-            let friends = response.map(friend => friend.object.value);
-            store.dispatch(loadFriendsSuccess(friends));
+            let friendsUri = [...response].map(friend => friend.object.value);
+            let friendsNames = [...friendsUri];
+            friendsNames = friendsNames.map(webId => {
+              return getName(webId);
+            });
+            Promise.all(friendsNames).then(results => {
+              let friendsObjects = [];
+              friendsNames = results.map(literal => literal.value);
+              for (let i = 0; i < friendsNames.length; i++) {
+                let friend = {
+                  name: friendsNames[i],
+                  uri: friendsUri[i]
+                };
+                friendsObjects.push(friend);
+              }
+
+              store.dispatch(loadFriendsSuccess(friendsObjects));
+            });
           })
           .catch(error => console.error(error));
       break;
