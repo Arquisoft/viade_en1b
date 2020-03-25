@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Image, useWebId, Value, LoggedIn, LoggedOut } from "@solid/react";
 import "./MyProfile.css";
 import { BsBoxArrowUpRight } from "react-icons/bs";
@@ -6,16 +6,15 @@ import FriendList from "./FriendList.js";
 import { connect } from "react-redux";
 import { Button, Badge } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
-import { showProfile } from "../../../store/actions/tests/UserActions";
+import { showProfileRequest } from "../../../store/actions/UserActions";
 
 export function MyProfile(props) {
-  const [theEmail, setTheEmail] = useState("");
+  useEffect(() => {
+    if (!props.userEmail) props.showProfileRequest();
+  }, [props]);
 
-  const setAllStates = async () => {
-    props.getProfile();
-  };
-
-  setAllStates();
+  let email = props.userEmail ? <p>{props.userEmail}</p> : null;
+  let emailLoading = props.loading === true ? <p>Loading...</p> : null;
 
   return (
     <div id="generalComponent">
@@ -37,14 +36,15 @@ export function MyProfile(props) {
                   <Value src="user.name" />
                 </b>
               </h1>
-              <p> {theEmail} </p>
+
+              {email}
+              {emailLoading}
               <p>
                 <Badge variant="dark">
                   <Value src="user.vcard_role" />
                   CEO
                 </Badge>
               </p>
-
               <a href={useWebId()}>
                 Solid profile <BsBoxArrowUpRight></BsBoxArrowUpRight>
               </a>
@@ -68,10 +68,21 @@ export function MyProfile(props) {
   );
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
   return {
-    getProfile: () => dispatch(showProfile())
+    userEmail: state.user.email,
+    emailLoading: state.user.emailLoading,
+    emailError: state.user.emailError
   };
 };
 
-export default connect(null, mapDispatchToProps)(MyProfile);
+const mapDispatchToProps = dispatch => {
+  return {
+    showProfileRequest: () => dispatch(showProfileRequest())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(React.memo(MyProfile));
