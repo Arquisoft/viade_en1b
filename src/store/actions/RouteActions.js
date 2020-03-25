@@ -8,7 +8,7 @@ export const deleteRoute = (route) => {
         //alert("Has borrado la ruta")
         dispatch({
             type: 'DELETE_ROUTE',
-            routes
+            payload: route
         });
     };
 }
@@ -17,7 +17,7 @@ export const shareRoute = (route) => {
     return (dispatch, getState) => {
         dispatch({
             type: 'SHARE_ROUTE',
-            route
+            payload: route
         });
     };
 }
@@ -25,10 +25,20 @@ export const shareRoute = (route) => {
 export const showRoute = (route) => {
     return (dispatch, getState) => {
         getState().route.selectedRoute = route;
-        console.log(getState());
+        //console.log(getState());
         dispatch({
             type: 'SHOW_ROUTE',
-            route
+            payload: route
+        });
+    };
+}
+
+export const clearRoute = () => {
+    return (dispatch, getState) => {
+        getState().route.selectedRoute = null;
+        dispatch({
+            type: 'CLEAR_ROUTE',
+            payload: null
         });
     };
 }
@@ -40,17 +50,17 @@ export const uploadRoute = (route) => {
             name: route.name,
             description: route.description,
             author: route.author,
-            positions: route.positions === "" ? "" : JSON.parse(route.positions),
+            positions: route.positions,
             file: route.file,
             images: route.images,
             videos: route.videos
         };
         uploadRouteToPod(newRoute);
         getState().route.routes[getState().route.routes.length]=newRoute;
-        console.log(getState());
+        //console.log(getState());
         dispatch({
             type: 'UPLOAD_ROUTE',
-            newRoute
+            payload: newRoute
         });
     };
 }

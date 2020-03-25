@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Image, useWebId, Value } from '@solid/react';
+import { Image, useWebId, Value, LoggedIn, LoggedOut } from '@solid/react';
 import './MyProfile.css';
 import { BsBoxArrowUpRight } from 'react-icons/bs'
 import FriendList from './FriendList.js';
 import { getEmail } from '../../../solid/profileInfo.js'
 import { Button, Badge } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom';
 
 
 
@@ -20,6 +21,7 @@ export default function MyProfile() {
 
 	return (
 		<div id="generalComponent">
+			<LoggedIn>
 			<div id="card">
 				<div id="image-cropper">
 					<Image src="user.vcard_hasPhoto" defaultSrc="profile.svg" id="profilePicture" />
@@ -48,6 +50,10 @@ export default function MyProfile() {
 				<FriendList id="friendList" />
 
 			</div>
+			</LoggedIn>
+			<LoggedOut>
+				<Redirect to='/'></Redirect>
+			</LoggedOut>
 
 		</div>
 	)

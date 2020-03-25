@@ -1,113 +1,108 @@
-.uploadContainer{
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    padding-top: 3em;
-    overflow-y: scroll;
-    margin: 0 auto;
+.uploadContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding-top: 3em;
+  overflow-y: scroll;
+  margin: 0 auto;
 }
 
-form{
-    margin-top: 5em;
-    width: 60%;
-    display: flex;
-    
+form {
+  margin-top: 5em;
+  width: 60%;
+  display: flex;
 }
 
-label{
-    float: left;
+label {
+  text-align: left;
 }
 
-#buttonHolder svg{
-    font-size: 1.2em;
-    margin: 0 auto;
+#buttonHolder svg {
+  font-size: 1.2em;
+  margin: 0 auto;
 }
 
-
-input{
-    transition: all 200ms ease-in-out;
-    background-color: var(--color-secondary);
+input {
+  transition: all 200ms ease-in-out;
+  background-color: var(--color-secondary);
 }
 
-input:focus{
-    outline: none !important;
+input:focus {
+  outline: none !important;
 }
 
-
-input[type="text"]:focus{
-    background-color: var(--color-primary) !important;
-    color: var(--color-secondary) !important;
-    outline: none;
+input[type="text"]:focus {
+  background-color: var(--color-primary) !important;
+  color: var(--color-secondary) !important;
+  outline: none;
 }
 
-input::placeholder{
-    transition: all 200ms ease-in-out;
+input::placeholder {
+  transition: all 200ms ease-in-out;
 }
 
-input:focus::placeholder{
-    color: var(--color-secondary);
+input:focus::placeholder {
+  color: var(--color-secondary);
 }
 
-input[type="file"]{
-    display: none;
+input[type="file"] {
+  display: none;
 }
 
-input[type="file"] + label{
-    padding: .3em;
-    opacity: .8;
-    background-color: var(--color-primary);
-    color: var(--color-secondary);
-    transition: all 200ms ease-in;
-    border-radius: 5px;
-    border: 1px solid var(--color-primary);
-    text-align: center;
-    cursor: pointer;
+input[type="file"] + label {
+  padding: 0.3em;
+  opacity: 0.8;
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  transition: all 200ms ease-in;
+  border-radius: 5px;
+  border: 1px solid var(--color-primary);
+  text-align: center;
+  cursor: pointer;
 }
 
-input[type="file"] + label:hover{
-    opacity: 1;
+input[type="file"] + label:hover {
+  opacity: 1;
 }
 
-#buttonHolder{
-    width: 25%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    margin: 1em;
-    
+#buttonHolder {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  margin: 1em;
 }
 
-#buttonHolder div{
-    width: 100%;
+#buttonHolder div {
+  width: 100%;
 }
 
-#buttonHolder label{
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    margin: 0 auto;
+#buttonHolder label {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0 auto;
 }
 
-#buttonHolder p{
-    margin: 0 auto;
+#buttonHolder p {
+  margin: 0 auto;
 }
 
-#uploadButton{
-    transition: all 200ms ease-in;
+#uploadButton {
+  transition: all 200ms ease-in;
 }
 
-#form-info{
-    display: flex;
-    flex-direction: column;
-    width: 50%;
+#form-info {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
 }
 
-.form-group label{
-    width: 100%;
+.form-group label {
+  width: 100%;
 }
-

@@ -4,6 +4,8 @@ import RouteList from '../routeList/RouteList';
 import RouteDetails from '../routeDetails/RouteDetails';
 import {connect} from 'react-redux'
 import { showRoute } from '../../../store/actions/RouteActions';
+import { LoggedIn, LoggedOut } from '@solid/react';
+import { Redirect } from 'react-router-dom';
 
 
 function MyRoutes(props) {
@@ -13,8 +15,13 @@ function MyRoutes(props) {
 
     return (
             <div className={styles.routesContainer}>
-                <RouteList style={styles.routeList} currentMap={selectedRoute} routes={routes} onClick = {showRoute} />
-                <RouteDetails style={styles.routeDetails} selectedRoute={selectedRoute}></RouteDetails>
+                <LoggedIn>
+                    <RouteList style={styles.routeList} currentMap={selectedRoute} routes={routes} onClick = {showRoute} />
+                    <RouteDetails style={styles.routeDetails} selectedRoute={selectedRoute}></RouteDetails>
+                </LoggedIn>
+                <LoggedOut>
+                    <Redirect to = '/'></Redirect>
+                </LoggedOut>
             </div>
         )
 }

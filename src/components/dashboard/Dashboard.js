@@ -4,6 +4,8 @@ import './Dashboard.css'
 import RouteList from './../routes/routeList/RouteList';
 import {connect} from 'react-redux'
 import { showRoute } from '../../store/actions/RouteActions';
+import { LoggedIn, LoggedOut } from '@solid/react';
+import { Redirect } from 'react-router-dom';
 
 function Dashboard(props) {
     const {routes} = props
@@ -12,7 +14,7 @@ function Dashboard(props) {
     //console.log(selectedRoute)
     //getWebId().then(x=> console.log(x))
     
-    // header of the currently selected  route
+    //header of the currently selected  route
     const currentSelectedMap = selectedRoute == null ? <div id='titleHolder'><h1>Routes List</h1></div> : (<div id='titleHolder'>
         <h1>{selectedRoute.name}</h1> <p> by {selectedRoute.author}</p>
     </div>)
@@ -24,15 +26,20 @@ function Dashboard(props) {
 
     return (
         <div className="dashboard container">
-            {currentSelectedMap}
-            <RouteList currentMap={selectedRoute} routes={routes} onClick = {showRoute} />
-            <MyMap center = {center} positions={positions}/>
+            <LoggedIn>
+                {currentSelectedMap}
+                <RouteList currentMap={selectedRoute} routes={routes} onClick={showRoute} />
+                <MyMap center={center} positions={positions} />
+            </LoggedIn>
+            <LoggedOut>
+                <Redirect to='/'></Redirect>
+            </LoggedOut>
         </div>
     )
 }
 
 const mapStateToProps = (state) =>{
-    console.log(state)
+    //console.log(state)
     return {
         routes : state.route.routes,
         selectedRoute : state.route.selectedRoute

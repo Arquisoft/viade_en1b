@@ -1,9 +1,11 @@
 import React from 'react'
 
-export default function PageNotFound() {
+export const PageNotFound = () => {
     return (
-        <div>
+        <div id = 'container' data-testid = 'page-not-found-container'>
             Sorry, page not found!
         </div>
     )
-}
+};
+
+export default PageNotFound;
