@@ -1,10 +1,10 @@
-import React from 'react'
-import { render, queryByTestId, waitForElement } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import React from 'react';
+import { render, queryByTestId, waitForElement } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import Footer from '../Footer';
 
 describe("Footer component", () => {
-    
+
     test("Team div renders correctly", () => {
         const wrapper = <Footer></Footer>;
         waitForElement(() => {
@@ -46,5 +46,5 @@ describe("Footer component", () => {
             expect(queryByTestId(wrapper, "icon-react")).not.toBeNull();
         });
     });
-    
+
 });
