@@ -5,7 +5,6 @@ import { Form, Button } from "react-bootstrap";
 import { uploadRoute } from "./../../../store/actions/RouteActions";
 import UploadButton from "./uploadButton/UploadButton";
 
-
 export class UploadRoute extends React.Component {
   state = {
     name: "",
@@ -59,7 +58,7 @@ export class UploadRoute extends React.Component {
 
   submitForm(e) {
     e.preventDefault();
-    this.props.uploadRoute(this.state);
+    this.props.uploadRoute(this.state, this.props.routes);
     this.setState({ ...this.state, reset: true });
   }
 
@@ -144,10 +143,17 @@ export class UploadRoute extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
   return {
-    uploadRoute: route => dispatch(uploadRoute(route))
+    routes: state.route.routes,
+    selectedRoute: state.route.selectedRoute
   };
 };
 
-export default connect(null, mapDispatchToProps)(UploadRoute);
+const mapDispatchToProps = dispatch => {
+  return {
+    uploadRoute: (route, routes) => dispatch(uploadRoute(route, routes))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UploadRoute);

@@ -1,5 +1,5 @@
 export const myLogger = store => next => action => {
-  console.group(action.type);
+  console.groupCollapsed(action.type);
   console.log("previous state", store.getState());
   next(action);
   console.log("actual state", store.getState());

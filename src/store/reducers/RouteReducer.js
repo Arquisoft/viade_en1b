@@ -1,3 +1,5 @@
+import { uploadRouteToPod } from "../../solid/routes";
+
 const initState = {
   routes: [
     {
@@ -86,13 +88,45 @@ const initState = {
 const routeReducer = (state = initState, action) => {
   switch (action.type) {
     case "SHOW_ROUTE":
-      return { ...state };
+      return {
+        ...state,
+        selectedRoute: action.payload
+      };
     case "UPLOAD_ROUTE":
-      return { ...state };
+      const route = action.payload;
+      const newRoute = {
+        id: Object.keys(action.payload.routes).length,
+        name: route.name,
+        description: route.description,
+        author: route.author,
+        positions: route.positions,
+        file: route.file,
+        images: route.images,
+        videos: route.videos
+      };
+      uploadRouteToPod(newRoute);
+      let previousRoutes = [...action.payload.routes];
+      previousRoutes.push(action.payload.route);
+
+      //getState().route.routes[getState().route.routes.length] = newRoute;
+      return {
+        ...state,
+        routes: previousRoutes
+      };
+
     case "DELETE_ROUTE":
-      return { ...state };
+      console.log(state);
+      let routes = state.routes.filter(r => r.id !== action.payload.id);
+      return {
+        ...state,
+        routes: routes,
+        selectedRoute: null
+      };
     case "CLEAR_ROUTE":
-      return { ...state };
+      return {
+        ...state,
+        selectedRoute: action.payload
+      };
     case "SHARE_ROUTE":
       return { ...state };
     default:
