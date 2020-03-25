@@ -13,7 +13,7 @@ export const deleteRoute = (route) => {
     };
 }
 
-export const shareRoute = (route) => {
+export const shareRoute = (route, friendUri) => {
     return (dispatch, getState) => {
         dispatch({
             type: 'SHARE_ROUTE',

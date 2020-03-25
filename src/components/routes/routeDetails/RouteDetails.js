@@ -4,6 +4,7 @@ import Slideshow from "../../layout/slideshow/Slideshow";
 import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { deleteRoute } from "../../../store/actions/RouteActions";
+import ShareRoute from '../shareRoute/ShareRoute';
 
 export const RouteDetails = props => {
   const { selectedRoute } = props;
@@ -56,9 +57,9 @@ export const RouteDetails = props => {
           >
             Delete
           </Button>
-          <Button data-testid="route-details-button-share" id="shareButton">
+          <ShareRoute data-testid="route-details-button-share" id="shareButton" selectedRoute={selectedRoute}>
             Share
-          </Button>
+          </ShareRoute>
         </div>
       </div>
     );

@@ -13,7 +13,9 @@ const ViadeModal = props => {
     <Button
       data-testid="modalSaveButton"
       variant="primary"
-      onClick={handleClose}
+      onClick={() => {
+        setShow(false);
+        props.onClick()}}
     >
       {props.saveText}
     </Button>
@@ -37,7 +39,6 @@ const ViadeModal = props => {
         variant="primary"
         onClick={e => {
           handleShow();
-          props.onClick(e);
         }}
       >
         {props.toggleText}

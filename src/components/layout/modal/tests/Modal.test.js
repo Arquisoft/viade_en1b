@@ -15,6 +15,7 @@ let rerenderFunc;
 beforeEach(() => {
   const { container, rerender } = render(
     <ViadeModal
+      disabled={false}
       title="Submitted"
       onClick={mock}
       saveText="Save"
@@ -32,11 +33,6 @@ describe("All renders correctly with normal settings", () => {
       expect(queryByTestId(modal, "modalTitle").textContent).not.toBeNull();
       expect(queryByTestId(modal, "modalTitle").textContent).toBe("Submitted");
     });
-  });
-
-  test("on click function is triggered", () => {
-    fireEvent.click(queryByTestId(modal, "modalButton"));
-    expect(mock).toBeCalled();
   });
 
   test("children are rendered", () => {
@@ -58,6 +54,18 @@ describe("All renders correctly with normal settings", () => {
       expect(queryByTestId(modal, "modalSaveButton")).toBe("Save");
       expect(queryByTestId(modal, "modalCloseButton")).not.toBeNull();
       expect(queryByTestId(modal, "modalCloseButton")).toBe("Close");
+    });
+  });
+
+  test("on save function is triggered", () => {
+    fireEvent.click(queryByTestId(modal, "modalButton"));
+    waitForDomChange(() => {
+      expect(queryByTestId(modal, "modalSaveButton")).not.toBeNull();
+      expect(queryByTestId(modal, "modalSaveButton")).toBe("Save");
+      expect(queryByTestId(modal, "modalCloseButton")).not.toBeNull();
+      expect(queryByTestId(modal, "modalCloseButton")).toBe("Close");
+      fireEvent.click(queryByTestId(modal, "modalSaveButton"));
+      expect(mock).toBeCalled();
     });
   });
 });
