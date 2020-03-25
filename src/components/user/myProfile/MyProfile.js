@@ -5,12 +5,9 @@ import { BsBoxArrowUpRight } from "react-icons/bs";
 import FriendList from "./FriendList.js";
 import { Button, Badge } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 export function MyProfile(props) {
-  useEffect(() => {
-    if (!props.userEmail) props.showProfileRequest();
-  }, [props]);
-
   let email = props.userEmail ? <p>{props.userEmail}</p> : null;
   let emailLoading = props.loading === true ? <p>Loading...</p> : null;
 
@@ -56,7 +53,7 @@ export function MyProfile(props) {
               </Button>
             </div>
           </div>
-          <FriendList id="friendList" />
+          <FriendList friends={props.friends} id="friendList" />
         </div>
       </LoggedIn>
       <LoggedOut>
@@ -70,8 +67,9 @@ const mapStateToProps = state => {
   return {
     userEmail: state.user.email,
     emailLoading: state.user.emailLoading,
-    emailError: state.user.emailError
+    emailError: state.user.emailError,
+    friends: state.user.friends
   };
 };
 
-export default React.memo(MyProfile);
+export default connect(mapStateToProps)(React.memo(MyProfile));
