@@ -89,12 +89,15 @@ describe("Behaviour", () => {
     let submitButton = queryByText(uploadRoute, "Submit");
     expect(spy).not.toBeCalled();
     submitButton.click();
-    expect(spy).toBeCalled();
+    waitForDomChange(() => {
+      expect(mockFunc).toBeCalled();
+    });
   });
 
   test("function handling the information of the route is fired", () => {
     const spy = jest.spyOn(UploadRoute.prototype, "changeHandlerRoute");
     const mockFunc = jest.fn();
+
     let nameInput = queryByPlaceholderText(uploadRoute, "Route name");
     let positionsInput = queryByPlaceholderText(
       uploadRoute,
