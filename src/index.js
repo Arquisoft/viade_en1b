@@ -9,15 +9,7 @@ import {
 } from "./components/layout/themeContext/ThemeContext";
 import { store } from "./createStore";
 
-const myLogger = store => next => action => {
-  console.group(action.type);
-  console.log("previous state", store.getState());
-  next(action);
-  console.log("actual state", store.getState());
-  console.groupEnd();
-};
-
-const store = createStore(rootReducer, applyMiddleware(thunk, myLogger));
+const myStore = store;
 
 ReactDOM.render(
   <ThemeContext.Provider value={themes.purple}>
