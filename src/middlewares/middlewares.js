@@ -6,9 +6,6 @@ export const myLogger = store => next => action => {
   console.groupEnd();
 };
 export const asyncRouteFetch = store => next => action => {
-  if (action.type) {
-    console.log(store.getState().route.selectedRoute);
-  }
   next(action);
 };
 

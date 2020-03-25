@@ -8,11 +8,11 @@ import { Button, Badge } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import { showProfile } from "../../../store/actions/tests/UserActions";
 
-export function MyProfile() {
+export function MyProfile(props) {
   const [theEmail, setTheEmail] = useState("");
 
   const setAllStates = async () => {
-    setTheEmail(showProfile());
+    props.getProfile();
   };
 
   setAllStates();
@@ -68,17 +68,10 @@ export function MyProfile() {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    ...state,
-    profile: state.profile
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
     getProfile: () => dispatch(showProfile())
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyProfile);
+export default connect(null, mapDispatchToProps)(MyProfile);
