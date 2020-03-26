@@ -19,12 +19,12 @@ export const App = props => {
     useLoggedIn() === true ? (
       <MyNavBar brandName="Viade_en1b"></MyNavBar>
     ) : null;
-
+  
   return (
-    <div className="App">
-      <Routing navBar={navBar} />
-      <Footer></Footer>
-    </div>
+      <div  data-testid="theApp" className="App">
+        <Routing navBar = {navBar}/>
+        <Footer></Footer>
+      </div>
   );
 };
 
