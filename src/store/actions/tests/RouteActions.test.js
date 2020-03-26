@@ -34,7 +34,8 @@ describe("Route actions", () => {
       routes: [],
       selectedRoute: null
     },
-    auth: {}
+    auth: {}, 
+    user: {}
   };
 
   test("show route action", () => {
@@ -70,9 +71,8 @@ describe("Route actions", () => {
       selectedRoute: null
     };
     const store = testStore(rootReducer, initState);
-    console.log(store.getState());
 
-    store.dispatch(uploadRoute(uploadedRoute));
+    store.dispatch(uploadRoute(uploadedRoute, initState.route.routes));
     const newState = store.getState().route;
 
     expect(newState).toStrictEqual(expectedState);
@@ -80,7 +80,7 @@ describe("Route actions", () => {
 
   test("share route action", () => {
     const expectedState = {
-      routes: [uploadedRoute],
+      routes: [],
       selectedRoute: null
     };
     const store = testStore(rootReducer, initState);
