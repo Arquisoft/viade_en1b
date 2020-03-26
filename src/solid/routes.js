@@ -8,13 +8,12 @@ import { getWebId } from "./auth";
  * so they act as a coherent module for other parts of the application to use.
  */
 
-export async function getRoutesFolder() {
-    let session = await getWebId();
-    return session.split("/profile")[0] + "/public/routes/";
+export async function getRoutesFolder(userWebId) {
+    return userWebId.split("/profile")[0] + "/public/routes/";
 }
 
-export async function getRoutesFromPod() {
-    let url = await getRoutesFolder();
+export async function getRoutesFromPod(userWebId) {
+    let url = await getRoutesFolder(userWebId);
     let fc = new FC(auth);
     let folder = await fc.readFolder(url);
     let routesTexts = await Promise.all(folder.files.map(async (f) => await fc.readFile(url + f.name)));
@@ -22,8 +21,8 @@ export async function getRoutesFromPod() {
     return routes;
 }
 
-async function getNextId() {
-    let routes = await getRoutesFromPod();
+async function getNextId(userWebId) {
+    let routes = await getRoutesFromPod(userWebId);
     routes = routes.sort( (a, b) => { return a.id - b.id; } );
     for (let i = 0; i < routes.length; i++) {
         if (i !== routes.get(i).id) {
@@ -33,9 +32,9 @@ async function getNextId() {
     return routes.length;
 }
 
-export async function uploadRouteToPod(route) {
-    route.id = await getNextId();
-    let url = await getRoutesFolder();
+export async function uploadRouteToPod(route, userWebId) {
+    route.id = await getNextId(userWebId);
+    let url = await getRoutesFolder(userWebId);
     let fc = new FC(auth);
     if (!await fc.itemExists(url)) {
         await fc.createFolder(url);
@@ -43,8 +42,8 @@ export async function uploadRouteToPod(route) {
     await fc.createFile(url + route.name, JSON.stringify(route), "text/plain");
 }
 
-export async function getRouteFromPod(routeName) {
-    let url = await getRoutesFolder();
+export async function getRouteFromPod(routeName, userWebId) {
+    let url = await getRoutesFolder(userWebId);
     let fc = new FC(auth);
     let folder = await fc.readFolder(url);
     if (folder.files.includes(routeName)) {
@@ -53,15 +52,15 @@ export async function getRouteFromPod(routeName) {
     return null;
 }
 
-export async function clearRoutesFromPod() {
-    let url = await getRoutesFolder();
+export async function clearRoutesFromPod(userWebId) {
+    let url = await getRoutesFolder(userWebId);
     let fc = new FC(auth);
     let folder = await fc.readFolder(url);
     await Promise.all(folder.files.map(async (f) => await fc.deleteFile(url + f.name)));
 }
 
-export async function clearRouteFromPod(routeName) {
-    let url = await getRoutesFolder();
+export async function clearRouteFromPod(routeName, userWebId) {
+    let url = await getRoutesFolder(userWebId);
     let fc = new FC(auth);
     let folder = await fc.readFolder(url);
     if (folder.files.includes(routeName)) {
