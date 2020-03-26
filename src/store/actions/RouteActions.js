@@ -46,7 +46,6 @@ export const clearRoute = () => {
 export const uploadRoute = (route) => {
     return (dispatch, getState) => {
         const newRoute = {
-            id: Object.keys(getState().route.routes).length,
             name: route.name,
             description: route.description,
             author: route.author,
