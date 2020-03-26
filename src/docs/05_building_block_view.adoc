@@ -125,13 +125,13 @@ Interface::
 
 [options="header"]
 |==============================
-| Method                        | Description
-| uploadRouteToPod(route)       | Uploads a route object to the user's POD
-| getRouteFromPod(routeName)    | Gets a route from the user's POD by name
-| getRoutesFromPod()            | Gets a list with all the routes from the user's POD
-| clearRoutesFromPod()          | Deletes all routes from the user's POD
-| clearRouteFromPod(routeName)  | Deletes a route from the user's POD by name
-| getRoutesFolder()             | Gets the URL of the routes storage as a string
+| Method                                  | Description
+| getRoutesFolder(userWebId)              | Gets the URL of the routes storage as a string
+| uploadRouteToPod(route, userWebId)      | Uploads a route object to the user's POD
+| getRouteFromPod(routeName, userWebId)   | Gets a route from the user's POD by name
+| getRoutesFromPod(userWebId)             | Gets a list with all the routes from the user's POD
+| clearRouteFromPod(routeName, userWebId) | Deletes a route from the user's POD by name
+| clearRoutesFromPod(userWebId)           | Deletes all routes from the user's POD
 |==============================
 
 Quality/Performance Characteristics::

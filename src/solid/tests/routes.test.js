@@ -18,7 +18,7 @@ describe("Solid Routes", () => {
             description: "Starting at Gascona, you will end right in front of the EII after visiting some important places in Oviedo.",
             "images": ["https://inigogf.inrupt.net/profile/catedralDeOviedo.jpg"],
             videos: []
-        }
+        };
 
     test("Correct path to routes", async () => {
         expect(solid.getRoutesFolder(targetWebId)).toEqual("https://viandetest2020.solid.community/public/viade/routes/");
@@ -38,5 +38,5 @@ describe("Solid Routes", () => {
     //    expect(routes.length).toEqual(1);
     //});
 
-})
+});
 

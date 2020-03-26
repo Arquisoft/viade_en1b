@@ -15,8 +15,9 @@ export function getRoutesFolder(userWebId) {
 export async function getRoutesFromPod(userWebId) {
     let url = getRoutesFolder(userWebId);
     let fc = new FC(auth);
-    if (! await fc.itemExists(url))
+    if (! await fc.itemExists(url)) {
         return [];
+    }
     let folder = await fc.readFolder(url);
     let routesTexts = await Promise.all(folder.files.map(async (f) => await fc.readFile(url + f.name)));
     let routes = routesTexts.map(JSON.parse);
@@ -57,8 +58,9 @@ export async function getRouteFromPod(routeName, userWebId) {
 export async function clearRoutesFromPod(userWebId) {
     let url = getRoutesFolder(userWebId);
     let fc = new FC(auth);
-    if (! await fc.itemExists(url))
+    if (! await fc.itemExists(url)) {
         return;
+    }
     let folder = await fc.readFolder(url);
     await Promise.all(folder.files.map(async (f) => await fc.deleteFile(url + f.name)));
 }
