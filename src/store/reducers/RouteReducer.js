@@ -107,15 +107,12 @@ const routeReducer = (state = initState, action) => {
       uploadRouteToPod(newRoute);
       let previousRoutes = [...action.payload.routes];
       previousRoutes.push(action.payload.route);
-
-      //getState().route.routes[getState().route.routes.length] = newRoute;
       return {
         ...state,
         routes: previousRoutes
       };
 
     case "DELETE_ROUTE":
-      console.log(state);
       let routes = state.routes.filter(r => r.id !== action.payload.id);
       return {
         ...state,
