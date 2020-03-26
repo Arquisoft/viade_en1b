@@ -8,13 +8,15 @@ import { getWebId } from "./auth";
  * so they act as a coherent module for other parts of the application to use.
  */
 
-export async function getRoutesFolder(userWebId) {
-    return userWebId.split("/profile")[0] + "/public/routes/";
+export function getRoutesFolder(userWebId) {
+    return userWebId.split("/profile")[0] + "/public/viade/routes/";
 }
 
 export async function getRoutesFromPod(userWebId) {
-    let url = await getRoutesFolder(userWebId);
+    let url = getRoutesFolder(userWebId);
     let fc = new FC(auth);
+    if (! await fc.itemExists(url))
+        return [];
     let folder = await fc.readFolder(url);
     let routesTexts = await Promise.all(folder.files.map(async (f) => await fc.readFile(url + f.name)));
     let routes = routesTexts.map(JSON.parse);
@@ -34,7 +36,7 @@ async function getNextId(userWebId) {
 
 export async function uploadRouteToPod(route, userWebId) {
     route.id = await getNextId(userWebId);
-    let url = await getRoutesFolder(userWebId);
+    let url = getRoutesFolder(userWebId);
     let fc = new FC(auth);
     if (!await fc.itemExists(url)) {
         await fc.createFolder(url);
@@ -43,7 +45,7 @@ export async function uploadRouteToPod(route, userWebId) {
 }
 
 export async function getRouteFromPod(routeName, userWebId) {
-    let url = await getRoutesFolder(userWebId);
+    let url = getRoutesFolder(userWebId);
     let fc = new FC(auth);
     let folder = await fc.readFolder(url);
     if (folder.files.includes(routeName)) {
@@ -53,14 +55,16 @@ export async function getRouteFromPod(routeName, userWebId) {
 }
 
 export async function clearRoutesFromPod(userWebId) {
-    let url = await getRoutesFolder(userWebId);
+    let url = getRoutesFolder(userWebId);
     let fc = new FC(auth);
+    if (! await fc.itemExists(url))
+        return;
     let folder = await fc.readFolder(url);
     await Promise.all(folder.files.map(async (f) => await fc.deleteFile(url + f.name)));
 }
 
 export async function clearRouteFromPod(routeName, userWebId) {
-    let url = await getRoutesFolder(userWebId);
+    let url = getRoutesFolder(userWebId);
     let fc = new FC(auth);
     let folder = await fc.readFolder(url);
     if (folder.files.includes(routeName)) {
