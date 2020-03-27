@@ -2,7 +2,9 @@ const initialState = {
   email: null,
   emailLoading: false,
   emailError: null,
-  friends: []
+  friends: [],
+  friendsLoading: false,
+  friendsError: null
 };
 
 const userReducer = (state = initialState, action) => {
@@ -10,7 +12,7 @@ const userReducer = (state = initialState, action) => {
     case "LOAD_EMAIL_REQUEST":
       return {
         ...state,
-        loading: action.payload
+        emailLoading: action.payload
       };
     case "LOAD_EMAIL_ERROR":
       return {
@@ -20,24 +22,24 @@ const userReducer = (state = initialState, action) => {
     case "LOAD_EMAIL_SUCCESS":
       return {
         ...state,
-        loading: false,
+        emailLoading: false,
         email: action.payload
       };
     case "LOAD_FRIENDS_REQUEST":
       return {
         ...state,
-        loading: action.payload
+        friendsLoading: action.payload
       };
     case "LOAD_FRIENDS_SUCCESS":
       return {
         ...state,
-        loading: false,
+        friendsLoading: false,
         friends: action.payload
       };
     case "LOAD_FRIENDS_ERROR":
       return {
         ...state,
-        loading: false,
+        friendsLoading: false,
         friendsError: action.payload
       };
     default:

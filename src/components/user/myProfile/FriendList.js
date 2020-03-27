@@ -13,19 +13,19 @@ export default function MyProfile(props) {
   useEffect(() => {});
   let friendsCards = props.friends.map((friend, index) => {
     return (
-      <Card key={index} onClick={() => openProfile(`${friend.uri}`)}>
+      <Card data-testid="friend-list-card" key={index} onClick={() => openProfile(`${friend.uri}`)}>
         <Card.Body>
-          <Card.Link href={friend.uri}>
-            <p>{friend.name}</p>
+          <Card.Link data-testid="friend-list-friend-uri" href={friend.uri}>
+            <p data-testid="friend-list-friend-name">{friend.name}</p>
           </Card.Link>
         </Card.Body>
       </Card>
     );
   });
-  let friends = <div className="FriendList">{friendsCards}</div>;
+  let friends = <div data-testid="friend-list" className="FriendList">{friendsCards}</div>;
   return (
-    <div id="friendListContainer">
-      <h1>Friends list:</h1>
+    <div data-testid="friend-list-container" id="friendListContainer">
+      <h1 data-testid="friend-list-container">Friends list:</h1>
       {friends}
     </div>
   );

@@ -2,7 +2,7 @@ const initState = {
   userWebId: null
 };
 
-const authReducer = (state = initState, action) => {
+export const authReducer = (state = initState, action) => {
   switch (action.type) {
     case "UPDATE_WEB_ID":
       return {
