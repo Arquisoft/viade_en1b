@@ -26,13 +26,22 @@ export class UploadRoute extends React.Component {
   }
 
   changeHandlerFiles(e) {
-    let routePositions = [];
-    console.log(e.target.files[0]);
-    console.log(this.state.file);
-    let parseado = parseGPX(e.target.files[0]);
-    console.log(parseado);
-    //positions = 
-    //this.setState({...this.state, positions: positions});
+    let file = e.target.files[0];
+    let parseado = null;
+    const self = this;
+    if (file) {
+      var reader = new FileReader();
+      reader.readAsText(file, "UTF-8");
+      reader.onload = function (evt) {
+        parseado = parseGPX(evt.target.result);
+        //console.log(self.state);
+        //console.log(parseado);
+        self.state.positions = parseado;
+        //console.log(self.state);
+      }
+      reader.onerror = function (evt) {
+      }
+  }
   }
 
   //This is part of the state, and states should not be tested.
@@ -78,6 +87,7 @@ export class UploadRoute extends React.Component {
 
   submitForm(e) {
     e.preventDefault();
+    //console.log(this.state);
     this.props.uploadRoute(this.state);
     this.setState({ ...this.state, reset: true });
   }

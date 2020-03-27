@@ -2,9 +2,7 @@ import GPX from 'gpx-parser-builder';
 
 export const parseGPX = (file) =>
 {
-    console.log(file)
     const gpx = GPX.parse(file)
-    console.log(gpx)
     const routeList = []
     gpx.trk.forEach(track => {
         const routePositions = []
