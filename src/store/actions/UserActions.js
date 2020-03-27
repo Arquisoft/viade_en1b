@@ -26,10 +26,10 @@ export const loadFriendsRequest = () => {
   };
 };
 
-export const loadFriendsSuccess = webId => {
+export const loadFriendsSuccess = friends => {
   return {
     type: "LOAD_FRIENDS_SUCCESS",
-    payload: webId
+    payload: friends
   };
 };
 

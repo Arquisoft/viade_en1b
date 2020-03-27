@@ -84,7 +84,6 @@ describe("Route actions", () => {
       selectedRoute: null
     };
     const store = testStore(rootReducer, initState);
-    console.log(store.getState());
 
     store.dispatch(shareRoute(uploadedRoute));
     const newState = store.getState().route;
@@ -98,7 +97,6 @@ describe("Route actions", () => {
       selectedRoute: null
     };
     const store = testStore(rootReducer, initState);
-    console.log(store.getState());
 
     store.dispatch(deleteRoute(uploadedRoute));
     const newState = store.getState().route;
