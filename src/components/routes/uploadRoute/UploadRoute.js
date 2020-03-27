@@ -5,6 +5,7 @@ import { Form } from "react-bootstrap";
 import { uploadRoute } from "./../../../store/actions/RouteActions";
 import UploadButton from "./uploadButton/UploadButton";
 import ViadeModal from "../../layout/modal/Modal";
+import parseGPX from "../../../parser/parser";
 
 export class UploadRoute extends React.Component {
   state = {
@@ -22,6 +23,16 @@ export class UploadRoute extends React.Component {
     this.setState({
       [e.target.id]: e.target.value
     });
+  }
+
+  changeHandlerFiles(e) {
+    let routePositions = [];
+    console.log(e.target.files[0]);
+    console.log(this.state.file);
+    let parseado = parseGPX(e.target.files[0]);
+    console.log(parseado);
+    //positions = 
+    //this.setState({...this.state, positions: positions});
   }
 
   //This is part of the state, and states should not be tested.
@@ -126,7 +137,7 @@ export class UploadRoute extends React.Component {
           <div id="buttonHolder">
             <UploadButton
               reset={this.state.reset}
-              onChange={this.changeHandlerRoute.bind(this)}
+              onChange={this.changeHandlerFiles.bind(this)}
               id="file"
               text="Choose a route"
             ></UploadButton>
