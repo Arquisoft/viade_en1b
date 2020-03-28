@@ -1,4 +1,5 @@
 import { uploadRouteToPod } from "../../solid/routes";
+import { deepClone } from "../../utils/functions";
 
 const initState = {
   routes: [
@@ -19,7 +20,8 @@ const initState = {
         "https://source.unsplash.com/random/600x600",
         "https://source.unsplash.com/random/602x602"
       ],
-      videos: ["futuro video 1", "futuro video 2"]
+      videos: ["futuro video 1", "futuro video 2"],
+      sharedWith: []
     },
     {
       id: 1,
@@ -34,7 +36,8 @@ const initState = {
       ],
       description: "",
       images: [],
-      videos: []
+      videos: [],
+      sharedWith: []
     },
     {
       id: 2,
@@ -49,7 +52,8 @@ const initState = {
       ],
       description: "",
       images: [],
-      videos: []
+      videos: [],
+      sharedWith: []
     },
     {
       id: 3,
@@ -64,7 +68,8 @@ const initState = {
       ],
       description: "",
       images: [],
-      videos: []
+      videos: [],
+      sharedWith: []
     },
     {
       id: 4,
@@ -79,7 +84,8 @@ const initState = {
       ],
       description: "",
       images: [],
-      videos: []
+      videos: [],
+      sharedWith: []
     }
   ],
   selectedRoute: null
@@ -125,7 +131,21 @@ const routeReducer = (state = initState, action) => {
         selectedRoute: action.payload
       };
     case "SHARE_ROUTE":
-      return { ...state };
+      let stateRoutes = deepClone(state.routes);
+      let sharedRouteId = action.payload.route.id;
+
+      let alreadyShared = stateRoutes.filter(
+        route => route.id == action.payload.route.id
+      )[0].sharedWith;
+      console.log(alreadyShared);
+      let sharedRoute = {
+        ...action.payload.route,
+        sharedWith: action.payload.friends.concat(alreadyShared)
+      };
+      let newRoutes = stateRoutes;
+      newRoutes[sharedRouteId] = sharedRoute;
+
+      return { ...state, routes: newRoutes };
     default:
       return state;
   }

@@ -1,40 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ShareRoute.css";
 import ViadeModal from "../../layout/modal/Modal";
 import { connect } from "react-redux";
 import { shareRoute } from "../../../store/actions/RouteActions";
 import FriendList from "../../user/myProfile/FriendList";
 import style from "./ShareRoute.css";
-import { deepClone } from "../../../utils/functions";
+import { deepClone, filterUnsharedFriends } from "../../../utils/functions";
 import { Badge } from "react-bootstrap";
 
 function ShareRoute(props) {
   const { selectedRoute } = props;
-  var { selectedFriend } = "";
   const { shareRoute } = props;
 
   const [state, setState] = useState({
-    friends: deepClone(props.friends),
+    friends: filterUnsharedFriends(props.friends, props.sharedWith),
     friendsToShareWith: []
   });
 
   const resetState = () => {
     setState({
-      friends: deepClone(props.friends),
+      friends: filterUnsharedFriends(
+        deepClone(props.friends),
+        deepClone(props.sharedWith)
+      ),
       friendsToShareWith: []
     });
   };
 
   const handleOnClick = key => {
     state.friends[key].checked = !state.friends[key].checked;
-    let array = [...state.friendsToShareWith];
-    if (state.friends[key].checked) {
-      array.push(state.friends[key]);
+    let shared = deepClone(state.friendsToShareWith);
+    let friends = deepClone(state.friends);
+    if (friends[key].checked) {
+      let f = friends[key];
+      shared.push(f);
     } else {
-      array.pop(key);
+      shared.pop(key);
     }
 
-    setState({ ...state, friendsToShareWith: array });
+    setState({ ...state, friendsToShareWith: shared, friends: friends });
   };
 
   const shareButtonText =
@@ -54,11 +58,16 @@ function ShareRoute(props) {
       disabled={false}
       saveDisabled={state.friendsToShareWith.length === 0}
       toggleText="Share"
-      handleClose={resetState}
+      handleClose={() => {}}
       onClick={() => {
-        shareRoute(selectedRoute, selectedFriend);
+        shareRoute(selectedRoute, state.friendsToShareWith);
+        setState({
+          ...state,
+          friends: filterUnsharedFriends(props.friends, props.sharedWith),
+          friendsToShareWith: []
+        });
       }}
-      title="Who do you want to share your routes with?"
+      title="Pick some friends"
       closeText="Close"
       saveText={shareButtonText}
     >
@@ -74,13 +83,14 @@ function ShareRoute(props) {
 
 const mapStateToProps = state => {
   return {
-    friends: state.user.friends
+    friends: state.user.friends,
+    sharedWith: state.route.selectedRoute.sharedWith
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    shareRoute: (route, friendUri) => dispatch(shareRoute(route, friendUri))
+    shareRoute: (route, friends) => dispatch(shareRoute(route, friends))
   };
 };
 
