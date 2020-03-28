@@ -7,6 +7,8 @@ import {
   shareRoute
 } from "../RouteActions";
 import rootReducer from "../../reducers/RootReducer";
+import { deepClone } from "../../../utils/functions";
+
 
 describe("Route actions", () => {
   const uploadedRoute = {
@@ -27,14 +29,15 @@ describe("Route actions", () => {
       "https://source.unsplash.com/random/600x600",
       "https://source.unsplash.com/random/602x602"
     ],
-    videos: ["futuro video 1", "futuro video 2"]
+    videos: ["futuro video 1", "futuro video 2"],
+    sharedWith: []
   };
   const initState = {
     route: {
       routes: [],
       selectedRoute: null
     },
-    auth: {}, 
+    auth: {},
     user: {}
   };
 
@@ -79,7 +82,7 @@ describe("Route actions", () => {
   });
 
   test("share route action", () => {
-    const expectedState = {
+    let routesReducerState = {
       routes: [{
         id: 0,
         name: "Hiking Naranco ",
@@ -94,33 +97,45 @@ describe("Route actions", () => {
         ],
         description:
           "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing",
-        sharedWith:[],
         images: [
           "https://source.unsplash.com/random/600x600",
           "https://source.unsplash.com/random/602x602"
         ],
-        videos: ["futuro video 1", "futuro video 2"], 
+        videos: ["futuro video 1", "futuro video 2"],
+        sharedWith: []
       }],
       selectedRoute: null
     };
 
     let initialState = {
-      route: {
-        routes: expectedState.routes,
-        selectedRoute: null
-      },
-      auth: {}, 
+      route: routesReducerState,
+      auth: {},
       user: {}
     };
 
     const mockFriends = ['marcos'];
-    expectedState.routes[0].sharedWith=mockFriends;
+
+    let stateRoutes = deepClone(initialState.route.routes);
+    let sharedRouteId = uploadedRoute.id;
+
+    let alreadyShared = stateRoutes.filter(
+      route => route.id == uploadedRoute.id
+    )[0].sharedWith;
+    let sharedRoute = {
+      ...uploadedRoute,
+      sharedWith: mockFriends.concat(alreadyShared)
+    };
+    let newRoutes = stateRoutes;
+    newRoutes[sharedRouteId] = sharedRoute;
+
+    routesReducerState = {...routesReducerState, routes:newRoutes};
+    const expected = {...initialState, route:routesReducerState};
 
     const store = testStore(rootReducer, initialState);
     store.dispatch(shareRoute(uploadedRoute, mockFriends));
-    const newState = store.getState().route;
+    const newState = store.getState();
 
-    expect(newState).toStrictEqual(expectedState);
+    expect(newState).toStrictEqual(expected);
   });
 
   test("delete route action", () => {
