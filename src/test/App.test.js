@@ -7,7 +7,7 @@ import React from "react";
 
 let wrapper;
 beforeEach(() => {
-  const { container } = render(<App/>);
+  const { container } = render(<App />);
   wrapper = container;
 });
 
