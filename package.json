@@ -15,7 +15,6 @@
     "@testing-library/user-event": "^7.2.1",
     "babel-plugin-react-css-modules": "^5.2.6",
     "bootstrap": "^4.4.1",
-    "gpx-parser-builder": "^1.0.2",
     "leaflet": "^1.6.0",
     "rdf-query": "0.0.2",
     "react": "^16.12.0",
