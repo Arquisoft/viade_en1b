@@ -5,6 +5,7 @@ import { ThemeContext } from "./components/layout/themeContext/ThemeContext";
 import { useLoggedIn } from "@solid/react";
 import Routing from "./components/routing/Routing";
 import Footer from "./components/layout/footer/Footer";
+
 export const App = props => {
   const theme = useContext(ThemeContext);
   useEffect(() => {
@@ -13,18 +14,18 @@ export const App = props => {
       return document.documentElement.style.setProperty(key, value);
     });
     return;
-  }, [theme, props]);
+  });
 
   const navBar =
     useLoggedIn() === true ? (
-      <MyNavBar brandName="Viade_en1b"></MyNavBar>
+      <MyNavBar data-testid="theNavBar" brandName="Viade_en1b"></MyNavBar>
     ) : null;
-  
+
   return (
-      <div  data-testid="theApp" className="App">
-        <Routing navBar = {navBar}/>
-        <Footer></Footer>
-      </div>
+    <div data-testid="theApp" className="App">
+      <Routing navBar={navBar} />
+      <Footer></Footer>
+    </div>
   );
 };
 

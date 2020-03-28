@@ -5,10 +5,13 @@ export const deleteRoute = route => {
   };
 };
 
-export const shareRoute = route => {
+export const shareRoute = (route, friends) => {
   return {
     type: "SHARE_ROUTE",
-    payload: route
+    payload: {
+      route: route,
+      friends: friends
+    }
   };
 };
 

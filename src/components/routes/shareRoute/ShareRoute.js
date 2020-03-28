@@ -1,33 +1,97 @@
-import React from 'react'
-import './ShareRoute.css'
+import React, { useState, useEffect } from "react";
+import "./ShareRoute.css";
+import ViadeModal from "../../layout/modal/Modal";
+import { connect } from "react-redux";
+import { shareRoute } from "../../../store/actions/RouteActions";
 import FriendList from "../../user/myProfile/FriendList";
-import {Button } from 'react-bootstrap'
-import { LoggedOut, LoggedIn } from '@solid/react';
-import { Redirect } from 'react-router-dom';
+import style from "./ShareRoute.css";
+import { deepClone, filterUnsharedFriends } from "../../../utils/functions";
+import { Badge } from "react-bootstrap";
 
 function ShareRoute(props) {
-   
+  const { selectedRoute } = props;
+  const { shareRoute } = props;
 
-    return (
-      <div id='shareRoute' className="modal">
-        <LoggedIn>
-          <div className="modal_content">
-            <span className="close" >
-              &times;
-          </span>
-            <FriendList />
-            <Button onClick={() => {
-            }}>Compartir</Button>
-          </div>
-        </LoggedIn>
-        <LoggedOut>
-          <Redirect to='/'></Redirect>
-        </LoggedOut>
+  const [state, setState] = useState({
+    friends: filterUnsharedFriends(props.friends, props.sharedWith),
+    friendsToShareWith: []
+  });
 
-      </div>
-    )
+  const resetState = () => {
+    setState({
+      friends: filterUnsharedFriends(
+        deepClone(props.friends),
+        deepClone(props.sharedWith)
+      ),
+      friendsToShareWith: []
+    });
+  };
+
+  const handleOnClick = key => {
+    state.friends[key].checked = !state.friends[key].checked;
+    let shared = deepClone(state.friendsToShareWith);
+    let friends = deepClone(state.friends);
+    if (friends[key].checked) {
+      let f = friends[key];
+      shared.push(f);
+    } else {
+      shared.pop(key);
+    }
+
+    setState({ ...state, friendsToShareWith: shared, friends: friends });
+  };
+
+  const shareButtonText =
+    state.friendsToShareWith.length > 0 ? (
+      <React.Fragment>
+        Share
+        <Badge className={style.badge} color="secondary">
+          {state.friendsToShareWith.length}
+        </Badge>
+      </React.Fragment>
+    ) : (
+      "Share"
+    );
+
+  return (
+    <ViadeModal
+      disabled={false}
+      saveDisabled={state.friendsToShareWith.length === 0}
+      toggleText="Share"
+      handleClose={() => {}}
+      onClick={() => {
+        shareRoute(selectedRoute, state.friendsToShareWith);
+        setState({
+          ...state,
+          friends: filterUnsharedFriends(props.friends, props.sharedWith),
+          friendsToShareWith: []
+        });
+      }}
+      title="Pick some friends"
+      closeText="Close"
+      saveText={shareButtonText}
+    >
+      <FriendList
+        onClick={handleOnClick}
+        friends={state.friends}
+        className={style.friendsExpanded}
+        checked
+      ></FriendList>
+    </ViadeModal>
+  );
 }
 
+const mapStateToProps = state => {
+  return {
+    friends: state.user.friends,
+    sharedWith: state.route.selectedRoute.sharedWith
+  };
+};
 
+const mapDispatchToProps = dispatch => {
+  return {
+    shareRoute: (route, friends) => dispatch(shareRoute(route, friends))
+  };
+};
 
-export default ShareRoute
+export default connect(mapStateToProps, mapDispatchToProps)(ShareRoute);
