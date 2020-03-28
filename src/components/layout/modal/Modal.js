@@ -8,7 +8,8 @@ const ViadeModal = props => {
     props.handleClose();
     setShow(false);
   };
-  const handleShow = () => {
+  const handleShow = e => {
+    props.onClick(e);
     setShow(true);
   };
 
@@ -19,7 +20,6 @@ const ViadeModal = props => {
       variant="primary"
       onClick={() => {
         setShow(false);
-        props.onClick();
       }}
     >
       {props.saveText}
@@ -43,7 +43,7 @@ const ViadeModal = props => {
         disabled={props.disabled}
         variant="primary"
         onClick={e => {
-          handleShow();
+          handleShow(e);
         }}
       >
         {props.toggleText}

@@ -18,7 +18,6 @@ export class UploadRoute extends React.Component {
     videos: [],
     reset: false
   };
-
   changeHandlerRoute(e) {
     this.setState({
       [e.target.id]: e.target.value
@@ -86,6 +85,7 @@ export class UploadRoute extends React.Component {
 
   submitForm(e) {
     e.preventDefault();
+    this.props.uploadRoute.bind(this);
     this.props.uploadRoute(this.state, this.props.routes, this.props.userWebId);
     this.setState({ ...this.state, reset: true });
   }
@@ -137,6 +137,9 @@ export class UploadRoute extends React.Component {
               onClick={this.submitForm.bind(this)}
               title="Submitted"
               closeText="Close"
+              handleClose={() => {
+                this.setState(this.resetState());
+              }}
               change
             >
               <p>Your route has been submited</p>
