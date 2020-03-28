@@ -43,7 +43,7 @@ const FriendList = props => {
     );
   });
 
-  let friendsCards = props.friends.map(friend => {
+  let friendsCards = props.friends.map((friend,index) => {
     return (
       <Card data-testid="friend-list-card" key={index} onClick={() => openProfile(`${friend.uri}`)}>
         <Card.Body>
