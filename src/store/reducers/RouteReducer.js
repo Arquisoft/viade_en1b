@@ -99,7 +99,7 @@ const routeReducer = (state = initState, action) => {
         selectedRoute: action.payload
       };
     case "UPLOAD_ROUTE":
-      const route = action.payload;
+      const route = action.payload.route;
       const newRoute = {
         id: Object.keys(action.payload.routes).length,
         name: route.name,
@@ -109,6 +109,7 @@ const routeReducer = (state = initState, action) => {
         images: route.images,
         videos: route.videos
       };
+      console.log("prueba")
       uploadRouteToPod(newRoute, action.payload.webId);
       let previousRoutes = [...action.payload.routes];
       previousRoutes.push(action.payload.route);
