@@ -1,9 +1,10 @@
 import React from "react";
 import "./UploadRoute.css";
 import { connect } from "react-redux";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { uploadRoute } from "./../../../store/actions/RouteActions";
 import UploadButton from "./uploadButton/UploadButton";
+import ViadeModal from "../../layout/modal/Modal";
 
 export class UploadRoute extends React.Component {
   state = {
@@ -51,6 +52,14 @@ export class UploadRoute extends React.Component {
       reset: false
     };
   }
+
+  isEmpty = () => {
+    return (
+      this.state.name === "" &&
+      this.state.description === "" &&
+      this.state.positions === ""
+    );
+  };
 
   componentDidUpdate() {
     if (this.state.reset) this.setState(this.resetState());
@@ -103,14 +112,15 @@ export class UploadRoute extends React.Component {
               />
             </Form.Group>
 
-            <Button
-              id="uploadButton"
+            <ViadeModal
+              disabled={this.isEmpty()}
+              toggleText="Submit"
               onClick={this.submitForm.bind(this)}
-              variant="primary"
-              type="submit"
+              title="Submitted"
+              closeText="Close"
             >
-              Submit
-            </Button>
+              <p>Your route has been submited</p>
+            </ViadeModal>
           </div>
 
           <div id="buttonHolder">

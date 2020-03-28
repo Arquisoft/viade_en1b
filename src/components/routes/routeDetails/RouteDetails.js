@@ -1,9 +1,10 @@
 import React from "react";
-import styles from "./RouteDetails.module.css";
+import style from "./RouteDetails.module.css";
 import Slideshow from "../../layout/slideshow/Slideshow";
 import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { deleteRoute } from "../../../store/actions/RouteActions";
+import ShareRoute from "../shareRoute/ShareRoute";
 
 export const RouteDetails = props => {
   const { selectedRoute } = props;
@@ -34,7 +35,7 @@ export const RouteDetails = props => {
       : "There is not description for this route";
 
     return (
-      <div className={props.style ? props.style : styles.details}>
+      <div className={props.style ? props.style : style.details}>
         <h3>Descripción</h3>
         <p data-testid="route-details-description">{description}</p>
         <h3>Fotos</h3>
@@ -48,7 +49,7 @@ export const RouteDetails = props => {
           images={videos}
         ></Slideshow>
 
-        <div id="buttons">
+        <div className={style.buttons}>
           <Button
             data-testid="route-details-button-delete"
             id="deleteButton"
@@ -56,9 +57,13 @@ export const RouteDetails = props => {
           >
             Delete
           </Button>
-          <Button data-testid="route-details-button-share" id="shareButton">
+          <ShareRoute
+            data-testid="route-details-button-share"
+            id="shareButton"
+            selectedRoute={selectedRoute}
+          >
             Share
-          </Button>
+          </ShareRoute>
         </div>
       </div>
     );
