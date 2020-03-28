@@ -1,8 +1,9 @@
-import GPX from './parser/gpx';
+import GPX from 'gpx-parser-builder'
 
 export const parseGPX = (file) =>
 {
     const gpx = GPX.parse(file)
+    //console.log(gpx)
     const routeList = []
     gpx.trk.forEach(track => {
         const routePositions = []
@@ -17,5 +18,3 @@ export const parseGPX = (file) =>
     })
     return routeList[0] //en caso de haber más de un track por archivo solo devolvemos el primer track
 }
-
-export default parseGPX
