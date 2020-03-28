@@ -26,12 +26,13 @@ export const clearRoute = () => {
   };
 };
 
-export const uploadRoute = (route, routes) => {
+export const uploadRoute = (route, routes, webId) => {
   return {
     type: "UPLOAD_ROUTE",
     payload: {
       route: route,
-      routes: routes
+      routes: routes,
+      webId: webId
     }
   };
 };

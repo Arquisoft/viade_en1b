@@ -103,7 +103,7 @@ const routeReducer = (state = initState, action) => {
         images: route.images,
         videos: route.videos
       };
-      uploadRouteToPod(newRoute);
+      uploadRouteToPod(newRoute, action.payload.webId);
       let previousRoutes = [...action.payload.routes];
       previousRoutes.push(action.payload.route);
       return {
