@@ -1,4 +1,4 @@
-import { uploadRouteToPod } from "../../solid/routes";
+import { uploadRouteToPod, shareRouteToPod } from "../../solid/routes";
 import { deepClone } from "../../utils/functions";
 
 const initState = {
@@ -144,6 +144,12 @@ const routeReducer = (state = initState, action) => {
       };
       let newRoutes = stateRoutes;
       newRoutes[sharedRouteId] = sharedRoute;
+
+      if(action.payload.friends[0])
+      {
+        shareRouteToPod(action.payload.route, action.payload.friends[0].uri);
+        console.log("se comparte")
+      }
 
       return { ...state, routes: newRoutes };
     default:

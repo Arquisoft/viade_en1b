@@ -40,6 +40,17 @@ async function getNextId(userWebId) {
   return routes.length;
 }
 
+export async function shareRouteToPod(route, userWebId) {
+  //route = {...route, id:await getNextId(userWebId)};
+  console.log(route)
+  let url = getRoutesFolder(userWebId);
+  let fc = new FC(auth);
+  if (!(await fc.itemExists(url))) {
+    await fc.createFolder(url);
+  }
+  await fc.postFile(url + route.name, JSON.stringify(route), "application/json");
+}
+
 export async function uploadRouteToPod(route, userWebId) {
   //route = {...route, id:await getNextId(userWebId)};
   console.log(route)
@@ -48,7 +59,7 @@ export async function uploadRouteToPod(route, userWebId) {
   if (!(await fc.itemExists(url))) {
     await fc.createFolder(url);
   }
-  await fc.createFile(url + route.name, JSON.stringify(route), "text/plain");
+  await fc.createFile(url + route.name, JSON.stringify(route), "application/json");
 }
 
 export async function getRouteFromPod(routeName, userWebId) {
