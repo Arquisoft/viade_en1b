@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Image, useWebId, Value, LoggedIn, LoggedOut } from "@solid/react";
 import "./MyProfile.css";
 import { BsBoxArrowUpRight } from "react-icons/bs";

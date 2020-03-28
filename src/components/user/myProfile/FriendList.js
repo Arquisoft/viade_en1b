@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import { Card } from "react-bootstrap";
-import { List, Value } from "@solid/react";
-import { getFriends } from "rdf-query/rdf-query";
 
 import "./FriendList.css";
 
