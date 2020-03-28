@@ -176,7 +176,6 @@ export class UploadRoute extends React.Component {
 const mapStateToProps = state => {
   return {
     routes: state.route.routes,
-    selectedRoute: state.route.selectedRoute
   };
 };
 
