@@ -94,12 +94,12 @@ describe("Route actions", () => {
         ],
         description:
           "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing",
-        sharedWith:[],
         images: [
           "https://source.unsplash.com/random/600x600",
           "https://source.unsplash.com/random/602x602"
         ],
         videos: ["futuro video 1", "futuro video 2"], 
+        sharedWith:[]
       }],
       selectedRoute: null
     };
