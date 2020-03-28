@@ -31,8 +31,9 @@ async function getNextId(userWebId) {
   routes = routes.sort((a, b) => {
     return a.id - b.id;
   });
+  console.log(routes);
   for (let i = 0; i < routes.length; i++) {
-    if (i !== routes.get(i).id) {
+    if (i !== routes[i].id) {
       return i;
     }
   }
