@@ -1,5 +1,6 @@
 import auth from "solid-auth-client";
 import FC from "solid-file-client";
+import { getWebId } from "./auth";
 
 /**
  * Functions in this file present an interface to add, get and manipulate routes

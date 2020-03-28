@@ -5,7 +5,6 @@ import { Form } from "react-bootstrap";
 import { uploadRoute } from "./../../../store/actions/RouteActions";
 import UploadButton from "./uploadButton/UploadButton";
 import ViadeModal from "../../layout/modal/Modal";
-import parseGPX from "../../../parser/parser";
 
 export class UploadRoute extends React.Component {
   state = {
@@ -23,25 +22,6 @@ export class UploadRoute extends React.Component {
     this.setState({
       [e.target.id]: e.target.value
     });
-  }
-
-  changeHandlerFiles(e) {
-    let file = e.target.files[0];
-    let parseado = null;
-    const self = this;
-    if (file) {
-      var reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload = function (evt) {
-        parseado = parseGPX(evt.target.result);
-        //console.log(self.state);
-        //console.log(parseado);
-        self.state.positions = parseado;
-        //console.log(self.state);
-      }
-      reader.onerror = function (evt) {
-      }
-  }
   }
 
   //This is part of the state, and states should not be tested.
@@ -87,7 +67,7 @@ export class UploadRoute extends React.Component {
 
   submitForm(e) {
     e.preventDefault();
-    this.props.uploadRoute(this.state, this.props.routes);
+    this.props.uploadRoute(this.state);
     this.setState({ ...this.state, reset: true });
   }
 
@@ -146,7 +126,7 @@ export class UploadRoute extends React.Component {
           <div id="buttonHolder">
             <UploadButton
               reset={this.state.reset}
-              onChange={this.changeHandlerFiles.bind(this)}
+              onChange={this.changeHandlerRoute.bind(this)}
               id="file"
               text="Choose a route"
             ></UploadButton>
@@ -173,16 +153,10 @@ export class UploadRoute extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    routes: state.route.routes,
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
-    uploadRoute: (route, routes) => dispatch(uploadRoute(route, routes))
+    uploadRoute: route => dispatch(uploadRoute(route))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploadRoute);
+export default connect(null, mapDispatchToProps)(UploadRoute);
