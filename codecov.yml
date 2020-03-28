@@ -1,2 +1,13 @@
 ignore:
   - "src/index.js"
+  - "src/parser/parser/bound.js"
+  - "src/parser/parser/copyright.js"
+  - "src/parser/parser/gpx.js"
+  - "src/parser/parser/link.js"
+  - "src/parser/parser/metadata.js"
+  - "src/parser/parser/person.js"
+  - "src/parser/parser/route.js"
+  - "src/parser/parser/track-segment.js"
+  - "src/parser/parser/track.js"
+  - "src/parser/parser/utils.js"
+  - "src/parser/parser/waypoint.js"

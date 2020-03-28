@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, waitForElement, queryBy ,fireEvent, queryByTestId } from '@testing-library/react'
+import { render, waitForElement ,fireEvent, queryByTestId } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import UploadButton from '../UploadButton'
 
