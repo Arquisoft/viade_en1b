@@ -100,7 +100,6 @@ const routeReducer = (state = initState, action) => {
         description: route.description,
         author: route.author,
         positions: route.positions,
-        file: route.file,
         images: route.images,
         videos: route.videos
       };
