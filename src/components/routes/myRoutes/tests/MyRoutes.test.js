@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import { render, queryByTestId } from "@testing-library/react";
+import { render, queryByTestId, waitForElement } from "@testing-library/react";
 import { MyRoutes } from "../MyRoutes";
 import "@testing-library/jest-dom";
 let myRoutes = null;
@@ -17,6 +17,9 @@ beforeEach(() => {
 
 describe("Everything is rendered correctly", () => {
   test("routes are rendered", () => {
-    expect(queryByTestId(myRoutes, "myRoutes-route-list")).not.toBeNull();
+    waitForElement(() => {
+      expect(queryByTestId(myRoutes, "myRoutes-route-list")).not.toBeNull();
+      expect(queryByTestId(myRoutes, "myRoutes-route-details")).not.toBeNull();
+    });
   });
 });

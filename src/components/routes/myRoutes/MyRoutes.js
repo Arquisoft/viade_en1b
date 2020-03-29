@@ -23,6 +23,7 @@ export function MyRoutes(props) {
           onClick={showRoute}
         />
         <RouteDetails
+          data-testid="myRoutes-route-details"
           style={styles.routeDetails}
           selectedRoute={selectedRoute}
         ></RouteDetails>
