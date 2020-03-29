@@ -52,7 +52,7 @@ describe("Route actions", () => {
       routesError: null
     },
     auth: {},
-    user: {}
+    user: {},
   };
 
   test("show route action", () => {
@@ -124,7 +124,8 @@ describe("Route actions", () => {
     let initialState = {
       route: routesReducerState,
       auth: {},
-      user: {}
+      user: {},
+      control: {}
     };
 
     const mockFriends = ['marcos'];
