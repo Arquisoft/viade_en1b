@@ -11,7 +11,6 @@ import {
   loadEmailRequest
 } from "../../store/actions/UserActions";
 import { useEffect } from "react";
-import { useWebId } from "@solid/react";
 import { updateWebId } from "../../store/actions/AuthActions";
 import { contentLoaded } from "../../store/actions/LoadActions";
 import { getWebId } from "../../solid/auth";

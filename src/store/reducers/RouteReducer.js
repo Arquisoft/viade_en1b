@@ -16,6 +16,7 @@ export const routeReducer = (state = initState, action) => {
         selectedRoute: action.payload
       };
     case "UPLOAD_ROUTE":
+      console.log(action.payload.webId)
       const id = action.payload.webId;
       const route = action.payload.route;
       const sharedWith= route.sharedWith ? route.sharedWith : [];

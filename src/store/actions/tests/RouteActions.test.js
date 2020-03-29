@@ -83,16 +83,12 @@ describe("Route actions", () => {
   });
 
   test("upload route action", () => {
-    const expectedState = {
-      routes: [],
-      selectedRoute: null
-    };
     const store = testStore(rootReducer, initState);
 
-    store.dispatch(uploadRoute(uploadedRoute, initState.route.routes, ""));
+    store.dispatch(uploadRoute(uploadedRoute, initState.route.routes, "https://themrcesi.inrupt.net/profile/card#me"));
     const newState = store.getState().route;
 
-    expect(newState).toStrictEqual();
+    expect(newState).toStrictEqual(initState.route);
   });
 
   test("share route action", () => {

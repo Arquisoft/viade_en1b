@@ -10,7 +10,8 @@ export const filterUnsharedFriends = (allFriends, alreadyShared) => {
   //Initialize the hash table
   alreadyShared.map(friend => hash[friend.uri] = true);
   allFriends.map(friend => {
-    if (!findInHashByUri(hash, friend)) aux.push({ ...friend });
+    if (!findInHashByUri(hash, friend)) return aux.push({ ...friend });
+    return [];
   });
   return aux;
 };
