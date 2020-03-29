@@ -7,7 +7,7 @@ import { showRoute } from "../../../store/actions/RouteActions";
 import { LoggedIn, LoggedOut } from "@solid/react";
 import { Redirect } from "react-router-dom";
 
-function MyRoutes(props) {
+export function MyRoutes(props) {
   const { routes } = props;
   const { selectedRoute } = props;
   const { showRoute } = props;
@@ -16,12 +16,14 @@ function MyRoutes(props) {
     <div className={styles.routesContainer}>
       <LoggedIn>
         <RouteList
+          data-testid="myRoutes-route-list"
           style={styles.routeList}
           currentMap={selectedRoute}
           routes={routes}
           onClick={showRoute}
         />
         <RouteDetails
+          data-testid="myRoutes-route-details"
           style={styles.routeDetails}
           selectedRoute={selectedRoute}
         ></RouteDetails>
