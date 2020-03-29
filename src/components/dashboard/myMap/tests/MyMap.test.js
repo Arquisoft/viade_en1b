@@ -12,7 +12,7 @@ describe('MyMap Component', () => {
             positions: []
         };
         wrapper = myMap(props.center, props.positions);
-        wrapperb = <MyMap center={props.center} positions={props.positions}></MyMap>
+        wrapperb = <MyMap center={props.center} positions={props.positions}></MyMap>;
     });
     
     test('Component renders correctly', () => {

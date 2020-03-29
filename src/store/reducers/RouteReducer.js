@@ -1,5 +1,6 @@
 import { uploadRouteToPod, shareRouteToPod } from "../../solid/routes";
 import { deepClone } from "../../utils/functions";
+import { loadRoutesRequest } from "../actions/RouteActions";
 
 const initState = {
   routes: [],
@@ -19,21 +20,19 @@ export const routeReducer = (state = initState, action) => {
       const route = action.payload.route;
       const sharedWith= route.sharedWith ? route.sharedWith : [];
       const newRoute = {
-        id: action.payload.routes.length,
         name: route.name,
         description: route.description,
-        author: route.author,
+        author: action.payload.webId.split("//")[1].split(".")[0],
         positions: route.positions,
         images: route.images,
         videos: route.videos,
         sharedWith: sharedWith
       };
       uploadRouteToPod(newRoute, action.payload.webId);
-      let previousRoutes = [...action.payload.routes];
-      previousRoutes.push(action.payload.route);
+      //let previousRoutes = [...action.payload.routes];
+      //previousRoutes.push(action.payload.route);
       return {
-        ...state,
-        routes: previousRoutes
+        ...state
       };
 
     case "DELETE_ROUTE":

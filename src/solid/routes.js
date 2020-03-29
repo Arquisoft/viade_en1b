@@ -41,8 +41,7 @@ async function getNextId(userWebId) {
 }
 
 export async function shareRouteToPod(route, userWebId) {
-  //route = {...route, id:await getNextId(userWebId)};
-  console.log(route)
+  route = {...route, id:await getNextId(userWebId)};
   let url = getRoutesFolder(userWebId);
   let fc = new FC(auth);
   if (!(await fc.itemExists(url))) {
@@ -52,8 +51,7 @@ export async function shareRouteToPod(route, userWebId) {
 }
 
 export async function uploadRouteToPod(route, userWebId) {
-  //route = {...route, id:await getNextId(userWebId)};
-  console.log(route)
+  route = {...route, id:await getNextId(userWebId)};
   let url = getRoutesFolder(userWebId);
   let fc = new FC(auth);
   if (!(await fc.itemExists(url))) {
