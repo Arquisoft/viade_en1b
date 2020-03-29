@@ -1,7 +1,8 @@
-import React from 'react'
-import { TileLayer, Map, Polyline, LayersControl } from 'react-leaflet'
-import './MyMap.css'
-
+import React from 'react';
+import { TileLayer, Map, Polyline, LayersControl } from 'react-leaflet';
+import './MyMap.css';
+import FullScreenControl from 'react-leaflet-fullscreen'
+import "react-leaflet-fullscreen/dist/styles.css"
 export const myMap = (center, positions) => {
     return (
         <div data-testid='mymap-container' id="mapContainer" className="leaflet-container">
@@ -19,6 +20,7 @@ export const myMap = (center, positions) => {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                     </LayersControl.BaseLayer>
+                    <FullScreenControl position="topright"></FullScreenControl>
                 </LayersControl>
                 
                 

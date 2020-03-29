@@ -11,7 +11,7 @@ import { contentLoaded } from "../../../store/actions/LoadActions";
 import { connect } from "react-redux";
 import { getWebId } from '../../../solid/auth'
 
-let MyNavBar = props => {
+export const MyNavBar = props => {
 
   const links = [
     { id: 0, text: "My routes", href: "/routes/MyRoutes", icon: <BsMap className="icon"></BsMap>, testId: "navbar-my-routes" },
