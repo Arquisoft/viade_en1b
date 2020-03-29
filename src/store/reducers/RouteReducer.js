@@ -19,7 +19,7 @@ export const routeReducer = (state = initState, action) => {
       const route = action.payload.route;
       const sharedWith= route.sharedWith ? route.sharedWith : [];
       const newRoute = {
-        id: Object.keys(action.payload.routes).length,
+        id: action.payload.routes.length,
         name: route.name,
         description: route.description,
         author: route.author,
