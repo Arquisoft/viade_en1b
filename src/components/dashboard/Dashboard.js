@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { useWebId } from "@solid/react";
 import { updateWebId } from "../../store/actions/AuthActions";
 import { contentLoaded } from "../../store/actions/LoadActions";
+import { getWebId } from "../../solid/auth";
 
 
 function Dashboard(props) {
@@ -24,7 +25,8 @@ function Dashboard(props) {
   //getWebId().then(x=> console.log(x))
 
   //header of the currently selected  route
-  let webId = useWebId();
+  let webId = null;
+  getWebId().then(id => webId = id);
   useEffect(() => {
     if(!props.loaded) {
       props.updateWebId(webId);
