@@ -4,7 +4,10 @@ import {
   showRoute,
   clearRoute,
   deleteRoute,
-  shareRoute
+  shareRoute,
+  loadRoutesRequest,
+  loadRoutesSuccess,
+  loadRoutesError
 } from "../RouteActions";
 import rootReducer from "../../reducers/RootReducer";
 import { deepClone } from "../../../utils/functions";
@@ -36,6 +39,17 @@ describe("Route actions", () => {
     route: {
       routes: [],
       selectedRoute: null
+    },
+    auth: {},
+    user: {}
+  };
+
+  const initNewState = {
+    route: {
+      routes: [],
+      selectedRoute: null,
+      routesLoading: false,
+      routesError: null
     },
     auth: {},
     user: {}
@@ -149,5 +163,55 @@ describe("Route actions", () => {
     const newState = store.getState().route;
 
     expect(newState).toStrictEqual(expectedState);
+  });
+
+  const mockPayload = "";
+
+  test("load routes request action", () => {
+    const expected = {
+      routes: [],
+      selectedRoute: null,
+      routesLoading: true,
+      routesError: null
+    };
+
+    const store = testStore(rootReducer, initNewState);
+    store.dispatch(loadRoutesRequest());
+
+    const newState = store.getState().route;
+
+    expect(newState).toStrictEqual(expected);
+  });
+
+  test("load routes success action", () => {
+    const expected = {
+      routes: mockPayload,
+      selectedRoute: null,
+      routesLoading: false,
+      routesError: null
+    };
+
+    const store = testStore(rootReducer, initNewState);
+
+    store.dispatch(loadRoutesSuccess(mockPayload));
+    const newState = store.getState().route;
+
+    expect(newState).toStrictEqual(expected);
+  });
+
+  test("load routes error action", () => {
+    const expected = {
+      routes: [],
+      selectedRoute: null,
+      routesLoading: false,
+      routesError: mockPayload
+    };
+
+    const store = testStore(rootReducer, initNewState);
+
+    store.dispatch(loadRoutesError(mockPayload));
+    const newState = store.getState().route;
+
+    expect(newState).toStrictEqual(expected);
   });
 });
