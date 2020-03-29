@@ -11,8 +11,10 @@ import {
   loadEmailRequest
 } from "../../store/actions/UserActions";
 import { useEffect } from "react";
-import { useWebId } from "@solid/react";
 import { updateWebId } from "../../store/actions/AuthActions";
+import { contentLoaded } from "../../store/actions/LoadActions";
+import { getWebId } from "../../solid/auth";
+
 
 function Dashboard(props) {
   const { routes } = props;
@@ -22,12 +24,16 @@ function Dashboard(props) {
   //getWebId().then(x=> console.log(x))
 
   //header of the currently selected  route
-  let webId = useWebId();
+  let webId = null;
+  getWebId().then(id => webId = id);
   useEffect(() => {
-    props.updateWebId(webId);
-    props.loadFriendsRequest();
-    props.loadEmailRequest();
-    props.loadRoutesRequest();
+    if(!props.loaded) {
+      props.updateWebId(webId);
+      props.loadFriendsRequest();
+      props.loadEmailRequest();
+      props.loadRoutesRequest();
+      props.contentLoaded();
+    }
   }, [webId, props]);
   const currentSelectedMap =
     selectedRoute == null ? (
@@ -69,7 +75,8 @@ function Dashboard(props) {
 const mapStateToProps = state => {
   return {
     routes: state.route.routes,
-    selectedRoute: state.route.selectedRoute
+    selectedRoute: state.route.selectedRoute,
+    loaded: state.control.loaded
   };
 };
 
@@ -79,7 +86,8 @@ const mapDispatchToProps = dispatch => {
     loadFriendsRequest: () => dispatch(loadFriendsRequest()),
     updateWebId: webId => dispatch(updateWebId(webId)),
     loadEmailRequest: () => dispatch(loadEmailRequest()),
-    loadRoutesRequest: () => dispatch(loadRoutesRequest())
+    loadRoutesRequest: () => dispatch(loadRoutesRequest()),
+    contentLoaded: () => dispatch(contentLoaded())
   };
 };
 

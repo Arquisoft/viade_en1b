@@ -2,7 +2,7 @@ import React from "react";
 import "./UploadRoute.css";
 import { connect } from "react-redux";
 import { Form } from "react-bootstrap";
-import { uploadRoute } from "./../../../store/actions/RouteActions";
+import { uploadRoute, loadRoutesRequest } from "./../../../store/actions/RouteActions";
 import UploadButton from "./uploadButton/UploadButton";
 import ViadeModal from "../../layout/modal/Modal";
 import parseGPX from "../../../parser/parser";
@@ -87,6 +87,8 @@ export class UploadRoute extends React.Component {
     e.preventDefault();
     this.props.uploadRoute.bind(this);
     this.props.uploadRoute(this.state, this.props.routes, this.props.userWebId);
+    this.props.loadRoutes.bind(this);
+    this.props.loadRoutes();
     this.setState({ ...this.state, reset: true });
   }
 
@@ -160,6 +162,7 @@ export class UploadRoute extends React.Component {
               id="images"
               text="Pick some images"
               multiple
+              image
             ></UploadButton>
 
             <UploadButton
@@ -185,8 +188,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    uploadRoute: (route, routes, webId) =>
-      dispatch(uploadRoute(route, routes, webId))
+    uploadRoute: (route, routes, webId) => dispatch(uploadRoute(route, routes, webId)),
+    loadRoutes: () => dispatch(loadRoutesRequest())
   };
 };
 

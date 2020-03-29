@@ -8,7 +8,7 @@ const initState = {
   routesError: null
 };
 
-const routeReducer = (state = initState, action) => {
+export const routeReducer = (state = initState, action) => {
   switch (action.type) {
     case "SHOW_ROUTE":
       return {
@@ -16,22 +16,24 @@ const routeReducer = (state = initState, action) => {
         selectedRoute: action.payload
       };
     case "UPLOAD_ROUTE":
+      console.log(action.payload.webId)
+      const id = action.payload.webId;
       const route = action.payload.route;
+      const sharedWith= route.sharedWith ? route.sharedWith : [];
       const newRoute = {
-        id: Object.keys(action.payload.routes).length,
         name: route.name,
         description: route.description,
-        author: route.author,
+        author: id.split("//")[1].split(".")[0],
         positions: route.positions,
         images: route.images,
-        videos: route.videos
+        videos: route.videos,
+        sharedWith: sharedWith
       };
       uploadRouteToPod(newRoute, action.payload.webId);
-      let previousRoutes = [...action.payload.routes];
-      previousRoutes.push(action.payload.route);
+      //let previousRoutes = [...action.payload.routes];
+      //previousRoutes.push(action.payload.route);
       return {
-        ...state,
-        routes: previousRoutes
+        ...state
       };
 
     case "DELETE_ROUTE":
@@ -61,10 +63,9 @@ const routeReducer = (state = initState, action) => {
       let newRoutes = stateRoutes;
       newRoutes[sharedRouteId] = sharedRoute;
 
-      if(action.payload.friends[0])
-      {
+      if (action.payload.friends[0]) {
         shareRouteToPod(action.payload.route, action.payload.friends[0].uri);
-        console.log("se comparte")
+        console.log("se comparte");
       }
 
       return { ...state, routes: newRoutes };

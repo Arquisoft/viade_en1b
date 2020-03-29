@@ -52,7 +52,7 @@ describe("Route actions", () => {
       routesError: null
     },
     auth: {},
-    user: {}
+    user: {},
   };
 
   test("show route action", () => {
@@ -83,16 +83,12 @@ describe("Route actions", () => {
   });
 
   test("upload route action", () => {
-    const expectedState = {
-      routes: [uploadedRoute],
-      selectedRoute: null
-    };
     const store = testStore(rootReducer, initState);
 
-    store.dispatch(uploadRoute(uploadedRoute, initState.route.routes));
+    store.dispatch(uploadRoute(uploadedRoute, initState.route.routes, "https://themrcesi.inrupt.net/profile/card#me"));
     const newState = store.getState().route;
 
-    expect(newState).toStrictEqual(expectedState);
+    expect(newState).toStrictEqual(initState.route);
   });
 
   test("share route action", () => {
@@ -124,7 +120,8 @@ describe("Route actions", () => {
     let initialState = {
       route: routesReducerState,
       auth: {},
-      user: {}
+      user: {},
+      control: {}
     };
 
     const mockFriends = ['marcos'];
