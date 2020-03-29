@@ -17,6 +17,7 @@ export const routeReducer = (state = initState, action) => {
       };
     case "UPLOAD_ROUTE":
       const route = action.payload.route;
+      const sharedWith= route.sharedWith ? route.sharedWith : [];
       const newRoute = {
         id: Object.keys(action.payload.routes).length,
         name: route.name,
@@ -24,7 +25,8 @@ export const routeReducer = (state = initState, action) => {
         author: route.author,
         positions: route.positions,
         images: route.images,
-        videos: route.videos
+        videos: route.videos,
+        sharedWith: sharedWith
       };
       uploadRouteToPod(newRoute, action.payload.webId);
       let previousRoutes = [...action.payload.routes];
