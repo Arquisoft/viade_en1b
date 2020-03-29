@@ -162,6 +162,7 @@ export class UploadRoute extends React.Component {
               id="images"
               text="Pick some images"
               multiple
+              image
             ></UploadButton>
 
             <UploadButton
