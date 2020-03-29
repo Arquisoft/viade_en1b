@@ -9,7 +9,6 @@ import { deleteRoute } from "../../../store/actions/RouteActions";
 import ShareRoute from "../shareRoute/ShareRoute";
 
 export const RouteDetails = props => {
-  const history = useHistory();
   const { selectedRoute } = props;
   const { deleteRoute } = props;
 
