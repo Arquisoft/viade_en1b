@@ -15,10 +15,22 @@ describe('Routes Reducer', () => {
         routes : routes,
         selectedRoute: null
     }
+
+    const initNewState = {
+        routes: [],
+        selectedRoute: null,
+        routesLoading: false,
+        routesError: null
+    };
    
     test('Should return default state', () =>{
         const newState = routesReducer(undefined, {});
-        expect(newState).toEqual(initState);
+        expect(newState).toEqual({
+            routes: [],
+            selectedRoute: null,
+            routesLoading: false,
+            routesError: null
+        });
     });
 
     describe('Should return state if receiving type', () =>{
@@ -86,6 +98,56 @@ describe('Routes Reducer', () => {
             }
             expect(newState).toEqual(expected);
         })
+
+        const mockPayload = "";
+
+        test("Type LOAD_ROUTES_REQUEST", () => {
+            const newState = routesReducer(initNewState, {
+                type: "LOAD_ROUTES_REQUEST",
+                payload: mockPayload
+            })
+
+            const expected = {
+                routes: [],
+                selectedRoute: null,
+                routesLoading: mockPayload,
+                routesError: null
+            };
+
+            expect(newState).toStrictEqual(expected);
+        });
+
+        test("Type LOAD_ROUTES_SUCCESS", () => {
+            const newState = routesReducer(initNewState, {
+                type: "LOAD_ROUTES_SUCCESS",
+                payload: mockPayload
+            })
+
+            const expected = {
+                routes: mockPayload,
+                selectedRoute: null,
+                routesLoading: false,
+                routesError: null
+            };
+
+            expect(newState).toStrictEqual(expected);
+        });
+
+        test("Type LOAD_ROUTES_ERROR", () => {
+            const newState = routesReducer(initNewState, {
+                type: "LOAD_ROUTES_ERROR",
+                payload: mockPayload
+            })
+
+            const expected = {
+                routes: [],
+                selectedRoute: null,
+                routesLoading: false,
+                routesError: mockPayload
+            };
+
+            expect(newState).toStrictEqual(expected);
+        });
         
     });
 })

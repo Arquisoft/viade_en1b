@@ -39,3 +39,26 @@ export const uploadRoute = (route, routes, webId) => {
     }
   };
 };
+
+export const loadRoutesRequest = () => {
+  return {
+    type: "LOAD_ROUTES_REQUEST",
+    payload: true
+  };
+};
+
+export const loadRoutesSuccess = routes => {
+  return {
+    type: "LOAD_ROUTES_SUCCESS",
+    payload: routes
+  };
+};
+
+export const loadRoutesError = error => {
+  return {
+    type: "LOAD_ROUTES_ERROR",
+    payload: error
+  };
+};
+
+

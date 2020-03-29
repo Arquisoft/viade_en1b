@@ -3,7 +3,7 @@ import MyMap from "./myMap/MyMap";
 import "./Dashboard.css";
 import RouteList from "./../routes/routeList/RouteList";
 import { connect } from "react-redux";
-import { showRoute } from "../../store/actions/RouteActions";
+import { showRoute, loadRoutesRequest } from "../../store/actions/RouteActions";
 import { LoggedIn, LoggedOut } from "@solid/react";
 import { Redirect } from "react-router-dom";
 import {
@@ -27,6 +27,7 @@ function Dashboard(props) {
     props.updateWebId(webId);
     props.loadFriendsRequest();
     props.loadEmailRequest();
+    props.loadRoutesRequest();
   }, [webId, props]);
   const currentSelectedMap =
     selectedRoute == null ? (
@@ -77,7 +78,8 @@ const mapDispatchToProps = dispatch => {
     showRoute: route => dispatch(showRoute(route)),
     loadFriendsRequest: () => dispatch(loadFriendsRequest()),
     updateWebId: webId => dispatch(updateWebId(webId)),
-    loadEmailRequest: () => dispatch(loadEmailRequest())
+    loadEmailRequest: () => dispatch(loadEmailRequest()),
+    loadRoutesRequest: () => dispatch(loadRoutesRequest())
   };
 };
 
