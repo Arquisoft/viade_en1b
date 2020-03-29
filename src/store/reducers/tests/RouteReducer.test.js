@@ -1,4 +1,4 @@
-import routesReducer from '../RouteReducer'
+import {routeReducer} from '../RouteReducer'
 import '@testing-library/jest-dom'
 
 describe('Routes Reducer', () => {
@@ -24,7 +24,7 @@ describe('Routes Reducer', () => {
     };
    
     test('Should return default state', () =>{
-        const newState = routesReducer(undefined, {});
+        const newState = routeReducer(undefined, {});
         expect(newState).toEqual({
             routes: [],
             selectedRoute: null,
@@ -37,7 +37,7 @@ describe('Routes Reducer', () => {
         const route = { id: 5, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: 'A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing', images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: [] }
         
         test('Type SHOW_ROUTE', () => {
-            const newState = routesReducer(initState, {
+            const newState = routeReducer(initState, {
                 type : 'SHOW_ROUTE',
                 payload: route
             });
@@ -46,21 +46,20 @@ describe('Routes Reducer', () => {
         })
 
         test('Type UPLOAD_ROUTE', () => {
-            const newState = routesReducer(initState, {
+            const newState = routeReducer(initState, { 
                 type : 'UPLOAD_ROUTE',
                 payload: {
                     route: route,
-                    routes: routes
+                    routes: routes,
+                    webId: "webId"
                 }
-            });
-            let previousRoutes = [...initState.routes];
-            previousRoutes.push(route);            
-            const expected = {...initState, routes: previousRoutes}
+            });          
+            const expected = {...initState}
             expect(newState).toEqual(expected);
         })
 
         test('Type CLEAR_ROUTE', () => {
-            const newState = routesReducer(initState, {
+            const newState = routeReducer(initState, {
                 type : 'CLEAR_ROUTE',
                 payload: null
             });
@@ -69,7 +68,7 @@ describe('Routes Reducer', () => {
         })
 
         test('Type DELETE_ROUTE', () => {
-            const newState = routesReducer(initState, {
+            const newState = routeReducer(initState, {
                 type : 'DELETE_ROUTE',
                 payload: route
             });
@@ -80,7 +79,7 @@ describe('Routes Reducer', () => {
 
         test('Type SHARE_ROUTE', () => {
             let route = { id: 0, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: 'A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing', images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: [] };
-            const newState = routesReducer(initState, {
+            const newState = routeReducer(initState, {
                 type : 'SHARE_ROUTE',
                 payload: { route: route, friends: ['marcos']}
             });
@@ -102,7 +101,7 @@ describe('Routes Reducer', () => {
         const mockPayload = "";
 
         test("Type LOAD_ROUTES_REQUEST", () => {
-            const newState = routesReducer(initNewState, {
+            const newState = routeReducer(initNewState, {
                 type: "LOAD_ROUTES_REQUEST",
                 payload: mockPayload
             })
@@ -118,7 +117,7 @@ describe('Routes Reducer', () => {
         });
 
         test("Type LOAD_ROUTES_SUCCESS", () => {
-            const newState = routesReducer(initNewState, {
+            const newState = routeReducer(initNewState, {
                 type: "LOAD_ROUTES_SUCCESS",
                 payload: mockPayload
             })
@@ -134,7 +133,7 @@ describe('Routes Reducer', () => {
         });
 
         test("Type LOAD_ROUTES_ERROR", () => {
-            const newState = routesReducer(initNewState, {
+            const newState = routeReducer(initNewState, {
                 type: "LOAD_ROUTES_ERROR",
                 payload: mockPayload
             })
