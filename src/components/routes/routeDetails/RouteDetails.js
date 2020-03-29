@@ -2,7 +2,9 @@ import React from "react";
 import style from "./RouteDetails.module.css";
 import Slideshow from "../../layout/slideshow/Slideshow";
 import { Button } from "react-bootstrap";
+
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { deleteRoute } from "../../../store/actions/RouteActions";
 import ShareRoute from "../shareRoute/ShareRoute";
 
@@ -57,13 +59,15 @@ export const RouteDetails = props => {
           >
             Delete
           </Button>
-          <ShareRoute
-            data-testid="route-details-button-share"
-            id="shareButton"
-            selectedRoute={selectedRoute}
-          >
-            Share
-          </ShareRoute>
+          {
+            <ShareRoute
+              data-testid="route-details-button-share"
+              id="shareButton"
+              selectedRoute={selectedRoute}
+            >
+              Share
+            </ShareRoute>
+          }
         </div>
       </div>
     );

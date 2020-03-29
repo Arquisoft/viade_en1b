@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./ShareRoute.css";
-import ViadeModal from "../../layout/modal/Modal";
 import { connect } from "react-redux";
 import { shareRoute } from "../../../store/actions/RouteActions";
 import FriendList from "../../user/myProfile/FriendList";
 import style from "./ShareRoute.css";
+import ViadeModal from "../../layout/modal/Modal";
 import { deepClone, filterUnsharedFriends } from "../../../utils/functions";
 import { Badge } from "react-bootstrap";
 
 function ShareRoute(props) {
   const { selectedRoute } = props;
   const { shareRoute } = props;
-
+  console.log(props);
   const [state, setState] = useState({
     friends: filterUnsharedFriends(props.friends, props.sharedWith),
     friendsToShareWith: []
