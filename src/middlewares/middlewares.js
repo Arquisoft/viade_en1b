@@ -15,6 +15,16 @@ export const myLogger = store => next => action => {
   console.groupEnd();
 };
 export const asyncRouteFetch = store => next => action => {
+  switch (action.type) {
+      case "LOAD_ROUTES_REQUEST":
+          break;
+      case "LOAD_ROUTES_SUCCESS":
+          break;
+      case "LOAD_ROUTES_ERROR":
+          break;
+      default:
+        break;
+  };
   next(action);
 };
 

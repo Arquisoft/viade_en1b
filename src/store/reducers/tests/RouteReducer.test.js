@@ -18,7 +18,12 @@ describe('Routes Reducer', () => {
    
     test('Should return default state', () =>{
         const newState = routesReducer(undefined, {});
-        expect(newState).toEqual(initState);
+        expect(newState).toEqual({
+            routes: [],
+            selectedRoute: null,
+            routesLoading: false,
+            routesError: null
+        });
     });
 
     describe('Should return state if receiving type', () =>{
