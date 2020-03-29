@@ -3,17 +3,10 @@ import MyMap from "./myMap/MyMap";
 import "./Dashboard.css";
 import RouteList from "./../routes/routeList/RouteList";
 import { connect } from "react-redux";
-import { showRoute, loadRoutesRequest } from "../../store/actions/RouteActions";
+import { showRoute } from "../../store/actions/RouteActions";
 import { LoggedIn, LoggedOut } from "@solid/react";
 import { Redirect } from "react-router-dom";
-import {
-  loadFriendsRequest,
-  loadEmailRequest
-} from "../../store/actions/UserActions";
-import { useEffect } from "react";
-import { updateWebId } from "../../store/actions/AuthActions";
-import { contentLoaded } from "../../store/actions/LoadActions";
-import { getWebId } from "../../solid/auth";
+
 
 
 function Dashboard(props) {
@@ -24,17 +17,6 @@ function Dashboard(props) {
   //getWebId().then(x=> console.log(x))
 
   //header of the currently selected  route
-  let webId = null;
-  getWebId().then(id => webId = id);
-  useEffect(() => {
-    if(!props.loaded) {
-      props.updateWebId(webId);
-      props.loadFriendsRequest();
-      props.loadEmailRequest();
-      props.loadRoutesRequest();
-      props.contentLoaded();
-    }
-  }, [webId, props]);
   const currentSelectedMap =
     selectedRoute == null ? (
       <div id="titleHolder">
@@ -76,18 +58,12 @@ const mapStateToProps = state => {
   return {
     routes: state.route.routes,
     selectedRoute: state.route.selectedRoute,
-    loaded: state.control.loaded
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    showRoute: route => dispatch(showRoute(route)),
-    loadFriendsRequest: () => dispatch(loadFriendsRequest()),
-    updateWebId: webId => dispatch(updateWebId(webId)),
-    loadEmailRequest: () => dispatch(loadEmailRequest()),
-    loadRoutesRequest: () => dispatch(loadRoutesRequest()),
-    contentLoaded: () => dispatch(contentLoaded())
+    showRoute: route => dispatch(showRoute(route))
   };
 };
 
