@@ -6,9 +6,9 @@ export const deepClone = array => {
 export const filterUnsharedFriends = (allFriends, alreadyShared) => {
   let aux = [];
   let hash = {};
-  if (alreadyShared.length == 0) return allFriends;
+  if (alreadyShared.length === 0) return allFriends;
   //Initialize the hash table
-  alreadyShared.map(friend => (hash[friend.uri] = true));
+  alreadyShared.map(friend => hash[friend.uri] = true);
   allFriends.map(friend => {
     if (!findInHashByUri(hash, friend)) aux.push({ ...friend });
   });

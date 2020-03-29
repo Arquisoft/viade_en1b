@@ -6,7 +6,7 @@ import {
   loadFriendsSuccess
 } from "../store/actions/UserActions";
 import { getRoutesFromPod } from "../solid/routes";
-import { loadRoutesSuccess } from "../store/actions/RouteActions";
+import { loadRoutesSuccess, loadRoutesError } from "../store/actions/RouteActions";
 
 export const myLogger = store => next => action => {
   console.groupCollapsed(action.type);

@@ -51,7 +51,7 @@ const routeReducer = (state = initState, action) => {
       let sharedRouteId = action.payload.route.id;
 
       let alreadyShared = stateRoutes.filter(
-        route => route.id == action.payload.route.id
+        route => route.id === action.payload.route.id
       )[0].sharedWith;
       console.log(alreadyShared);
       let sharedRoute = {
