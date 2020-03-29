@@ -16,6 +16,7 @@ export function MyRoutes(props) {
     <div className={styles.routesContainer}>
       <LoggedIn>
         <RouteList
+          data-testid="myRoutes-route-list"
           style={styles.routeList}
           currentMap={selectedRoute}
           routes={routes}
