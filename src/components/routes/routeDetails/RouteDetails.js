@@ -4,7 +4,6 @@ import Slideshow from "../../layout/slideshow/Slideshow";
 import { Button } from "react-bootstrap";
 
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { deleteRoute } from "../../../store/actions/RouteActions";
 import ShareRoute from "../shareRoute/ShareRoute";
 

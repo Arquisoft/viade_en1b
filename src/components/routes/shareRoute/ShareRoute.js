@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./ShareRoute.css";
 import { connect } from "react-redux";
 import { shareRoute } from "../../../store/actions/RouteActions";
@@ -17,15 +17,7 @@ function ShareRoute(props) {
     friendsToShareWith: []
   });
 
-  const resetState = () => {
-    setState({
-      friends: filterUnsharedFriends(
-        deepClone(props.friends),
-        deepClone(props.sharedWith)
-      ),
-      friendsToShareWith: []
-    });
-  };
+  
 
   const handleOnClick = key => {
     state.friends[key].checked = !state.friends[key].checked;
