@@ -4,10 +4,23 @@ import '@testing-library/jest-dom'
 //import App from '../../../../App'
 import Navbar from '../NavBar'
 import { HashRouter } from "react-router-dom";
+import { Provider } from 'react-redux';
+import { testStore } from '../../../../utils';
+import rootReducer from '../../../../store/reducers/RootReducer';
 
 let rendered = null
-beforeEach( () => {
-    const { container } = render(<HashRouter><Navbar></Navbar></HashRouter>)
+const state = {
+    route: {},
+    auth: {},
+    user: {},
+    control: {}
+};
+beforeEach(() => {
+    const store = testStore(rootReducer, state);
+    const { container } = render(
+        <Provider store={store}>
+            <HashRouter><Navbar></Navbar></HashRouter>
+        </Provider>);
     rendered = container
 })
 
@@ -42,7 +55,7 @@ describe('Navbar is correctly rendered', () => {
 
             fireEvent.click(profile)
             expect(getCurrentPage()).toEqual('profile')
-            
+
             fireEvent.click(brand)
             expect(getCurrentPage()).toEqual('dashboard')
 
@@ -51,7 +64,7 @@ describe('Navbar is correctly rendered', () => {
 
             fireEvent.click(settings)
             expect(getCurrentPage()).toEqual('settings')
-            
+
         })
     })
 })
