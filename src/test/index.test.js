@@ -16,5 +16,6 @@
     <ThemeContext.Provider data-testid="provider" value={themes.purple}>
     <Provider store={myStore}><App/></Provider>
     </ThemeContext.Provider>, div);
+    expect(div.children).not.toBeNull();
   });
   
