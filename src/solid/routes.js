@@ -9,7 +9,7 @@ import { getWebId } from "./auth";
  */
 
 export function getRoutesFolder(userWebId) {
-    return userWebId.split("/profile")[0] + "/public/viade/routes/";
+  return userWebId.split("/profile")[0] + "/viadeen1b/routes/";
 }
 
 export async function getRoutesFromPod(userWebId) {
