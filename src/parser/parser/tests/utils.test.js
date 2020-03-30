@@ -12,17 +12,17 @@ import {
 
   beforeEach(() => {
     dictionary = {
-        date1: new Date(2020, 10, 2),
-        date2: new Date(1998,11,7),
+        date1: new Date(2020, 10, 2, 24, 0, 0),
+        date2: new Date(1998,11, 7, 24, 0, 0),
         notADate: "It was me Dio, all alone",
         anotherDictionary: {
-            date3: new Date(1969, 7,16)
+            date3: new Date(1969, 7,16, 24,0,0)
         }
     }
     dictionaryISO = {
-        date1: "2020-11-01T23:00:00Z",
-        date2: "1998-12-06T23:00:00Z",
-        date3: "1969-08-15T23:00:00Z"
+        date1: "22020-11-02T23:00:00Z",
+        date2: "1998-12-07T23:00:00Z",
+        date3: "1969-08-16T23:00:00Z"
     }
     dictionaryWithEmpties = {
         empty1: null,
