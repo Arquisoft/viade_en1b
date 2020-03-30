@@ -57,7 +57,7 @@ export const asyncProfileFetch = store => next => action => {
             });
             Promise.all(friendsNames).then(results => {
               let friendsObjects = [];
-              friendsNames = results.map(literal => literal.value);
+              friendsNames = results.map(literal => literal === null ? "noName" : literal.value);
               for (let i = 0; i < friendsNames.length; i++) {
                 let friend = {
                   name: friendsNames[i],
@@ -76,3 +76,4 @@ export const asyncProfileFetch = store => next => action => {
   }
   next(action);
 };
+
