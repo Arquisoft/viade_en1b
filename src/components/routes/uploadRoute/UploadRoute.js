@@ -2,9 +2,10 @@ import React from "react";
 import "./UploadRoute.css";
 import { connect } from "react-redux";
 import { Form } from "react-bootstrap";
-import { uploadRoute } from "./../../../store/actions/RouteActions";
+import { uploadRoute, loadRoutesRequest } from "./../../../store/actions/RouteActions";
 import UploadButton from "./uploadButton/UploadButton";
 import ViadeModal from "../../layout/modal/Modal";
+import parseGPX from "../../../parser/parser";
 
 export class UploadRoute extends React.Component {
   state = {
@@ -17,11 +18,28 @@ export class UploadRoute extends React.Component {
     videos: [],
     reset: false
   };
-
   changeHandlerRoute(e) {
     this.setState({
       [e.target.id]: e.target.value
     });
+  }
+
+  changeHandlerFiles(e) {
+    let file = e.target.files[0];
+    let parseado = null;
+    const self = this;
+    if (file) {
+      var reader = new FileReader();
+      reader.readAsText(file, "UTF-8");
+      reader.onload = function(evt) {
+        parseado = parseGPX(evt.target.result);
+        //console.log(self.state);
+        //console.log(parseado);
+        self.state.positions = parseado;
+        //console.log(self.state);
+      };
+      reader.onerror = function(evt) {};
+    }
   }
 
   //This is part of the state, and states should not be tested.
@@ -67,7 +85,10 @@ export class UploadRoute extends React.Component {
 
   submitForm(e) {
     e.preventDefault();
-    this.props.uploadRoute(this.state);
+    this.props.uploadRoute.bind(this);
+    this.props.uploadRoute(this.state, this.props.routes, this.props.userWebId);
+    this.props.loadRoutes.bind(this);
+    this.props.loadRoutes();
     this.setState({ ...this.state, reset: true });
   }
 
@@ -118,6 +139,10 @@ export class UploadRoute extends React.Component {
               onClick={this.submitForm.bind(this)}
               title="Submitted"
               closeText="Close"
+              handleClose={() => {
+                this.setState(this.resetState());
+              }}
+              change
             >
               <p>Your route has been submited</p>
             </ViadeModal>
@@ -126,7 +151,7 @@ export class UploadRoute extends React.Component {
           <div id="buttonHolder">
             <UploadButton
               reset={this.state.reset}
-              onChange={this.changeHandlerRoute.bind(this)}
+              onChange={this.changeHandlerFiles.bind(this)}
               id="file"
               text="Choose a route"
             ></UploadButton>
@@ -137,6 +162,7 @@ export class UploadRoute extends React.Component {
               id="images"
               text="Pick some images"
               multiple
+              image
             ></UploadButton>
 
             <UploadButton
@@ -153,10 +179,18 @@ export class UploadRoute extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
   return {
-    uploadRoute: route => dispatch(uploadRoute(route))
+    routes: state.route.routes,
+    userWebId: state.auth.userWebId
   };
 };
 
-export default connect(null, mapDispatchToProps)(UploadRoute);
+const mapDispatchToProps = dispatch => {
+  return {
+    uploadRoute: (route, routes, webId) => dispatch(uploadRoute(route, routes, webId)),
+    loadRoutes: () => dispatch(loadRoutesRequest())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UploadRoute);

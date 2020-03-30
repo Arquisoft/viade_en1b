@@ -4,16 +4,23 @@ import { Button, Modal } from "react-bootstrap";
 const ViadeModal = props => {
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => {
+  const handleClose = () => {
+    props.handleClose();
+    setShow(false);
+  };
+  const handleShow = e => {
+    props.onClick(e);
     setShow(true);
   };
 
   const saveButton = props.saveText ? (
     <Button
       data-testid="modalSaveButton"
+      disabled={props.saveDisabled}
       variant="primary"
-      onClick={handleClose}
+      onClick={() => {
+        setShow(false);
+      }}
     >
       {props.saveText}
     </Button>
@@ -36,8 +43,7 @@ const ViadeModal = props => {
         disabled={props.disabled}
         variant="primary"
         onClick={e => {
-          handleShow();
-          props.onClick(e);
+          handleShow(e);
         }}
       >
         {props.toggleText}
