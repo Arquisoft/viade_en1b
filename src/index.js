@@ -9,7 +9,7 @@ import { store } from './createStore';
 const myStore = store;  
 
 ReactDOM.render(
-  <ThemeContext.Provider value={themes.purple}>
+  <ThemeContext.Provider data-testid="provider" value={themes.purple}>
     <Provider store={myStore}><App/></Provider>
   </ThemeContext.Provider>
   ,
