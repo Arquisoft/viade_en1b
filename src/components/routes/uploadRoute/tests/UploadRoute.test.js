@@ -14,7 +14,7 @@ let rerenderFunc = () => {};
 
 beforeEach(() => {
   const { container, rerender } = render(
-    <UploadRoute routes={[]} uploadRoute={route => {}}></UploadRoute>
+    <UploadRoute routes={[]} uploadRoute={route => {}} loadRoutes={() => {}}></UploadRoute>
   );
   uploadRoute = container;
   rerenderFunc = rerender;
@@ -85,7 +85,7 @@ describe("Behaviour", () => {
   test("submit function is triggered when the form is submitted", () => {
     const spy = jest.spyOn(UploadRoute.prototype, "submitForm");
     const mockFunc = jest.fn();
-    rerenderFunc(<UploadRoute routes={[]} uploadRoute={mockFunc}></UploadRoute>);
+    rerenderFunc(<UploadRoute routes={[]} uploadRoute={mockFunc} loadRoutes={mockFunc}></UploadRoute>);
     let submitButton = queryByText(uploadRoute, "Submit");
     expect(spy).not.toBeCalled();
     submitButton.click();
@@ -107,7 +107,7 @@ describe("Behaviour", () => {
       uploadRoute,
       "Description..."
     );
-    rerenderFunc(<UploadRoute routes={[]} uploadRoute={mockFunc}></UploadRoute>);
+    rerenderFunc(<UploadRoute routes={[]} uploadRoute={mockFunc} loadRoutes={mockFunc}></UploadRoute>);
 
     expect(spy).not.toBeCalled();
 

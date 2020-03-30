@@ -6,13 +6,8 @@ import { connect } from "react-redux";
 import { showRoute } from "../../store/actions/RouteActions";
 import { LoggedIn, LoggedOut } from "@solid/react";
 import { Redirect } from "react-router-dom";
-import {
-  loadFriendsRequest,
-  loadEmailRequest
-} from "../../store/actions/UserActions";
-import { useEffect } from "react";
-import { useWebId } from "@solid/react";
-import { updateWebId } from "../../store/actions/AuthActions";
+
+
 
 function Dashboard(props) {
   const { routes } = props;
@@ -22,12 +17,6 @@ function Dashboard(props) {
   //getWebId().then(x=> console.log(x))
 
   //header of the currently selected  route
-  let webId = useWebId();
-  useEffect(() => {
-    props.updateWebId(webId);
-    props.loadFriendsRequest();
-    props.loadEmailRequest();
-  }, [webId, props]);
   const currentSelectedMap =
     selectedRoute == null ? (
       <div id="titleHolder">
@@ -68,16 +57,13 @@ function Dashboard(props) {
 const mapStateToProps = state => {
   return {
     routes: state.route.routes,
-    selectedRoute: state.route.selectedRoute
+    selectedRoute: state.route.selectedRoute,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    showRoute: route => dispatch(showRoute(route)),
-    loadFriendsRequest: () => dispatch(loadFriendsRequest()),
-    updateWebId: webId => dispatch(updateWebId(webId)),
-    loadEmailRequest: () => dispatch(loadEmailRequest())
+    showRoute: route => dispatch(showRoute(route))
   };
 };
 

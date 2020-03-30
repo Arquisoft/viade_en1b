@@ -5,15 +5,34 @@ import {
   loadEmailSuccess,
   loadFriendsSuccess
 } from "../store/actions/UserActions";
+import { getRoutesFromPod } from "../solid/routes";
+import { loadRoutesSuccess, loadRoutesError } from "../store/actions/RouteActions";
 
 export const myLogger = store => next => action => {
   console.groupCollapsed(action.type);
+  console.log("PAYLOAD: ", action.payload);
   console.log("previous state", store.getState());
   next(action);
   console.log("actual state", store.getState());
   console.groupEnd();
 };
 export const asyncRouteFetch = store => next => action => {
+  switch (action.type) {
+      case "LOAD_ROUTES_REQUEST":
+          let webId = store.getState().auth.userWebId;
+          if(webId) {
+            getRoutesFromPod(webId).then(
+              routes => {
+                  store.dispatch(loadRoutesSuccess(routes));
+              }
+            ).catch(error => {
+              store.dispatch(loadRoutesError(error));
+            });
+          };
+          break;
+      default:
+        break;
+  };
   next(action);
 };
 
@@ -38,7 +57,7 @@ export const asyncProfileFetch = store => next => action => {
             });
             Promise.all(friendsNames).then(results => {
               let friendsObjects = [];
-              friendsNames = results.map(literal => literal.value);
+              friendsNames = results.map(literal => literal === null ? "noName" : literal.value);
               for (let i = 0; i < friendsNames.length; i++) {
                 let friend = {
                   name: friendsNames[i],
@@ -57,3 +76,4 @@ export const asyncProfileFetch = store => next => action => {
   }
   next(action);
 };
+
