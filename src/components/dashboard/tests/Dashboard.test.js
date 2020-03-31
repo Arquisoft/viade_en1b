@@ -1,7 +1,5 @@
 import {
     render,
-    fireEvent,
-    queryByTestId,
     waitForElement
   } from "@testing-library/react";
   import "@testing-library/jest-dom";
@@ -33,6 +31,8 @@ describe("Dashboard Component", () => {
     });
 
     test("renders correctly", () => {
-        expect(queryByTestId(wrapper, "dashboard-container")).not.toBeNull();
+        waitForElement(() => {
+            expect(queryByTestId(wrapper, "dashboard-container")).not.toBeNull();
+        });
     });
 });
