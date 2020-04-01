@@ -24,7 +24,7 @@ describe("Dashboard Component", () => {
         const store = testStore(rootReducer, initState);
         const {container} = render(<Provider store={store}>
             <HashRouter>
-                <Dashboard routes ={[]} selectedRoute={""} showRoute={mockFn}></Dashboard>
+                <Dashboard routes ={[]} selectedRoute={""} showRoute={() => mockFn}></Dashboard>
             </HashRouter>
         </Provider>);
         wrapper = container;

@@ -59,7 +59,7 @@ const FriendList = props => {
     );
   });
   let friends = (
-    <div className="FriendList">
+    <div data-testid="friend-list-main" className="FriendList">
       {props.checked ? (
         friendsCardsWithCheckBoxes
       ) : (
@@ -77,7 +77,7 @@ const FriendList = props => {
       data-testid="friend-list-container"
       id="friendListContainer"
     >
-      <h1 data-testid="friend-list-container">Friends list:</h1>
+      <h1 data-testid="friend-list-heading">Friends list:</h1>
       {friends}
     </div>
   );
