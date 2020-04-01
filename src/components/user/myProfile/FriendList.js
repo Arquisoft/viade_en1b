@@ -82,7 +82,7 @@ const FriendList = props => {
       data-testid="friend-list-container"
       id="friendListContainer"
     >
-      <h1 data-testid="friend-list-container">Friends list:</h1>
+      <h1 data-testid="friend-list-header">Friends list:</h1>
       {friends}
     </div>
   );

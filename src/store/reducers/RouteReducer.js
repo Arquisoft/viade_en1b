@@ -1,4 +1,4 @@
-import { uploadRouteToPod, shareRouteToPod } from "../../solid/routes";
+import { uploadRouteToPod /*shareRouteToPod*/ } from "../../solid/routes";
 import { deepClone } from "../../utils/functions";
 
 const initState = {

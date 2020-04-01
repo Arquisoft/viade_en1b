@@ -33,6 +33,7 @@ export function ShareRoute(props) {
         checked: false
       }))
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleOnSave = () => {
