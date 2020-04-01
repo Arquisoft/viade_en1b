@@ -23,6 +23,7 @@ export async function getRoutesFromPod(userWebId) {
     folder.files.map(async f => await fc.readFile(url + f.name))
   );
   let routes = routesTexts.map(JSON.parse);
+  routes = routes.sort((route1, route2) => route1.id - route2.id);
   return routes;
 }
 
@@ -41,23 +42,31 @@ async function getNextId(userWebId) {
 }
 
 export async function shareRouteToPod(route, userWebId) {
-  route = {...route, id:await getNextId(userWebId)};
+  route = { ...route, id: await getNextId(userWebId) };
   let url = getRoutesFolder(userWebId);
   let fc = new FC(auth);
   if (!(await fc.itemExists(url))) {
     await fc.createFolder(url);
   }
-  await fc.postFile(url + route.name, JSON.stringify(route), "application/json");
+  await fc.postFile(
+    url + route.name,
+    JSON.stringify(route),
+    "application/json"
+  );
 }
 
 export async function uploadRouteToPod(route, userWebId) {
-  route = {...route, id:await getNextId(userWebId)};
+  route = { ...route, id: await getNextId(userWebId) };
   let url = getRoutesFolder(userWebId);
   let fc = new FC(auth);
   if (!(await fc.itemExists(url))) {
     await fc.createFolder(url);
   }
-  await fc.createFile(url + route.name, JSON.stringify(route), "application/json");
+  await fc.createFile(
+    url + route.name,
+    JSON.stringify(route),
+    "application/json"
+  );
 }
 
 export async function getRouteFromPod(routeName, userWebId) {
