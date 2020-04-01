@@ -3,7 +3,7 @@ import { Card, Form } from "react-bootstrap";
 import style from "./FriendList.css";
 import { BsCheck } from "react-icons/bs";
 
-const FriendList = props => {
+export const FriendList = props => {
   //Function used by the non-checked version of the component
   const openProfile = friendProfile => {
     window.location.href = friendProfile + "profile/card#me";

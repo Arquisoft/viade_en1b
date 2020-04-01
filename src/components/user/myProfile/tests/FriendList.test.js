@@ -6,7 +6,7 @@ import {
   } from "@testing-library/react";
   import "@testing-library/jest-dom";
 import React from "react";
-import FriendList from "../FriendList";
+import {FriendList} from "../FriendList";
 
 describe("FriendList component", () => {
 
@@ -23,6 +23,10 @@ describe("FriendList component", () => {
         window.location = {href:mockFriends[0].uri+"profile/card#me"};
         const {container} = render(<FriendList friends={mockFriends}></FriendList>);
         wrapper = container;
+    });
+
+    afterAll(() => {
+        window.location = location;
     });
     
     test("renders correctly", () => {
