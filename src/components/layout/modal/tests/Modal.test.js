@@ -17,7 +17,7 @@ beforeEach(() => {
     <ViadeModal
       disabled={false}
       title="Submitted"
-      onClick={mock}
+      onOpen={mock}
       saveText="Save"
       closeText="Close"
     ></ViadeModal>
@@ -38,7 +38,7 @@ describe("All renders correctly with normal settings", () => {
   test("children are rendered", () => {
     let paragraph = <p>Hello there!</p>;
     rerenderFunc(
-      <ViadeModal onClick={mock} title="Submit">
+      <ViadeModal onOpen={mock} title="Submit">
         {paragraph}
       </ViadeModal>
     );
@@ -73,7 +73,7 @@ describe("All renders correctly with normal settings", () => {
 describe("Buttons are rendered with different settings", () => {
   test("render save button but not cancel button", () => {
     rerenderFunc(
-      <ViadeModal title="Title" onClick={mock} saveText="Save"></ViadeModal>
+      <ViadeModal title="Title" onOpen={mock} saveText="Save"></ViadeModal>
     );
     waitForElement(() => {
       fireEvent.click(queryByTestId(modal, "modalButton"));
@@ -87,7 +87,7 @@ describe("Buttons are rendered with different settings", () => {
 
   test("render cancel button but not save button", () => {
     rerenderFunc(
-      <ViadeModal title="Title" onClick={mock} CancelText="Cancel"></ViadeModal>
+      <ViadeModal title="Title" onOpen={mock} CancelText="Cancel"></ViadeModal>
     );
     waitForElement(() => {
       fireEvent.click(queryByTestId(modal, "modalButton"));

@@ -7,13 +7,17 @@ import { getFriendProfile } from "../../../solid/profileInfo";
 const FriendList = props => {
   //Function used by the non-checked version of the component
   const openProfile = friendProfile => {
-    window.location.href =  getFriendProfile(friendProfile);
+    window.location.href = getFriendProfile(friendProfile);
   };
 
   //Checked friendList to be used by the ShareRoute component
   let friendsCardsWithCheckBoxes = props.friends.map((friend, key) => {
     return (
-      <Card onClick={() => props.onClick(key)} key={key}>
+      <Card
+        data-testid={"card" + key}
+        onClick={() => props.onClick(key)}
+        key={key}
+      >
         <Card.Body style={{ marginLeft: "1em" }}>
           <Form.Check
             onChange={() => {}}
@@ -78,7 +82,7 @@ const FriendList = props => {
       data-testid="friend-list-container"
       id="friendListContainer"
     >
-      <h1 data-testid="friend-list-container">Friends list:</h1>
+      <h1 data-testid="friend-list-header">Friends list:</h1>
       {friends}
     </div>
   );
