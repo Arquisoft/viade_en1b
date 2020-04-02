@@ -2,7 +2,10 @@ import React from "react";
 import "./UploadRoute.css";
 import { connect } from "react-redux";
 import { Form } from "react-bootstrap";
-import { uploadRoute, loadRoutesRequest } from "./../../../store/actions/RouteActions";
+import {
+  uploadRoute,
+  loadRoutesRequest
+} from "./../../../store/actions/RouteActions";
 import UploadButton from "./uploadButton/UploadButton";
 import ViadeModal from "../../layout/modal/Modal";
 import parseGPX from "../../../parser/parser";
@@ -136,12 +139,13 @@ export class UploadRoute extends React.Component {
             <ViadeModal
               disabled={this.isEmpty()}
               toggleText="Submit"
-              onClick={this.submitForm.bind(this)}
+              onSave={this.submitForm.bind(this)}
               title="Submitted"
               closeText="Close"
               handleClose={() => {
                 this.setState(this.resetState());
               }}
+              onOpen={() => {}}
               change
             >
               <p>Your route has been submited</p>
@@ -188,7 +192,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    uploadRoute: (route, routes, webId) => dispatch(uploadRoute(route, routes, webId)),
+    uploadRoute: (route, routes, webId) =>
+      dispatch(uploadRoute(route, routes, webId)),
     loadRoutes: () => dispatch(loadRoutesRequest())
   };
 };
