@@ -25,14 +25,14 @@ rectangle Redux {
 
 [React App] as app 
 
-app -up-> actions
-actions -up-> dispatcher
-dispatcher -> reducers
-state -> reducers
-[Solid] -up-> reducers
-reducers -down-> [Solid]
-reducers -down-> state
-state -down-> app
+app -up-> actions :event
+actions -up-> dispatcher :action
+dispatcher -> reducers :dispatch
+state -> reducers :oldState
+reducers -up-> [Solid]
+[Solid] -down-> reducers
+reducers -down-> state :newState
+state -down-> app :newState
 
 
 
