@@ -9,7 +9,7 @@ the data is the same for all of them.
 
 === Business Context
 
-[plantuml,"Whitebox overall system",png]
+[plantuml,"Business context",png]
 ----
 include::diagrams/03-01_BusinessContext.puml[]
 ----
