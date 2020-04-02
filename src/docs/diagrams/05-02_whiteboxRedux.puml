@@ -1,0 +1,46 @@
+@startuml
+
+rectangle Redux {
+    node "Store" {
+        [Dispatcher] as dispatcher
+        folder "Reducers" as reducers {
+            [AuthReducer] as authReducer
+            [RouteReducer] as routeReducer
+            [UserReducer] as userReducer
+            [RootReducer] as rootReducer
+            [LoadReducer] as loadReducer
+        }
+        [State] as state
+    }
+
+    folder "Actions" as actions {
+    [AuthActions] as authActions
+    [RouteActions] as routeActions
+    [UserActions] as userActions
+    [LoadActions] as loadActions
+}
+}
+
+
+
+[React App] as app 
+
+app -up-> actions
+actions -up-> dispatcher
+dispatcher -> reducers
+state -> reducers
+[Solid] -up-> reducers
+reducers -down-> [Solid]
+reducers -down-> state
+state -down-> app
+
+
+
+
+
+
+
+
+
+
+@enduml

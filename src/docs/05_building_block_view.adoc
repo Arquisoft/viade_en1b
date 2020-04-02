@@ -20,9 +20,11 @@ Contained Building Blocks::
 [options="header"]
 |==============================
 | Building block       | Description
-| React                | Offers an interface to the system for the final user.
-| Route interpretation | Offers an interface to routes to other modules.
-| Node module          | Offers an interface to the Solid POD.
+| React module             | Offers an interface to the system for the final user.
+| Parser module | Provides methods to parse files.
+| Store module | Redux store in charge of state of the whole application.
+| Middlewares module | Middlewares to perform async operations.
+| Solid module        | Offers an interface to the Solid POD.
 |==============================
 
 
@@ -30,15 +32,11 @@ Important Interfaces::
 
 _<Description of important interfaces>_
 
-==== React graphical interface
+=== Redux module
 
 Responsibility::
 
 Offers an interface into the system for the final user.
-
-Interface::
-
-This module does not provide interfaces to other modules of the system.
 
 Quality/Performance Characteristics::
 

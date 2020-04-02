@@ -1,12 +1,41 @@
 @startuml
 
-rectangle ViaDe as viade
+rectangle ViaDe {
+    [React] as react
+    [Parser] as parser 
+    [Middlewares] as middlewares
+    [Store] as store 
+    [Solid] as solid
+}
 
 database "User's POD" as pod
 
-:User: -> viade
-viade -> pod
-pod -> viade
+() "Maps API" as imaps
+
+:User: --> react
+
+react <-- store
+react --> store
+
+react --> middlewares
+
+parser <- react
+parser -> react
+
+middlewares -> store
+
+store -> solid
+store <- solid
+
+solid -> pod
+solid <- pod
+
+react -> imaps
+
+
+
+
+
 
 
 @enduml
