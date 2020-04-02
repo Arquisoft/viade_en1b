@@ -1,0 +1,24 @@
+@startuml
+
+rectangle "Middlewares" as mid {
+    [RoutesMiddleware] as rm 
+    [UserMiddleware] as um     
+}
+
+[Redux] as redux
+[React GUI Components] as app
+    
+
+app -right-> mid
+mid -down-> redux
+redux -up-> app
+
+
+
+
+
+
+
+
+
+@enduml
