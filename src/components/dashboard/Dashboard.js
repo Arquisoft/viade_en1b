@@ -13,17 +13,15 @@ function Dashboard(props) {
   const { routes } = props;
   const { selectedRoute } = props;
   const { showRoute } = props;
-  //console.log(selectedRoute)
-  //getWebId().then(x=> console.log(x))
 
   //header of the currently selected  route
   const currentSelectedMap =
     selectedRoute == null ? (
-      <div id="titleHolder">
+      <div data-testid = "dashboard-header" id="titleHolder">
         <h1>Routes List</h1>
       </div>
     ) : (
-      <div id="titleHolder">
+      <div data-testid = "dashboard-header" id="titleHolder">
         <h1>{selectedRoute.name}</h1> <p> by {selectedRoute.author}</p>
       </div>
     );
@@ -37,7 +35,7 @@ function Dashboard(props) {
       : selectedRoute.positions[selectedRoute.positions.length - 1];
 
   return (
-    <div className="dashboard container">
+    <div data-testid="dashbaord-container" className="dashboard container">
       <LoggedIn>
         {currentSelectedMap}
         <RouteList
