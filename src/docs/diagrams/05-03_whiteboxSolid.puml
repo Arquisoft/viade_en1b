@@ -1,39 +1,19 @@
 @startuml
 
-rectangle Redux {
-    node "Store" {
-        [Dispatcher] as dispatcher
-        folder "Reducers" as reducers {
-            [AuthReducer] as authReducer
-            [RouteReducer] as routeReducer
-            [UserReducer] as userReducer
-            [RootReducer] as rootReducer
-            [LoadReducer] as loadReducer
-        }
-        [State] as state
-    }
-
-    folder "Actions" as actions {
-    [AuthActions] as authActions
-    [RouteActions] as routeActions
-    [UserActions] as userActions
-    [LoadActions] as loadActions
-}
+rectangle Solid as solid {
+    [Auth]
+    [Routes]
+    [ProfileInfo]
 }
 
+[Redux] as redux
 
+database "User´s POD" as pod
 
-[React App] as app 
-
-state --> app
-actions <-- state
-actions -> dispatcher
-dispatcher -> reducers
-reducers --> state
-reducers <-- state
-reducers --> [Solid]
-reducers <-- [Solid]
-
+redux -right-> solid
+solid -> pod
+pod -> solid
+solid -left-> redux
 
 
 
