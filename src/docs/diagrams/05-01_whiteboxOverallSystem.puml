@@ -1,7 +1,7 @@
 @startuml
 
 rectangle ViaDe {
-    [React] as react
+    [React  GUI Components] as react
     [Parser] as parser 
     [Middlewares] as middlewares
     [Store] as store 
@@ -31,6 +31,7 @@ solid -> pod
 solid <- pod
 
 react -> imaps
+imaps -> react
 
 
 
