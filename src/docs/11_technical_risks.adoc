@@ -22,4 +22,8 @@ application for the managing, in a decentralized way, of the routes of an user.
 |Travis-ci
 |The use of a continuous integration tool is new for the developer team.
 |A solution would be the familiarization with the configuration file of the tool.
+
+|Viade spec
+|All the teams must agree in a specification in order to achieve the interoperability between different viade applications
+|It is difficult to agree on something so specific with so many people
 |===
