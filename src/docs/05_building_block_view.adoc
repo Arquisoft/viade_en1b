@@ -71,19 +71,12 @@ include::diagrams/05-03_whiteboxSolid.puml[]
 
 Responsibility::
 
-Redux is used to manage the local state of our application.
+Redux module was in charge of managing the local state of the application. However, this SOLID module is actually in charge of managing the real data of the user fro the POD.
 
-Contained Building Blocks::
-
-[options="header"]
-|==============================
-| Building block       | Description
-| Reducers             | Specify how the application´s state changes in response to actions sent to the store.
-| Actions | Payloads of information that send data form our application to our store. They only describe _what happened_, but don´t edscribe how the application´s state changes.
-| Store module | Redux store in charge of state of the whole application.
-| Middlewares module | Middlewares to perform async operations.
-| Solid module        | Offers an interface to the Solid POD.
-|==============================
+Files::
+* Auth.js: it has one method to obtain the user´s web id.
+* ProfileInfo.js: it has methods to get the user´s mail and the list of friends.
+* Routes.js: it has all the methods needed to obtain the routes data from the user POD: read, write, share, delete.
 
 === GUI components module
 
