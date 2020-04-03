@@ -109,52 +109,10 @@ include::diagrams/05-05_whiteboxMiddlewares.puml[]
 
 Responsibility::
 
-Offers an interface into the system for the final user.
+TODO
 
-Contained Building Blocks::
+Middlewares::
+* ProfileMiddleware: TODO
+* RouteMiddleware: TODO
+* LoggerMiddleware: TODO
 
-[options="header"]
-|==============================
-| Building block       | Description
-| React module             | Offers an interface to the system for the final user.
-| Parser module | Provides methods to parse files.
-| Store module | Redux store in charge of state of the whole application.
-| Middlewares module | Middlewares to perform async operations.
-| Solid module        | Offers an interface to the Solid POD.
-|==============================
-
-==== Solid module
-
-Responsibility::
-
-Knows the Solid protocol and interacts directly with PODs.
-
-Interface::
-
-[options="header"]
-|==============================
-| Method                                  | Description
-| getRoutesFolder(userWebId)              | Gets the URL of the routes storage as a string
-| uploadRouteToPod(route, userWebId)      | Uploads a route object to the user's POD
-| getRouteFromPod(routeName, userWebId)   | Gets a route from the user's POD by name
-| getRoutesFromPod(userWebId)             | Gets a list with all the routes from the user's POD
-| clearRouteFromPod(routeName, userWebId) | Deletes a route from the user's POD by name
-| clearRoutesFromPod(userWebId)           | Deletes all routes from the user's POD
-|==============================
-
-Quality/Performance Characteristics::
-
-Must fit the standards of Solid data representation and exploit the benefits of
-linked data.
-
-Directory/File Location::
-
-`src/solid/`
-
-Fulfilled Requirements::
-
-Basic interface to interact with profile and routes stored in a user's POD.
-
-Open Issues/Problems/Risks::
-
-_WIP_
