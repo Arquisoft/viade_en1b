@@ -1,6 +1,6 @@
 @startuml
 
-rectangle "React GUI Components" as react {
+rectangle "GUI Components" as react {
     folder "dashboard" as dashboard {
         [Dahsboard] as das
         [MyMap] as map

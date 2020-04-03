@@ -20,6 +20,87 @@ Contained Building Blocks::
 [options="header"]
 |==============================
 | Building block       | Description
+| GUI components module             | Offers an interface to the system for the final user.
+| Parser module | Provides methods to parse files.
+| Redux module | Redux store in charge of state of the whole application.
+| Middlewares module | Middlewares to perform async operations.
+| Solid module        | Offers an interface to the Solid POD.
+|==============================
+
+=== Redux module
+
+[plantuml,"Whitebox Redux",png]
+----
+include::diagrams/05-02_whiteboxRedux.puml[]
+----
+
+Responsibility::
+
+Redux is used to manage the local state of our application.
+
+Contained Building Blocks::
+
+[options="header"]
+|==============================
+| Building block       | Description
+| Reducers             | Specify how the application´s state changes in response to actions sent to the store.
+| Actions | Payloads of information that send data from our application to our store. They only describe _what happened_, but don´t describe _how the application´s state changes_.
+| Store| It is the object that brings reducers, actions and the state together.
+| Dispatcher | Middlewares to perform async operations.
+|==============================
+
+Reducers::
+* AuthReducer: It is in charge of managing the information about the user´s data needed for the authentication.
+* LoadReducer: It is used to know when the user data has already been loaded.
+* RouteReducer: It manages all the information related to the user´s routes.
+* UserReducer: It is used to manage the user´s information once it is logged in.
+* RootReducer: It combines all the previous reducers into one. (Redux standard)
+
+Actions::
+* AuthActions: It only has one action in charge of updating the local userWebId once the user logs in the app.
+* LoadActions: It has one action in order to change a propierty once the user logs in.
+* RouteActions: All the actions related to the routes: show a route in the map, upload a route, delete a route and share a route.
+* UserActions: Actions in charge of loading the user data: friends, email, name...
+
+=== SOLID module
+
+[plantuml,"Whitebox SOLID",png]
+----
+include::diagrams/05-03_whiteboxSolid.puml[]
+----
+
+Responsibility::
+
+Redux is used to manage the local state of our application.
+
+Contained Building Blocks::
+
+[options="header"]
+|==============================
+| Building block       | Description
+| Reducers             | Specify how the application´s state changes in response to actions sent to the store.
+| Actions | Payloads of information that send data form our application to our store. They only describe _what happened_, but don´t edscribe how the application´s state changes.
+| Store module | Redux store in charge of state of the whole application.
+| Middlewares module | Middlewares to perform async operations.
+| Solid module        | Offers an interface to the Solid POD.
+|==============================
+
+=== GUI components module
+
+[plantuml,"Whitebox React GUI Components",png]
+----
+include::diagrams/05-04_whiteboxReact.puml[]
+----
+
+Responsibility::
+
+Offers an interface into the system for the final user.
+
+Contained Building Blocks::
+
+[options="header"]
+|==============================
+| Building block       | Description
 | React module             | Offers an interface to the system for the final user.
 | Parser module | Provides methods to parse files.
 | Store module | Redux store in charge of state of the whole application.
@@ -27,91 +108,28 @@ Contained Building Blocks::
 | Solid module        | Offers an interface to the Solid POD.
 |==============================
 
+=== Middlewares module
 
-Important Interfaces::
-
-_<Description of important interfaces>_
-
-=== Redux module
+[plantuml,"Whitebox Middlewares",png]
+----
+include::diagrams/05-05_whiteboxMiddlewares.puml[]
+----
 
 Responsibility::
 
 Offers an interface into the system for the final user.
 
-Quality/Performance Characteristics::
+Contained Building Blocks::
 
-The graphical interface must accord to the Solid style guide. It must also be
-responsive enough for final users to interact with the system without problem.
-
-Directory/File Location::
-
-_WIP_
-
-Fulfilled Requirements::
-
-_WIP_
-
-Open Issues/Problems/Risks::
-
-_WIP_
-
-==== Map module
-
-Responsibility::
-
-Provides a map for the routes to be represented on.
-
-Interface::
-
-Provides an interface to show and interact with routes.
-
-Quality/Performance Characteristics::
-
-The maps must be precise and expressive enough for the routes to be easily
-interpreted by as many final users as possible.
-
-Directory/File Location::
-
-_WIP_
-
-Fulfilled Requirements::
-
-_WIP_
-
-Open Issues/Problems/Risks::
-
-_WIP_
-
-
-
-
-==== Route interpretation
-
-Responsibility::
-
-Deals with the routes format.
-
-Interface::
-
-Offers representable routes.
-
-Quality/Performance Characteristics::
-
-Handling of routes must be responsive enough to not affect the flow of the
-application.
-
-Directory/File Location::
-
-_WIP_
-
-Fulfilled Requirements::
-
-_WIP_
-
-Open Issues/Problems/Risks::
-
-_WIP_
-
+[options="header"]
+|==============================
+| Building block       | Description
+| React module             | Offers an interface to the system for the final user.
+| Parser module | Provides methods to parse files.
+| Store module | Redux store in charge of state of the whole application.
+| Middlewares module | Middlewares to perform async operations.
+| Solid module        | Offers an interface to the Solid POD.
+|==============================
 
 ==== Solid module
 

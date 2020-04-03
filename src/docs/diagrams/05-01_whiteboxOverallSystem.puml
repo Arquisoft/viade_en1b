@@ -1,7 +1,7 @@
 @startuml
 
 rectangle ViaDe {
-    [React  GUI Components] as react
+    [GUI Components] as react
     [Parser] as parser 
     [Middlewares] as middlewares
     [Store] as store 

@@ -2,11 +2,12 @@
 
 rectangle "Middlewares" as mid {
     [RoutesMiddleware] as rm 
-    [UserMiddleware] as um     
+    [UserMiddleware] as um 
+    [LoggerMiddleware] as lm    
 }
 
 [Redux] as redux
-[React GUI Components] as app
+[GUI Components] as app
     
 
 app -right-> mid

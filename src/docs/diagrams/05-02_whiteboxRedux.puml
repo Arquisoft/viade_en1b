@@ -23,7 +23,7 @@ rectangle Redux {
 
 
 
-[React App] as app 
+[App] as app 
 
 app -up-> actions :event
 actions -up-> dispatcher :action
