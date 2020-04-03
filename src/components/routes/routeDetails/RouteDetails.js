@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { deleteRoute } from "../../../store/actions/RouteActions";
 import ShareRoute from "../shareRoute/ShareRoute";
+import Comments from "../../layout/comments/Comments.js"
 
 export const RouteDetails = props => {
   const { selectedRoute } = props;
@@ -59,6 +60,7 @@ export const RouteDetails = props => {
             Delete
           </Button>
           {
+           
             <ShareRoute
               data-testid="route-details-button-share"
               id="shareButton"
@@ -66,7 +68,9 @@ export const RouteDetails = props => {
             >
               Share
             </ShareRoute>
+           
           }
+           <Comments data-testid="Comments-button" ></Comments>
         </div>
       </div>
     );
