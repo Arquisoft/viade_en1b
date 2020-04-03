@@ -71,7 +71,7 @@ include::diagrams/05-03_whiteboxSolid.puml[]
 
 Responsibility::
 
-Redux module was in charge of managing the local state of the application. However, this SOLID module is actually in charge of managing the real data of the user fro the POD.
+Redux module was in charge of managing the local state of the application. However, this SOLID module is actually in charge of managing the real data of the user from the POD.
 
 Files::
 * Auth.js: it has one method to obtain the user´s web id.
@@ -87,18 +87,17 @@ include::diagrams/05-04_whiteboxReact.puml[]
 
 Responsibility::
 
-Offers an interface into the system for the final user.
+It contains all the React components needed for the GUI.
 
 Contained Building Blocks::
 
 [options="header"]
 |==============================
-| Building block       | Description
-| React module             | Offers an interface to the system for the final user.
-| Parser module | Provides methods to parse files.
-| Store module | Redux store in charge of state of the whole application.
-| Middlewares module | Middlewares to perform async operations.
-| Solid module        | Offers an interface to the Solid POD.
+| Folders       | Description
+| Dashboard             | It contains the main page of the application and the map component.
+| Layout | It has all the components related to the layout: navbar, login, settings, footer...
+| Routes | It has all the route components: routes list, upload route, route summary...
+| User        | Components related to the user: profile, friends list...
 |==============================
 
 === Middlewares module
