@@ -3,7 +3,7 @@
 
 == Deployment View
 
-Viade is running at client side on his web browser and connects to personal Solid POD's. As a result the user just need a computer and a internet connection to bhe able to run our application.
+Viade is running at client side on his web browser and connects to personal Solid POD's. As a result the user just need a computer and a internet connection to be able to run our application.
 
 === Infrastructure Level 1
 

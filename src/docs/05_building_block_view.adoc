@@ -108,11 +108,10 @@ include::diagrams/05-05_whiteboxMiddlewares.puml[]
 ----
 
 Responsibility::
-
-TODO
+Interception point between dispatching an action, and the action reaching the reducer, allowing us to perform async fetches of information among other things.
 
 Middlewares::
-* ProfileMiddleware: TODO
-* RouteMiddleware: TODO
-* LoggerMiddleware: TODO
+* ProfileMiddleware: Fetches profile information about the user, and loads it into the state so it is available for the entire application.
+* RouteMiddleware: Fetches the routes of the user and loads them into the state, so they are available for the whole application.
+* LoggerMiddleware: Catches all the actions, and logs into the console information about the previous and next state of the application once the action is dispatched through the reducer.
 
