@@ -6,14 +6,14 @@ import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { deleteRoute } from "../../../store/actions/RouteActions";
 import ShareRoute from "../shareRoute/ShareRoute";
-import Comments from "../../layout/comments/Comments.js"
+import Comments from "../../layout/comments/Comments.js";
 
-export const RouteDetails = props => {
+export const RouteDetails = (props) => {
   const { selectedRoute } = props;
   const { deleteRoute } = props;
 
   if (selectedRoute != null) {
-    const photos = selectedRoute.images.map(e => {
+    const photos = selectedRoute.images.map((e) => {
       return (
         <img
           data-testid="current-image-slideshow"
@@ -23,7 +23,7 @@ export const RouteDetails = props => {
       );
     });
 
-    const videos = selectedRoute.videos.map(e => {
+    const videos = selectedRoute.videos.map((e) => {
       return (
         <video width="320" height="240" controls>
           <source src={e} type="video/mp4" />
@@ -60,7 +60,6 @@ export const RouteDetails = props => {
             Delete
           </Button>
           {
-           
             <ShareRoute
               data-testid="route-details-button-share"
               id="shareButton"
@@ -68,9 +67,8 @@ export const RouteDetails = props => {
             >
               Share
             </ShareRoute>
-           
           }
-           <Comments data-testid="Comments-button" ></Comments>
+          <Comments data-testid="Comments-button"></Comments>
         </div>
       </div>
     );
@@ -78,9 +76,9 @@ export const RouteDetails = props => {
   return <div></div>;
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    deleteRoute: route => dispatch(deleteRoute(route))
+    deleteRoute: (route) => dispatch(deleteRoute(route)),
   };
 };
 
