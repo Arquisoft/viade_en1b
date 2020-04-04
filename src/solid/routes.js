@@ -25,9 +25,7 @@ export async function getRoutesFromPod(userWebId) {
         return [];
     }
     let folder = await fc.readFolder(url);
-    let routesTexts = await Promise.all(folder.files.map(async (f) => await fc.readFile(url + f.name)));
-    let routes = routesTexts.map(JSON.parse);
-    return routes;
+    return routes = folder.files.map( async (f) => await getRouteFromPod(f.name, userWebId) );
 }
 
 async function getNextId(userWebId) {
@@ -79,7 +77,6 @@ export async function uploadCommentToPod(webId, routeUri, commentText) {
         "dateCreated": year + "-" + month + "-" + day
     };
 }
-
 
 export async function getRouteFromPod(routeName, userWebId) {
     let url = getRoutesFolder(userWebId);
