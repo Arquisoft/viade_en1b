@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ViadeModal from "../modal/Modal.js";
 import { connect } from "react-redux";
 import "../comments/Comments.css";
@@ -12,7 +12,7 @@ export function Comments(props) {
     setState({ ...state, theRoute: props.selectedRoute.name });
   };
   const handleOnSave = () => {
-    if (state.comment !== null && state.comment != "") {
+    if (state.comment !== null && state.comment !== "") {
       //Call whatever function to save the comment
       // The comment is save in state.comment
     }
