@@ -8,8 +8,14 @@ import { getWebId } from "./auth";
  * so they act as a coherent module for other parts of the application to use.
  */
 
+const appName = "viade";
+
 export function getRoutesFolder(userWebId) {
-  return userWebId.split("/profile")[0] + "/viadeen1b/routes/";
+    return userWebId.split("/profile")[0] + "/" + appName + "/routes/";
+}
+
+export function getCommentsFolder(userWebId) {
+    return userWebId.split("/profile")[0] + "/" + appName + "/comments/";
 }
 
 export async function getRoutesFromPod(userWebId) {
@@ -44,6 +50,36 @@ export async function uploadRouteToPod(route, userWebId) {
     }
     await fc.createFile(url + route.name, JSON.stringify(route), "text/plain");
 }
+
+export async function uploadCommentToPod(webId, routeUri, commentText) {
+    let url = getCommentsFolder(userWebId);
+    let date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth()+1;
+    let year = date.getFullYear();
+    let fc = new FC(auth);
+    if (!await fc.itemExists(url)) {
+        await fc.createFolder(url);
+    }
+    let newComment = {
+        "@context": {
+            "@version": 1.1,
+            "viade": "http://arquisoft.github.io/viadeSpec/",
+            "schema": "http://schema.org/",
+            "dateCreated": {
+                "@id": "viade:dateCreated",
+                "@type": "xsd:date"
+            },
+            "text": {
+                "@id": "viade:text",
+                "@type": "xsd:string"
+            }
+        },
+        "text": commentText,
+        "dateCreated": year + "-" + month + "-" + day
+    };
+}
+
 
 export async function getRouteFromPod(routeName, userWebId) {
     let url = getRoutesFolder(userWebId);
