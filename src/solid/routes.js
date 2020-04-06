@@ -1,6 +1,6 @@
 import auth from "solid-auth-client";
 import FC from "solid-file-client";
-import { getWebId } from "./auth";
+import { v4 as uuidv4 } from "uuid";
 
 /**
  * Functions in this file present an interface to add, get and manipulate routes
@@ -18,6 +18,14 @@ export function getCommentsFolder(userWebId) {
     return userWebId.split("/profile")[0] + "/" + appName + "/comments/";
 }
 
+export function getMyCommentsFolder(userWebId) {
+    return getCommentsFolder(userWebId) + "myComments/";
+}
+
+export function getRouteCommentsFile(userWebId, routeName) {
+    return getCommentsFolder(userWebId) + "myRoutesComments/" + routeName;
+}
+
 export async function getRoutesFromPod(userWebId) {
     let url = getRoutesFolder(userWebId);
     let fc = new FC(auth);
@@ -25,7 +33,7 @@ export async function getRoutesFromPod(userWebId) {
         return [];
     }
     let folder = await fc.readFolder(url);
-    return routes = folder.files.map( async (f) => await getRouteFromPod(f.name, userWebId) );
+    return folder.files.map( async (f) => await getRouteFromPod(f.name, userWebId) );
 }
 
 async function getNextId(userWebId) {
@@ -49,7 +57,7 @@ export async function uploadRouteToPod(route, userWebId) {
     await fc.createFile(url + route.name, JSON.stringify(route), "text/plain");
 }
 
-export async function uploadCommentToPod(webId, routeUri, commentText) {
+export async function uploadCommentToPod(userWebId, routeCommentsUri, commentText) {
     let url = getCommentsFolder(userWebId);
     let date = new Date();
     let day = date.getDate();
@@ -76,6 +84,8 @@ export async function uploadCommentToPod(webId, routeUri, commentText) {
         "text": commentText,
         "dateCreated": year + "-" + month + "-" + day
     };
+    await fc.createFile(url + uuidv4(), JSON.stringify(newComment), "text/plain");
+    // change route comments file, adding uri of this comment
 }
 
 export async function getRouteFromPod(routeName, userWebId) {
