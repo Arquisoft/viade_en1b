@@ -1,11 +1,26 @@
 import React from 'react'
 import { render, waitForElement, fireEvent, queryByTestId } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import App from '../../../../App'
+//import App from '../../../../App'
+import Navbar from '../NavBar'
+import { HashRouter } from "react-router-dom";
+import { Provider } from 'react-redux';
+import { testStore } from '../../../../utils';
+import rootReducer from '../../../../store/reducers/RootReducer';
 
 let rendered = null
-beforeEach( () => {
-    const { container } = render(<App></App>)
+const state = {
+    route: {},
+    auth: {},
+    user: {},
+    control: {}
+};
+beforeEach(() => {
+    const store = testStore(rootReducer, state);
+    const { container } = render(
+        <Provider store={store}>
+            <HashRouter><Navbar></Navbar></HashRouter>
+        </Provider>);
     rendered = container
 })
 
@@ -19,6 +34,7 @@ describe('Navbar is correctly rendered', () => {
             expect(queryByTestId(rendered, 'navbar-my-profile')).not.toBeNull();
             expect(queryByTestId(rendered, 'navbar-logout')).not.toBeNull();
             expect(queryByTestId(rendered, 'navbar-brand')).not.toBeNull();
+            expect(queryByTestId(rendered, 'navbar-settingsks')).not.toBeNull();
         })
     })
 
@@ -29,6 +45,7 @@ describe('Navbar is correctly rendered', () => {
             let profile = queryByTestId(rendered, 'navbar-my-profile')
             let brand = queryByTestId(rendered, 'navbar-brand')
             let logout = queryByTestId(rendered, 'navbar-logout')
+            let settings = queryByTestId(rendered, 'navbar-settings')
 
             fireEvent.click(routes);
             expect(getCurrentPage()).toEqual('routes');
@@ -38,13 +55,16 @@ describe('Navbar is correctly rendered', () => {
 
             fireEvent.click(profile)
             expect(getCurrentPage()).toEqual('profile')
-            
+
             fireEvent.click(brand)
             expect(getCurrentPage()).toEqual('dashboard')
 
             fireEvent.click(logout)
             expect(getCurrentPage()).toEqual('')
-            
+
+            fireEvent.click(settings)
+            expect(getCurrentPage()).toEqual('settings')
+
         })
     })
 })

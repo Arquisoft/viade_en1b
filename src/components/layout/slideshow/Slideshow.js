@@ -18,12 +18,12 @@ const Slideshow = props => {
     const [state, dispatch] = useReducer(reducer, {picture: 0})
 
     const previousButton = state.picture === 0 
-                        ? <button disabled onClick={() => dispatch({type: 'PREVIOUS'})}><BsArrowLeft></BsArrowLeft></button>
-                        : <button onClick={() => dispatch({type: 'PREVIOUS'})}><BsArrowLeft></BsArrowLeft></button>
+                        ? <button data-testid="previous" disabled onClick={() => dispatch({type: 'PREVIOUS'})}><BsArrowLeft></BsArrowLeft></button>
+                        : <button data-testid="previous" onClick={() => dispatch({type: 'PREVIOUS'})}><BsArrowLeft></BsArrowLeft></button>
             
     const nextButton = state.picture === props.images.length - 1 
-                        ? <button disabled onClick={() => dispatch({type: 'NEXT'})}><BsArrowRight></BsArrowRight></button>
-                        : <button onClick={() => dispatch({type: 'NEXT'})}><BsArrowRight></BsArrowRight></button>
+                        ? <button data-testid="next" disabled onClick={() => dispatch({type: 'NEXT'})}><BsArrowRight></BsArrowRight></button>
+                        : <button data-testid="next" onClick={() => dispatch({type: 'NEXT'})}><BsArrowRight></BsArrowRight></button>
             
     const pictures = props.images.length === 0 ? 'There are no media elements' : props.images[state.picture]
 

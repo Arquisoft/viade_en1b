@@ -1,0 +1,25 @@
+@startuml
+
+rectangle Solid as solid {
+    [Auth]
+    [Routes]
+    [ProfileInfo]
+}
+
+[Redux] as redux
+
+database "User´s POD" as pod
+
+redux -right-> solid
+solid -> pod
+pod -> solid
+solid -left-> redux
+
+
+
+
+
+
+
+
+@enduml

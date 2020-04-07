@@ -33,28 +33,51 @@ export async function getRoutesFromPod(userWebId) {
         return [];
     }
     let folder = await fc.readFolder(url);
-    return folder.files.map( async (f) => await getRouteFromPod(f.name, userWebId) );
+    let routes = folder.files.map( async (f) => await getRouteFromPod(f.name, userWebId) );
+    return routes.sort((route1, route2) => route1.id - route2.id);
+
 }
 
 async function getNextId(userWebId) {
-    let routes = await getRoutesFromPod(userWebId);
-    routes = routes.sort( (a, b) => { return a.id - b.id; } );
-    for (let i = 0; i < routes.length; i++) {
-        if (i !== routes.get(i).id) {
-            return i;
-        }
+  let routes = await getRoutesFromPod(userWebId);
+  routes = routes.sort((a, b) => {
+    return a.id - b.id;
+  });
+  console.log(routes);
+  for (let i = 0; i < routes.length; i++) {
+    if (i !== routes[i].id) {
+      return i;
     }
-    return routes.length;
+  }
+  return routes.length;
+}
+
+export async function shareRouteToPod(route, userWebId) {
+  route = { ...route, id: await getNextId(userWebId) };
+  let url = getRoutesFolder(userWebId);
+  let fc = new FC(auth);
+  if (!(await fc.itemExists(url))) {
+    await fc.createFolder(url);
+  }
+  await fc.postFile(
+    url + route.name,
+    JSON.stringify(route),
+    "application/json"
+  );
 }
 
 export async function uploadRouteToPod(route, userWebId) {
-    route.id = await getNextId(userWebId);
-    let url = getRoutesFolder(userWebId);
-    let fc = new FC(auth);
-    if (!await fc.itemExists(url)) {
-        await fc.createFolder(url);
-    }
-    await fc.createFile(url + route.name, JSON.stringify(route), "text/plain");
+  route = { ...route, id: await getNextId(userWebId) };
+  let url = getRoutesFolder(userWebId);
+  let fc = new FC(auth);
+  if (!(await fc.itemExists(url))) {
+    await fc.createFolder(url);
+  }
+  await fc.createFile(
+    url + route.name,
+    JSON.stringify(route),
+    "application/json"
+  );
 }
 
 export async function uploadCommentToPod(userWebId, routeCommentsUri, commentText) {
@@ -89,32 +112,33 @@ export async function uploadCommentToPod(userWebId, routeCommentsUri, commentTex
 }
 
 export async function getRouteFromPod(routeName, userWebId) {
-    let url = getRoutesFolder(userWebId);
-    let fc = new FC(auth);
-    let folder = await fc.readFolder(url);
-    if (folder.files.includes(routeName)) {
-        return fc.readFile(url + routeName);
-    }
-    return null;
+  let url = getRoutesFolder(userWebId);
+  let fc = new FC(auth);
+  let folder = await fc.readFolder(url);
+  if (folder.files.includes(routeName)) {
+    return fc.readFile(url + routeName);
+  }
+  return null;
 }
 
 export async function clearRoutesFromPod(userWebId) {
-    let url = getRoutesFolder(userWebId);
-    let fc = new FC(auth);
-    if (! await fc.itemExists(url)) {
-        return;
-    }
-    let folder = await fc.readFolder(url);
-    await Promise.all(folder.files.map(async (f) => await fc.deleteFile(url + f.name)));
+  let url = getRoutesFolder(userWebId);
+  let fc = new FC(auth);
+  if (!(await fc.itemExists(url))) {
+    return;
+  }
+  let folder = await fc.readFolder(url);
+  await Promise.all(
+    folder.files.map(async f => await fc.deleteFile(url + f.name))
+  );
 }
 
 export async function clearRouteFromPod(routeName, userWebId) {
-    let url = getRoutesFolder(userWebId);
-    let fc = new FC(auth);
-    let folder = await fc.readFolder(url);
-    if (folder.files.includes(routeName)) {
-        let fileUrl = url + routeName;
-        fc.deleteFile(fileUrl);
-    }
+  let url = getRoutesFolder(userWebId);
+  let fc = new FC(auth);
+  let folder = await fc.readFolder(url);
+  if (folder.files.includes(routeName)) {
+    let fileUrl = url + routeName;
+    fc.deleteFile(fileUrl);
+  }
 }
-

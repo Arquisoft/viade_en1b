@@ -1,21 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './index.css';
-import { createStore, applyMiddleware } from 'redux';
-import rootReducer from './store/reducers/RootReducer';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk'
-import { ThemeContext, themes } from './components/layout/themeContext/ThemeContext'
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import "./index.css";
+import { Provider } from "react-redux";
+import {
+  ThemeContext,
+  themes
+} from "./components/layout/themeContext/ThemeContext";
+import { store } from "./createStore";
 
-const store = createStore(rootReducer,
-  applyMiddleware(thunk))
-  
+const myStore = store;
 
 ReactDOM.render(
   <ThemeContext.Provider value={themes.purple}>
-    <Provider store={store}><App/></Provider>
-  </ThemeContext.Provider>
-  ,
-  document.getElementById('root')
+    <Provider store={myStore}>
+      <App />
+    </Provider>
+  </ThemeContext.Provider>,
+  document.getElementById("root")
 );
