@@ -20,6 +20,7 @@ export const routeReducer = (state = initState, action) => {
       const id = action.payload.webId;
       const route = action.payload.route;
       const sharedWith = route.sharedWith ? route.sharedWith : [];
+      const comments = [route.comments]
       const newRoute = {
         name: route.name,
         description: route.description,
@@ -27,7 +28,8 @@ export const routeReducer = (state = initState, action) => {
         positions: route.positions,
         images: route.images,
         videos: route.videos,
-        sharedWith: sharedWith
+        sharedWith: sharedWith,
+        comments: comments
       };
       uploadRouteToPod(newRoute, action.payload.webId);
       //let previousRoutes = [...action.payload.routes];

@@ -25,6 +25,7 @@ export function Comments(props) {
   return (
     <div className="GeneralComponent" data-testid="general-component">
       <ViadeModal
+        className={props.style}
         data-testid="Modal-component"
         disabled={false}
         toggleText="Comment"
