@@ -54,7 +54,9 @@ destroy rr
 end
 destroy rm
 rs --> nb: state
-
-
+legend right
+line = method
+dash line = data
+endlegend
 
 @enduml

@@ -58,8 +58,24 @@ include::diagrams/06-04_accessingFriend.puml[]
 ----
 
 === Sequence diagrams
+
+The previous diagrams describe some actions but at a very high-level of detail. Now we are going to focus on some more _difficult_ actions trying to explain them more in detail, at very low level.
+
+==== Loading routes from POD
+
 [plantuml,"Loading routes",png]
 ----
 include::diagrams/06_SD_LoadRoutes.puml[]
 ----
+
+Since it is a bit complex diagram we are going to explain it:
+
+. A message is sent from the NavBar to the Redux store in order to load the routes.
+. The store dispatches the proper action.
+. A request for loading the routes is called and intercepted by the middleware.
+. The middleware is in charge of actually loading the routes asynchronously. Meanwhile, the reducer gives a response to the request.
+. Once the routes are loaded, there are two possible scenarios: everything worked or some error occurred. 
+If everything worked, a load routes success actions is dispatched from the store, and the state is updated with the routes.
+On the other hand, if an error occured while loading the routes, an error action is dispatched and the state is updated.
+. Finally, the state is received by the NavBar (whole application).
 
