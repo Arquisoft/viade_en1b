@@ -57,7 +57,7 @@ include::diagrams/06-04_accessingFriend.puml[]
 
 === Sequence diagrams
 
-The previous diagrams describe some actions but at a very high-level of detail. Now we are going to focus on some more _difficult_ actions trying to explain them more in detail, at very low level.
+The previous diagrams describe some actions but at a very high-level of detail. Now we are going to focus on some more _difficult_ actions trying to explain them more in detail, at a low level.
 
 ==== Loading routes from POD
 
@@ -79,7 +79,7 @@ On the other hand, if an error occured while loading the routes, an error action
 
 ==== Loading user´s email
 
-[plantuml,"Loading routes",png]
+[plantuml,"Loading email",png]
 ----
 include::diagrams/06_SD_LoadEmail.puml[]
 ----
@@ -89,4 +89,18 @@ It follows the same structure as the previous diagram:
 . It sends a request to load the email.
 . The middleware is in charge of loading it asynchronously.
 . If everything worked, a load email success is sent and the state is updated with the email. If an error occurred, a load email error is sent and the state is updated.
+. Finally, the NavBar (whole application) receives the updated state.
+
+==== Loading user´s friends
+
+[plantuml,"Loading friends",png]
+----
+include::diagrams/06_SD_LoadFriends.puml[]
+----
+
+Again, it follows the same structure as the previous diagrams:
+
+. It sends a request to load the friends.
+. The middleware is in charge of loading them asynchronously.
+. If everything worked, a load friends success is sent and the state is updated with the friends. If an error occurred, a load friends error is sent and the state is updated.
 . Finally, the NavBar (whole application) receives the updated state.

@@ -1,0 +1,62 @@
+title Load routes - Sequence Diagram 
+
+@startuml
+
+participant NavBar as nb 
+participant ReduxStore as rs 
+participant RouteActions as ra 
+participant RouteReducer as rr 
+participant RouteMiddleware as rm 
+participant Solid.js as s 
+database POD as p
+
+activate nb
+nb -> rs: loadRoutesRequest()
+activate rs
+rs -> ra: dispatch(loadRoutesRequest())
+activate ra
+ra -> rm: loadRoutesRequest()
+destroy ra
+activate rm
+rm -> s: getRoutesFromPod(webid)
+activate s
+rm -> rr: loadRoutesRequest()
+activate rr
+rr --> rs: state
+destroy rr
+loop for each user´s routes
+    s -> p: readFile()
+    activate p
+    p --> s: route
+end
+destroy p
+...
+alt routes successfully loaded
+s --> rm: routes
+destroy s
+rs -> ra: dispatch(loadRoutesSuccess(routes))
+activate ra
+ra -> rr: loadRoutesSuccess(routes)
+activate rr
+destroy ra
+rr --> rs: state with routes updated
+destroy rr
+else error at loading routes
+s --> rm: error
+destroy s
+rs -> ra: dispatch(loadRoutesError(error))
+activate ra
+ra -> rr: loadRoutesError(error)
+activate rr
+destroy ra
+rr --> rs: state updated
+destroy rr
+end
+destroy rm
+rs --> nb: state
+legend right
+line = method
+dash line = data
+endlegend
+
+@enduml
