@@ -39,6 +39,7 @@ activate ra
 ra -> rr: loadFriendsSuccess(friends)
 activate rr
 destroy ra
+rr -> rr: updateState(friends)
 rr --> rs: updated state with friends
 destroy rr
 else error at loading email
@@ -49,6 +50,7 @@ activate ra
 ra -> rr: loadFriendsError(error)
 activate rr
 destroy ra
+rr -> rr: updateState(error)
 rr --> rs: updated state
 destroy rr
 end

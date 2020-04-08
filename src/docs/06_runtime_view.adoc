@@ -104,3 +104,16 @@ Again, it follows the same structure as the previous diagrams:
 . The middleware is in charge of loading them asynchronously.
 . If everything worked, a load friends success is sent and the state is updated with the friends. If an error occurred, a load friends error is sent and the state is updated.
 . Finally, the NavBar (whole application) receives the updated state.
+
+==== Displaying a route in the map
+
+[plantuml,"Display route",png]
+----
+include::diagrams/06_SD_DisplayRoute.puml[]
+----
+
+In this diagram we can perfectly observe the redux architecture:
+
+. The user clicks on a route and an event is triggered.
+. An action is dispatched and the reducer updates the state.
+. Once the state is updated, the map component receives the positions of the route and the route is displayed.

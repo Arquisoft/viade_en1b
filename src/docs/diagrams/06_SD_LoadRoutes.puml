@@ -39,6 +39,7 @@ activate ra
 ra -> rr: loadRoutesSuccess(routes)
 activate rr
 destroy ra
+rr -> rr: updateState(routes)
 rr --> rs: state with routes updated
 destroy rr
 else error at loading routes
@@ -49,6 +50,7 @@ activate ra
 ra -> rr: loadRoutesError(error)
 activate rr
 destroy ra
+rr -> rr: updateState(error)
 rr --> rs: state updated
 destroy rr
 end

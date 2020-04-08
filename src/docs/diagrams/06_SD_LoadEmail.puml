@@ -37,6 +37,7 @@ activate ra
 ra -> rr: loadEmailSuccess(email)
 activate rr
 destroy ra
+rr -> rr: updateState(email)
 rr --> rs: updated state with email
 destroy rr
 else error at loading email
@@ -47,6 +48,7 @@ activate ra
 ra -> rr: loadEmailError(error)
 activate rr
 destroy ra
+rr -> rr: updateState(error)
 rr --> rs: updated state
 destroy rr
 end
