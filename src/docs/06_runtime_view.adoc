@@ -1,8 +1,6 @@
 [[section-runtime-view]]
 == Runtime View
-The main runtime views of the application are the ones in charge of dealing with the routes and the user profile data.
-
-These views will be explained in detail in the following sections.
+The main runtime views of the application are the ones in charge of dealing with the routes and the user profile data. These views will be explained in detail in the following sections.
 
 === Activity diagrams
 
@@ -68,7 +66,7 @@ The previous diagrams describe some actions but at a very high-level of detail. 
 include::diagrams/06_SD_LoadRoutes.puml[]
 ----
 
-Since it is a bit complex diagram we are going to explain it:
+Since it is a bit complex diagram, we are going to explain it in detail:
 
 . A message is sent from the NavBar to the Redux store in order to load the routes.
 . The store dispatches the proper action.
