@@ -4,52 +4,50 @@ title Load routes - Sequence Diagram
 
 participant NavBar as nb 
 participant ReduxStore as rs 
-participant RouteActions as ra 
-participant RouteReducer as rr 
-participant RouteMiddleware as rm 
+participant UserActions as ra 
+participant UserReducer as rr 
+participant ProfileMiddleware as rm 
 participant Solid.js as s 
 database POD as p
 
 activate nb
-nb -> rs: loadRoutesRequest()
+nb -> rs: loadEmailRequest()
 activate rs
-rs -> ra: dispatch(loadRoutesRequest())
+rs -> ra: dispatch(loadEmailRequest())
 activate ra
-ra -> rm: loadRoutesRequest()
+ra -> rm: loadEmailRequest()
 destroy ra
 activate rm
-rm -> s: getRoutesFromPod(webid)
+rm -> s: getEmail()
 activate s
-rm -> rr: loadRoutesRequest()
+rm -> rr: loadEmailRequest()
 activate rr
 rr --> rs: state
 destroy rr
-loop for each user´s routes
-    s -> p: readFile()
-    activate p
-    p --> s: route
-end
+s -> p: getEmail()
+activate p
+p --> s: email
 destroy p
 ...
-alt routes successfully loaded
-s --> rm: routes
+alt email successfully loaded
+s --> rm: email
 destroy s
-rs -> ra: dispatch(loadRoutesSuccess(routes))
+rs -> ra: dispatch(loadEmailSuccess(email))
 activate ra
-ra -> rr: loadRoutesSuccess(routes)
+ra -> rr: loadEmailSuccess(email)
 activate rr
 destroy ra
-rr --> rs: state with routes updated
+rr --> rs: updated state with email
 destroy rr
-else error at loading routes
+else error at loading email
 s --> rm: error
 destroy s
-rs -> ra: dispatch(loadRoutesError(error))
+rs -> ra: dispatch(loadEmailError(error))
 activate ra
-ra -> rr: loadRoutesError(error)
+ra -> rr: loadEmailError(error)
 activate rr
 destroy ra
-rr --> rs: state updated
+rr --> rs: updated state
 destroy rr
 end
 destroy rm

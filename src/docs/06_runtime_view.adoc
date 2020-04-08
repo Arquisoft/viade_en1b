@@ -77,3 +77,16 @@ If everything worked, a load routes success actions is dispatched from the store
 On the other hand, if an error occured while loading the routes, an error action is dispatched and the state is updated.
 . Finally, the state is received by the NavBar (whole application).
 
+==== Loading user´s email
+
+[plantuml,"Loading routes",png]
+----
+include::diagrams/06_SD_LoadEmail.puml[]
+----
+
+It follows the same structure as the previous diagram:
+
+. It sends a request to load the email.
+. The middleware is in charge of loading it asynchronously.
+. If everything worked, a load email success is sent and the state is updated with the email. If an error occurred, a load email error is sent and the state is updated.
+. Finally, the NavBar (whole application) receives the updated state.
