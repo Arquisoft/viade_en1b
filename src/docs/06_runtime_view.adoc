@@ -1,15 +1,12 @@
 [[section-runtime-view]]
 == Runtime View
-The runtime views can be divided into four possible views:
-
-    * Upload a route
-    * Share a route
-    * Comment a route
-    * Access a friend profile
+The main runtime views of the application are the ones in charge of dealing with the routes and the user profile data.
 
 These views will be explained in detail in the following sections.
 
-=== Upload a route
+=== Activity diagrams
+
+==== Upload a route
 
 The user will be able to upload a route to his own POD.
 
@@ -24,7 +21,7 @@ The user will be able to upload a route to his own POD.
 include::diagrams/06-01_uploadRoute.puml[]
 ----
 
-=== Share a route
+==== Share a route
 
 A user can share a route to one of his friends. 
 
@@ -37,7 +34,7 @@ A user can share a route to one of his friends.
 include::diagrams/06-02_shareRoute.puml[]
 ----
 
-=== Comment a route
+==== Comment a route
 A user will be able to post a comment in a route.
 
 . First, the user will click in the desired route to comment.
@@ -49,7 +46,7 @@ A user will be able to post a comment in a route.
 include::diagrams/06-03_commentRoute.puml[]
 ----
 
-=== Accessing a friend profile
+==== Accessing a friend profile
 Our users will be able to access from the viade app to any of their friends profile.
 
 . First, the user should click on "My Profile"
@@ -59,3 +56,10 @@ Our users will be able to access from the viade app to any of their friends prof
 ----
 include::diagrams/06-04_accessingFriend.puml[]
 ----
+
+=== Sequence diagrams
+[plantuml,"Loading routes",png]
+----
+include::diagrams/06_SD_LoadRoutes.puml[]
+----
+
