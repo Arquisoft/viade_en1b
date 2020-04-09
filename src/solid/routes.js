@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
  */
 
 const appName = "viade";
+const fc = new FC(auth);
 
 export function getRoutesFolder(userWebId) {
     return userWebId.split("/profile")[0] + "/" + appName + "/routes/";
@@ -22,13 +23,16 @@ export function getMyCommentsFolder(userWebId) {
     return getCommentsFolder(userWebId) + "myComments/";
 }
 
+export function getInboxFolder(userWebId) {
+    return userWebId.split("/profile")[0] + "/" + appName + "/inbox/";
+}
+
 export function getRouteCommentsFile(userWebId, routeName) {
     return getCommentsFolder(userWebId) + "myRoutesComments/" + routeName;
 }
 
 export async function getRoutesFromPod(userWebId) {
     let url = getRoutesFolder(userWebId);
-    let fc = new FC(auth);
     if (! await fc.itemExists(url)) {
         return [];
     }
@@ -55,7 +59,6 @@ async function getNextId(userWebId) {
 export async function shareRouteToPod(route, userWebId) {
   route = { ...route, id: await getNextId(userWebId) };
   let url = getRoutesFolder(userWebId);
-  let fc = new FC(auth);
   if (!(await fc.itemExists(url))) {
     await fc.createFolder(url);
   }
@@ -69,7 +72,6 @@ export async function shareRouteToPod(route, userWebId) {
 export async function uploadRouteToPod(route, userWebId) {
   route = { ...route, id: await getNextId(userWebId) };
   let url = getRoutesFolder(userWebId);
-  let fc = new FC(auth);
   if (!(await fc.itemExists(url))) {
     await fc.createFolder(url);
   }
@@ -86,7 +88,6 @@ export async function uploadCommentToPod(userWebId, routeCommentsUri, commentTex
     let day = date.getDate();
     let month = date.getMonth()+1;
     let year = date.getFullYear();
-    let fc = new FC(auth);
     if (!await fc.itemExists(url)) {
         await fc.createFolder(url);
     }
@@ -113,7 +114,6 @@ export async function uploadCommentToPod(userWebId, routeCommentsUri, commentTex
 
 export async function getRouteFromPod(routeName, userWebId) {
   let url = getRoutesFolder(userWebId);
-  let fc = new FC(auth);
   let folder = await fc.readFolder(url);
   if (folder.files.includes(routeName)) {
     return fc.readFile(url + routeName);
@@ -123,7 +123,6 @@ export async function getRouteFromPod(routeName, userWebId) {
 
 export async function clearRoutesFromPod(userWebId) {
   let url = getRoutesFolder(userWebId);
-  let fc = new FC(auth);
   if (!(await fc.itemExists(url))) {
     return;
   }
@@ -135,10 +134,10 @@ export async function clearRoutesFromPod(userWebId) {
 
 export async function clearRouteFromPod(routeName, userWebId) {
   let url = getRoutesFolder(userWebId);
-  let fc = new FC(auth);
   let folder = await fc.readFolder(url);
   if (folder.files.includes(routeName)) {
     let fileUrl = url + routeName;
     fc.deleteFile(fileUrl);
   }
 }
+
