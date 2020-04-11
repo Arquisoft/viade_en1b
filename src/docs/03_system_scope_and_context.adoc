@@ -18,9 +18,11 @@ include::diagrams/03-01_BusinessContext.puml[]
 [options="header", cols="0,4"]
 |===
 |Element | Role
-| Users | People wanting to store and share their routes with control over their storage.
-| Viade | Our application that is supposed to be interoperable thanks to the use of Solid.
-| POD | Each user has a personal pod which stores all his information
+| User | User of the application
+| Viade | Our application of ViaDe
+| User`s POD | Personal storage of the user
+| Other User Viade | External application which the user can share and receive routes
+| imaps | API of the maps
 |===
 
 === Technical Context
