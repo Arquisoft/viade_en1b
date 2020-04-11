@@ -102,18 +102,27 @@ export async function uploadRouteToPod(route, userWebId) {
     );
 }
 
-export async function uploadCommentToPod(userWebId, routeCommentsUri, commentText) {
-    let url = getCommentsFolder(userWebId);
+export async function uploadCommentToPod(userWebId, commentedRouteUri, commentText) {
     let date = new Date();
     let day = date.getDate();
     let month = date.getMonth()+1;
     let year = date.getFullYear();
+    let url = getCommentsFolder(userWebId);
     if (!await fc.itemExists(url)) {
         await fc.createFolder(url);
     }
     let newComment = getNewComment(commentText, year, month, day);
-    await fc.createFile(url + uuidv4(), JSON.stringify(newComment), "text/plain");
-    // change route comments file, adding uri of this comment
+    await fc.createFile(url + uuidv4(), JSON.stringify(newComment), "application/ld+json"); // Creates local comment
+    let route = fc.readFile(commentedRouteUri);
+    let routeJSON = JSON.parse(route);
+    let commentsFileContent = fc.readFile(routeJSON.comments);
+    let commentsFileContentJSON = JSON.parse(commentsFileContent);
+    commentsFileContentJSON.comments.add(newComment); // Adds comment to comments on routeComments file
+    fc.createFile(
+        routeJSON.comments,
+        JSON.stringify(commentsFileContentJSON),
+        "application/ld+json"
+    );
 }
 
 export async function getRouteFromPod(routeName, userWebId) {
@@ -175,28 +184,28 @@ export async function grantAccess(path, userWebId) {
 
 function getNewNotification(route, sharerName, receiverName) {
     return {
-            "@context": {
-                "@version": 1.1,
-                "as": "https://www.w3.org/ns/activitystreams#",
-                "viade": "http://arquisoft.github.io/viadeSpec/",
-                "notification": {
-                    "@id": "as:Offer"
-                }
-            },
+        "@context": {
+            "@version": 1.1,
+            "as": "https://www.w3.org/ns/activitystreams#",
+            "viade": "http://arquisoft.github.io/viadeSpec/",
             "notification": {
-                "actor": {
-                    "type": "Person",
-                    "name":sharerName
-                },
-                "object": {
-                    "type": "viade:route",
-                    "uri":route.uri // TODO
-                },
-                "target": {
-                    "type": "Person",
-                    "name":receiverName
-                }
+                "@id": "as:Offer"
             }
+        },
+        "notification": {
+            "actor": {
+                "type": "Person",
+                "name":sharerName
+            },
+            "object": {
+                "type": "viade:route",
+                "uri":route.uri // TODO
+            },
+            "target": {
+                "type": "Person",
+                "name":receiverName
+            }
+        }
         }
 }
 
