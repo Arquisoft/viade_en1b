@@ -67,15 +67,13 @@ async function getNextId(userWebId) {
 }
 
 export async function shareRouteToPod(route, userWebId) {
-    // Write a notification in the userWebId pod linking to shared route
-    route = { ...route, id: await getNextId(userWebId) };
     let url = getInboxFolder(userWebId);
     if ( !fc.itemExists(url) ) {
         return;
     }
     await fc.createFile(
         url + uuidv4(),
-        makeNotification(route),
+        getNewNotification(route),
         "application/ld+json"
     );
 }
@@ -173,12 +171,10 @@ export async function grantAccess(path, userWebId) {
     await fc.updateFile(url, acl).then(() => {
         console.log('Folder permisions added');
     }, (err) => console.log('Could not set folder permisions' + err));
-
 }
 
-function makeNotification(route, sharerName, receiverName) {
-    let notification =
-        {
+function getNewNotification(route, sharerName, receiverName) {
+    return {
             "@context": {
                 "@version": 1.1,
                 "as": "https://www.w3.org/ns/activitystreams#",
@@ -202,7 +198,6 @@ function makeNotification(route, sharerName, receiverName) {
                 }
             }
         }
-    return notification;
 }
 
 function getRouteUriFromShareNotification(notification) {
