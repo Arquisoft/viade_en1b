@@ -11,7 +11,7 @@
 }
 
 form {
-  margin-top: 5em;
+  margin-top: 2em;
   width: 60%;
   display: flex;
 }
@@ -105,4 +105,14 @@ input[type="file"] + label:hover {
 
 .form-group label {
   width: 100%;
+}
+
+div#footer{
+  clear: both;
+  position: relative;
+  margin-bottom: 0em;
+}
+
+button.btn.btn-primary{
+  margin-bottom: 1em;
 }
