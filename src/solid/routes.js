@@ -17,30 +17,51 @@ async function createFolderIfAbsent(path) {
     }
 }
 
+/**
+ * Returns a string containing the URI of the routes folder for the given user.
+ */
 export function getRoutesFolder(userWebId) {
     return userWebId.split("/profile")[0] + "/" + appName + "/routes/";
 }
 
+/**
+ * Returns a string containing the URI of the comments folder for the given user.
+ */
 export function getCommentsFolder(userWebId) {
     return userWebId.split("/profile")[0] + "/" + appName + "/comments/";
 }
 
+/**
+ * Returns a string containing the URI of the folder of comments created by the given user.
+ */
 export function getMyCommentsFolder(userWebId) {
     return getCommentsFolder(userWebId) + "myComments/";
 }
 
+/**
+ * Returns a string containing the URI of the inbox folder for the given user.
+ */
 export function getInboxFolder(userWebId) {
     return userWebId.split("/profile")[0] + "/" + appName + "/inbox/";
 }
 
+/**
+ * Returns a string containing the URI of the comments file of a given route for the given user.
+ */
 export function getRouteCommentsFile(userWebId, routeName) {
     return getCommentsFolder(userWebId) + "myRoutesComments/" + routeName;
 }
 
+/**
+ * Returns a string containing the URI of the resources folder for the given user.
+ */
 export function getResourcesFolder(userWebId) {
     return userWebId.split("/profile")[0] + "/" + appName + "/resources/";
 }
 
+/**
+ * Returns an array containing the routes in a given user's pod.
+ */
 export async function getRoutesFromPod(userWebId) {
     let url = getRoutesFolder(userWebId);
     if (! await fc.itemExists(url)) {
@@ -49,9 +70,11 @@ export async function getRoutesFromPod(userWebId) {
     let folder = await fc.readFolder(url);
     let routes = folder.files.map( async (f) => await getRouteFromPod(f.name, userWebId) );
     return routes.sort((route1, route2) => route1.id - route2.id);
-
 }
 
+/**
+ * Generates a new ID based on the existing ones (to be deprecated in favor of UUIDs).
+ */
 async function getNextId(userWebId) {
     let routes = await getRoutesFromPod(userWebId);
     routes = routes.sort((a, b) => {
@@ -66,6 +89,9 @@ async function getNextId(userWebId) {
     return routes.length;
 }
 
+/**
+ * Adds a notification to the given user's inbox marking the intention of sharing a route.
+ */
 export async function shareRouteToPod(route, userWebId) {
     let url = getInboxFolder(userWebId);
     if ( !fc.itemExists(url) ) {
@@ -78,12 +104,15 @@ export async function shareRouteToPod(route, userWebId) {
     );
 }
 
+/**
+ * Reads the target user's inbox, adding to shared routes the ones found in the notifications present there
+ * and then deletes those notifications.
+ */
 export async function checkInboxForSharedRoutes(userWebId) {
     let url = getInboxFolder(userWebId);
     createFolderIfAbsent(url);
     let folder = await fc.readFolder(url);
     let notifications = folder.files.map( async (f) => await fc.readFile(f.name) );
-    // for each file, accept sharing of route and remove notification
     let i = 0;
     for ( i; i < notifications.length; i++ ) {
         addRouteUriToShared(getRouteUriFromShareNotification(notifications.get(i)));
@@ -91,6 +120,9 @@ export async function checkInboxForSharedRoutes(userWebId) {
     }
 }
 
+/**
+ * Adds the given route to the given user's pod.
+ */
 export async function uploadRouteToPod(route, userWebId) {
     route = { ...route, id: await getNextId(userWebId) };
     let url = getRoutesFolder(userWebId);
@@ -102,7 +134,19 @@ export async function uploadRouteToPod(route, userWebId) {
     );
 }
 
-export async function uploadCommentToPod(userWebId, commentedRouteUri, commentText) {
+/**
+ * Adds a comment to a route.
+ *
+ * @param {string} userWebId
+ *      The commentator's URI
+ *
+ * @param {string} commentedRouteUri
+ *      The commented route's URI
+ *
+ * @param {string} commentText
+ *      The text of the comment
+ */
+export async function uploadComment(userWebId, commentedRouteUri, commentText) {
     let date = new Date();
     let day = date.getDate();
     let month = date.getMonth()+1;
@@ -125,6 +169,9 @@ export async function uploadCommentToPod(userWebId, commentedRouteUri, commentTe
     );
 }
 
+/**
+ * Returns a route from a given user's pod given the name of the route, or null if not found.
+ */
 export async function getRouteFromPod(routeName, userWebId) {
     let url = getRoutesFolder(userWebId);
     let folder = await fc.readFolder(url);
@@ -134,6 +181,9 @@ export async function getRouteFromPod(routeName, userWebId) {
     return null;
 }
 
+/**
+ * Removes all routes from a given user's pod.
+ */
 export async function clearRoutesFromPod(userWebId) {
     let url = getRoutesFolder(userWebId);
     if (!(await fc.itemExists(url))) {
@@ -145,6 +195,9 @@ export async function clearRoutesFromPod(userWebId) {
     );
 }
 
+/**
+ * Removes a route from given user's pod, given the name of the route.
+ */
 export async function clearRouteFromPod(routeName, userWebId) {
     let url = getRoutesFolder(userWebId);
     let folder = await fc.readFolder(url);
@@ -154,6 +207,9 @@ export async function clearRouteFromPod(routeName, userWebId) {
     }
 }
 
+/**
+ * Grants write permissions to a file in a pod.
+ */
 export async function grantAccess(path, userWebId) {
     let url = path + ".acl";
     let acl =
@@ -174,14 +230,17 @@ export async function grantAccess(path, userWebId) {
             n0:agent c0:me;
             n0:defaultForNew ch:;
             n0:mode n0:Read.`;
-    path += '.acl';
+    path += ".acl";
     console.log(path);
     console.log(acl);
     await fc.updateFile(url, acl).then(() => {
-        console.log('Folder permisions added');
-    }, (err) => console.log('Could not set folder permisions' + err));
+        console.log("Folder permisions added");
+    }, (err) => console.log("Could not set folder permisions" + err));
 }
 
+/**
+ * Returns a new notification in JSON form.
+ */
 function getNewNotification(route, sharerName, receiverName) {
     return {
         "@context": {
@@ -206,13 +265,19 @@ function getNewNotification(route, sharerName, receiverName) {
                 "name":receiverName
             }
         }
-        }
+    }
 }
 
+/**
+ * Returns the URI of the route from a notification object.
+ */
 function getRouteUriFromShareNotification(notification) {
     return notification.notification.object.uri;
 }
 
+/**
+ * Adds a given URI to the list of routes shared with the given user.
+ */
 async function addRouteUriToShared(userWebId, uri) {
     let folder = userWebId.split("/profile")[0] + "/" + appName + "/shared/";
     createFolderIfAbsent(folder);
@@ -235,6 +300,9 @@ async function addRouteUriToShared(userWebId, uri) {
         );
 }
 
+/**
+ * Returns a new shared routes file in JSON form.
+ */
 function getNewSharedRoutesFileContent() {
     return {
         "@context": {
@@ -249,6 +317,9 @@ function getNewSharedRoutesFileContent() {
     }
 }
 
+/**
+ * Returns a new comment file in JSON form.
+ */
 function getNewComment(commentText, year, month, day) {
     return {
         "@context": {
