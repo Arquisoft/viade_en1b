@@ -69,7 +69,7 @@ async function getNextId(userWebId) {
 export async function shareRouteToPod(route, userWebId) {
     let url = getInboxFolder(userWebId);
     if ( !fc.itemExists(url) ) {
-        return;
+        return; // Possibility: notify the user the target user does not have inbox folder
     }
     await fc.createFile(
         url + uuidv4(),
