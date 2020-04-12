@@ -170,7 +170,9 @@ export async function getRouteFromPod(fileName, userWebId) {
     let url = getRoutesFolder(userWebId);
     let folder = await fc.readFolder(url);
     if (folder.files.some( (f) => f.name === fileName )) {
-        return fc.readFile(url + fileName);
+        let fileContent = fc.readFile(url + fileName);
+        let podRoute = JSON.parse(fileContent);
+        return getRouteObjectFromPodRoute(podRoute);
     }
     return null;
 }
@@ -287,9 +289,24 @@ export async function getFormattedRoute(routeObject, userWebId, fileName) {
         "description": ${routeObject.description},
         "comments": ${getRouteCommentsFile(userWebId, fileName)},
         "media": ${routeObject.images + routeObject.videos},
-        "waypoints": ${routeObject.waypoints},
+        "waypoints": ${routeObject.positions},
         "points": ${routeObject.positions}
     }`
+}
+
+/**
+ * Returns a route in JSON form from the given route in JSON-LD.
+ */
+function getRouteObjectFromPodRoute(route) {
+    return {
+        "name": route.name,
+        "description": route.description,
+        "author": route.author,
+        "positions": route.points,
+        "images": route.media,
+        "videos": route.media,
+        "sharedWith": route.sharedWith
+    }
 }
 
 /**
