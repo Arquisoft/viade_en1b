@@ -12,7 +12,8 @@
   background-color: var(--color-primary) !important;
   color: var(--color-secondary) !important;
   font-size: 110%;
-  position: absolute;
+  position: fixed;
+  left: 0;
   bottom: 0;
   width: 100%;
 }

@@ -4,7 +4,7 @@
 There are several risks and practical debts in the developing of this
 application for the managing, in a decentralized way, of the routes of an user.
 
-.Table with Risks and Technical debs and a possible way of minimizing them
+.Table with Risks and a possible way of minimizing them
 |===
 |Possible Risk |Risk description | Possible solution/hotfix
 |Solid
@@ -26,4 +26,13 @@ application for the managing, in a decentralized way, of the routes of an user.
 |Viade spec
 |All the teams must agree in a specification in order to achieve the interoperability between different viade applications
 |It is difficult to agree on something so specific with so many people
+|===
+
+.Table with Technical debt and a possible way of minimizing the
+|===
+|Description |Motivation
+|Route parser
+|When parsing a route with more than one track, only the first one is taken into account because of simplicity.
+
+
 |===

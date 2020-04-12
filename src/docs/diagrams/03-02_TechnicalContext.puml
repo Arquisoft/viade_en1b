@@ -1,0 +1,15 @@
+@startuml
+
+node "Viade" {
+
+}
+
+database "POD" {
+    
+}
+actor User
+Viade <-[#blue]up- POD:RDF
+Viade -up-> POD:Http
+User -> Viade:HTTP
+User <-[#blue]up- Viade:HTTP
+@enduml
