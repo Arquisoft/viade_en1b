@@ -73,33 +73,16 @@ export async function getRoutesFromPod(userWebId) {
 }
 
 /**
- * Generates a new ID based on the existing ones (to be deprecated in favor of UUIDs).
- */
-async function getNextId(userWebId) {
-    let routes = await getRoutesFromPod(userWebId);
-    routes = routes.sort((a, b) => {
-        return a.id - b.id;
-    });
-    console.log(routes);
-    for (let i = 0; i < routes.length; i++) {
-        if (i !== routes[i].id) {
-            return i;
-        }
-    }
-    return routes.length;
-}
-
-/**
  * Adds a notification to the given user's inbox marking the intention of sharing a route.
  */
-export async function shareRouteToPod(route, userWebId) {
+export async function shareRouteToPod(routeUri, userWebId) {
     let url = getInboxFolder(userWebId);
     if ( !fc.itemExists(url) ) {
         return; // Possibility: notify the user the target user does not have inbox folder
     }
     await fc.createFile(
         url + uuidv4(),
-        getNewNotification(route),
+        getNewNotification(routeUri),
         "application/ld+json"
     );
 }
@@ -123,13 +106,14 @@ export async function checkInboxForSharedRoutes(userWebId) {
 /**
  * Adds the given route to the given user's pod.
  */
-export async function uploadRouteToPod(route, userWebId) {
-    route = { ...route, id: await getNextId(userWebId) };
+export async function uploadRouteToPod(routeObject, userWebId) {
+    let newRouteName = uuidv4();
+    let newRoute = getFormattedRoute(routeObject, userWebId, newRouteName);
     let url = getRoutesFolder(userWebId);
     createFolderIfAbsent(url);
     await fc.createFile(
-        url + route.name,
-        JSON.stringify(route),
+        url + newRouteName,
+        newRoute,
         "application/ld+json"
     );
 }
@@ -239,9 +223,69 @@ export async function grantAccess(path, userWebId) {
 }
 
 /**
+ * Returns a route in JSON-LD form as a string from the given route object, the webId of the pod's user and
+ * the file name of the route for the pod.
+ */
+export async function getFormattedRoute(routeObject, userWebId, routeName) {
+    return `{
+        "@context": {
+            "@version": 1.1,
+            "comments": {
+                "@id": "viade:comments",
+                "@type": "@id"
+            },
+            "description": {
+                "@id": "schema:description",
+                "@type": "xsd:string"
+            },
+            "media": {
+                "@container": "@list",
+                "@id": "viade:media"
+            },
+            "name": {
+                "@id": "schema:name",
+                "@type": "xsd:string"
+            },
+            "points": {
+                "@container": "@list",
+                "@id": "viade:points"
+            },
+            "latitude": {
+                "@id": "schema:latitude",
+                "@type": "xsd:double"
+            },
+            "longitude": {
+                "@id": "schema:longitude",
+                "@type": "xsd:double"
+            },
+            "elevation": {
+                "@id": "schema:elevation",
+                "@type": "xsd:double"
+            },
+            "author": {
+                "@id": "schema:author",
+                "@type": "@id"
+            },
+            "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+            "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+            "schema": "http://schema.org/",
+            "viade": "http://arquisoft.github.io/viadeSpec/",
+            "xsd": "http://www.w3.org/2001/XMLSchema#"
+        },
+        "name": ${routeObject.name},
+        "author": ${routeObject.author},
+        "description": ${routeObject.description},
+        "comments": ${getRouteCommentsFile(userWebId, routeName)},
+        "media": ${routeObject.images + routeObject.videos},
+        "waypoints": ${routeObject.waypoints},
+        "points": ${routeObject.positions}
+    }`
+}
+
+/**
  * Returns a new notification in JSON form.
  */
-function getNewNotification(route, sharerName, receiverName) {
+function getNewNotification(routeUri, sharerName, receiverName) {
     return {
         "@context": {
             "@version": 1.1,
@@ -254,15 +298,15 @@ function getNewNotification(route, sharerName, receiverName) {
         "notification": {
             "actor": {
                 "type": "Person",
-                "name":sharerName
+                "name": sharerName
             },
             "object": {
                 "type": "viade:route",
-                "uri":route.uri // TODO
+                "uri": routeUri
             },
             "target": {
                 "type": "Person",
-                "name":receiverName
+                "name": receiverName
             }
         }
     }
