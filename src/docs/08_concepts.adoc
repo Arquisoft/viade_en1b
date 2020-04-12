@@ -1,11 +1,11 @@
 [[section-concepts]]
 == Cross-cutting Concepts
 
-This section contains all the relevant information about different topics of the application, for example, domain concepts, user exeprience, architecture, security, etc. Which are going to be relevant in all the application parts.
+This section contains all the relevant information about different topics of the application, for example, domain concepts, user experience, architecture, security, etc. Which are going to be relevant in all the application parts.
 
 === Domain Concepts
 
-Client: the person or system that runs our descentralized application, using for example, a web browser like Firefox.
+Client: the person or system that runs our decentralized application, using for example, a web browser like Firefox.
 Route: it is expressed using RDF, represent a user route, which can be shared, load, etc. The specification is not yet ready.
 Pod: it is the personal repository of the user, which follows the Solid specification, and it stores information like the routes of each user.
 
