@@ -305,7 +305,7 @@ export async function getFormattedRoute(routeObject, userWebId, fileName) {
         "comments": ${getRouteCommentsFile(userWebId, fileName)},
         "media": ${routeObject.images + routeObject.videos},
         "waypoints": ${routeObject.positions},
-        "points": ${routeObject.positions}}
+        "points": ${routeObject.positions}
     }`;
 }
 
@@ -420,3 +420,4 @@ function getNewComment(commentText, year, month, day) {
     dateCreated: year + "-" + month + "-" + day,
   };
 }
+
