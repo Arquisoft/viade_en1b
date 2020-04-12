@@ -35,16 +35,16 @@ export function MyRoutes(props) {
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     routes: state.route.routes,
-    selectedRoute: state.route.selectedRoute
+    selectedRoute: state.route.selectedRoute,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    showRoute: route => dispatch(showRoute(route))
+    showRoute: (route) => dispatch(showRoute(route)),
   };
 };
 
