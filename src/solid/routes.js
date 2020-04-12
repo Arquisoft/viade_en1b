@@ -75,14 +75,14 @@ export async function getRoutesFromPod(userWebId) {
 /**
  * Adds a notification to the given user's inbox marking the intention of sharing a route.
  */
-export async function shareRouteToPod(routeUri, userWebId) {
-    let url = getInboxFolder(userWebId);
+export async function shareRouteToPod(routeUri, targetUserWebId, sharerName, receiverName) {
+    let url = getInboxFolder(targetUserWebId);
     if ( !fc.itemExists(url) ) {
         return; // Possibility: notify the user the target user does not have inbox folder
     }
     await fc.createFile(
         url + uuidv4(),
-        getNewNotification(routeUri),
+        getNewNotification(routeUri, sharerName, receiverName),
         "application/ld+json"
     );
 }
