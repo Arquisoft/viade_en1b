@@ -1,13 +1,13 @@
-title Load routes - Sequence Diagram 
+title Load routes - Sequence Diagram
 
 @startuml
 
-participant NavBar as nb 
-participant ReduxStore as rs 
-participant RouteActions as ra 
-participant RouteReducer as rr 
-participant RouteMiddleware as rm 
-participant Solid.js as s 
+participant NavBar as nb
+participant ReduxStore as rs
+participant RouteActions as ra
+participant RouteReducer as rr
+participant RouteMiddleware as rm
+participant Solid.js as s
 database POD as p
 
 activate nb
@@ -18,7 +18,7 @@ activate ra
 ra -> rm: loadRoutesRequest()
 destroy ra
 activate rm
-rm -> s: getRoutesFromPod(webid)
+rm -> s: getRoutesFromPod(userwebid)
 activate s
 rm -> rr: loadRoutesRequest()
 activate rr
