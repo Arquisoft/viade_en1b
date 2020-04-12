@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Form } from "react-bootstrap";
 import {
   uploadRoute,
-  loadRoutesRequest
+  loadRoutesRequest,
 } from "./../../../store/actions/RouteActions";
 import UploadButton from "./uploadButton/UploadButton";
 import ViadeModal from "../../layout/modal/Modal";
@@ -19,11 +19,11 @@ export class UploadRoute extends React.Component {
     file: "",
     images: [],
     videos: [],
-    reset: false
+    reset: false,
   };
   changeHandlerRoute(e) {
     this.setState({
-      [e.target.id]: e.target.value
+      [e.target.id]: e.target.value,
     });
   }
 
@@ -34,14 +34,14 @@ export class UploadRoute extends React.Component {
     if (file) {
       var reader = new FileReader();
       reader.readAsText(file, "UTF-8");
-      reader.onload = function(evt) {
+      reader.onload = function (evt) {
         parseado = parseGPX(evt.target.result);
         //console.log(self.state);
         //console.log(parseado);
         self.state.positions = parseado;
         //console.log(self.state);
       };
-      reader.onerror = function(evt) {};
+      reader.onerror = function (evt) {};
     }
   }
 
@@ -49,7 +49,7 @@ export class UploadRoute extends React.Component {
   //This behaviour is tested in the upload button
   changeHandlerImages(e) {
     let docs = [];
-    Array.from(e.target.files).forEach(file => docs.push(file.name));
+    Array.from(e.target.files).forEach((file) => docs.push(file.name));
     this.setState({ ...this.state, images: docs });
   }
 
@@ -57,7 +57,7 @@ export class UploadRoute extends React.Component {
   //This behaviour is tested in the upload button
   changeHandlerVideos(e) {
     let docs = [];
-    Array.from(e.target.files).forEach(file => docs.push(file.name));
+    Array.from(e.target.files).forEach((file) => docs.push(file.name));
     this.setState({ ...this.state, videos: docs });
   }
 
@@ -70,7 +70,7 @@ export class UploadRoute extends React.Component {
       author: "",
       images: [],
       videos: [],
-      reset: false
+      reset: false,
     };
   }
 
@@ -86,8 +86,7 @@ export class UploadRoute extends React.Component {
     if (this.state.reset) this.setState(this.resetState());
   }
 
-  submitForm(e) {
-    e.preventDefault();
+  submitForm() {
     this.props.uploadRoute.bind(this);
     this.props.uploadRoute(this.state, this.props.routes, this.props.userWebId);
     this.props.loadRoutes.bind(this);
@@ -139,13 +138,13 @@ export class UploadRoute extends React.Component {
             <ViadeModal
               disabled={this.isEmpty()}
               toggleText="Submit"
-              onSave={this.submitForm.bind(this)}
+              onSave={() => {}}
               title="Submitted"
               closeText="Close"
               handleClose={() => {
                 this.setState(this.resetState());
               }}
-              onOpen={() => {}}
+              onOpen={this.submitForm.bind(this)}
               change
             >
               <p>Your route has been submited</p>
@@ -183,18 +182,18 @@ export class UploadRoute extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     routes: state.route.routes,
-    userWebId: state.auth.userWebId
+    userWebId: state.auth.userWebId,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     uploadRoute: (route, routes, webId) =>
       dispatch(uploadRoute(route, routes, webId)),
-    loadRoutes: () => dispatch(loadRoutesRequest())
+    loadRoutes: () => dispatch(loadRoutesRequest()),
   };
 };
 
