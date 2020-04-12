@@ -69,7 +69,7 @@ export async function getRoutesFromPod(userWebId) {
     }
     let folder = await fc.readFolder(url);
     let routes = folder.files.map( async (f) => await getRouteFromPod(f.name, userWebId) );
-    return routes.sort((route1, route2) => route1.id - route2.id);
+    return routes;
 }
 
 /**
@@ -169,7 +169,7 @@ export async function getCommentsFromRoute(userWebId, fileName) {
 export async function getRouteFromPod(fileName, userWebId) {
     let url = getRoutesFolder(userWebId);
     let folder = await fc.readFolder(url);
-    if (folder.files.includes(fileName)) {
+    if (folder.files.some( (f) => f.name === fileName )) {
         return fc.readFile(url + fileName);
     }
     return null;
