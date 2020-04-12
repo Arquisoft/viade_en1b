@@ -48,8 +48,8 @@ export function getInboxFolder(userWebId) {
 /**
  * Returns a string containing the URI of the comments file of a given route for the given user.
  */
-export function getRouteCommentsFile(userWebId, routeName) {
-    return getCommentsFolder(userWebId) + "myRoutesComments/" + routeName;
+export function getRouteCommentsFile(userWebId, fileName) {
+    return getCommentsFolder(userWebId) + "myRoutesComments/" + fileName;
 }
 
 /**
@@ -154,13 +154,23 @@ export async function uploadComment(userWebId, commentedRouteUri, commentText) {
 }
 
 /**
+ * Gets the comments from a given route, assuming the text is in the comments file.
+ */
+export async function getCommentsFromRoute(userWebId, fileName) {
+    let commentsFileRoute = getRouteCommentsFile(userWebId, fileName);
+    let commentsFile = fc.readFile(commentsFileRoute);
+    let commentsFileJSON = JSON.parse(commentsFile);
+    return commentsFileJSON.comments;
+}
+
+/**
  * Returns a route from a given user's pod given the name of the route, or null if not found.
  */
-export async function getRouteFromPod(routeName, userWebId) {
+export async function getRouteFromPod(fileName, userWebId) {
     let url = getRoutesFolder(userWebId);
     let folder = await fc.readFolder(url);
-    if (folder.files.includes(routeName)) {
-        return fc.readFile(url + routeName);
+    if (folder.files.includes(fileName)) {
+        return fc.readFile(url + fileName);
     }
     return null;
 }
@@ -226,7 +236,7 @@ export async function grantAccess(path, userWebId) {
  * Returns a route in JSON-LD form as a string from the given route object, the webId of the pod's user and
  * the file name of the route for the pod.
  */
-export async function getFormattedRoute(routeObject, userWebId, routeName) {
+export async function getFormattedRoute(routeObject, userWebId, fileName) {
     return `{
         "@context": {
             "@version": 1.1,
@@ -275,7 +285,7 @@ export async function getFormattedRoute(routeObject, userWebId, routeName) {
         "name": ${routeObject.name},
         "author": ${routeObject.author},
         "description": ${routeObject.description},
-        "comments": ${getRouteCommentsFile(userWebId, routeName)},
+        "comments": ${getRouteCommentsFile(userWebId, fileName)},
         "media": ${routeObject.images + routeObject.videos},
         "waypoints": ${routeObject.waypoints},
         "points": ${routeObject.positions}
