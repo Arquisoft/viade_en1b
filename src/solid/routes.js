@@ -140,13 +140,13 @@ export async function uploadComment(userWebId, commentedRouteUri, commentText) {
         await fc.createFolder(url);
     }
     let newComment = getNewComment(commentText, year, month, day);
-    await fc.createFile(url + uuidv4(), JSON.stringify(newComment), "application/ld+json"); // Creates local comment
+    await fc.createFile(url + uuidv4(), JSON.stringify(newComment), "application/ld+json"); // Creates local comment file
     let route = fc.readFile(commentedRouteUri);
     let routeJSON = JSON.parse(route);
     let commentsFileContent = fc.readFile(routeJSON.comments);
     let commentsFileContentJSON = JSON.parse(commentsFileContent);
     commentsFileContentJSON.comments.add(newComment); // Adds comment to comments on routeComments file
-    fc.createFile(
+    fc.createFile( // Uploads the new routeComments file with the new comment
         routeJSON.comments,
         JSON.stringify(commentsFileContentJSON),
         "application/ld+json"
