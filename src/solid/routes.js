@@ -194,11 +194,11 @@ export async function clearRoutesFromPod(userWebId) {
 /**
  * Removes a route from given user's pod, given the name of the route.
  */
-export async function clearRouteFromPod(routeName, userWebId) {
+export async function clearRouteFromPod(fileName, userWebId) {
     let url = getRoutesFolder(userWebId);
     let folder = await fc.readFolder(url);
-    if (folder.files.includes(routeName)) {
-        let fileUrl = url + routeName;
+    if (folder.files.some( (f) => f.name === fileName )) {
+        let fileUrl = url + fileName;
         fc.deleteFile(fileUrl);
     }
 }
