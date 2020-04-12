@@ -1,12 +1,11 @@
 [[section-concepts]]
 == Cross-cutting Concepts
 
-This section contains all the relevant information about different topics of the application, for example, domain concepts, user experience, architecture, security, etc. Which are going to be relevant in all the application parts.
+This section contains all the relevant information about different topics of the application, for example: domain concepts, user experience, architecture, security, etc. These are going to be relevant in all the application parts.
 
 === Domain Concepts
 
-Client: the person or system that runs our decentralized application, using for example, a web browser like Firefox.
-Route: it is expressed using RDF, represent a user route, which can be shared, load, etc. The specification is not yet ready.
-Pod: it is the personal repository of the user, which follows the Solid specification, and it stores information like the routes of each user.
+- Client: The person or system that runs our decentralized application, using for example a web browser like Firefox.
+- Route: Expressed using RDF, represents a user route, which can be shared, loaded, etc. It follows the https://arquisoft.github.io/viadeSpec/#dataModel[Viade specification].
+- Pod: The personal repository of the user, which follows the https://solid.github.io/specification/[Solid specification] and stores information like their routes, comments and media associated with a route.
 
-TBD
