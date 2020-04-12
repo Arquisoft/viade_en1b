@@ -24,6 +24,11 @@ application for the managing, in a decentralized way, of the routes of an user.
 |A solution would be the familiarization with the configuration file of the tool.
 
 |Viade spec
-|All the teams must agree in a specification in order to achieve the interoperability between different viade applications
-|It is difficult to agree on something so specific with so many people
+|All the teams must agree in a specification in order to achieve the
+interoperability between different viade applications, and this specification is
+still in process, so some parts of the application and this documentation are
+subject to future changes caused by changes in the inter-group specification.
+|It is difficult to agree on something so specific with so many people: for the
+moment, take general decisions and work with other groups for a consensus,
+adapting application and documentation when major specification changes occur.
 |===
