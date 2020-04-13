@@ -41,3 +41,4 @@ include::diagrams/03-02_TechnicalContext.puml[]
 | Viade | Our application that is supposed to be interoperable thanks to the use of Solid.
 | POD | Each user has a personal pod which stores all his information
 |===
+

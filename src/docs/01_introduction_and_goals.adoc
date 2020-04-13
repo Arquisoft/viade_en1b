@@ -33,7 +33,7 @@ The aim of the project is to create a decentralized routes management system bas
 [options="header",cols="1,2"]
 |===
 |Role/Name|Expectations
-| Developers | _Develop an application fulfilling the requierements that allow us to pass the course._
+| Developers | _Develop an application fulfilling the requirements that allow us to pass the course._
 | SOLID Developers | _Help us with our doubts concerning the SOLID specifications._
 | Course professors | _Evaluate our work and follow our progress throughout the course._
 | End users | _Be able to use our application and take advantage of the functionalities._
