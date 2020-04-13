@@ -59,7 +59,7 @@ The main elements are the following ones:
 - My Routes: Allows you to see your routes all their comments, images and videos as well as their description. It also provides you to share a route to your friends, delete it and so on.
 - My profile: it constains all the information about your profile as weel as yours friends. You can also upload a new route.
 
-It is important to mention that all the user interface look and feel its the same for all the parts of the application so the user can identify our application just with watching its colors.
+It is important to mention that all the user interface look and feel its the same for all the parts of the application so the user can identify our application just with watching its colors. Futhermore, we have used the Bootstrap library in order to make the creation of new components easier
 
 === Security
 
@@ -67,4 +67,9 @@ Currently the application is still in working progress so some security features
 
 When a user that is not registered and tries to access a specific URL inside the application writing it on the browser, which could obtain it in the past. The security of the application must not allow you to acces it and redirects you to the registration page.
 
-Additionally, it is worthy to mention that all the security aspects related to routes are still in progress because we depend on the viade specification.
+Additionally, it is worthy to mention that all the security aspects related to routes are still in progress because we depend on the viade specification. However, we could infer some of them so in our upload route window, if you do not give it a name or description you can not upload that route
+
+=== Design patterns
+
+We have tried to encapsulate all the responsabilities and reduce the cohesion between the modules, so a future programmer could understand easily where he can find a specific funcionality and change it without affectering other parts of the application. In order to achive it, we have divided the application in several directories and modules.
+This part is explained with a higher level of detail in point number 5
