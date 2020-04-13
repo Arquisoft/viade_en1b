@@ -1,4 +1,9 @@
 [[section-design-decisions]]
 == Design Decisions
 
-TBD
+=== Route specification
+We follow the https://github.com/Arquisoft/viadeSpec[Viade Specficiation] to set a format to manage the routes, so that interoperability can be achieved.
+
+
+=== Leaflet
+We chose this library because it is open source, free, and matches the philosophy of Solid.

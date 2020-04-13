@@ -20,133 +20,114 @@ Contained Building Blocks::
 [options="header"]
 |==============================
 | Building block       | Description
-| React                | Offers an interface to the system for the final user.
-| Route interpretation | Offers an interface to routes to other modules.
-| Node module          | Offers an interface to the Solid POD.
+| GUI components module             | Offers an interface to the system for the final user.
+| Parser module | Provides methods to parse files.
+| Redux module | Redux store in charge of state of the whole application.
+| Middlewares module | Middlewares to perform async operations.
+| Solid module        | Offers an interface to the Solid POD.
 |==============================
 
+=== Redux module
 
-Important Interfaces::
+[plantuml,"Whitebox Redux",png]
+----
+include::diagrams/05-02_whiteboxRedux.puml[]
+----
 
-_<Description of important interfaces>_
-
-==== React graphical interface
 
 Responsibility::
 
-Offers an interface into the system for the final user.
+Redux is used to manage the local state of our application.
 
-Interface::
-
-This module does not provide interfaces to other modules of the system.
-
-Quality/Performance Characteristics::
-
-The graphical interface must accord to the Solid style guide. It must also be
-responsive enough for final users to interact with the system without problem.
-
-Directory/File Location::
-
-_WIP_
-
-Fulfilled Requirements::
-
-_WIP_
-
-Open Issues/Problems/Risks::
-
-_WIP_
-
-==== Map module
-
-Responsibility::
-
-Provides a map for the routes to be represented on.
-
-Interface::
-
-Provides an interface to show and interact with routes.
-
-Quality/Performance Characteristics::
-
-The maps must be precise and expressive enough for the routes to be easily
-interpreted by as many final users as possible.
-
-Directory/File Location::
-
-_WIP_
-
-Fulfilled Requirements::
-
-_WIP_
-
-Open Issues/Problems/Risks::
-
-_WIP_
-
-
-
-
-==== Route interpretation
-
-Responsibility::
-
-Deals with the routes format.
-
-Interface::
-
-Offers representable routes.
-
-Quality/Performance Characteristics::
-
-Handling of routes must be responsive enough to not affect the flow of the
-application.
-
-Directory/File Location::
-
-_WIP_
-
-Fulfilled Requirements::
-
-_WIP_
-
-Open Issues/Problems/Risks::
-
-_WIP_
-
-
-==== Solid module
-
-Responsibility::
-
-Knows the Solid protocol and interacts directly with PODs.
-
-Interface::
+Contained Building Blocks::
 
 [options="header"]
 |==============================
-| Method                                  | Description
-| getRoutesFolder(userWebId)              | Gets the URL of the routes storage as a string
-| uploadRouteToPod(route, userWebId)      | Uploads a route object to the user's POD
-| getRouteFromPod(routeName, userWebId)   | Gets a route from the user's POD by name
-| getRoutesFromPod(userWebId)             | Gets a list with all the routes from the user's POD
-| clearRouteFromPod(routeName, userWebId) | Deletes a route from the user's POD by name
-| clearRoutesFromPod(userWebId)           | Deletes all routes from the user's POD
+| Building block       | Description
+| Reducers             | Specify how the application´s state changes in response to actions sent to the store.
+| Actions | Payloads of information that send data from our application to our store. They only describe _what happened_, but don´t describe _how the application´s state changes_.
+| Store| It is the object that brings reducers, actions and the state together.
+| Dispatcher | Middlewares to perform async operations.
 |==============================
 
-Quality/Performance Characteristics::
+Reducers::
+* AuthReducer: It is in charge of managing the information about the user´s data needed for the authentication.
+* LoadReducer: It is used to know when the user data has already been loaded.
+* RouteReducer: It manages all the information related to the user´s routes.
+* UserReducer: It is used to manage the user´s information once it is logged in.
+* RootReducer: It combines all the previous reducers into one. (Redux standard)
 
-Must fit the standards of Solid data representation and exploit the benefits of
-linked data.
+Actions::
+* AuthActions: It only has one action in charge of updating the local userWebId once the user logs in the app.
+* LoadActions: It has one action in order to change a property once the user logs in.
+* RouteActions: All the actions related to the routes: show a route in the map, upload a route, delete a route and share a route.
+* UserActions: Actions in charge of loading the user data: friends, email, name...
 
-Directory/File Location::
+=== SOLID module
 
-`src/solid/`
+[plantuml,"Whitebox SOLID",png]
+----
+include::diagrams/05-03_whiteboxSolid.puml[]
+----
 
-Fulfilled Requirements::
+Responsibility::
 
-Basic interface to interact with profile and routes stored in a user's POD.
+Redux module was in charge of managing the local state of the application. However, this SOLID module is actually in charge of managing the real data of the user from the POD.
 
-Open Issues/Problems/Risks::
+Files::
+* Auth.js: it has one method to obtain the user´s web id.
+* ProfileInfo.js: it has methods to get the user´s mail and the list of friends.
+* Routes.js: it has all the methods needed to obtain the routes data from the user POD: read, write, share, delete.
 
-_WIP_
+==== Routes module
+
+Responsibilities:
+
+* Converting a route to json-ld and uploading it.
+* Getting routes from the POD and converting them to json.
+* Deleting stored routes, either all or individually.
+* Sharing a route via a notification to another user's inbox folder.
+* Reading the inbox folder and adding the referred routes to the shared ones.
+* Adding a comment to a route.
+* Obtaining the comments of a route.
+* Managing permissions of files.
+
+=== GUI components module
+
+[plantuml,"Whitebox React GUI Components",png]
+----
+include::diagrams/05-04_whiteboxReact.puml[]
+----
+
+
+Responsibility::
+
+It contains all the React components needed for the GUI.
+
+Contained Building Blocks::
+
+[options="header"]
+|==============================
+| Folders       | Description
+| Dashboard             | It contains the main page of the application and the map component.
+| Layout | It has all the components related to the layout: navbar, login, settings, footer...
+| Routes | It has all the route components: routes list, upload route, route summary...
+| User        | Components related to the user: profile, friends list...
+|==============================
+
+=== Middlewares module
+
+[plantuml,"Whitebox Middlewares",png]
+----
+include::diagrams/05-05_whiteboxMiddlewares.puml[]
+----
+
+
+Responsibility::
+Interception point between dispatching an action, and the action reaching the reducer, allowing us to perform async fetches of information among other things.
+
+Middlewares::
+* ProfileMiddleware: Fetches profile information about the user, and loads it into the state so it is available for the entire application.
+* RouteMiddleware: Fetches the routes of the user and loads them into the state, so they are available for the whole application.
+* LoggerMiddleware: Catches all the actions, and logs into the console information about the previous and next state of the application once the action is dispatched through the reducer.
+

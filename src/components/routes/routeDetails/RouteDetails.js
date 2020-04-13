@@ -1,55 +1,34 @@
 import React from "react";
 import style from "./RouteDetails.module.css";
-import Slideshow from "../../layout/slideshow/Slideshow";
 import { Button } from "react-bootstrap";
 
 import { connect } from "react-redux";
 import { deleteRoute } from "../../../store/actions/RouteActions";
 import ShareRoute from "../shareRoute/ShareRoute";
+import Comments from "../../layout/comments/Comments.js";
 
-export const RouteDetails = props => {
+export const RouteDetails = (props) => {
   const { selectedRoute } = props;
   const { deleteRoute } = props;
 
   if (selectedRoute != null) {
-    const photos = selectedRoute.images.map(e => {
-      return (
-        <img
-          data-testid="current-image-slideshow"
-          src={e}
-          alt="Not found"
-        ></img>
-      );
-    });
-
-    const videos = selectedRoute.videos.map(e => {
-      return (
-        <video width="320" height="240" controls>
-          <source src={e} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      );
-    });
-
+    let comments = [];
+    if (selectedRoute.comments != null) {
+      comments = selectedRoute.comments;
+      comments = comments.map((comment, key) => {
+        return <li key={key}>{comment}</li>;
+      });
+    }
     const description = selectedRoute.description
       ? selectedRoute.description
       : "There is not description for this route";
 
     return (
       <div className={props.style ? props.style : style.details}>
-        <h3>Descripción</h3>
-        <p data-testid="route-details-description">{description}</p>
-        <h3>Fotos</h3>
-        <Slideshow
-          data-testid="route-details-photos"
-          images={photos}
-        ></Slideshow>
-        <h3>Videos</h3>
-        <Slideshow
-          data-testid="route-details-videos"
-          images={videos}
-        ></Slideshow>
-
+        <div className={style.description}>
+          <h3>Descripción</h3>
+          <p data-testid="route-details-description">{description}</p>
+        </div>
         <div className={style.buttons}>
           <Button
             data-testid="route-details-button-delete"
@@ -68,15 +47,24 @@ export const RouteDetails = props => {
             </ShareRoute>
           }
         </div>
+        <div className={style.comments}>
+          <h3>Comments</h3>
+          <ul>{comments}</ul>
+          <Comments
+            style={style.commentsButton}
+            data-testid="Comments-button"
+          ></Comments>
+        </div>
       </div>
     );
   }
+
   return <div></div>;
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    deleteRoute: route => dispatch(deleteRoute(route))
+    deleteRoute: (route) => dispatch(deleteRoute(route)),
   };
 };
 

@@ -4,7 +4,7 @@ import Login from "../layout/login/Login";
 import MyProfile from "../user/myProfile/MyProfile";
 import Dashboard from "../dashboard/Dashboard";
 import UploadRoute from "../routes/uploadRoute/UploadRoute";
-import PageNotFound from "../pageNotFound/PageNotFound";
+import PageNotFound from "../layout/pageNotFound/PageNotFound";
 import MyRoutes from "../routes/myRoutes/MyRoutes";
 import Settings from "../layout/settings/Settings";
 import ShareRoute from "../routes/shareRoute/ShareRoute";

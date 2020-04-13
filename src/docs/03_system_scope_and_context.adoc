@@ -9,7 +9,7 @@ the data is the same for all of them.
 
 === Business Context
 
-[plantuml,"Whitebox overall system",png]
+[plantuml,"Business context",png]
 ----
 include::diagrams/03-01_BusinessContext.puml[]
 ----
@@ -20,20 +20,23 @@ include::diagrams/03-01_BusinessContext.puml[]
 |Element | Role
 | User | User of the application
 | Viade | Our application of ViaDe
-| User`s POD | Personal storage of the user
+| User's POD | Personal storage of the user
 | Other User Viade | External application which the user can share and receive routes
 | imaps | API of the maps
 |===
 
 === Technical Context
 
-image:03-TechnicalContext.png["TechnicalContext Context"]
-
+[plantuml,"Technical Context",png]
+----
+include::diagrams/03-02_TechnicalContext.puml[]
+----
 [options="header", cols="0,4"]
 |===
 |Partner | Role
-| Red arrow | Request done from a system to another, in order to know the direction of the requests.
+| Red arrow | Request made to a system, in order to know the direction of the requests.
 | Blue arrow | Response that a system provides for a given request, in order to know the direction of the information.
+
 | Users | People wanting to store and share their routes with control over their storage.
 | Viade | Our application that is supposed to be interoperable thanks to the use of Solid.
 | POD | Each user has a personal pod which stores all his information

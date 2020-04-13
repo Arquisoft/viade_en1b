@@ -1,0 +1,11 @@
+title A user can access to their friend POD profile - Activity Diagram 
+
+start
+
+:Click in "My profile" section;
+
+:Click on any of the friends in the friend list;
+
+:The browser will redirect to their POD;
+
+stop

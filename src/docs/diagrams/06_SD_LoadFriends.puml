@@ -1,0 +1,64 @@
+title Load routes - Sequence Diagram 
+
+@startuml
+
+participant NavBar as nb 
+participant ReduxStore as rs 
+participant UserActions as ra 
+participant UserReducer as rr 
+participant ProfileMiddleware as rm 
+participant Solid.js as s 
+database POD as p
+
+activate nb
+nb -> rs: loadFriendsRequest()
+activate rs
+rs -> ra: dispatch(loadEmailRequest())
+activate ra
+ra -> rm: loadFriendsRequest()
+destroy ra
+activate rm
+rm -> s: getFriends(webId)
+activate s
+rm -> rr: loadFriendsRequest()
+activate rr
+rr --> rs: state
+destroy rr
+loop for each user´s friend
+    s -> p: getFriend()
+    activate p
+    p --> s: friend
+    destroy p
+end
+...
+alt email successfully loaded
+s --> rm: friends
+destroy s
+rs -> ra: dispatch(loadFriendsSuccess(friends))
+activate ra
+ra -> rr: loadFriendsSuccess(friends)
+activate rr
+destroy ra
+rr -> rr: updateState(friends)
+rr --> rs: updated state with friends
+destroy rr
+else error at loading email
+s --> rm: error
+destroy s
+rs -> ra: dispatch(loadFriendsError(error))
+activate ra
+ra -> rr: loadFriendsError(error)
+activate rr
+destroy ra
+rr -> rr: updateState(error)
+rr --> rs: updated state
+destroy rr
+end
+destroy rm
+rs --> nb: state
+legend right
+line = method
+dash line = data
+endlegend
+
+@enduml
