@@ -76,5 +76,5 @@ It is important to mention that all the user interface look and feel its the sam
 Currently the application is still in working progress so some security features may change in the future. Nowadays we have the following security functionality:
 
 - When a user that is not registered and tries to access a specific URL inside the application writing it on the browser, which could obtain it in the past. The security of the application must not allow you to access it and redirects you to the registration page.
-- Additionally, it is worthy to mention that all the security aspects related to routes are still in progress because we depend on the Viade specification.  However, we could infer some of them, so for example in our upload route window, if you do not give it a name or description, you can not upload that route.
+- Additionally, it is worthy to mention that all the security aspects related to routes are still in progress because we depend on the Viade specification. However, we could infer some of them, so for example in our upload route window, if you do not give it a name or description, you can not upload that route.
 

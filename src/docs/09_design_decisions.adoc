@@ -7,3 +7,4 @@ We follow the https://github.com/Arquisoft/viadeSpec[Viade Specficiation] to set
 
 === Leaflet
 We chose this library because it is open source, free, and matches the philosophy of Solid.
+
