@@ -1,3 +1,35 @@
-.details{
-    
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-row: 2 / 3;
+}
+
+.buttons button {
+  margin: 1em;
+}
+
+.comments {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.comments ul {
+  list-style: none;
+  grid-row: 3 / 5;
+  width: 50%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.comments ul li {
+  margin: 0;
+  padding: 0;
+  font-style: italic;
+}
+
+.description {
+  text-align: left;
 }

@@ -1,17 +1,16 @@
 const initState = {
-    userWebId: null
-}
+  userWebId: null
+};
 
-const authReducer = (state = initState, action) => {
-    switch(action.type){
-        case 'LOG_IN':
-            console.log("user loggedin", action.userWebId)
-            return {...state}
-        case 'LOG_OUT':
-            console.log("user loggedOUT")
-            return {...state}
-        default:
-            return state
-    }
-}
-export default authReducer
+export const authReducer = (state = initState, action) => {
+  switch (action.type) {
+    case "UPDATE_WEB_ID":
+      return {
+        ...state,
+        userWebId: action.payload
+      };
+    default:
+      return state;
+  }
+};
+export default authReducer;

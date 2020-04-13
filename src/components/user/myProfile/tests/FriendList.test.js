@@ -1,53 +1,64 @@
-import React from 'react';
-import {render, queryByTestId ,fireEvent,     getAllByTestId, waitForElement } from  '@testing-library/react';
-import '@testing-library/jest-dom';
-import FriendList from '../FriendList.js';
+import { render, fireEvent, screen, wait } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import React from "react";
+import { FriendList } from "../FriendList";
+import TestingRouter from "../../../routing/utils/TestingRouter";
 
-let component = null; 
-let emptyComponent = null;
-beforeAll( () => {
-
-
-	const { container } = render(<FriendList id="friendList"value="[https://viandetest2020.solid.community/profile/card#me].foaf_knows"/>); 
-	component = container;
-	const {emptyContainer}  = render(<FriendList id="friendList"value=""/>);  
-	emptyComponent = emptyContainer;
-
+const mockOnClick = jest.fn();
+const mockFriends = [
+  { name: "mockFriend", uri: "https://viandetest2020.solid.community" },
+  {
+    name: "mockFriend2",
+    uri: "https://viandetest2020.solid.community",
+    checked: true
+  }
+];
+beforeEach(() => {
+  window.location = { href: mockFriends[0].uri + "profile/card#me" };
 });
+describe("FriendList component", () => {
+  test("renders correctly with normal setting", () => {
+    render(<FriendList friends={mockFriends}></FriendList>);
+    expect(screen.queryByTestId("friend-list-container")).toBeInTheDocument();
+    expect(screen.queryByTestId("friend-list-heading")).toBeInTheDocument();
+    expect(screen.queryByTestId("friend-list-main")).toBeInTheDocument();
+    expect(screen.queryByTestId("friend-list-card0")).toBeInTheDocument();
+    expect(screen.queryByTestId("friend-list-friend-uri0")).toBeInTheDocument();
 
-describe("Checking the correct behaviour of the FriendList", ()=>{
-	   
-	 
-	test("If it loads the  cards  correctly", () => {
+    expect(
+      screen.queryByTestId("friend-list-friend-name0")
+    ).toBeInTheDocument();
+    expect(screen.queryByTestId("friend-list-card1")).toBeInTheDocument();
+    expect(screen.queryByTestId("friend-list-friend-uri1")).toBeInTheDocument();
 
-		waitForElement(() => {
+    expect(
+      screen.queryByTestId("friend-list-friend-name1")
+    ).toBeInTheDocument();
+  });
+  test("renders correctly with checkbox setting", () => {
+    render(
+      <FriendList
+        checked
+        onClick={mockOnClick}
+        friends={mockFriends}
+      ></FriendList>
+    );
+    expect(screen.queryByTestId("friend-list-main")).toBeInTheDocument();
+    expect(screen.queryByTestId("card0")).toBeInTheDocument();
 
-			expect(queryByTestId(component, 'friendCard')).not.toBeNull();
-			expect(getAllByTestId(component, 'friendCard').length).toBe(1); 
-        });});
-	
-	test("If when you click in the friend card, it loads the new page", () => {
-		waitForElement( () => {
-
-			expect(queryByTestId(component, 'friendCard')).not.toBeNull();   
-			fireEvent.click( queryByTestId(component, 'FriendCard'));
-			expect(window.location.href).toEqual("https://lamasumas.inrupt.net/profile/card#me");
-
-	} )});
-
-
-	test("If the user has no friends", () => {
-		waitForElement( () => {
-			expect( () => getAllByTestId(emptyComponent, 'friendCard')).toBeNull(); 
-		});
-
-	 });
-
-
+    expect(mockOnClick).not.toBeCalled();
+    fireEvent.click(screen.queryByTestId("card0"));
+    expect(mockOnClick).toBeCalled();
+    expect(screen.queryByTestId("friend-list-check1")).toBeInTheDocument();
+  });
+  test("change location", () => {
+    const { container } = render(
+      <TestingRouter
+        redirectUrl={mockFriends[0].uri}
+        ComponentWithRedirection={() => <FriendList friends={mockFriends} />}
+      />
+    );
+    const redirectUrl = mockFriends[0].uri;
+    expect(container.innerHTML).toEqual(expect.stringContaining(redirectUrl));
+  });
 });
-
-
-	 
-
-
-

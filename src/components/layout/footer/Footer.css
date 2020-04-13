@@ -1,21 +1,19 @@
-.footerElement{
-    margin: 1%;
-    display:inline;
-
+.footerElement {
+  margin: 1%;
+  display: inline;
 }
 
-#githubIcon{
-    font-size: 150%;
+#githubIcon {
+  font-size: 150%;
 }
-#footer{
-    padding-bottom: 0.5%;
-    padding-top: 0.5%;
-    background-color: var(--color-primary) !important;
-    color: var(--color-secondary) !important;
-    font-size: 110%;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+#footer {
+  padding-bottom: 0.5%;
+  padding-top: 0.5%;
+  background-color: var(--color-primary) !important;
+  color: var(--color-secondary) !important;
+  font-size: 110%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
-
-

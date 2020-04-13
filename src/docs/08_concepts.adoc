@@ -1,12 +1,80 @@
 [[section-concepts]]
 == Cross-cutting Concepts
 
-This section contains all the relevant information about different topics of the application, for example, domain concepts, user exeprience, architecture, security, etc. Which are going to be relevant in all the application parts.
+This section contains all the relevant information about different topics of the application, for example: domain concepts, user experience, architecture, security, etc. These are going to be relevant in all the application parts.
 
 === Domain Concepts
 
-Client: the person or system that runs our descentralized application, using for example, a web browser like Firefox.
-Route: it is expressed using RDF, represent a user route, which can be shared, load, etc. The specification is not yet ready.
-Pod: it is the personal repository of the user, which follows the Solid specification, and it stores information like the routes of each user.
+==== Client
 
-TBD
+The person or system that runs our decentralized application, using for example a web browser like Firefox.
+
+==== Pod
+
+The personal repository of the user, which follows the https://solid.github.io/specification/[Solid specification] and stores information like their routes, comments and media associated with a route.
+
+==== Route
+
+Expressed using RDF, represents a user route, which can be shared, loaded, etc. It follows the https://arquisoft.github.io/viadeSpec/#dataModel[Viade specification].
+
+- Name: name of the route
+- Description (optional): some information about the specific route
+- GeoCoordinates: list of GeoCoordinate that conform the points that form the route
+- UserComents (optional): list of UserComent that users have added to the route
+- Media (optional): list of Images and Videos that the author of the route added
+
+==== GeoCoordinate
+
+- Latitude: in decimal degrees format
+- Longitude: in decimal degrees format
+- Elevation (optional): in meters
+- Name (optional): specific label for the point, in case it is a special point
+- PhysicalAddress
+
+==== UserComment
+
+- Text
+- PublishedDate: in datetime format
+- Author: IRI to the pod profile of the user that published the comment
+
+==== Media
+
+===== Image
+
+- ContentUrl: direction for the resource
+- PublishedDate: in datetime format
+- Author: IRI to the pod profile of the user that published the comment
+
+===== Video
+
+- ContentUrl: direction for the resource
+- PublishedDate: in datetime format
+- Author: IRI to the pod profile of the user that published the comment
+
+=== User Experience
+
+First of all it is important to mention that as this is a web application to access the application it is necessary to have internet connection. Once you have it, you just need to open your browser and enter in the URL of the application.
+
+After this, you just need to sign up in one of the two possible Solid Servers:
+
+- Inrupt
+- Solid Community Site
+
+If you are already registered, the application will let you enter directly
+
+The application follows a very intuitive interface, it has a main navigation bar placed at the top of the window that informs you about all the possible windows that you may access, which have all the functionality of the application.
+The main elements are the following ones:
+
+- Dashboard: Main Window that shows you a list of all the routes you have access to and a brief information about each one (name, author, map with its position).
+- My Routes: Allows you to see your routes all their comments, images and videos as well as their description. It also provides you to share a route to your friends, delete it and so on.
+- My profile: it contains all the information about your profile as well as yours friends. You can also upload a new route.
+
+It is important to mention that all the user interface look and feel its the same for all the parts of the application so the user can identify our application just with watching its colors. Furthermore, we have used the Bootstrap library in order to make the creation of new components easier
+
+=== Security
+
+Currently the application is still in working progress so some security features may change in the future. Nowadays we have the following security functionality:
+
+- When a user that is not registered and tries to access a specific URL inside the application writing it on the browser, which could obtain it in the past. The security of the application must not allow you to access it and redirects you to the registration page.
+- Additionally, it is worthy to mention that all the security aspects related to routes are still in progress because we depend on the Viade specification. However, we could infer some of them, so for example in our upload route window, if you do not give it a name or description, you can not upload that route.
+

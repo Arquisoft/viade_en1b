@@ -36,7 +36,7 @@ const UploadButton = (props) => {
 
     const uploadButton = !props.multiple
                             ? 
-                            <Form.Group>
+                            <Form.Group className={props.className}>
                                 <Form.Control ref={file} onChange={handleSingleFileChanged} id={props.id} type="file" accept=".kml,.gpx"></Form.Control>
                                 <Form.Label className="uploadLabel" htmlFor={props.id}>
                                     <p data-testid='upload-button-label'>{state.filename !== '' ? state.filename : props.text}</p>
