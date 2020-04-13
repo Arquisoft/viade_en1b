@@ -5,22 +5,13 @@
   height: 80vh;
   width: 100vw;
   padding-top: 3em;
-<<<<<<< HEAD:src/components/routes/uploadRoute/UploadRoute.css
-=======
-
->>>>>>> dev:src/components/routes/uploadRoute/UploadRoute.module.css
   justify-content: center;
   align-items: center;
   margin: 0 auto;
 }
 
-<<<<<<< HEAD:src/components/routes/uploadRoute/UploadRoute.css
 form {
   margin-top: 6em;
-=======
-.form {
-  margin-top: 5em;
->>>>>>> dev:src/components/routes/uploadRoute/UploadRoute.module.css
   display: flex;
   grid-column: 2 / 4;
 }
@@ -102,12 +93,8 @@ input[type="file"] + label:hover {
   margin: 0 auto;
 }
 
-<<<<<<< HEAD:src/components/routes/uploadRoute/UploadRoute.css
 
 #uploadButton {
-=======
-.uploadButton {
->>>>>>> dev:src/components/routes/uploadRoute/UploadRoute.module.css
   transition: all 200ms ease-in;
   margin-left: 2em;
   margin-top: 2em;
@@ -130,5 +117,3 @@ div#footer{
   width: 100%;
   height: 2.5rem
 }
-
-
