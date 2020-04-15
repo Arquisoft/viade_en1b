@@ -90,7 +90,7 @@ export async function shareRouteToPod(
     await fc.createFile(
         url + uuidv4(),
         getNewNotification(routeUri, sharerName, receiverName),
-        "text/ld+json"
+        "application/ld+json"
     );
 }
 
@@ -114,15 +114,18 @@ export async function checkInboxForSharedRoutes(userWebId) {
  * Adds the given route to the given user's pod.
  */
 export async function uploadRouteToPod(routeObject, userWebId) {
+    console.log("[DEBUG] Uploaded route.");
     let newRouteName = uuidv4();
     let newRoute = getFormattedRoute(routeObject, userWebId, newRouteName);
     let url = getRoutesFolder(userWebId);
     createFolderIfAbsent(url);
     await fc.createFile(
         url + newRouteName + ".jsonld",
-        newRoute,
-        "text/ld+json"
+        JSON.stringify(newRoute),
+        "application/ld+json"
     );
+    console.log("[DEBUG] Uploaded route: ");
+    console.log(JSON.stringify(newRoute));
 }
 
 /**
@@ -150,7 +153,7 @@ export async function uploadComment(userWebId, commentedRouteUri, commentText) {
     await fc.createFile(
         url + uuidv4(),
         JSON.stringify(newComment),
-        "text/ld+json"
+        "application/ld+json"
     ); // Creates local comment file
     let route = fc.readFile(commentedRouteUri);
     let routeJSON = JSON.parse(route);
@@ -161,7 +164,7 @@ export async function uploadComment(userWebId, commentedRouteUri, commentText) {
         // Uploads the new routeComments file with the new comment
         routeJSON.comments,
         JSON.stringify(commentsFileContentJSON),
-        "text/ld+json"
+        "application/ld+json"
     );
 }
 
@@ -183,8 +186,12 @@ export async function getRouteFromPod(fileName, userWebId) {
     let folder = await fc.readFolder(url);
     if (folder.files.some((f) => f.name === fileName)) {
         let fileContent = await fc.readFile(url + fileName);
-        let podRoute = JSON.parse(fileContent);
-        return getRouteObjectFromPodRoute(podRoute);
+        try {
+            let podRoute = JSON.parse(fileContent);
+            return getRouteObjectFromPodRoute(podRoute);
+        } catch (e) {
+            console.log("[ERROR] Routes loading failed: " + e);
+        }
     }
     return null;
 }
@@ -253,8 +260,61 @@ export async function grantAccess(path, userWebId) {
  * Returns a route in JSON-LD form as a string from the given route object, the webId of the pod's user and
  * the file name of the route for the pod.
  */
-export async function getFormattedRoute(routeObject, userWebId, fileName) {
-    return `{
+export function getFormattedRoute(routeObject, userWebId, fileName) {
+    //let output = `{
+    //    "@context": {
+    //        "@version": "1.1",
+    //        "comments": {
+    //            "@id": "viade:comments",
+    //            "@type": "@id"
+    //        },
+    //        "description": {
+    //            "@id": "schema:description",
+    //            "@type": "xsd:string"
+    //        },
+    //        "media": {
+    //            "@container": "@list",
+    //            "@id": "viade:media"
+    //        },
+    //        "name": {
+    //            "@id": "schema:name",
+    //            "@type": "xsd:string"
+    //        },
+    //        "points": {
+    //            "@container": "@list",
+    //            "@id": "viade:points"
+    //        },
+    //        "latitude": {
+    //            "@id": "schema:latitude",
+    //            "@type": "xsd:double"
+    //        },
+    //        "longitude": {
+    //            "@id": "schema:longitude",
+    //            "@type": "xsd:double"
+    //        },
+    //        "elevation": {
+    //            "@id": "schema:elevation",
+    //            "@type": "xsd:double"
+    //        },
+    //        "author": {
+    //            "@id": "schema:author",
+    //            "@type": "@id"
+    //        },
+    //        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    //        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    //        "schema": "http://schema.org/",
+    //        "viade": "http://arquisoft.github.io/viadeSpec/",
+    //        "xsd": "http://www.w3.org/2001/XMLSchema#"
+    //    },
+    //    "name": ${routeObject.name},
+    //    "author": ${routeObject.author},
+    //    "description": ${routeObject.description},
+    //    "comments": ${getRouteCommentsFile(userWebId, fileName)},
+    //    "media": ${routeObject.images + routeObject.videos},
+    //    "waypoints": [${routeObject.positions}],
+    //    "points": [${routeObject.positions}]
+    //}`;
+    let output = {
         "@context": {
             "@version": "1.1",
             "comments": {
@@ -299,14 +359,16 @@ export async function getFormattedRoute(routeObject, userWebId, fileName) {
             "viade": "http://arquisoft.github.io/viadeSpec/",
             "xsd": "http://www.w3.org/2001/XMLSchema#"
         },
-        "name": ${routeObject.name},
-        "author": ${routeObject.author},
-        "description": ${routeObject.description},
-        "comments": ${getRouteCommentsFile(userWebId, fileName)},
-        "media": ${routeObject.images + routeObject.videos},
-        "waypoints": ${routeObject.positions},
-        "points": ${routeObject.positions}
-    }`;
+        "name": routeObject.name,
+        "author": routeObject.author,
+        "description": routeObject.description,
+        "comments": getRouteCommentsFile(userWebId, fileName),
+        "media": routeObject.images + routeObject.videos,
+        "waypoints": routeObject.positions,
+        "points": routeObject.positions
+    };
+    console.log("[DEBUG] getFormattedRoute: " + output);
+    return output;
 }
 
 /**
@@ -378,7 +440,7 @@ async function addRouteUriToShared(userWebId, uri) {
     }
     // Possibility: Add a check to not duplicate routes
     sharedRoutesJSON.routes.add({ "@id": uri });
-    await fc.createFile(filePath, sharedRoutesJSON, "text/ld+json");
+    await fc.createFile(filePath, sharedRoutesJSON, "application/ld+json");
 }
 
 /**
