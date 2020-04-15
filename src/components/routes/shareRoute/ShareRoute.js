@@ -11,7 +11,7 @@ import { Badge } from "react-bootstrap";
 export function ShareRoute(props) {
   const { selectedRoute } = props;
   const { shareRoute } = props;
-  const friendsToShow = filterUnsharedFriends(
+  const friendsToShow = /*(
     props.friends,
     props.sharedWith
   ).map(friend => (friend.checked = false));
@@ -23,9 +23,9 @@ export function ShareRoute(props) {
       checked: false
     })),
     shared: false
-  });
+  });*/
   useEffect(() => {
-    setState({
+   /* setState({
       ...state,
       friends: friendsToShow,
       friendsToShareWith: deepClone(alreadySharedWith).map(friend => ({
@@ -33,11 +33,11 @@ export function ShareRoute(props) {
         checked: false
       }))
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps*/
   }, []);
 
   const handleOnSave = () => {
-    shareRoute(selectedRoute, state.friendsToShareWith || []);
+   /* shareRoute(selectedRoute, state.friendsToShareWith || []);
     let newFriends = filterUnsharedFriends(
       props.friends,
       state.friendsToShareWith
@@ -50,24 +50,24 @@ export function ShareRoute(props) {
         checked: false
       })),
       shared: true
-    });
+    });*/
   };
 
   const handleClose = () => {
-    if (!state.shared) {
+   /* if (!state.shared) {
       setState({ ...state, friendsToShareWith: [] });
-    }
+    }*/
   };
 
   const handleOnOpen = () => {
-    setState({
+  /*  setState({
       ...state,
       friends: filterUnsharedFriends(props.friends, state.friendsToShareWith)
-    });
+    });*/
   };
 
   const handleOnClick = key => {
-    state.friends[key].checked = !state.friends[key].checked;
+   /* state.friends[key].checked = !state.friends[key].checked;
     let shared = deepClone(state.friendsToShareWith);
     let friends = deepClone(state.friends);
     if (friends[key].checked) {
@@ -76,11 +76,11 @@ export function ShareRoute(props) {
     } else {
       shared.pop(key);
     }
-    setState({ ...state, friendsToShareWith: shared, friends: friends });
+    setState({ ...state, friendsToShareWith: shared, friends: friends });*/
   };
-  let activeSelectedFriends = state.friendsToShareWith.filter(
-    friend => friend.checked
-  ).length;
+  let activeSelectedFriends = "test"/* state.friendsToShareWith.filter(
+   friend => friend.checked
+  ).length;*/
   const shareButtonText =
     activeSelectedFriends > 0 ? (
       <span data-testid="share-route-share-button-numbers">
@@ -111,7 +111,7 @@ export function ShareRoute(props) {
       <FriendList
         data-testid="share-route-friend-list"
         onClick={handleOnClick}
-        friends={state.friends}
+        friends={"test"}
         className={style.friendsExpanded}
         checked
       ></FriendList>
