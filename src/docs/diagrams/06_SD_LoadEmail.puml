@@ -1,0 +1,62 @@
+title Load routes - Sequence Diagram 
+
+@startuml
+
+participant NavBar as nb 
+participant ReduxStore as rs 
+participant UserActions as ra 
+participant UserReducer as rr 
+participant ProfileMiddleware as rm 
+participant Solid.js as s 
+database POD as p
+
+activate nb
+nb -> rs: loadEmailRequest()
+activate rs
+rs -> ra: dispatch(loadEmailRequest())
+activate ra
+ra -> rm: loadEmailRequest()
+destroy ra
+activate rm
+rm -> s: getEmail()
+activate s
+rm -> rr: loadEmailRequest()
+activate rr
+rr --> rs: state
+destroy rr
+s -> p: getEmail()
+activate p
+p --> s: email
+destroy p
+...
+alt email successfully loaded
+s --> rm: email
+destroy s
+rs -> ra: dispatch(loadEmailSuccess(email))
+activate ra
+ra -> rr: loadEmailSuccess(email)
+activate rr
+destroy ra
+rr -> rr: updateState(email)
+rr --> rs: updated state with email
+destroy rr
+else error at loading email
+s --> rm: error
+destroy s
+rs -> ra: dispatch(loadEmailError(error))
+activate ra
+ra -> rr: loadEmailError(error)
+activate rr
+destroy ra
+rr -> rr: updateState(error)
+rr --> rs: updated state
+destroy rr
+end
+destroy rm
+rs --> nb: state
+legend right
+line = method
+dash line = data
+endlegend
+
+@enduml

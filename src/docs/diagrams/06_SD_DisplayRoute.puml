@@ -1,0 +1,35 @@
+title Load routes - Sequence Diagram 
+
+@startuml
+
+actor User as u 
+participant RouteSummary as rs
+participant ReduxStore as r
+participant RouteActions as ra
+participant RouteReducer as rr
+participant MyMap as mm 
+
+activate u
+u -> rs: click on a route
+activate rs
+rs -> r: showRoute(route)
+destroy rs 
+activate r
+r -> ra: dispatch(showRoute(route))
+activate ra
+ra -> rr: showRoute(route)
+destroy ra
+activate rr
+rr -> rr: updateState(route)
+rr --> r: updated state
+destroy rr
+r --> mm: route positions
+destroy r
+activate mm
+mm --> u: displayed route
+legend right
+line = method
+dash line = data
+endlegend
+
+@enduml

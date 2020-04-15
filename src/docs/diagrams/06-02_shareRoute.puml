@@ -1,4 +1,4 @@
-title A user shares a route with a friend - Activity Diagram 
+title A user shares a route with a friend - Activity Diagram
 
 start
 
@@ -8,6 +8,5 @@ start
 
 :Add the route to friend's POD;
 
-:Display the route in friend´s app;
-
 stop
+

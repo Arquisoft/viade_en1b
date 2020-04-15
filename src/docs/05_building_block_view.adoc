@@ -34,6 +34,7 @@ Contained Building Blocks::
 include::diagrams/05-02_whiteboxRedux.puml[]
 ----
 
+
 Responsibility::
 
 Redux is used to manage the local state of our application.
@@ -58,7 +59,7 @@ Reducers::
 
 Actions::
 * AuthActions: It only has one action in charge of updating the local userWebId once the user logs in the app.
-* LoadActions: It has one action in order to change a propierty once the user logs in.
+* LoadActions: It has one action in order to change a property once the user logs in.
 * RouteActions: All the actions related to the routes: show a route in the map, upload a route, delete a route and share a route.
 * UserActions: Actions in charge of loading the user data: friends, email, name...
 
@@ -78,12 +79,26 @@ Files::
 * ProfileInfo.js: it has methods to get the user´s mail and the list of friends.
 * Routes.js: it has all the methods needed to obtain the routes data from the user POD: read, write, share, delete.
 
+==== Routes module
+
+Responsibilities:
+
+* Converting a route to json-ld and uploading it.
+* Getting routes from the POD and converting them to json.
+* Deleting stored routes, either all or individually.
+* Sharing a route via a notification to another user's inbox folder.
+* Reading the inbox folder and adding the referred routes to the shared ones.
+* Adding a comment to a route.
+* Obtaining the comments of a route.
+* Managing permissions of files.
+
 === GUI components module
 
 [plantuml,"Whitebox React GUI Components",png]
 ----
 include::diagrams/05-04_whiteboxReact.puml[]
 ----
+
 
 Responsibility::
 
@@ -106,6 +121,7 @@ Contained Building Blocks::
 ----
 include::diagrams/05-05_whiteboxMiddlewares.puml[]
 ----
+
 
 Responsibility::
 Interception point between dispatching an action, and the action reaching the reducer, allowing us to perform async fetches of information among other things.

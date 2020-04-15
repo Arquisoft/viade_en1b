@@ -1,5 +1,5 @@
 import React from "react";
-import "./UploadRoute.css";
+import style from "./UploadRoute.module.css";
 import { connect } from "react-redux";
 import { Form } from "react-bootstrap";
 import {
@@ -14,12 +14,11 @@ export class UploadRoute extends React.Component {
   state = {
     name: "",
     description: "",
-    author: "",
-    positions: "",
     file: "",
-    images: [],
-    videos: [],
+    author: "",
     reset: false,
+    positions: [],
+    comments: "",
   };
   changeHandlerRoute(e) {
     this.setState({
@@ -65,21 +64,16 @@ export class UploadRoute extends React.Component {
     return {
       name: "",
       description: "",
-      positions: "",
       file: "",
       author: "",
-      images: [],
-      videos: [],
+      positions: [],
       reset: false,
+      comments: [],
     };
   }
 
   isEmpty = () => {
-    return (
-      this.state.name === "" &&
-      this.state.description === "" &&
-      this.state.positions === ""
-    );
+    return this.state.name === "" && this.state.description === "";
   };
 
   componentDidUpdate() {
@@ -87,6 +81,7 @@ export class UploadRoute extends React.Component {
   }
 
   submitForm() {
+    console.log(this.state);
     this.props.uploadRoute.bind(this);
     this.props.uploadRoute(this.state, this.props.routes, this.props.userWebId);
     this.props.loadRoutes.bind(this);
@@ -96,8 +91,8 @@ export class UploadRoute extends React.Component {
 
   render() {
     return (
-      <div className="uploadContainer">
-        <Form>
+      <div className={style.uploadContainer}>
+        <Form className={style.form}>
           <div id="form-info">
             <Form.Group htmlFor="routeName">
               <Form.Label htmlFor="name">Name of the route</Form.Label>
@@ -118,20 +113,19 @@ export class UploadRoute extends React.Component {
                 value={this.state.description}
                 as="textarea"
                 rows="4"
-                placeholder="Description..."
+                placeholder="Add a description"
               />
             </Form.Group>
 
-            <Form.Group htmlFor="routePositions">
-              <Form.Label htmlFor="positions">Positions</Form.Label>
+            <Form.Group htmlFor="routeDescription">
+              <Form.Label htmlFor="comments">Comment</Form.Label>
               <Form.Control
-                id="positions"
+                id="comments"
                 onChange={this.changeHandlerRoute.bind(this)}
-                value={this.state.positions}
+                value={this.state.comments}
                 as="textarea"
                 rows="4"
-                placeholder="Positions, as of now in javascript array[n,2] format, example:
-                                    [[10.148, -5.148], [11.134, 4.0459]]"
+                placeholder="Add a comment"
               />
             </Form.Group>
 
@@ -153,27 +147,11 @@ export class UploadRoute extends React.Component {
 
           <div id="buttonHolder">
             <UploadButton
+              className={style.uploadButton}
               reset={this.state.reset}
               onChange={this.changeHandlerFiles.bind(this)}
               id="file"
               text="Choose a route"
-            ></UploadButton>
-
-            <UploadButton
-              reset={this.state.reset}
-              onChange={this.changeHandlerImages.bind(this)}
-              id="images"
-              text="Pick some images"
-              multiple
-              image
-            ></UploadButton>
-
-            <UploadButton
-              reset={this.state.reset}
-              onChange={this.changeHandlerVideos.bind(this)}
-              id="videos"
-              multiple
-              text="Choose a video"
             ></UploadButton>
           </div>
         </Form>

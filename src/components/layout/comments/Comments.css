@@ -1,0 +1,12 @@
+#myForm {
+  margin: 0%;
+}
+.modal-body {
+  padding-bottom: 10%;
+}
+#myTextArea {
+  margin: 0%;
+  resize: auto;
+  width: 200%;
+  padding-left: 2%;
+}
