@@ -21,7 +21,7 @@ describe("Solid Routes", () => {
         };
 
     test("Correct path to routes", async () => {
-        expect(solid.getRoutesFolder(targetWebId)).toEqual("https://viandetest2020.solid.community/viade/routes/");
+        expect(solid.getRoutesFolder(targetWebId)).toEqual("https://viandetest2020.solid.community/public/viade/routes/");
     });
 
     // test("Delete routes from POD", async () => {
