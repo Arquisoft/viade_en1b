@@ -68,9 +68,12 @@ export async function getRoutesFromPod(userWebId) {
         return [];
     }
     let folder = await fc.readFolder(url);
-    let routes = folder.files.map(
-        async (f) => await getRouteFromPod(f.name, userWebId)
-    );
+    let routes = [];
+    let i = 0;
+    for (i; i < folder.files.length; i++) {
+        let route = await getRouteFromPod(folder.files[i].name, userWebId);
+        routes.push(route);
+    }
     return routes;
 }
 
@@ -173,7 +176,7 @@ export async function uploadComment(userWebId, commentedRouteUri, commentText) {
  */
 export async function getCommentsFromRoute(userWebId, fileName) {
     let commentsFileRoute = getRouteCommentsFile(userWebId, fileName);
-    let commentsFile = fc.readFile(commentsFileRoute);
+    let commentsFile = await fc.readFile(commentsFileRoute);
     let commentsFileJSON = JSON.parse(commentsFile);
     return commentsFileJSON.comments;
 }
@@ -190,7 +193,7 @@ export async function getRouteFromPod(fileName, userWebId) {
             let podRoute = JSON.parse(fileContent);
             return getRouteObjectFromPodRoute(podRoute);
         } catch (e) {
-            console.log("[ERROR] Routes loading failed: " + e);
+            console.log("[ERROR] Route loading failed: " + e);
         }
     }
     return null;
@@ -205,7 +208,7 @@ export async function clearRoutesFromPod(userWebId) {
         return;
     }
     let folder = await fc.readFolder(url);
-    await Promise.all(
+    Promise.all(
         folder.files.map(async (f) => await fc.deleteFile(url + f.name))
     );
 }
@@ -379,10 +382,7 @@ function getRouteObjectFromPodRoute(route) {
         name: route.name,
         description: route.description,
         author: route.author,
-        positions: route.points,
-        images: route.media,
-        videos: route.media,
-        sharedWith: route.sharedWith,
+        positions: route.waypoints
     };
 }
 
