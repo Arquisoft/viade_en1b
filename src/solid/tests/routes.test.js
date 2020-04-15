@@ -24,11 +24,11 @@ describe("Solid Routes", () => {
         expect(solid.getRoutesFolder(targetWebId)).toEqual("https://viandetest2020.solid.community/public/viade/routes/");
     });
 
-    test("Delete routes from POD", async () => {
-        await solid.clearRoutesFromPod(targetWebId);
-        let routes = await solid.getRoutesFromPod(targetWebId);
-        expect(routes.length).toEqual(0);
-    });
+    // test("Delete routes from POD", async () => {
+    //     await solid.clearRoutesFromPod(targetWebId);
+    //     let routes = await solid.getRoutesFromPod(targetWebId);
+    //     expect(routes.length).toEqual(0);
+    // });
 
     // The user needs to be logged in for this one.
     //test("Add first route to POD", async () => {

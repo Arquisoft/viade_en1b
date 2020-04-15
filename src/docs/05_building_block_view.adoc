@@ -34,6 +34,7 @@ Contained Building Blocks::
 include::diagrams/05-02_whiteboxRedux.puml[]
 ----
 
+
 Responsibility::
 
 Redux is used to manage the local state of our application.
@@ -43,22 +44,22 @@ Contained Building Blocks::
 [options="header"]
 |==============================
 | Building block       | Description
-| Reducers             | Specify how the application´s state changes in response to actions sent to the store.
-| Actions | Payloads of information that send data from our application to our store. They only describe _what happened_, but don´t describe _how the application´s state changes_.
+| Reducers             | Specify how the application's state changes in response to actions sent to the store.
+| Actions | Payloads of information that send data from our application to our store. They only describe _what happened_, but don't describe _how the application's state changes_.
 | Store| It is the object that brings reducers, actions and the state together.
 | Dispatcher | Middlewares to perform async operations.
 |==============================
 
 Reducers::
-* AuthReducer: It is in charge of managing the information about the user´s data needed for the authentication.
+* AuthReducer: It is in charge of managing the information about the user's data needed for the authentication.
 * LoadReducer: It is used to know when the user data has already been loaded.
-* RouteReducer: It manages all the information related to the user´s routes.
-* UserReducer: It is used to manage the user´s information once it is logged in.
+* RouteReducer: It manages all the information related to the user's routes.
+* UserReducer: It is used to manage the user's information once it is logged in.
 * RootReducer: It combines all the previous reducers into one. (Redux standard)
 
 Actions::
 * AuthActions: It only has one action in charge of updating the local userWebId once the user logs in the app.
-* LoadActions: It has one action in order to change a propierty once the user logs in.
+* LoadActions: It has one action in order to change a property once the user logs in.
 * RouteActions: All the actions related to the routes: show a route in the map, upload a route, delete a route and share a route.
 * UserActions: Actions in charge of loading the user data: friends, email, name...
 
@@ -74,9 +75,22 @@ Responsibility::
 Redux module was in charge of managing the local state of the application. However, this SOLID module is actually in charge of managing the real data of the user from the POD.
 
 Files::
-* Auth.js: it has one method to obtain the user´s web id.
-* ProfileInfo.js: it has methods to get the user´s mail and the list of friends.
+* Auth.js: it has one method to obtain the user's web id.
+* ProfileInfo.js: it has methods to get the user's mail and the list of friends.
 * Routes.js: it has all the methods needed to obtain the routes data from the user POD: read, write, share, delete.
+
+==== Routes module
+
+Responsibilities:
+
+* Converting a route to json-ld and uploading it.
+* Getting routes from the POD and converting them to json.
+* Deleting stored routes, either all or individually.
+* Sharing a route via a notification to another user's inbox folder.
+* Reading the inbox folder and adding the referred routes to the shared ones.
+* Adding a comment to a route.
+* Obtaining the comments of a route.
+* Managing permissions of files.
 
 === GUI components module
 
@@ -84,6 +98,7 @@ Files::
 ----
 include::diagrams/05-04_whiteboxReact.puml[]
 ----
+
 
 Responsibility::
 
@@ -106,6 +121,7 @@ Contained Building Blocks::
 ----
 include::diagrams/05-05_whiteboxMiddlewares.puml[]
 ----
+
 
 Responsibility::
 Interception point between dispatching an action, and the action reaching the reducer, allowing us to perform async fetches of information among other things.

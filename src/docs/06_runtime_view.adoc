@@ -1,32 +1,120 @@
 [[section-runtime-view]]
 == Runtime View
+The main runtime views of the application are the ones in charge of dealing with the routes and the user profile data. These views will be explained in detail in the following sections.
 
-We only know very abstract and few details about these actions at the moment, that's why we have decided to represent these actions with a basic activitity diagram.
+=== Activity diagrams
 
-=== Upload a route
+==== Upload a route
 
-One action that we know is the action of uploading a route from the user´s storage to the user's pod.
+The user will be able to upload a route to his own POD.
 
-* A user will click a button or similar to import the route.
-* Then, he will choose the rout to upload from his files system.
-* Finally, the route will be uploaded to the user's POD and shown in our application.
+. A user will click a button on the "Upload route".
+. The user will write the name of the route and a description.
+. Then, he will choose the route to upload from his files system or he can write it by hand in the "Position" text area.
+. After that, he can attach a picture or a video
+. Finally, the route will be uploaded to the user's POD and shown in our application.
 
 [plantuml,"Uploading a route",png]
 ----
 include::diagrams/06-01_uploadRoute.puml[]
 ----
 
-=== Share a route
+==== Share a route
 
-A user can also share a route with any friend he wants. 
+A user can share a route to one of his friends.
 
 . Firstly, the user must select the route he want to share.
 . Then, he must select the friend he wants to share the route with.
-. Finally, the route must be added to the friend´s POD and be able to be displayed.
+. Finally, the route must be added to the friend's POD and be able to be displayed.
 
 [plantuml,"Sharing a route",png]
 ----
 include::diagrams/06-02_shareRoute.puml[]
 ----
 
-=== TODO
+==== Comment a route
+A user will be able to post a comment in a route.
+
+. First, the user will click in the desired route to comment.
+. Then, the user will write his comment.
+. Finally, when the comment its written and saved, the route will have the comment in it.
+
+[plantuml,"Commenting a route",png]
+----
+include::diagrams/06-03_commentRoute.puml[]
+----
+
+==== Accessing a friend profile
+Our users will be able to access from the viade app to any of their friends profile.
+
+. First, the user should click on "My Profile"
+. Then, click on any of their friends of their friend list.
+
+[plantuml,"Accessing friend profile",png]
+----
+include::diagrams/06-04_accessingFriend.puml[]
+----
+
+=== Sequence diagrams
+
+The previous diagrams describe some actions but at a very high-level of detail. Now we are going to focus on some more _difficult_ actions trying to explain them more in detail, at a low level.
+
+==== Loading routes from POD
+
+[plantuml,"Loading routes",png]
+----
+include::diagrams/06_SD_LoadRoutes.puml[]
+----
+
+Since it is a bit complex diagram, we are going to explain it in detail:
+
+. A message is sent from the NavBar to the Redux store in order to load the routes.
+. The store dispatches the proper action.
+. A request for loading the routes is called and intercepted by the middleware.
+. The middleware is in charge of actually loading the routes asynchronously. Meanwhile, the reducer gives a response to the request.
+. Once the routes are loaded, there are two possible scenarios: everything worked or some error occurred.
+If everything worked, a load routes success actions is dispatched from the store, and the state is updated with the routes.
+On the other hand, if an error occurred while loading the routes, an error action is dispatched and the state is updated.
+. Finally, the state is received by the NavBar (whole application).
+
+==== Loading user's email
+
+[plantuml,"Loading email",png]
+----
+include::diagrams/06_SD_LoadEmail.puml[]
+----
+
+It follows the same structure as the previous diagram:
+
+. It sends a request to load the email.
+. The middleware is in charge of loading it asynchronously.
+. If everything worked, a load email success is sent and the state is updated with the email. If an error occurred, a load email error is sent and the state is updated.
+. Finally, the NavBar (whole application) receives the updated state.
+
+==== Loading user's friends
+
+[plantuml,"Loading friends",png]
+----
+include::diagrams/06_SD_LoadFriends.puml[]
+----
+
+Again, it follows the same structure as the previous diagrams:
+
+. It sends a request to load the friends.
+. The middleware is in charge of loading them asynchronously.
+. If everything worked, a load friends success is sent and the state is updated with the friends. If an error occurred, a load friends error is sent and the state is updated.
+. Finally, the NavBar (whole application) receives the updated state.
+
+==== Displaying a route in the map
+
+[plantuml,"Display route",png]
+----
+include::diagrams/06_SD_DisplayRoute.puml[]
+----
+
+In this diagram we can perfectly observe the redux architecture:
+
+. The user clicks on a route and an event is triggered.
+. An action is dispatched and the reducer updates the state.
+. Once the state is updated, the map component receives the positions of the route and the route is displayed.
+

@@ -1,8 +1,11 @@
 import React from "react";
-import "./UploadRoute.css";
+import style from "./UploadRoute.module.css";
 import { connect } from "react-redux";
 import { Form } from "react-bootstrap";
-import { uploadRoute, loadRoutesRequest } from "./../../../store/actions/RouteActions";
+import {
+  uploadRoute,
+  loadRoutesRequest,
+} from "./../../../store/actions/RouteActions";
 import UploadButton from "./uploadButton/UploadButton";
 import ViadeModal from "../../layout/modal/Modal";
 import parseGPX from "../../../parser/parser";
@@ -11,16 +14,15 @@ export class UploadRoute extends React.Component {
   state = {
     name: "",
     description: "",
-    author: "",
-    positions: "",
     file: "",
-    images: [],
-    videos: [],
-    reset: false
+    author: "",
+    reset: false,
+    positions: [],
+    comments: "",
   };
   changeHandlerRoute(e) {
     this.setState({
-      [e.target.id]: e.target.value
+      [e.target.id]: e.target.value,
     });
   }
 
@@ -31,14 +33,14 @@ export class UploadRoute extends React.Component {
     if (file) {
       var reader = new FileReader();
       reader.readAsText(file, "UTF-8");
-      reader.onload = function(evt) {
+      reader.onload = function (evt) {
         parseado = parseGPX(evt.target.result);
         //console.log(self.state);
         //console.log(parseado);
         self.state.positions = parseado;
         //console.log(self.state);
       };
-      reader.onerror = function(evt) {};
+      reader.onerror = function (evt) {};
     }
   }
 
@@ -46,7 +48,7 @@ export class UploadRoute extends React.Component {
   //This behaviour is tested in the upload button
   changeHandlerImages(e) {
     let docs = [];
-    Array.from(e.target.files).forEach(file => docs.push(file.name));
+    Array.from(e.target.files).forEach((file) => docs.push(file.name));
     this.setState({ ...this.state, images: docs });
   }
 
@@ -54,7 +56,7 @@ export class UploadRoute extends React.Component {
   //This behaviour is tested in the upload button
   changeHandlerVideos(e) {
     let docs = [];
-    Array.from(e.target.files).forEach(file => docs.push(file.name));
+    Array.from(e.target.files).forEach((file) => docs.push(file.name));
     this.setState({ ...this.state, videos: docs });
   }
 
@@ -62,29 +64,24 @@ export class UploadRoute extends React.Component {
     return {
       name: "",
       description: "",
-      positions: "",
       file: "",
       author: "",
-      images: [],
-      videos: [],
-      reset: false
+      positions: [],
+      reset: false,
+      comments: [],
     };
   }
 
   isEmpty = () => {
-    return (
-      this.state.name === "" &&
-      this.state.description === "" &&
-      this.state.positions === ""
-    );
+    return this.state.name === "" && this.state.description === "";
   };
 
   componentDidUpdate() {
     if (this.state.reset) this.setState(this.resetState());
   }
 
-  submitForm(e) {
-    e.preventDefault();
+  submitForm() {
+    console.log(this.state);
     this.props.uploadRoute.bind(this);
     this.props.uploadRoute(this.state, this.props.routes, this.props.userWebId);
     this.props.loadRoutes.bind(this);
@@ -94,8 +91,8 @@ export class UploadRoute extends React.Component {
 
   render() {
     return (
-      <div className="uploadContainer">
-        <Form>
+      <div className={style.uploadContainer}>
+        <Form className={style.form}>
           <div id="form-info">
             <Form.Group htmlFor="routeName">
               <Form.Label htmlFor="name">Name of the route</Form.Label>
@@ -116,32 +113,32 @@ export class UploadRoute extends React.Component {
                 value={this.state.description}
                 as="textarea"
                 rows="4"
-                placeholder="Description..."
+                placeholder="Add a description"
               />
             </Form.Group>
 
-            <Form.Group htmlFor="routePositions">
-              <Form.Label htmlFor="positions">Positions</Form.Label>
+            <Form.Group htmlFor="routeDescription">
+              <Form.Label htmlFor="comments">Comment</Form.Label>
               <Form.Control
-                id="positions"
+                id="comments"
                 onChange={this.changeHandlerRoute.bind(this)}
-                value={this.state.positions}
+                value={this.state.comments}
                 as="textarea"
                 rows="4"
-                placeholder="Positions, as of now in javascript array[n,2] format, example:
-                                    [[10.148, -5.148], [11.134, 4.0459]]"
+                placeholder="Add a comment"
               />
             </Form.Group>
 
             <ViadeModal
               disabled={this.isEmpty()}
               toggleText="Submit"
-              onClick={this.submitForm.bind(this)}
+              onSave={() => {}}
               title="Submitted"
               closeText="Close"
               handleClose={() => {
                 this.setState(this.resetState());
               }}
+              onOpen={this.submitForm.bind(this)}
               change
             >
               <p>Your route has been submited</p>
@@ -150,27 +147,11 @@ export class UploadRoute extends React.Component {
 
           <div id="buttonHolder">
             <UploadButton
+              className={style.uploadButton}
               reset={this.state.reset}
               onChange={this.changeHandlerFiles.bind(this)}
               id="file"
               text="Choose a route"
-            ></UploadButton>
-
-            <UploadButton
-              reset={this.state.reset}
-              onChange={this.changeHandlerImages.bind(this)}
-              id="images"
-              text="Pick some images"
-              multiple
-              image
-            ></UploadButton>
-
-            <UploadButton
-              reset={this.state.reset}
-              onChange={this.changeHandlerVideos.bind(this)}
-              id="videos"
-              multiple
-              text="Choose a video"
             ></UploadButton>
           </div>
         </Form>
@@ -179,17 +160,18 @@ export class UploadRoute extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     routes: state.route.routes,
-    userWebId: state.auth.userWebId
+    userWebId: state.auth.userWebId,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    uploadRoute: (route, routes, webId) => dispatch(uploadRoute(route, routes, webId)),
-    loadRoutes: () => dispatch(loadRoutesRequest())
+    uploadRoute: (route, routes, webId) =>
+      dispatch(uploadRoute(route, routes, webId)),
+    loadRoutes: () => dispatch(loadRoutesRequest()),
   };
 };
 

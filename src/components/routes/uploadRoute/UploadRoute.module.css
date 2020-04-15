@@ -1,29 +1,29 @@
 .uploadContainer {
   display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  height: 80vh;
+  width: 100vw;
   padding-top: 3em;
-  overflow-y: scroll;
+  justify-content: center;
+  align-items: center;
   margin: 0 auto;
 }
 
 form {
-  margin-top: 5em;
-  width: 60%;
+  margin-top: 6em;
   display: flex;
+  grid-column: 2 / 4;
 }
 
-label {
-  text-align: left;
+.form label {
+  float: left;
 }
 
-#buttonHolder svg {
-  font-size: 1.2em;
-  margin: 0 auto;
+.uploadLabel {
+  grid-column: 3 / 4;
 }
+
 
 input {
   transition: all 200ms ease-in-out;
@@ -93,8 +93,12 @@ input[type="file"] + label:hover {
   margin: 0 auto;
 }
 
+
 #uploadButton {
   transition: all 200ms ease-in;
+  margin-left: 2em;
+  margin-top: 2em;
+  display: flex;
 }
 
 #form-info {
@@ -105,4 +109,11 @@ input[type="file"] + label:hover {
 
 .form-group label {
   width: 100%;
+}
+
+div#footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem
 }

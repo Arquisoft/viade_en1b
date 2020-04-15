@@ -22,6 +22,7 @@ rectangle "GUI Components" as react {
         [RouteSummary] as rs 
         [ShareRoute] as sr 
         [UploadRoute] as ur 
+        [RouteComment] as rc
     }
     folder "user" as user {
         [FriendList] as fl 

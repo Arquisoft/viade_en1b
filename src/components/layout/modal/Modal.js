@@ -9,7 +9,7 @@ const ViadeModal = props => {
     setShow(false);
   };
   const handleShow = e => {
-    props.onClick(e);
+    props.onOpen();
     setShow(true);
   };
 
@@ -19,6 +19,7 @@ const ViadeModal = props => {
       disabled={props.saveDisabled}
       variant="primary"
       onClick={() => {
+        props.onSave();
         setShow(false);
       }}
     >
@@ -37,6 +38,7 @@ const ViadeModal = props => {
   ) : null;
 
   return (
+    //Main show button
     <div>
       <Button
         data-testid="modalButton"
