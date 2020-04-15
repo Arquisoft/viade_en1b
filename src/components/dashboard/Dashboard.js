@@ -35,7 +35,7 @@ function Dashboard(props) {
       : selectedRoute.positions[selectedRoute.positions.length - 1];
 
   return (
-    <div data-testid="dashbaord-container" className="dashboard container">
+    <div data-testid="dashboard-container" className="dashboard container">
       <LoggedIn>
         {currentSelectedMap}
         <RouteList
