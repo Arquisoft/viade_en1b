@@ -4,7 +4,10 @@
 === Route specification
 We follow the https://github.com/Arquisoft/viadeSpec[Viade Specficiation] to set a format to manage the routes, so that interoperability can be achieved.
 
-
 === Leaflet
 We chose this library because it is open source, free, and matches the philosophy of Solid.
+
+=== Template
+At the begining of the course, we had to choose using the Inrupt Generator or not. After some discussion, we decided not to use it in order to learn React from the basics, as we considered not only important the SOLID challenge, but also learning a new technology.
+This decision carried us some disadvantages, for example we lost some time learning React, but we consider it worthy because of the knowledge gained.
 
