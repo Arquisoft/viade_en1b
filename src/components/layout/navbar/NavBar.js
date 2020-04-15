@@ -12,6 +12,8 @@ import { updateWebId } from "../../../store/actions/AuthActions";
 import { loadRoutesRequest } from "../../../store/actions/RouteActions";
 import { contentLoaded } from "../../../store/actions/LoadActions";
 import { connect } from "react-redux";
+import { getWebId } from "../../../solid/auth";
+
 export const MyNavBar = (props) => {
   const links = [
     {
@@ -36,6 +38,16 @@ export const MyNavBar = (props) => {
       testId: "navbar-upload-route",
     },
   ];
+
+  if (!props.loaded) {
+    getWebId().then((id) => {
+      props.updateWebId(id);
+      props.loadFriendsRequest();
+      props.loadEmailRequest();
+      props.loadRoutesRequest();
+      props.contentLoaded();
+    });
+  }
 
   const dropDownElements = [
     {
