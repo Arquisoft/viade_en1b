@@ -78,7 +78,7 @@ export function ShareRoute(props) {
     }
     setState({ ...state, friendsToShareWith: shared, friends: friends });
   };
-  let activeSelectedFriends = "test" state.friendsToShareWith.filter(
+  let activeSelectedFriends = state.friendsToShareWith.filter(
    friend => friend.checked
   ).length;
   const shareButtonText =
