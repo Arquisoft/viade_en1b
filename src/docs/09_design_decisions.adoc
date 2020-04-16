@@ -12,4 +12,4 @@ At the begining of the course, we had to choose using the Inrupt Generator or no
 This decision carried us some disadvantages, for example we lost some time learning React, but we consider it worthy because of the knowledge gained.
 
 === External Manual
-As it might be difficult for tech newbies the SOLID concepts or our application, we have created an external webpage that will work as a manual of our appllication. This webpage will be hosted in https://lamasumas.github.io/Solid/[HERE].
+As it might be difficult for tech newbies the SOLID concepts or our application, we have created an external webpage that will work as a manual of our appllication. This was done in another webpage so the actual application was separated from this manual. This external manual will be hosted in https://lamasumas.github.io/Solid/[HERE].
