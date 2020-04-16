@@ -15,6 +15,7 @@ export const Footer = () => {
           data-testid="footer-github"
           href="https://github.com/Arquisoft/viade_en1b"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <FontAwesomeIcon id="githubIcon" icon={faGithub} />
         </a>
@@ -24,6 +25,7 @@ export const Footer = () => {
           data-testid="footer-react"
           href="https://lamasumas.github.io/Solid/"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <FontAwesomeIcon id="githubIcon" icon={faBook} />
         </a>
@@ -33,6 +35,7 @@ export const Footer = () => {
           data-testid="footer-react"
           href="https://reactjs.org/"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <FontAwesomeIcon id="githubIcon" icon={faReact} />
         </a>
