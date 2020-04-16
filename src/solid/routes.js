@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 const appName = "viade";
 const fc = new FC(auth);
 
-async function createFolderIfAbsent(path) {
+export async function createFolderIfAbsent(path) {
     if (!(await fc.itemExists(path))) {
         await fc.createFolder(path);
     }
@@ -81,7 +81,7 @@ export async function getRoutesFromPod(userWebId) {
  * Adds a notification to the given user's inbox marking the intention of sharing a route.
  */
 export async function shareRouteToPod(
-    routeUri,
+    routeUri, // Do we need this? How to get it if so?
     targetUserWebId,
     sharerName,
     receiverName
@@ -91,8 +91,8 @@ export async function shareRouteToPod(
         return; // Possibility: notify the user the target user does not have inbox folder
     }
     await fc.createFile(
-        url + uuidv4(),
-        getNewNotification(routeUri, sharerName, receiverName),
+        url + uuidv4() + ".jsonld",
+        JSON.stringify(getNewNotification(routeUri, sharerName, receiverName)),
         "application/ld+json"
     );
 }
@@ -105,8 +105,12 @@ export async function checkInboxForSharedRoutes(userWebId) {
     let url = getInboxFolder(userWebId);
     createFolderIfAbsent(url);
     let folder = await fc.readFolder(url);
-    let notifications = folder.files.map(async (f) => await fc.readFile(f.name));
+    let notifications = [];
     let i = 0;
+    for (i; i < folder.files.length; i++) {
+        notifications.push(await fc.readFile(folder.files[i].url));
+    }
+    i = 0;
     for (i; i < notifications.length; i++) {
         addRouteUriToShared(getRouteUriFromShareNotification(notifications.get(i)));
         fc.deleteFile(folder.files[i].url);
@@ -117,7 +121,6 @@ export async function checkInboxForSharedRoutes(userWebId) {
  * Adds the given route to the given user's pod.
  */
 export async function uploadRouteToPod(routeObject, userWebId) {
-    console.log("[DEBUG] Uploaded route.");
     let newRouteName = uuidv4();
     let newRoute = getFormattedRoute(routeObject, userWebId, newRouteName);
     let url = getRoutesFolder(userWebId);
@@ -127,8 +130,6 @@ export async function uploadRouteToPod(routeObject, userWebId) {
         JSON.stringify(newRoute),
         "application/ld+json"
     );
-    console.log("[DEBUG] Uploaded route: ");
-    console.log(JSON.stringify(newRoute));
 }
 
 /**
@@ -208,9 +209,10 @@ export async function clearRoutesFromPod(userWebId) {
         return;
     }
     let folder = await fc.readFolder(url);
-    Promise.all(
-        folder.files.map(async (f) => await fc.deleteFile(url + f.name))
-    );
+    let i = 0;
+    for (i; i< folder.files.length; i++) {
+        await fc.deleteFile(url + folder.files[i].name);
+    }
 }
 
 /**
@@ -370,7 +372,6 @@ export function getFormattedRoute(routeObject, userWebId, fileName) {
         "waypoints": routeObject.positions,
         "points": routeObject.positions
     };
-    console.log("[DEBUG] getFormattedRoute: " + output);
     return output;
 }
 

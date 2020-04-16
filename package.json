@@ -32,6 +32,7 @@
     "redux-thunk": "^2.3.0",
     "solid-auth-client": "^2.4.1",
     "solid-file-client": "^1.0.2",
+    "solid-local-pod": "^0.2.1",
     "uuid": "^7.0.3"
   },
   "scripts": {
