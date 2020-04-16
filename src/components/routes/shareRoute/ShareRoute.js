@@ -11,7 +11,7 @@ import { Badge } from "react-bootstrap";
 export function ShareRoute(props) {
   const { selectedRoute } = props;
   const { shareRoute } = props;
-  const friendsToShow = (
+  const friendsToShow = filterUnsharedFriends(
     props.friends,
     props.sharedWith
   ).map(friend => (friend.checked = false));
@@ -79,7 +79,7 @@ export function ShareRoute(props) {
     setState({ ...state, friendsToShareWith: shared, friends: friends });
   };
   let activeSelectedFriends = state.friendsToShareWith.filter(
-   friend => friend.checked
+    friend => friend.checked
   ).length;
   const shareButtonText =
     activeSelectedFriends > 0 ? (
@@ -111,7 +111,7 @@ export function ShareRoute(props) {
       <FriendList
         data-testid="share-route-friend-list"
         onClick={handleOnClick}
-        friends={"test"}
+        friends={state.friends}
         className={style.friendsExpanded}
         checked
       ></FriendList>
