@@ -36,6 +36,7 @@
   overflow: scroll;
   max-height: 80%;
   grid-column: 1 / 2;
+  height: 100vh;
 }
 
 .commentsButton {
