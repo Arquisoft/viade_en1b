@@ -11,3 +11,5 @@ We chose this library because it is open source, free, and matches the philosoph
 At the begining of the course, we had to choose using the Inrupt Generator or not. After some discussion, we decided not to use it in order to learn React from the basics, as we considered not only important the SOLID challenge, but also learning a new technology.
 This decision carried us some disadvantages, for example we lost some time learning React, but we consider it worthy because of the knowledge gained.
 
+=== External Manual
+As it might be difficult for tech newbies the SOLID concepts or our application, we have created an external webpage that will work as a manual of our appllication. This webpage will be hosted in https://lamasumas.github.io/Solid/[HERE].
