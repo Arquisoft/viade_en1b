@@ -12,7 +12,7 @@ const appName = "viade";
 const fc = new FC(auth);
 
 export async function createFolderIfAbsent(path) {
-    if (!(await fc.itemExists(path))) {
+    if ( !(await fc.itemExists(path)) ) {
         await fc.createFolder(path);
     }
 }
@@ -60,6 +60,30 @@ export function getResourcesFolder(userWebId) {
 }
 
 /**
+ * Returns a string containing the URI of the shared folder for the given user.
+ */
+export function getSharedFolder(userWebId) {
+    return userWebId.split("/profile")[0] + "/" + appName + "/shared/";
+}
+
+/**
+ * Creates the basic folder structure in a given user's pod.
+ */
+export async function createBaseStructure(userWebId) {
+    let folders = [
+        getRoutesFolder(userWebId),
+        getCommentsFolder(userWebId),
+        getMyCommentsFolder(userWebId),
+        getInboxFolder(userWebId),
+        getResourcesFolder(userWebId)
+    ];
+    let i = 0;
+    for (i; i < folders.length; i++) {
+        await createFolderIfAbsent(folders[i]);
+    }
+}
+
+/**
  * Returns an array containing the routes in a given user's pod.
  */
 export async function getRoutesFromPod(userWebId) {
@@ -87,7 +111,7 @@ export async function shareRouteToPod(
     receiverName
 ) {
     let url = getInboxFolder(targetUserWebId);
-    if (!fc.itemExists(url)) {
+    if ( !(await fc.itemExists(url)) ) {
         return; // Possibility: notify the user the target user does not have inbox folder
     }
     await fc.createFile(
@@ -103,7 +127,7 @@ export async function shareRouteToPod(
  */
 export async function checkInboxForSharedRoutes(userWebId) {
     let url = getInboxFolder(userWebId);
-    createFolderIfAbsent(url);
+    await createFolderIfAbsent(url);
     let folder = await fc.readFolder(url);
     let notifications = [];
     let i = 0;
@@ -112,8 +136,9 @@ export async function checkInboxForSharedRoutes(userWebId) {
     }
     i = 0;
     for (i; i < notifications.length; i++) {
-        addRouteUriToShared(getRouteUriFromShareNotification(notifications.get(i)));
-        fc.deleteFile(folder.files[i].url);
+        let routeUri = getRouteUriFromShareNotification(JSON.parse(notifications[i]));
+        await addRouteUriToShared(userWebId, routeUri);
+        await fc.deleteFile(folder.files[i].url);
     }
 }
 
@@ -124,7 +149,9 @@ export async function uploadRouteToPod(routeObject, userWebId) {
     let newRouteName = uuidv4();
     let newRoute = getFormattedRoute(routeObject, userWebId, newRouteName);
     let url = getRoutesFolder(userWebId);
-    createFolderIfAbsent(url);
+    console.log("1" + url + typeof url);
+    await createFolderIfAbsent(url);
+    console.log("2" + url);
     await fc.createFile(
         url + newRouteName + ".jsonld",
         JSON.stringify(newRoute),
@@ -159,12 +186,12 @@ export async function uploadComment(userWebId, commentedRouteUri, commentText) {
         JSON.stringify(newComment),
         "application/ld+json"
     ); // Creates local comment file
-    let route = fc.readFile(commentedRouteUri);
+    let route = await fc.readFile(commentedRouteUri);
     let routeJSON = JSON.parse(route);
-    let commentsFileContent = fc.readFile(routeJSON.comments);
+    let commentsFileContent = await fc.readFile(routeJSON.comments);
     let commentsFileContentJSON = JSON.parse(commentsFileContent);
     commentsFileContentJSON.comments.add(newComment); // Adds comment to comments on routeComments file
-    fc.createFile(
+    await fc.createFile(
         // Uploads the new routeComments file with the new comment
         routeJSON.comments,
         JSON.stringify(commentsFileContentJSON),
@@ -189,8 +216,8 @@ export async function getRouteFromPod(fileName, userWebId) {
     let url = getRoutesFolder(userWebId);
     let folder = await fc.readFolder(url);
     if (folder.files.some((f) => f.name === fileName)) {
-        let fileContent = await fc.readFile(url + fileName);
         try {
+            let fileContent = await fc.readFile(url + fileName);
             let podRoute = JSON.parse(fileContent);
             return getRouteObjectFromPodRoute(podRoute);
         } catch (e) {
@@ -211,7 +238,7 @@ export async function clearRoutesFromPod(userWebId) {
     let folder = await fc.readFolder(url);
     let i = 0;
     for (i; i< folder.files.length; i++) {
-        await fc.deleteFile(url + folder.files[i].name);
+        await fc.deleteFile(folder.files[i].url);
     }
 }
 
@@ -223,7 +250,7 @@ export async function clearRouteFromPod(fileName, userWebId) {
     let folder = await fc.readFolder(url);
     if (folder.files.some((f) => f.name === fileName)) {
         let fileUrl = url + fileName;
-        fc.deleteFile(fileUrl);
+        await fc.deleteFile(fileUrl);
     }
 }
 
@@ -388,6 +415,50 @@ function getRouteObjectFromPodRoute(route) {
 }
 
 /**
+ * Returns the URI of the route from a notification object.
+ */
+function getRouteUriFromShareNotification(notification) {
+    return notification.notification.object.uri;
+}
+
+/**
+ * Adds a given URI to the list of routes shared with the given user.
+ */
+async function addRouteUriToShared(userWebId, uri) {
+    let folder = getSharedFolder(userWebId);
+    await createFolderIfAbsent(folder);
+    let fileName = "sharedRoutes.jsonld";
+    let filePath = folder + fileName;
+    let sharedRoutesJSON;
+    if (!(await fc.itemExists(filePath))) {
+        sharedRoutesJSON = getNewSharedRoutesFileContent();
+    } else {
+        let sharedRoutes = await fc.readFile(filePath);
+        sharedRoutesJSON = JSON.parse(sharedRoutes);
+    }
+    // Possibility: Add a check to not duplicate routes
+    sharedRoutesJSON.routes.push({"@id": uri});
+    await fc.createFile(filePath, JSON.stringify(sharedRoutesJSON), "application/ld+json");
+}
+
+/**
+ * Returns a new shared routes file in JSON form.
+ */
+function getNewSharedRoutesFileContent() {
+    return {
+        "@context": {
+            "@version": 1.1,
+            routes: {
+                "@container": "@list",
+                "@id": "viade:routes",
+            },
+            viade: "http://arquisoft.github.io/viadeSpec/",
+        },
+        routes: [],
+    };
+}
+
+/**
  * Returns a new notification in JSON form.
  */
 function getNewNotification(routeUri, sharerName, receiverName) {
@@ -414,50 +485,6 @@ function getNewNotification(routeUri, sharerName, receiverName) {
                 name: receiverName,
             },
         },
-    };
-}
-
-/**
- * Returns the URI of the route from a notification object.
- */
-function getRouteUriFromShareNotification(notification) {
-    return notification.notification.object.uri;
-}
-
-/**
- * Adds a given URI to the list of routes shared with the given user.
- */
-async function addRouteUriToShared(userWebId, uri) {
-    let folder = userWebId.split("/profile")[0] + "/" + appName + "/shared/";
-    createFolderIfAbsent(folder);
-    let fileName = "sharedRoutes.jsonld";
-    let filePath = folder + fileName;
-    let sharedRoutesJSON;
-    if (!(await fc.itemExists(filePath))) {
-        sharedRoutesJSON = getNewSharedRoutesFileContent();
-    } else {
-        let sharedRoutes = fc.readFile(filePath);
-        sharedRoutesJSON = JSON.parse(sharedRoutes);
-    }
-    // Possibility: Add a check to not duplicate routes
-    sharedRoutesJSON.routes.add({ "@id": uri });
-    await fc.createFile(filePath, sharedRoutesJSON, "application/ld+json");
-}
-
-/**
- * Returns a new shared routes file in JSON form.
- */
-function getNewSharedRoutesFileContent() {
-    return {
-        "@context": {
-            "@version": 1.1,
-            routes: {
-                "@container": "@list",
-                "@id": "viade:routes",
-            },
-            viade: "http://arquisoft.github.io/viadeSpec/",
-        },
-        routes: [],
     };
 }
 

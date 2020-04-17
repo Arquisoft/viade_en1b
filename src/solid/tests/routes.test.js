@@ -4,41 +4,33 @@ import * as solid from "../routes";
 
 describe("Solid Routes", () => {
 
-    const LocalPod = require('solid-local-pod')
-    const solidFileFetchFirst = require('solid-local-pod/src/solidFileFetch')
-    const solidFileFetchSecond = require('solid-local-pod/src/solidFileFetch')
+    const LocalPod = require('solid-local-pod');
+    const solidFileFetchFirst = require('solid-local-pod/src/solidFileFetch');
+    //const solidFileFetchSecond = require('solid-local-pod/src/solidFileFetch');
 
     const userPod = new LocalPod({
         port: 3000,
-        basePath: '.localpods/userpod',
+        basePath: '.localpods/userpod/',
         fetch: solidFileFetchFirst
-    })
-
-    const friendPod = new LocalPod({
-        port: 3333,
-        basePath: '.localpods/friendpod',
-        fetch: solidFileFetchSecond
-    })
-
-    let userWebId;
-    let friendWebId;
-
-    beforeAll(async () => {
-        userWebId = "http://localhost:" + userPod.port + "/profile/";
-        friendWebId = "http://localhost:" + friendPod.port + "/profile/";
-        await userPod.startListening();
-        await friendPod.startListening();
     });
 
-    afterAll(async () => {
-        await userPod.stopListening();
-        await friendPod.stopListening();
-    });
+    //const friendPod = new LocalPod({
+    //    port: 3333,
+    //    basePath: '.localpods/friendpod',
+    //    fetch: solidFileFetchSecond
+    //});
+
+    const userWebId   = "http://localhost:" + userPod.port + "/profile/";
+    //const friendWebId = "http://localhost:" + friendPod.port + "/profile/";
 
     const firstRouteName    = "A nice route";
     const firstRouteAuthor  = "Mortadelo";
     const secondRouteName   = "Second route";
     const secondRouteAuthor = "Filemón";
+
+    const firstRouteFilename = "firstRoute.jsonld";
+    const firstRouteUri = solid.getRoutesFolder(userWebId) + firstRouteFilename;
+    const friendInboxFolderUri = solid.getInboxFolder(userWebId); // Sharing with self
 
     const firstRoute =
         {
@@ -69,6 +61,19 @@ describe("Solid Routes", () => {
             description: "Description of a second route."
         };
 
+    const fc = new FC(auth);
+
+    beforeAll(async () => {
+        await userPod.startListening();
+        //friendPod.startListening();
+        //await solid.createBaseStructure(userWebId);
+    });
+
+    afterAll(async () => {
+        await userPod.stopListening();
+        //friendPod.stopListening();
+    });
+
     /**
      * Checks no routes are left after deleting all of them.
      */
@@ -76,6 +81,18 @@ describe("Solid Routes", () => {
         await solid.clearRoutesFromPod(userWebId);
         let routes = await solid.getRoutesFromPod(userWebId);
         expect(routes.length).toEqual(0);
+    });
+
+    /**
+     * Testing connectivity.
+     */
+    test("Connection", async () => {
+        let fc = new FC(auth);
+        let url = solid.getRoutesFolder(userWebId);
+        fc.createFolder(url);
+        let exists = await fc.itemExists(url);
+        expect(exists).toBeTruthy();
+
     });
 
     /**
@@ -97,7 +114,7 @@ describe("Solid Routes", () => {
         await solid.uploadRouteToPod(secondRoute, userWebId);
         let routes = await solid.getRoutesFromPod(userWebId);
         expect(routes.length).toEqual(2);
-        routes.sort( (r1, r2) => r1.name < r2.name ? -1 : 1);
+        routes.sort( (r1, r2) => r1.name < r2.name ? -1 : 1 );
         expect(routes[0].name).toEqual(firstRouteName);
         expect(routes[0].author).toEqual(firstRouteAuthor);
         expect(routes[1].name).toEqual(secondRouteName);
@@ -108,12 +125,8 @@ describe("Solid Routes", () => {
      * Checks route sharing creates the notification correctly.
      */
     test("Share a route", async () => {
+        await solid.clearRoutesFromPod(userWebId);
 
-        const firstRouteFilename = "firstRoute.jsonld";
-        const firstRouteUri = solid.getRoutesFolder(userWebId) + firstRouteFilename;
-        const friendInboxFolderUri = solid.getInboxFolder(userWebId); // Sharing with self
-
-        let fc = new FC(auth);
          if (await fc.itemExists(friendInboxFolderUri)) {
              await fc.deleteFolder(friendInboxFolderUri);
          }
@@ -148,9 +161,20 @@ describe("Solid Routes", () => {
     /**
      * Checks inbox processing for getting routes shared with user.
      */
-    // test("Process inbox notifications", async() => {
-    //   ...
-    // });
+    test("Process inbox notifications", async() => {
+        await solid.checkInboxForSharedRoutes(userWebId); // Should clear notifications
+        await solid.shareRouteToPod(
+            firstRouteUri,
+            userWebId,
+            firstRouteAuthor,
+            secondRouteAuthor
+        );
+        await solid.checkInboxForSharedRoutes(userWebId);
+        let sharedFolder = await solid.getSharedFolder(userWebId);
+        let existsSharedRoutesFile = await fc.itemExists(sharedFolder);
+        expect(existsSharedRoutesFile).toBeTruthy();
+
+    });
 
 });
 
