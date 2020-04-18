@@ -5,8 +5,9 @@
 |===
 | Term                      | Definition
 | [[pod_definition]]POD     | Personal Online Datastore
-| [[solid_definition]]SOLID | Social Linked Data is a web decentralization project led by Tim Berners-Lee, the inventor of the World Wide Web. For further information visit https://solid.mit.edu/[the oficial page].
-| [[react_definition]] React | A Facebook mantained library to build graphical user interfaces. For further information visit https://reactjs.org/[the oficial page].
-|[[arch42_definition]]arc42 | Template to communicate and document software architecture. For further information visit https://www.arc42.org[the oficial page].
+| [[solid_definition]]SOLID | Social Linked Data is a web decentralization project led by Tim Berners-Lee, the inventor of the World Wide Web. For further information visit https://solid.mit.edu/[the official page].
+| [[react_definition]] React | A Facebook maintained library to build graphical user interfaces. For further information visit https://reactjs.org/[the official page].
+|[[arch42_definition]]arc42 | Template to communicate and document software architecture. For further information visit https://www.arc42.org[the official page].
 | GPX | It is an XML Schema design as a common GPS data format for software applications. For further information visit https://www.topografix.com/gpx.asp[Topographix.com]
 |===
+

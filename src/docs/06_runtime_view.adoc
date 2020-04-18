@@ -11,7 +11,7 @@ The user will be able to upload a route to his own POD.
 . A user will click a button on the "Upload route".
 . The user will write the name of the route and a description.
 . Then, he will choose the route to upload from his files system or he can write it by hand in the "Position" text area.
-. After that, he can attach a picture or a video 
+. After that, he can attach a picture or a video
 . Finally, the route will be uploaded to the user's POD and shown in our application.
 
 [plantuml,"Uploading a route",png]
@@ -21,11 +21,11 @@ include::diagrams/06-01_uploadRoute.puml[]
 
 ==== Share a route
 
-A user can share a route to one of his friends. 
+A user can share a route to one of his friends.
 
 . Firstly, the user must select the route he want to share.
 . Then, he must select the friend he wants to share the route with.
-. Finally, the route must be added to the friend´s POD and be able to be displayed.
+. Finally, the route must be added to the friend's POD and be able to be displayed.
 
 [plantuml,"Sharing a route",png]
 ----
@@ -72,12 +72,12 @@ Since it is a bit complex diagram, we are going to explain it in detail:
 . The store dispatches the proper action.
 . A request for loading the routes is called and intercepted by the middleware.
 . The middleware is in charge of actually loading the routes asynchronously. Meanwhile, the reducer gives a response to the request.
-. Once the routes are loaded, there are two possible scenarios: everything worked or some error occurred. 
+. Once the routes are loaded, there are two possible scenarios: everything worked or some error occurred.
 If everything worked, a load routes success actions is dispatched from the store, and the state is updated with the routes.
-On the other hand, if an error occured while loading the routes, an error action is dispatched and the state is updated.
+On the other hand, if an error occurred while loading the routes, an error action is dispatched and the state is updated.
 . Finally, the state is received by the NavBar (whole application).
 
-==== Loading user´s email
+==== Loading user's email
 
 [plantuml,"Loading email",png]
 ----
@@ -91,7 +91,7 @@ It follows the same structure as the previous diagram:
 . If everything worked, a load email success is sent and the state is updated with the email. If an error occurred, a load email error is sent and the state is updated.
 . Finally, the NavBar (whole application) receives the updated state.
 
-==== Loading user´s friends
+==== Loading user's friends
 
 [plantuml,"Loading friends",png]
 ----
@@ -117,3 +117,4 @@ In this diagram we can perfectly observe the redux architecture:
 . The user clicks on a route and an event is triggered.
 . An action is dispatched and the reducer updates the state.
 . Once the state is updated, the map component receives the positions of the route and the route is displayed.
+

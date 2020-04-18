@@ -33,11 +33,10 @@ moment, take general decisions and work with other groups for a consensus,
 adapting application and documentation when major specification changes occur.
 |===
 
-.Table with Technical debt and a possible way of minimizing the
+.Table with Technical debt and a possible way of minimizing them
 |===
 |Description |Motivation
 |Route parser
 |When parsing a route with more than one track, only the first one is taken into account because of simplicity.
-
-
 |===
+
