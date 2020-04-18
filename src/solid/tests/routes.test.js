@@ -83,7 +83,6 @@ describe("Solid Routes", () => {
         ];
         await userPod.startListening();
         //friendPod.startListening();
-        //await solid.createBaseStructure(userWebId);
     });
 
     afterAll(async () => {
@@ -110,8 +109,18 @@ describe("Solid Routes", () => {
      * Checks no routes are left after deleting all of them.
      */
     test("Delete routes from POD", async () => {
+
         await solid.clearRoutesFromPod(userWebId);
         let routes = await solid.getRoutesFromPod(userWebId);
+        expect(routes.length).toEqual(0);
+
+        await solid.uploadRouteToPod(firstRoute, userWebId);
+        await solid.uploadRouteToPod(secondRoute, userWebId);
+        routes = await solid.getRoutesFromPod(userWebId);
+        expect(routes.length).toEqual(2);
+
+        await solid.clearRoutesFromPod(userWebId);
+        routes = await solid.getRoutesFromPod(userWebId);
         expect(routes.length).toEqual(0);
     });
 
