@@ -88,12 +88,12 @@ describe("Solid Routes", () => {
         //friendPod.startListening();
     });
 
-    afterAll(() => {
+    afterAll( () => {
         let i = 0;
         for (i; i < folders.length; i++) {
-            await fc.deleteFolder(folders[i]);
+             fc.deleteFolder(folders[i]);
         }
-        await userPod.stopListening();
+         userPod.stopListening();
         //friendPod.stopListening();
     });
 
