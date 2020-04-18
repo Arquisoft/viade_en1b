@@ -65,17 +65,32 @@ describe("Solid Routes", () => {
 
     const fc = new FC(auth);
 
+    let folders = [];
+
     beforeAll(async () => {
         mkdirp(userPod.basePath, function (err) {
-            if (err) console.error(err)
-            else console.log("Couldn't create test pod local folder: " + userPod.basePath)
+            if (err) {
+                console.error(err);
+            }
         });
+        folders = [
+            solid.getRoutesFolder(userWebId),
+            solid.getCommentsFolder(userWebId),
+            solid.getMyCommentsFolder(userWebId),
+            solid.getInboxFolder(userWebId),
+            solid.getResourcesFolder(userWebId),
+            solid.getSharedFolder(userWebId)
+        ];
         await userPod.startListening();
         //friendPod.startListening();
         //await solid.createBaseStructure(userWebId);
     });
 
     afterAll(async () => {
+        let i = 0;
+        for (i; i < folders.length; i++) {
+            await fc.deleteFolder(folders[i]);
+        }
         await userPod.stopListening();
         //friendPod.stopListening();
     });
@@ -85,13 +100,6 @@ describe("Solid Routes", () => {
      */
     test("Create base structure", async() => {
         await solid.createBaseStructure(userWebId);
-        let folders = [
-            solid.getRoutesFolder(userWebId),
-            solid.getCommentsFolder(userWebId),
-            solid.getMyCommentsFolder(userWebId),
-            solid.getInboxFolder(userWebId),
-            solid.getResourcesFolder(userWebId)
-    ];
         let i = 0;
         for (i; i < folders.length; i++) {
             expect(await fc.itemExists(folders[i])).toBeTruthy();
@@ -105,18 +113,6 @@ describe("Solid Routes", () => {
         await solid.clearRoutesFromPod(userWebId);
         let routes = await solid.getRoutesFromPod(userWebId);
         expect(routes.length).toEqual(0);
-    });
-
-    /**
-     * Testing connectivity.
-     */
-    test("Connection", async () => {
-        let fc = new FC(auth);
-        let url = solid.getRoutesFolder(userWebId);
-        fc.createFolder(url);
-        let exists = await fc.itemExists(url);
-        expect(exists).toBeTruthy();
-
     });
 
     /**
@@ -161,7 +157,7 @@ describe("Solid Routes", () => {
 
         await fc.createFile(
             firstRouteUri,
-            JSON.stringify(firstRoute),
+            JSON.stringify(solid.getFormattedRoute(firstRoute, userWebId, firstRouteName)),
             "application/ld+json"
         );
         await solid.shareRouteToPod(
@@ -198,6 +194,27 @@ describe("Solid Routes", () => {
         let existsSharedRoutesFile = await fc.itemExists(sharedFolder);
         expect(existsSharedRoutesFile).toBeTruthy();
 
+    });
+
+    /**
+     * Checks comments from a route can be obtained.
+     */
+    test("Get comments from route", async() => {
+        await fc.createFile(
+            firstRouteUri,
+            JSON.stringify(solid.getFormattedRoute(firstRoute, userWebId, firstRouteFilename)),
+            "application/ld+json"
+        );
+        await fc.createFile(
+            solid.getRouteCommentsFile(userWebId, firstRouteFilename),
+            JSON.stringify(solid.getNewCommentsFile(firstRouteUri)),
+            "application/ld+json"
+        );
+        const commentText = "Test comment";
+        await solid.uploadComment(userWebId, firstRouteUri, commentText);
+        let commentsUrls = await solid.getCommentsFromRoute(userWebId, firstRouteFilename);
+        let commentFile = JSON.parse(await fc.readFile(commentsUrls[0]));
+        expect(commentFile.text).toEqual(commentText);
     });
 
 });

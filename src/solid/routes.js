@@ -49,7 +49,7 @@ export function getInboxFolder(userWebId) {
  * Returns a string containing the URI of the comments file of a given route for the given user.
  */
 export function getRouteCommentsFile(userWebId, fileName) {
-    return getCommentsFolder(userWebId) + "myRoutesComments/" + fileName;
+    return getCommentsFolder(userWebId) + "routeComments/" + fileName;
 }
 
 /**
@@ -75,12 +75,14 @@ export async function createBaseStructure(userWebId) {
         getCommentsFolder(userWebId),
         getMyCommentsFolder(userWebId),
         getInboxFolder(userWebId),
-        getResourcesFolder(userWebId)
+        getResourcesFolder(userWebId),
+        getSharedFolder(userWebId)
     ];
     let i = 0;
     for (i; i < folders.length; i++) {
         await createFolderIfAbsent(folders[i]);
     }
+    await grantAccess(getInboxFolder(userWebId), userWebId);
 }
 
 /**
@@ -146,13 +148,19 @@ export async function checkInboxForSharedRoutes(userWebId) {
  * Adds the given route to the given user's pod.
  */
 export async function uploadRouteToPod(routeObject, userWebId) {
-    let newRouteName = uuidv4();
+    let newRouteName = uuidv4() + ".jsonld";
     let newRoute = getFormattedRoute(routeObject, userWebId, newRouteName);
     let url = getRoutesFolder(userWebId);
+    let routeUrl = url + newRouteName;
     await createFolderIfAbsent(url);
     await fc.createFile(
-        url + newRouteName + ".jsonld",
+        routeUrl,
         JSON.stringify(newRoute),
+        "application/ld+json"
+    );
+    await fc.createFile(
+        getRouteCommentsFile(userWebId, newRouteName),
+        JSON.stringify(getNewCommentsFile(routeUrl)),
         "application/ld+json"
     );
 }
@@ -174,23 +182,28 @@ export async function uploadComment(userWebId, commentedRouteUri, commentText) {
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
-    let url = getCommentsFolder(userWebId);
-    if (!(await fc.itemExists(url))) {
-        await fc.createFolder(url);
+
+    let myCommentsUrl = getMyCommentsFolder(userWebId);
+    if (!(await fc.itemExists(myCommentsUrl))) {
+        await fc.createFolder(myCommentsUrl);
     }
+    let newCommentUrl = myCommentsUrl + uuidv4() + ".jsonld";
+
+    // Create local comment file
     let newComment = getNewComment(commentText, year, month, day);
     await fc.createFile(
-        url + uuidv4(),
+        newCommentUrl,
         JSON.stringify(newComment),
         "application/ld+json"
-    ); // Creates local comment file
+    );
+
+    // Add comment url to route's comments file
     let route = await fc.readFile(commentedRouteUri);
     let routeJSON = JSON.parse(route);
     let commentsFileContent = await fc.readFile(routeJSON.comments);
     let commentsFileContentJSON = JSON.parse(commentsFileContent);
-    commentsFileContentJSON.comments.add(newComment); // Adds comment to comments on routeComments file
+    commentsFileContentJSON.comments.push(newCommentUrl);
     await fc.createFile(
-        // Uploads the new routeComments file with the new comment
         routeJSON.comments,
         JSON.stringify(commentsFileContentJSON),
         "application/ld+json"
@@ -278,11 +291,11 @@ export async function grantAccess(path, userWebId) {
     /* console.log(path);
     console.log(acl);
     */
-    await fc.updateFile(url, acl).then(
+    await fc.createFile(url, acl).then(
         () => {
-            /* console.log("Folder permisions added");  */
+            /* console.log("[DEBUG] File permisions added");  */
         },
-        (err) => console.log("Could not set folder permisions" + err)
+        (err) => console.log("[ERROR] Could not set file permisions" + err)
     );
 }
 
@@ -291,59 +304,6 @@ export async function grantAccess(path, userWebId) {
  * the file name of the route for the pod.
  */
 export function getFormattedRoute(routeObject, userWebId, fileName) {
-    //let output = `{
-    //    "@context": {
-    //        "@version": "1.1",
-    //        "comments": {
-    //            "@id": "viade:comments",
-    //            "@type": "@id"
-    //        },
-    //        "description": {
-    //            "@id": "schema:description",
-    //            "@type": "xsd:string"
-    //        },
-    //        "media": {
-    //            "@container": "@list",
-    //            "@id": "viade:media"
-    //        },
-    //        "name": {
-    //            "@id": "schema:name",
-    //            "@type": "xsd:string"
-    //        },
-    //        "points": {
-    //            "@container": "@list",
-    //            "@id": "viade:points"
-    //        },
-    //        "latitude": {
-    //            "@id": "schema:latitude",
-    //            "@type": "xsd:double"
-    //        },
-    //        "longitude": {
-    //            "@id": "schema:longitude",
-    //            "@type": "xsd:double"
-    //        },
-    //        "elevation": {
-    //            "@id": "schema:elevation",
-    //            "@type": "xsd:double"
-    //        },
-    //        "author": {
-    //            "@id": "schema:author",
-    //            "@type": "@id"
-    //        },
-    //        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    //        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    //        "schema": "http://schema.org/",
-    //        "viade": "http://arquisoft.github.io/viadeSpec/",
-    //        "xsd": "http://www.w3.org/2001/XMLSchema#"
-    //    },
-    //    "name": ${routeObject.name},
-    //    "author": ${routeObject.author},
-    //    "description": ${routeObject.description},
-    //    "comments": ${getRouteCommentsFile(userWebId, fileName)},
-    //    "media": ${routeObject.images + routeObject.videos},
-    //    "waypoints": [${routeObject.positions}],
-    //    "points": [${routeObject.positions}]
-    //}`;
     let output = {
         "@context": {
             "@version": "1.1",
@@ -483,6 +443,25 @@ function getNewNotification(routeUri, sharerName, receiverName) {
                 name: receiverName,
             },
         },
+    };
+}
+
+/**
+ * Returns a new comments file for a route in JSON form.
+ */
+export function getNewCommentsFile(routeUrl) {
+    return {
+        "@context": {
+            "@version": 1.1,
+            "viade": "http://arquisoft.github.io/viadeSpec/",
+            "schema": "http://schema.org/",
+            comments: {
+                "@container": "@list",
+                "@id": "viade:comments"
+            },
+        },
+        "routeUri": routeUrl,
+        "comments": [],
     };
 }
 
