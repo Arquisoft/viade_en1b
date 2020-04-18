@@ -336,6 +336,19 @@ export async function createBaseStructure(userWebId) {
 }
 
 /**
+ * Returns a route from a given user's pod given the name of the route, or null if not found.
+ */
+export async function getRouteFromPod(fileName, userWebId) {
+    let url = getRoutesFolder(userWebId);
+    let folder = await fc.readFolder(url);
+    if (folder.files.some((f) => f.name === fileName)) {
+        let podRoute = await readToJson(url + fileName);
+        return getRouteObjectFromPodRoute(userWebId, podRoute, fileName);
+    }
+    return null;
+}
+
+/**
  * Returns an array containing the routes in a given user's pod.
  */
 export async function getRoutesFromPod(userWebId) {
@@ -351,19 +364,6 @@ export async function getRoutesFromPod(userWebId) {
         routes.push(route);
     }
     return routes;
-}
-
-/**
- * Returns a route from a given user's pod given the name of the route, or null if not found.
- */
-export async function getRouteFromPod(fileName, userWebId) {
-    let url = getRoutesFolder(userWebId);
-    let folder = await fc.readFolder(url);
-    if (folder.files.some((f) => f.name === fileName)) {
-        let podRoute = await readToJson(url + fileName);
-        return getRouteObjectFromPodRoute(userWebId, podRoute, fileName);
-    }
-    return null;
 }
 
 /**

@@ -227,11 +227,13 @@ describe("Solid Routes", () => {
     test("Process inbox notifications", async() => {
 
         await solid.checkInboxForSharedRoutes(userWebId); // Should clear notifications
-        if (await fc.itemExists(solid.getSharedFolder(userWebId)))
+        if (await fc.itemExists(solid.getSharedFolder(userWebId))) {
             await fc.deleteFolder(solid.getSharedFolder(userWebId));
+        }
 
-        if (await fc.itemExists(solid.getRoutesFolder(userWebId)))
+        if (await fc.itemExists(solid.getRoutesFolder(userWebId))) {
             await fc.deleteFolder(solid.getRoutesFolder(userWebId));
+        }
 
         let sharedRoutes = await solid.getSharedRoutesUris(userWebId);
         expect(sharedRoutes.length).toEqual(0);
