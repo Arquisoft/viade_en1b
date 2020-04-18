@@ -75,6 +75,7 @@ function getRouteObjectFromPodRoute(route) {
         description: route.description,
         author: route.author,
         positions: route.waypoints
+        //TODO: sharedWith
     };
 }
 
@@ -479,12 +480,11 @@ export async function clearRoutesFromPod(userWebId) {
 /**
  * Removes a route from given user's pod, given the name of the route.
  */
-export async function clearRouteFromPod(fileName, userWebId) {
+export async function clearRouteFromPod(routeUrl, userWebId) {
     let url = getRoutesFolder(userWebId);
     let folder = await fc.readFolder(url);
-    if (folder.files.some((f) => f.name === fileName)) {
-        let fileUrl = url + fileName;
-        await fc.deleteFile(fileUrl);
+    if (folder.files.some((f) => f.url === routeUrl)) {
+        await fc.deleteFile(routeUrl);
     }
 }
 

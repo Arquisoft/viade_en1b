@@ -109,6 +109,34 @@ describe("Solid Routes", () => {
     });
 
     /**
+     * Checks a route can be deleted idempotently.
+     */
+    test("Delete one route from POD", async () => {
+
+        await solid.clearRoutesFromPod(userWebId);
+        let routes = await solid.getRoutesFromPod(userWebId);
+        expect(routes.length).toEqual(0);
+
+        await solid.clearRouteFromPod(firstRouteUri, userWebId);
+        routes = await solid.getRoutesFromPod(userWebId);
+        expect(routes.length).toEqual(0);
+
+        await fc.createFile(
+            firstRouteUri,
+            JSON.stringify(solid.getFormattedRoute(firstRoute, userWebId, firstRouteName)),
+            "application/ld+json"
+        );
+
+        routes = await solid.getRoutesFromPod(userWebId);
+        expect(routes.length).toEqual(1);
+
+        await solid.clearRouteFromPod(firstRouteUri, userWebId);
+        routes = await solid.getRoutesFromPod(userWebId);
+        expect(routes.length).toEqual(0);
+
+    });
+
+    /**
      * Checks no routes are left after deleting all of them.
      */
     test("Delete routes from POD", async () => {
