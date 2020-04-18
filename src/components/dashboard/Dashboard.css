@@ -1,58 +1,68 @@
 .dashboard {
-    height: 100vh;
-    width: 100vw;
-    padding-top: 7em;
-    max-height: 100vh;
-    display: grid;
-    grid-template-columns: auto auto auto auto;
-    grid-template-rows: 15% auto;
-    
+  height: 100vh;
+  width: 100vw;
+  padding-top: 4.5em;
+  max-height: 100vh;
+  display: grid;
+  overflow: hidden;
+  margin: 0 auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: repeat(2, 2fr) 5% 20%;
+  grid-template-areas:
+    "map map map map"
+    "map map map map"
+    "header header header header"
+    "route route route route";
+
+  max-width: 80%;
+
+  /*----------*/
+
+  margin: 0 auto;
 }
 
-#titleHolder{
-    grid-column: 1 / 5;
-    grid-row: 1 / 1;
-    z-index: 3;
+#titleHolder {
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  grid-area: header;
+  margin: 0;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+p {
+  font-style: italic;
+}
+
+@media (max-width: 800px) {
+  .dashboard {
+    padding-top: 5em;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 10% 50% auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  #titleHolder {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-}
+    align-items: center;
+    grid-column: 1 / 5;
+    grid-row: 1 / 1;
+    background-color: white;
+    margin: 0 auto;
+    margin-top: 5em;
+    height: 150%;
+    width: 90%;
+    padding: 0.5em 0;
 
-h1{
-    font-size: 1.5em;
-}
-
-p{
-    font-style: italic;
-}
-
-@media (max-width: 800px){
-    .dashboard {
-        padding-top: 5em;
-        display: grid;
-        grid-template-columns: 100%;
-        grid-template-rows: 10% 50% auto;
-        margin: 0;
-        padding: 0;
-    
-    }
-
-    #titleHolder{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        grid-column: 1 / 5;
-        grid-row: 1 / 1;
-        background-color: white;
-        margin: 0 auto;
-        margin-top: 5em;
-        height: 150%;
-        width: 90%;
-        padding: .5em 0;
-        
-        border-radius: 5px;
-    }
-
+    border-radius: 5px;
+  }
 }

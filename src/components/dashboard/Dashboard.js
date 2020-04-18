@@ -7,8 +7,6 @@ import { showRoute } from "../../store/actions/RouteActions";
 import { LoggedIn, LoggedOut } from "@solid/react";
 import { Redirect } from "react-router-dom";
 
-
-
 function Dashboard(props) {
   const { routes } = props;
   const { selectedRoute } = props;
@@ -17,11 +15,11 @@ function Dashboard(props) {
   //header of the currently selected  route
   const currentSelectedMap =
     selectedRoute == null ? (
-      <div data-testid = "dashboard-header" id="titleHolder">
+      <div data-testid="dashboard-header" id="titleHolder">
         <h1>Routes List</h1>
       </div>
     ) : (
-      <div data-testid = "dashboard-header" id="titleHolder">
+      <div data-testid="dashboard-header" id="titleHolder">
         <h1>{selectedRoute.name}</h1> <p> by {selectedRoute.author}</p>
       </div>
     );
@@ -35,7 +33,7 @@ function Dashboard(props) {
       : selectedRoute.positions[selectedRoute.positions.length - 1];
 
   return (
-    <div data-testid="dashboard-container" className="dashboard container">
+    <div data-testid="dashboard-container" className="dashboard">
       <LoggedIn>
         {currentSelectedMap}
         <RouteList
@@ -52,16 +50,16 @@ function Dashboard(props) {
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     routes: state.route.routes,
     selectedRoute: state.route.selectedRoute,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    showRoute: route => dispatch(showRoute(route))
+    showRoute: (route) => dispatch(showRoute(route)),
   };
 };
 

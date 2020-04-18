@@ -3,11 +3,11 @@
   top: 4em;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas:
-    "routes routes info info"
-    "routes routes info info"
-    "routes routes info info";
+    "detail detail detail detail"
+    "detail detail detail detail"
+    "route route route route";
 
   max-height: 90vh;
   width: 100%;
@@ -28,15 +28,21 @@
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr 3fr;
   width: 100%;
+  grid-area: detail;
 }
 
 .routeList {
-  margin-top: 2em;
-  padding: 1em;
-  overflow: scroll;
-  max-height: 80%;
-  grid-column: 1 / 2;
-  height: 100vh;
+  display: flex;
+  position: absolute;
+
+  overflow-x: scroll;
+
+  height: 70%;
+  /* Custom scrollbar for firefox*/
+  scrollbar-color: var(--color-primary) transparent;
+  scrollbar-base-color: var(--color-primary);
+  scroll-behavior: smooth;
+  grid-area: route;
 }
 
 .commentsButton {
