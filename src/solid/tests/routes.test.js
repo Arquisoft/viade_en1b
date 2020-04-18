@@ -3,25 +3,25 @@ import FC from "solid-file-client";
 import * as solid from "../routes";
 
 describe("Solid Routes", () => {
-    
+
 
     //////////
 
-    const LocalPod = require('solid-local-pod');
-    const solidFileFetchFirst = require('solid-local-pod/src/solidFileFetch');
-    //const solidFileFetchSecond = require('solid-local-pod/src/solidFileFetch');
+    const LocalPod = require("solid-local-pod");
+    const solidFileFetchFirst = require("solid-local-pod/src/solidFileFetch");
+    //const solidFileFetchSecond = require("solid-local-pod/src/solidFileFetch");
 
-    const mkdirp = require('mkdirp');
+    const mkdirp = require("mkdirp");
 
     const userPod = new LocalPod({
         port: 3000,
-        basePath: '.localpods/userpod/',
+        basePath: ".localpods/userpod/",
         fetch: solidFileFetchFirst
     });
 
     //const friendPod = new LocalPod({
     //    port: 3333,
-    //    basePath: '.localpods/friendpod',
+    //    basePath: ".localpods/friendpod",
     //    fetch: solidFileFetchSecond
     //});
 
