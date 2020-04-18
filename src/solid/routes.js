@@ -149,9 +149,7 @@ export async function uploadRouteToPod(routeObject, userWebId) {
     let newRouteName = uuidv4();
     let newRoute = getFormattedRoute(routeObject, userWebId, newRouteName);
     let url = getRoutesFolder(userWebId);
-    console.log("1" + url + typeof url);
     await createFolderIfAbsent(url);
-    console.log("2" + url);
     await fc.createFile(
         url + newRouteName + ".jsonld",
         JSON.stringify(newRoute),

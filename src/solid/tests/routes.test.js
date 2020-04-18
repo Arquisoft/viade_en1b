@@ -8,6 +8,8 @@ describe("Solid Routes", () => {
     const solidFileFetchFirst = require('solid-local-pod/src/solidFileFetch');
     //const solidFileFetchSecond = require('solid-local-pod/src/solidFileFetch');
 
+    const mkdirp = require('mkdirp');
+
     const userPod = new LocalPod({
         port: 3000,
         basePath: '.localpods/userpod/',
@@ -64,6 +66,10 @@ describe("Solid Routes", () => {
     const fc = new FC(auth);
 
     beforeAll(async () => {
+        mkdirp(userPod.basePath, function (err) {
+            if (err) console.error(err)
+            else console.log("Couldn't create test pod local folder: " + userPod.basePath)
+        });
         await userPod.startListening();
         //friendPod.startListening();
         //await solid.createBaseStructure(userWebId);
@@ -72,6 +78,24 @@ describe("Solid Routes", () => {
     afterAll(async () => {
         await userPod.stopListening();
         //friendPod.stopListening();
+    });
+
+    /**
+     * Checks base structure is created.
+     */
+    test("Create base structure", async() => {
+        await solid.createBaseStructure(userWebId);
+        let folders = [
+            solid.getRoutesFolder(userWebId),
+            solid.getCommentsFolder(userWebId),
+            solid.getMyCommentsFolder(userWebId),
+            solid.getInboxFolder(userWebId),
+            solid.getResourcesFolder(userWebId)
+    ];
+        let i = 0;
+        for (i; i < folders.length; i++) {
+            expect(await fc.itemExists(folders[i])).toBeTruthy();
+        }
     });
 
     /**
