@@ -4,9 +4,6 @@ import * as solid from "../routes";
 
 describe("Solid Routes", () => {
 
-
-    //////////
-
     const LocalPod = require("solid-local-pod");
     const solidFileFetchFirst = require("solid-local-pod/src/solidFileFetch");
     //const solidFileFetchSecond = require("solid-local-pod/src/solidFileFetch");
@@ -89,10 +86,6 @@ describe("Solid Routes", () => {
     });
 
     afterAll( () => {
-        let i = 0;
-        for (i; i < folders.length; i++) {
-             fc.deleteFolder(folders[i]);
-        }
          userPod.stopListening();
         //friendPod.stopListening();
     });
@@ -222,17 +215,27 @@ describe("Solid Routes", () => {
      * Checks inbox processing for getting routes shared with user.
      */
     test("Process inbox notifications", async() => {
+
         await solid.checkInboxForSharedRoutes(userWebId); // Should clear notifications
+        await fc.deleteFolder(solid.getSharedFolder(userWebId));
+
         await solid.shareRouteToPod(
             firstRouteUri,
             userWebId,
             firstRouteAuthor,
             secondRouteAuthor
         );
+
         await solid.checkInboxForSharedRoutes(userWebId);
-        let sharedFolder = await solid.getSharedFolder(userWebId);
-        let existsSharedRoutesFile = await fc.itemExists(sharedFolder);
+
+        let sharedFolder = solid.getSharedFolder(userWebId);
+        let existsSharedRoutesFolder = await fc.itemExists(sharedFolder);
+        expect(existsSharedRoutesFolder).toBeTruthy();
+        let existsSharedRoutesFile = await fc.itemExists(sharedFolder + "sharedRoutes.jsonld");
         expect(existsSharedRoutesFile).toBeTruthy();
+        let sharedRoutes = await solid.getSharedRoutesUris(userWebId);
+        expect(sharedRoutes.length).toEqual(1);
+        expect(sharedRoutes[0]).toEqual(firstRouteUri);
 
     });
 

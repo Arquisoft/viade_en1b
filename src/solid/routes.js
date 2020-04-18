@@ -2,6 +2,8 @@ import auth from "solid-auth-client";
 import FC from "solid-file-client";
 import { v4 as uuidv4 } from "uuid";
 
+//const SolidAclUtils = require("solid-acl-utils");
+
 /**
  * Functions in this file present an interface to add, get and manipulate routes
  * stored in a pod. They are intented to keep a consistent signature over time
@@ -9,7 +11,13 @@ import { v4 as uuidv4 } from "uuid";
  */
 
 const appName = "viade";
+const sharedRoutesFilename = "sharedRoutes.jsonld";
+
 const fc = new FC(auth);
+
+//const { AclApi, AclDoc, AclParser, AclRule, Permissions, Agents } = SolidAclUtils;
+//const { READ, WRITE, APPEND, CONTROL } = Permissions;
+//const fetch = auth.fetch.bind(auth);
 
 export async function createFolderIfAbsent(path) {
     if ( !(await fc.itemExists(path)) ) {
@@ -80,38 +88,32 @@ function getRouteObjectFromPodRoute(route) {
 }
 
 /**
- * Grants write permissions to a file in a pod.
+ * Grants read and write permissions to the given file in a pod to everyone.
  */
-export async function grantAccess(path, userWebId) {
-    let url = path + ".acl";
-    let acl = `@prefix : <#>.
-        @prefix n0: <http://www.w3.org/ns/auth/acl#>.
-        @prefix ch: <./>.
-        @prefix c: </profile/card#>.
-        @prefix c0: <${userWebId}>.
-        :ControlReadWrite
-            a n0:Authorization;
-            n0:accessTo ch:;
-            n0:agent c:me;
-            n0:defaultForNew ch:;
-            n0:mode n0:Control, n0:Read, n0:Write.
-        :Read
-            a n0:Authorization;
-            n0:accessTo ch:;
-            n0:agent c0:me;
-            n0:defaultForNew ch:;
-            n0:mode n0:Read.`;
-    path += ".acl";
-    /* console.log(path);
-    console.log(acl);
-    */
-    await fc.createFile(url, acl).then(
-        () => {
-            /* console.log("[DEBUG] File permisions added");  */
-        },
-        (err) => console.log("[ERROR] Could not set file permisions" + err)
-    );
-}
+//export async function grantGlobalReadWritePermissions(path) {
+//    const aclApi = new AclApi(fetch, { autoSave: true });
+//    const acl = await aclApi.loadFromFileUrl(path);
+//    console.log("ACL: " + acl);
+//    await acl.addRule([READ, WRITE], Agents.PUBLIC);
+//}
+
+/**
+ * Grants read and write permissions to the given file in a pod to the given user.
+ */
+//export async function grantReadWritePermissions(path, userWebId) {
+//    const aclApi = new AclApi(fetch, { autoSave: true });
+//    const acl = await aclApi.loadFromFileUrl(path);
+//    await acl.addRule([READ, WRITE], userWebId);
+//}
+
+/**
+ * Grants read permissions to the given file in a pod to the given user.
+ */
+//export async function grantReadPermissions(path, userWebId) {
+//    const aclApi = new AclApi(fetch, { autoSave: true });
+//    const acl = await aclApi.loadFromFileUrl(path);
+//    await acl.addRule(READ, userWebId);
+//}
 
 /**
  * Returns a route in JSON-LD form as a string from the given route object, the webId of the pod's user and
@@ -286,7 +288,7 @@ export async function createBaseStructure(userWebId) {
     for (i; i < folders.length; i++) {
         await createFolderIfAbsent(folders[i]);
     }
-    await grantAccess(getInboxFolder(userWebId), userWebId);
+    //await grantGlobalReadWritePermissions(getInboxFolder(userWebId));
 }
 
 /**
@@ -308,13 +310,44 @@ export async function getRoutesFromPod(userWebId) {
 }
 
 /**
+ * Returns a route from a given user's pod given the name of the route, or null if not found.
+ */
+export async function getRouteFromPod(fileName, userWebId) {
+    let url = getRoutesFolder(userWebId);
+    let folder = await fc.readFolder(url);
+    if (folder.files.some((f) => f.name === fileName)) {
+        try {
+            let fileContent = await fc.readFile(url + fileName);
+            let podRoute = JSON.parse(fileContent);
+            return getRouteObjectFromPodRoute(podRoute);
+        } catch (e) {
+            console.log("[ERROR] Route loading failed: " + e);
+        }
+    }
+    return null;
+}
+
+/**
+ * Returns an array with the URIs of routes shared with the user.
+ */
+export async function getSharedRoutesUris(userWebId) {
+    let folderUri = getSharedFolder(userWebId);
+    let fileUri = folderUri + sharedRoutesFilename;
+    if ( !(await fc.itemExists(fileUri)) ) {
+        return [];
+    }
+    let fileContent = await fc.readFile(fileUri);
+    let fileContentJSON = JSON.parse(fileContent);
+    return fileContentJSON.routes;
+}
+
+/**
  * Adds a given URI to the list of routes shared with the given user.
  */
 async function addRouteUriToShared(userWebId, uri) {
     let folder = getSharedFolder(userWebId);
     await createFolderIfAbsent(folder);
-    let fileName = "sharedRoutes.jsonld";
-    let filePath = folder + fileName;
+    let filePath = folder + sharedRoutesFilename;
     let sharedRoutesJSON;
     if (!(await fc.itemExists(filePath))) {
         sharedRoutesJSON = getNewSharedRoutesFileContent();
@@ -323,7 +356,8 @@ async function addRouteUriToShared(userWebId, uri) {
         sharedRoutesJSON = JSON.parse(sharedRoutes);
     }
     // Possibility: Add a check to not duplicate routes
-    sharedRoutesJSON.routes.push({"@id": uri});
+    //sharedRoutesJSON.routes.push({"@id": uri}); // Old version
+    sharedRoutesJSON.routes.push(uri);
     await fc.createFile(filePath, JSON.stringify(sharedRoutesJSON), "application/ld+json");
 }
 
@@ -331,7 +365,7 @@ async function addRouteUriToShared(userWebId, uri) {
  * Adds a notification to the given user's inbox marking the intention of sharing a route.
  */
 export async function shareRouteToPod(
-    routeUri, // Do we need this? How to get it if so?
+    routeUri,
     targetUserWebId,
     sharerName,
     receiverName
@@ -345,6 +379,8 @@ export async function shareRouteToPod(
         JSON.stringify(getNewNotification(routeUri, sharerName, receiverName)),
         "application/ld+json"
     );
+    //await grantReadPermissions(routeUri, targetUserWebId); // Read the route
+    //await grantReadWritePermissions(getRouteCommentsFile(routeUri), targetUserWebId); // Comment it
 }
 
 /**
@@ -355,14 +391,11 @@ export async function checkInboxForSharedRoutes(userWebId) {
     let url = getInboxFolder(userWebId);
     await createFolderIfAbsent(url);
     let folder = await fc.readFolder(url);
-    let notifications = [];
+    //let notifications = [];
     let i = 0;
     for (i; i < folder.files.length; i++) {
-        notifications.push(await fc.readFile(folder.files[i].url));
-    }
-    i = 0;
-    for (i; i < notifications.length; i++) {
-        let routeUri = getRouteUriFromShareNotification(JSON.parse(notifications[i]));
+        let notification = await fc.readFile(folder.files[i].url);
+        let routeUri = getRouteUriFromShareNotification(JSON.parse(notification));
         await addRouteUriToShared(userWebId, routeUri);
         await fc.deleteFile(folder.files[i].url);
     }
@@ -382,8 +415,10 @@ export async function uploadRouteToPod(routeObject, userWebId) {
         JSON.stringify(newRoute),
         "application/ld+json"
     );
+
+    let routeCommentsFile = getRouteCommentsFile(userWebId, newRouteName);
     await fc.createFile(
-        getRouteCommentsFile(userWebId, newRouteName),
+        routeCommentsFile,
         JSON.stringify(getNewCommentsFile(routeUrl)),
         "application/ld+json"
     );
@@ -421,7 +456,7 @@ export async function uploadComment(userWebId, commentedRouteUri, commentText) {
         "application/ld+json"
     );
 
-    // Add comment url to route's comments file
+    // Add comment's url to route's comments file
     let route = await fc.readFile(commentedRouteUri);
     let routeJSON = JSON.parse(route);
     let commentsFileContent = await fc.readFile(routeJSON.comments);
@@ -435,31 +470,13 @@ export async function uploadComment(userWebId, commentedRouteUri, commentText) {
 }
 
 /**
- * Gets the comments from a given route, assuming the text is in the comments file.
+ * Gets the URLs of comments from a given route.
  */
 export async function getCommentsFromRoute(userWebId, fileName) {
     let commentsFileRoute = getRouteCommentsFile(userWebId, fileName);
     let commentsFile = await fc.readFile(commentsFileRoute);
     let commentsFileJSON = JSON.parse(commentsFile);
     return commentsFileJSON.comments;
-}
-
-/**
- * Returns a route from a given user's pod given the name of the route, or null if not found.
- */
-export async function getRouteFromPod(fileName, userWebId) {
-    let url = getRoutesFolder(userWebId);
-    let folder = await fc.readFolder(url);
-    if (folder.files.some((f) => f.name === fileName)) {
-        try {
-            let fileContent = await fc.readFile(url + fileName);
-            let podRoute = JSON.parse(fileContent);
-            return getRouteObjectFromPodRoute(podRoute);
-        } catch (e) {
-            console.log("[ERROR] Route loading failed: " + e);
-        }
-    }
-    return null;
 }
 
 /**
