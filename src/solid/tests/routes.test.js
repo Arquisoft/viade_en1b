@@ -79,7 +79,8 @@ describe("Solid Routes", () => {
             solid.getMyCommentsFolder(userWebId),
             solid.getInboxFolder(userWebId),
             solid.getResourcesFolder(userWebId),
-            solid.getSharedFolder(userWebId)
+            solid.getSharedFolder(userWebId),
+            solid.getRoutesSharedWithFolder(userWebId)
         ];
         await userPod.startListening();
         //friendPod.startListening();
@@ -114,16 +115,13 @@ describe("Solid Routes", () => {
         routes = await solid.getRoutesFromPod(userWebId);
         expect(routes.length).toEqual(0);
 
-        await fc.createFile(
-            firstRouteUri,
-            JSON.stringify(solid.getFormattedRoute(firstRoute, userWebId, firstRouteName)),
-            "application/ld+json"
-        );
+        await solid.uploadRouteToPod(firstRoute, userWebId);
 
         routes = await solid.getRoutesFromPod(userWebId);
         expect(routes.length).toEqual(1);
 
-        await solid.clearRouteFromPod(firstRouteUri, userWebId);
+        let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
+        await solid.clearRouteFromPod(routeUri, userWebId);
         routes = await solid.getRoutesFromPod(userWebId);
         expect(routes.length).toEqual(0);
 
@@ -143,6 +141,12 @@ describe("Solid Routes", () => {
         routes = await solid.getRoutesFromPod(userWebId);
         expect(routes.length).toEqual(2);
 
+        await solid.clearRoutesFromPod(userWebId);
+        routes = await solid.getRoutesFromPod(userWebId);
+        expect(routes.length).toEqual(0);
+
+        // Test behaviour when there are no folder
+        await fc.deleteFolder(solid.getRoutesFolder(userWebId));
         await solid.clearRoutesFromPod(userWebId);
         routes = await solid.getRoutesFromPod(userWebId);
         expect(routes.length).toEqual(0);
@@ -172,29 +176,35 @@ describe("Solid Routes", () => {
         expect(routes[0].author).toEqual(firstRouteAuthor);
         expect(routes[1].name).toEqual(secondRouteName);
         expect(routes[1].author).toEqual(secondRouteAuthor);
+
+        expect(await solid.getRouteFromPod("noRoute", userWebId)).toBeFalsy();
     });
 
     /**
      * Checks route sharing creates the notification correctly.
      */
     test("Share a route", async () => {
+
         await solid.clearRoutesFromPod(userWebId);
+        await solid.uploadRouteToPod(firstRoute, userWebId);
+        let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
 
          if (await fc.itemExists(friendInboxFolderUri)) {
              await fc.deleteFolder(friendInboxFolderUri);
          }
+        expect(await solid.shareRouteToPod(
+            routeUri,
+            userWebId, // Sharing with self
+            firstRouteAuthor,
+            secondRouteAuthor
+        )).toBeNull();
         await solid.createFolderIfAbsent(friendInboxFolderUri);
 
         let inboxFiles = await fc.readFolder(friendInboxFolderUri);
         expect(inboxFiles.files.length).toEqual(0);
 
-        await fc.createFile(
-            firstRouteUri,
-            JSON.stringify(solid.getFormattedRoute(firstRoute, userWebId, firstRouteName)),
-            "application/ld+json"
-        );
         await solid.shareRouteToPod(
-            firstRouteUri,
+            routeUri,
             userWebId, // Sharing with self
             firstRouteAuthor,
             secondRouteAuthor
@@ -207,7 +217,7 @@ describe("Solid Routes", () => {
         let notificationJSON = JSON.parse(notification);
         expect(notificationJSON.notification.actor.name).toEqual(firstRouteAuthor);
         expect(notificationJSON.notification.target.name).toEqual(secondRouteAuthor);
-        expect(notificationJSON.notification.object.uri).toEqual(firstRouteUri);
+        expect(notificationJSON.notification.object.uri).toEqual(routeUri);
 
     });
 
@@ -217,10 +227,20 @@ describe("Solid Routes", () => {
     test("Process inbox notifications", async() => {
 
         await solid.checkInboxForSharedRoutes(userWebId); // Should clear notifications
-        await fc.deleteFolder(solid.getSharedFolder(userWebId));
+        if (await fc.itemExists(solid.getSharedFolder(userWebId)))
+            await fc.deleteFolder(solid.getSharedFolder(userWebId));
+
+        if (await fc.itemExists(solid.getRoutesFolder(userWebId)))
+            await fc.deleteFolder(solid.getRoutesFolder(userWebId));
+
+        let sharedRoutes = await solid.getSharedRoutesUris(userWebId);
+        expect(sharedRoutes.length).toEqual(0);
+
+        await solid.uploadRouteToPod(firstRoute, userWebId);
+        let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
 
         await solid.shareRouteToPod(
-            firstRouteUri,
+            routeUri,
             userWebId,
             firstRouteAuthor,
             secondRouteAuthor
@@ -233,9 +253,18 @@ describe("Solid Routes", () => {
         expect(existsSharedRoutesFolder).toBeTruthy();
         let existsSharedRoutesFile = await fc.itemExists(sharedFolder + "sharedRoutes.jsonld");
         expect(existsSharedRoutesFile).toBeTruthy();
-        let sharedRoutes = await solid.getSharedRoutesUris(userWebId);
+        sharedRoutes = await solid.getSharedRoutesUris(userWebId);
         expect(sharedRoutes.length).toEqual(1);
-        expect(sharedRoutes[0]).toEqual(firstRouteUri);
+        expect(sharedRoutes[0]).toEqual(routeUri);
+
+        await solid.checkInboxForSharedRoutes(userWebId);
+
+        sharedRoutes = await solid.getSharedRoutesUris(userWebId);
+        expect(sharedRoutes.length).toEqual(1);
+        expect(sharedRoutes[0]).toEqual(routeUri);
+        let inboxFolder = solid.getInboxFolder(userWebId);
+        let notifications = (await fc.readFolder(inboxFolder)).files;
+        expect(notifications.length).toBe(0);
 
     });
 
@@ -254,10 +283,27 @@ describe("Solid Routes", () => {
             "application/ld+json"
         );
         const commentText = "Test comment";
+
+        // Without folder
+        await fc.deleteFolder(solid.getMyCommentsFolder(userWebId));
         await solid.uploadComment(userWebId, firstRouteUri, commentText);
         let commentsUrls = await solid.getCommentsFromRoute(userWebId, firstRouteFilename);
         let commentFile = JSON.parse(await fc.readFile(commentsUrls[0]));
         expect(commentFile.text).toEqual(commentText);
+
+        // With folder
+        await fc.createFile(
+            solid.getRouteCommentsFile(userWebId, firstRouteFilename),
+            JSON.stringify(solid.getNewCommentsFile(firstRouteUri)),
+            "application/ld+json"
+        );
+        await fc.deleteFolder(solid.getMyCommentsFolder(userWebId));
+        await fc.createFolder(solid.getMyCommentsFolder(userWebId));
+        await solid.uploadComment(userWebId, firstRouteUri, commentText);
+        commentsUrls = await solid.getCommentsFromRoute(userWebId, firstRouteFilename);
+        commentFile = JSON.parse(await fc.readFile(commentsUrls[0]));
+        expect(commentFile.text).toEqual(commentText);
+
     });
 
 });

@@ -75,15 +75,58 @@ export function getSharedFolder(userWebId) {
 }
 
 /**
+ * Returns a string containing the URI of the folder which contains with whom routes have been shared for the
+ * given user.
+ */
+export function getRoutesSharedWithFolder(userWebId) {
+    return getSharedFolder(userWebId) + "routesSharedWith/";
+}
+
+/**
+ * Returns a string containing the URI of the file which contains with whom a route has been shared for the
+ * given user.
+ */
+function getRoutesSharedWithFile(userWebId, routeFilename) {
+    return getRoutesSharedWithFolder(userWebId) + routeFilename;
+}
+
+/**
+ * Returns a string containing the URI of the file which contains with whom a route has been shared for the
+ * given user, given the route URI.
+ */
+function getRoutesSharedWithFileFromRouteUri(routeUri) {
+    let split = routeUri.split("routes/");
+    let folder = split[0] + "shared/routesSharedWith/";
+    let fileName = split[1];
+    return folder + fileName;
+}
+
+/**
+ * Returns the contents of the given url in JSON form.
+ */
+async function readToJson(url) {
+    return JSON.parse(await fc.readFile(url));
+}
+
+/**
+ * Returns an array containing the users the given route is shared with.
+ */
+async function getUsersRouteSharedWith(userWebId, routeFilename) {
+    let sharedFileUrl = getRoutesSharedWithFile(userWebId, routeFilename);
+    let sharedFileContentJSON = await readToJson(sharedFileUrl);
+    return sharedFileContentJSON.alreadyShared;
+}
+
+/**
  * Returns a route in JSON form from the given route in JSON-LD.
  */
-function getRouteObjectFromPodRoute(route) {
+function getRouteObjectFromPodRoute(userWebId, route, routeFilename) {
     return {
         name: route.name,
         description: route.description,
         author: route.author,
-        positions: route.waypoints
-        //TODO: sharedWith
+        positions: route.waypoints,
+        alreadyShared: getUsersRouteSharedWith(userWebId, routeFilename)
     };
 }
 
@@ -282,7 +325,8 @@ export async function createBaseStructure(userWebId) {
         getMyCommentsFolder(userWebId),
         getInboxFolder(userWebId),
         getResourcesFolder(userWebId),
-        getSharedFolder(userWebId)
+        getSharedFolder(userWebId),
+        getRoutesSharedWithFolder(userWebId)
     ];
     let i = 0;
     for (i; i < folders.length; i++) {
@@ -316,15 +360,42 @@ export async function getRouteFromPod(fileName, userWebId) {
     let url = getRoutesFolder(userWebId);
     let folder = await fc.readFolder(url);
     if (folder.files.some((f) => f.name === fileName)) {
-        try {
-            let fileContent = await fc.readFile(url + fileName);
-            let podRoute = JSON.parse(fileContent);
-            return getRouteObjectFromPodRoute(podRoute);
-        } catch (e) {
-            console.log("[ERROR] Route loading failed: " + e);
-        }
+        let podRoute = await readToJson(url + fileName);
+        return getRouteObjectFromPodRoute(userWebId, podRoute, fileName);
     }
     return null;
+}
+
+/**
+ * Adds a notification to the given user's inbox marking the intention of sharing a route.
+ */
+export async function shareRouteToPod(
+    routeUri,
+    targetUserWebId,
+    sharerName,
+    receiverName
+) {
+    let url = getInboxFolder(targetUserWebId);
+    if ( !(await fc.itemExists(url)) ) {
+        return null; // Possibility: notify the user the target user does not have inbox folder
+    }
+    await fc.createFile(
+        url + uuidv4() + ".jsonld",
+        JSON.stringify(getNewNotification(routeUri, sharerName, receiverName)),
+        "application/ld+json"
+    );
+    //await grantReadPermissions(routeUri, targetUserWebId); // Read the route
+    //await grantReadWritePermissions(getRouteCommentsFile(routeUri), targetUserWebId); // Comment it
+
+    // Add target user to route's list of shared with.
+    let sharedWithUri = getRoutesSharedWithFileFromRouteUri(routeUri);
+    let sharedWithContentJSON = await readToJson(sharedWithUri);
+    sharedWithContentJSON.alreadyShared.push(targetUserWebId);
+    await fc.createFile(
+        sharedWithUri,
+        JSON.stringify(sharedWithContentJSON),
+        "application/ld+json"
+    );
 }
 
 /**
@@ -362,28 +433,6 @@ async function addRouteUriToShared(userWebId, uri) {
 }
 
 /**
- * Adds a notification to the given user's inbox marking the intention of sharing a route.
- */
-export async function shareRouteToPod(
-    routeUri,
-    targetUserWebId,
-    sharerName,
-    receiverName
-) {
-    let url = getInboxFolder(targetUserWebId);
-    if ( !(await fc.itemExists(url)) ) {
-        return; // Possibility: notify the user the target user does not have inbox folder
-    }
-    await fc.createFile(
-        url + uuidv4() + ".jsonld",
-        JSON.stringify(getNewNotification(routeUri, sharerName, receiverName)),
-        "application/ld+json"
-    );
-    //await grantReadPermissions(routeUri, targetUserWebId); // Read the route
-    //await grantReadWritePermissions(getRouteCommentsFile(routeUri), targetUserWebId); // Comment it
-}
-
-/**
  * Reads the target user's inbox, adding to shared routes the ones found in the notifications present there
  * and then deletes those notifications.
  */
@@ -416,10 +465,21 @@ export async function uploadRouteToPod(routeObject, userWebId) {
         "application/ld+json"
     );
 
+    await createFolderIfAbsent(getCommentsFolder(userWebId));
     let routeCommentsFile = getRouteCommentsFile(userWebId, newRouteName);
     await fc.createFile(
         routeCommentsFile,
         JSON.stringify(getNewCommentsFile(routeUrl)),
+        "application/ld+json"
+    );
+
+    let routesSharedWithFolder = getRoutesSharedWithFolder(userWebId);
+    await createFolderIfAbsent(routesSharedWithFolder);
+    let routeSharedWithFile = { alreadyShared: [] };
+    let newSharedWithFileUrl = routesSharedWithFolder + newRouteName;
+    await fc.createFile(
+        newSharedWithFileUrl,
+        JSON.stringify(routeSharedWithFile),
         "application/ld+json"
     );
 }
