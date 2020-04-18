@@ -1,5 +1,6 @@
 import auth from "solid-auth-client";
 import FC from "solid-file-client";
+import { v4 as uuidv4 } from "uuid";
 
 /**
  * Functions in this file present an interface to add, get and manipulate routes
