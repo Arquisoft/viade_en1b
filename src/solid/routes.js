@@ -67,6 +67,209 @@ export function getSharedFolder(userWebId) {
 }
 
 /**
+ * Returns a route in JSON form from the given route in JSON-LD.
+ */
+function getRouteObjectFromPodRoute(route) {
+    return {
+        name: route.name,
+        description: route.description,
+        author: route.author,
+        positions: route.waypoints
+    };
+}
+
+/**
+ * Grants write permissions to a file in a pod.
+ */
+export async function grantAccess(path, userWebId) {
+    let url = path + ".acl";
+    let acl = `@prefix : <#>.
+        @prefix n0: <http://www.w3.org/ns/auth/acl#>.
+        @prefix ch: <./>.
+        @prefix c: </profile/card#>.
+        @prefix c0: <${userWebId}>.
+        :ControlReadWrite
+            a n0:Authorization;
+            n0:accessTo ch:;
+            n0:agent c:me;
+            n0:defaultForNew ch:;
+            n0:mode n0:Control, n0:Read, n0:Write.
+        :Read
+            a n0:Authorization;
+            n0:accessTo ch:;
+            n0:agent c0:me;
+            n0:defaultForNew ch:;
+            n0:mode n0:Read.`;
+    path += ".acl";
+    /* console.log(path);
+    console.log(acl);
+    */
+    await fc.createFile(url, acl).then(
+        () => {
+            /* console.log("[DEBUG] File permisions added");  */
+        },
+        (err) => console.log("[ERROR] Could not set file permisions" + err)
+    );
+}
+
+/**
+ * Returns a route in JSON-LD form as a string from the given route object, the webId of the pod's user and
+ * the file name of the route for the pod.
+ */
+export function getFormattedRoute(routeObject, userWebId, fileName) {
+    let output = {
+        "@context": {
+            "@version": "1.1",
+            "comments": {
+                "@id": "viade:comments",
+                "@type": "@id"
+            },
+            "description": {
+                "@id": "schema:description",
+                "@type": "xsd:string"
+            },
+            "media": {
+                "@container": "@list",
+                "@id": "viade:media"
+            },
+            "name": {
+                "@id": "schema:name",
+                "@type": "xsd:string"
+            },
+            "points": {
+                "@container": "@list",
+                "@id": "viade:points"
+            },
+            "latitude": {
+                "@id": "schema:latitude",
+                "@type": "xsd:double"
+            },
+            "longitude": {
+                "@id": "schema:longitude",
+                "@type": "xsd:double"
+            },
+            "elevation": {
+                "@id": "schema:elevation",
+                "@type": "xsd:double"
+            },
+            "author": {
+                "@id": "schema:author",
+                "@type": "@id"
+            },
+            "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+            "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+            "schema": "http://schema.org/",
+            "viade": "http://arquisoft.github.io/viadeSpec/",
+            "xsd": "http://www.w3.org/2001/XMLSchema#"
+        },
+        "name": routeObject.name,
+        "author": routeObject.author,
+        "description": routeObject.description,
+        "comments": getRouteCommentsFile(userWebId, fileName),
+        "media": routeObject.images + routeObject.videos,
+        "waypoints": routeObject.positions,
+        "points": routeObject.positions
+    };
+    return output;
+}
+
+/**
+ * Returns the URI of the route from a notification object.
+ */
+function getRouteUriFromShareNotification(notification) {
+    return notification.notification.object.uri;
+}
+
+/**
+ * Returns a new shared routes file in JSON form.
+ */
+function getNewSharedRoutesFileContent() {
+    return {
+        "@context": {
+            "@version": 1.1,
+            routes: {
+                "@container": "@list",
+                "@id": "viade:routes",
+            },
+            viade: "http://arquisoft.github.io/viadeSpec/",
+        },
+        routes: [],
+    };
+}
+
+/**
+ * Returns a new notification in JSON form.
+ */
+function getNewNotification(routeUri, sharerName, receiverName) {
+    return {
+        "@context": {
+            "@version": 1.1,
+            as: "https://www.w3.org/ns/activitystreams#",
+            viade: "http://arquisoft.github.io/viadeSpec/",
+            notification: {
+                "@id": "as:Offer",
+            },
+        },
+        notification: {
+            actor: {
+                type: "Person",
+                name: sharerName,
+            },
+            object: {
+                type: "viade:route",
+                uri: routeUri,
+            },
+            target: {
+                type: "Person",
+                name: receiverName,
+            },
+        },
+    };
+}
+
+/**
+ * Returns a new comments file for a route in JSON form.
+ */
+export function getNewCommentsFile(routeUrl) {
+    return {
+        "@context": {
+            "@version": 1.1,
+            "viade": "http://arquisoft.github.io/viadeSpec/",
+            "schema": "http://schema.org/",
+            comments: {
+                "@container": "@list",
+                "@id": "viade:comments"
+            },
+        },
+        "routeUri": routeUrl,
+        "comments": [],
+    };
+}
+
+/**
+ * Returns a new comment file in JSON form.
+ */
+function getNewComment(commentText, year, month, day) {
+    return {
+        "@context": {
+            "@version": 1.1,
+            viade: "http://arquisoft.github.io/viadeSpec/",
+            schema: "http://schema.org/",
+            dateCreated: {
+                "@id": "viade:dateCreated",
+                "@type": "xsd:date",
+            },
+            text: {
+                "@id": "viade:text",
+                "@type": "xsd:string",
+            },
+        },
+        text: commentText,
+        dateCreated: year + "-" + month + "-" + day,
+    };
+}
+
+/**
  * Creates the basic folder structure in a given user's pod.
  */
 export async function createBaseStructure(userWebId) {
@@ -101,6 +304,26 @@ export async function getRoutesFromPod(userWebId) {
         routes.push(route);
     }
     return routes;
+}
+
+/**
+ * Adds a given URI to the list of routes shared with the given user.
+ */
+async function addRouteUriToShared(userWebId, uri) {
+    let folder = getSharedFolder(userWebId);
+    await createFolderIfAbsent(folder);
+    let fileName = "sharedRoutes.jsonld";
+    let filePath = folder + fileName;
+    let sharedRoutesJSON;
+    if (!(await fc.itemExists(filePath))) {
+        sharedRoutesJSON = getNewSharedRoutesFileContent();
+    } else {
+        let sharedRoutes = await fc.readFile(filePath);
+        sharedRoutesJSON = JSON.parse(sharedRoutes);
+    }
+    // Possibility: Add a check to not duplicate routes
+    sharedRoutesJSON.routes.push({"@id": uri});
+    await fc.createFile(filePath, JSON.stringify(sharedRoutesJSON), "application/ld+json");
 }
 
 /**
@@ -263,228 +486,5 @@ export async function clearRouteFromPod(fileName, userWebId) {
         let fileUrl = url + fileName;
         await fc.deleteFile(fileUrl);
     }
-}
-
-/**
- * Grants write permissions to a file in a pod.
- */
-export async function grantAccess(path, userWebId) {
-    let url = path + ".acl";
-    let acl = `@prefix : <#>.
-        @prefix n0: <http://www.w3.org/ns/auth/acl#>.
-        @prefix ch: <./>.
-        @prefix c: </profile/card#>.
-        @prefix c0: <${userWebId}>.
-        :ControlReadWrite
-            a n0:Authorization;
-            n0:accessTo ch:;
-            n0:agent c:me;
-            n0:defaultForNew ch:;
-            n0:mode n0:Control, n0:Read, n0:Write.
-        :Read
-            a n0:Authorization;
-            n0:accessTo ch:;
-            n0:agent c0:me;
-            n0:defaultForNew ch:;
-            n0:mode n0:Read.`;
-    path += ".acl";
-    /* console.log(path);
-    console.log(acl);
-    */
-    await fc.createFile(url, acl).then(
-        () => {
-            /* console.log("[DEBUG] File permisions added");  */
-        },
-        (err) => console.log("[ERROR] Could not set file permisions" + err)
-    );
-}
-
-/**
- * Returns a route in JSON-LD form as a string from the given route object, the webId of the pod's user and
- * the file name of the route for the pod.
- */
-export function getFormattedRoute(routeObject, userWebId, fileName) {
-    let output = {
-        "@context": {
-            "@version": "1.1",
-            "comments": {
-                "@id": "viade:comments",
-                "@type": "@id"
-            },
-            "description": {
-                "@id": "schema:description",
-                "@type": "xsd:string"
-            },
-            "media": {
-                "@container": "@list",
-                "@id": "viade:media"
-            },
-            "name": {
-                "@id": "schema:name",
-                "@type": "xsd:string"
-            },
-            "points": {
-                "@container": "@list",
-                "@id": "viade:points"
-            },
-            "latitude": {
-                "@id": "schema:latitude",
-                "@type": "xsd:double"
-            },
-            "longitude": {
-                "@id": "schema:longitude",
-                "@type": "xsd:double"
-            },
-            "elevation": {
-                "@id": "schema:elevation",
-                "@type": "xsd:double"
-            },
-            "author": {
-                "@id": "schema:author",
-                "@type": "@id"
-            },
-            "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-            "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-            "schema": "http://schema.org/",
-            "viade": "http://arquisoft.github.io/viadeSpec/",
-            "xsd": "http://www.w3.org/2001/XMLSchema#"
-        },
-        "name": routeObject.name,
-        "author": routeObject.author,
-        "description": routeObject.description,
-        "comments": getRouteCommentsFile(userWebId, fileName),
-        "media": routeObject.images + routeObject.videos,
-        "waypoints": routeObject.positions,
-        "points": routeObject.positions
-    };
-    return output;
-}
-
-/**
- * Returns a route in JSON form from the given route in JSON-LD.
- */
-function getRouteObjectFromPodRoute(route) {
-    return {
-        name: route.name,
-        description: route.description,
-        author: route.author,
-        positions: route.waypoints
-    };
-}
-
-/**
- * Returns the URI of the route from a notification object.
- */
-function getRouteUriFromShareNotification(notification) {
-    return notification.notification.object.uri;
-}
-
-/**
- * Adds a given URI to the list of routes shared with the given user.
- */
-async function addRouteUriToShared(userWebId, uri) {
-    let folder = getSharedFolder(userWebId);
-    await createFolderIfAbsent(folder);
-    let fileName = "sharedRoutes.jsonld";
-    let filePath = folder + fileName;
-    let sharedRoutesJSON;
-    if (!(await fc.itemExists(filePath))) {
-        sharedRoutesJSON = getNewSharedRoutesFileContent();
-    } else {
-        let sharedRoutes = await fc.readFile(filePath);
-        sharedRoutesJSON = JSON.parse(sharedRoutes);
-    }
-    // Possibility: Add a check to not duplicate routes
-    sharedRoutesJSON.routes.push({"@id": uri});
-    await fc.createFile(filePath, JSON.stringify(sharedRoutesJSON), "application/ld+json");
-}
-
-/**
- * Returns a new shared routes file in JSON form.
- */
-function getNewSharedRoutesFileContent() {
-    return {
-        "@context": {
-            "@version": 1.1,
-            routes: {
-                "@container": "@list",
-                "@id": "viade:routes",
-            },
-            viade: "http://arquisoft.github.io/viadeSpec/",
-        },
-        routes: [],
-    };
-}
-
-/**
- * Returns a new notification in JSON form.
- */
-function getNewNotification(routeUri, sharerName, receiverName) {
-    return {
-        "@context": {
-            "@version": 1.1,
-            as: "https://www.w3.org/ns/activitystreams#",
-            viade: "http://arquisoft.github.io/viadeSpec/",
-            notification: {
-                "@id": "as:Offer",
-            },
-        },
-        notification: {
-            actor: {
-                type: "Person",
-                name: sharerName,
-            },
-            object: {
-                type: "viade:route",
-                uri: routeUri,
-            },
-            target: {
-                type: "Person",
-                name: receiverName,
-            },
-        },
-    };
-}
-
-/**
- * Returns a new comments file for a route in JSON form.
- */
-export function getNewCommentsFile(routeUrl) {
-    return {
-        "@context": {
-            "@version": 1.1,
-            "viade": "http://arquisoft.github.io/viadeSpec/",
-            "schema": "http://schema.org/",
-            comments: {
-                "@container": "@list",
-                "@id": "viade:comments"
-            },
-        },
-        "routeUri": routeUrl,
-        "comments": [],
-    };
-}
-
-/**
- * Returns a new comment file in JSON form.
- */
-function getNewComment(commentText, year, month, day) {
-    return {
-        "@context": {
-            "@version": 1.1,
-            viade: "http://arquisoft.github.io/viadeSpec/",
-            schema: "http://schema.org/",
-            dateCreated: {
-                "@id": "viade:dateCreated",
-                "@type": "xsd:date",
-            },
-            text: {
-                "@id": "viade:text",
-                "@type": "xsd:string",
-            },
-        },
-        text: commentText,
-        dateCreated: year + "-" + month + "-" + day,
-    };
 }
 
