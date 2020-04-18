@@ -88,7 +88,7 @@ describe("Solid Routes", () => {
         //friendPod.startListening();
     });
 
-    afterAll(async () => {
+    afterAll(() => {
         let i = 0;
         for (i; i < folders.length; i++) {
             await fc.deleteFolder(folders[i]);
