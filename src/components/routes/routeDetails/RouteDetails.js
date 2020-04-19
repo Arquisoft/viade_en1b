@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     userWebId : state.auth.userWebId
   };

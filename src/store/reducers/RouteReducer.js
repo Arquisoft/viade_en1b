@@ -1,4 +1,4 @@
-import { uploadRouteToPod, /*shareRouteToPod*/ 
+import { uploadRouteToPod, /*shareRouteToPod*/
 shareRouteToPod,
 clearRouteFromPod} from "../../solid/routes";
 import { deepClone } from "../../utils/functions";
@@ -43,7 +43,7 @@ export const routeReducer = (state = initState, action) => {
     case "DELETE_ROUTE":
       console.log(action.payload);
       clearRouteFromPod(action.payload.route.id, action.payload.uri);
-      let routes = state.routes.filter(r => r.id !== action.payload.route.id);
+      let routes = state.routes.filter((r) => r.id !== action.payload.route.id);
       return {
         ...state,
         routes: routes,
