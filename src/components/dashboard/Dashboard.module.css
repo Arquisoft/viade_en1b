@@ -1,37 +1,63 @@
 .dashboard {
-  height: 100vh;
-  width: 100vw;
-  padding-top: 4.5em;
-  max-height: 100vh;
+  position: absolute;
+  top: 4em;
   display: grid;
-  overflow: hidden;
-  margin: 0 auto;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: repeat(2, 2fr) 5% 20%;
+  grid-template-columns: 2fr 1fr 2fr 2fr;
+  grid-template-rows: 1fr;
   grid-template-areas:
-    "map map map map"
-    "map map map map"
-    "header header header header"
-    "route route route route";
+    "route route map map"
+    "route route map map"
+    "route route map map"
+    "route route map map";
 
+  max-height: 90vh;
+  width: 100%;
+  justify-items: center;
+  align-items: start;
   max-width: 80%;
-
-  /*
-
-
-  */
-
   margin: 0 auto;
 }
 
-#titleHolder {
-  z-index: 3;
+.mapContainer {
+  height: 75vh;
+  width: 75vw;
+  margin-left: 5em;
+  margin-top: 1em;
+  grid-area: map;
+}
+
+.myMap {
+  height: 100%;
+  width: 100%;
+}
+
+.routeList {
+  margin-top: 2em;
+  padding: 1em;
+  overflow: scroll;
+  max-height: 80%;
+  grid-column: 1 / 2;
+  height: 100vh;
+}
+
+.routeList * {
+  margin-bottom: 10px;
+}
+
+.routeList svg {
+  margin: auto 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.titleHolder {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  grid-area: header;
   margin: 0;
+  height: 10%;
 }
 
 h1 {
