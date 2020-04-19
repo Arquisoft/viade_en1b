@@ -198,7 +198,8 @@ describe("Solid Routes", () => {
             firstRouteAuthor,
             secondRouteAuthor
         )).toBeNull();
-        await solid.createFolderIfAbsent(friendInboxFolderUri);
+
+        await solid.createFolderIfAbsent(friendInboxFolderUri); // No global permissions
 
         let inboxFiles = await fc.readFolder(friendInboxFolderUri);
         expect(inboxFiles.files.length).toEqual(0);

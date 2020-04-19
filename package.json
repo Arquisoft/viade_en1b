@@ -8,6 +8,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.12.1",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@fortawesome/react-fontawesome": "^0.1.9",
+    "@inrupt/solid-react-components": "^0.5.1",
     "@solid/react": "^1.9.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -30,9 +31,11 @@
     "react-scripts": "3.4.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "solid-acl-utils": "github:otto-aa/solid-acl-utils",
     "solid-auth-client": "^2.4.1",
     "solid-file-client": "^1.0.2",
     "solid-local-pod": "^0.2.1",
+    "styled-components": "^5.1.0",
     "uuid": "^7.0.3"
   },
   "scripts": {
