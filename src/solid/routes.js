@@ -120,14 +120,15 @@ async function getUsersRouteSharedWith(userWebId, routeFilename) {
 /**
  * Returns a route in JSON form from the given route in JSON-LD.
  */
-function getRouteObjectFromPodRoute(userWebId, route, routeFilename) {
-    return {
-        name: route.name,
-        description: route.description,
-        author: route.author,
-        positions: route.waypoints,
-        alreadyShared: getUsersRouteSharedWith(userWebId, routeFilename)
-    };
+async function getRouteObjectFromPodRoute(userWebId, route, routeFilename) {
+        return {
+            id: routeFilename.split(".")[0],
+            name: route.name,
+            description: route.description,
+            author: route.author,
+            positions: route.waypoints,
+            sharedWith: await getUsersRouteSharedWith(userWebId, routeFilename)
+        };  
 }
 
 /**
