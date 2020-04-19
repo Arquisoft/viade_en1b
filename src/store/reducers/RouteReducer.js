@@ -1,5 +1,6 @@
 import { uploadRouteToPod, /*shareRouteToPod*/ 
-shareRouteToPod} from "../../solid/routes";
+shareRouteToPod,
+clearRouteFromPod} from "../../solid/routes";
 import { deepClone } from "../../utils/functions";
 
 const initState = {
@@ -40,7 +41,9 @@ export const routeReducer = (state = initState, action) => {
       };
 
     case "DELETE_ROUTE":
-      let routes = state.routes.filter(r => r.id !== action.payload.id);
+      console.log(action.payload);
+      clearRouteFromPod(action.payload.route.id, action.payload.uri);
+      let routes = state.routes.filter(r => r.id !== action.payload.route.id);
       return {
         ...state,
         routes: routes,
@@ -68,7 +71,7 @@ export const routeReducer = (state = initState, action) => {
       if (action.payload.friends[0]) {
         shareRouteToPod(action.payload.route, action.payload.friends[0].uri);
       }
-      console.log(newRoutes);
+      //console.log(newRoutes);
       return { ...state, routes: newRoutes };
     case "LOAD_ROUTES_REQUEST":
       return {
