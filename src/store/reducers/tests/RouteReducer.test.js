@@ -64,7 +64,10 @@ describe('Routes Reducer', () => {
         test('Type DELETE_ROUTE', () => {
             const newState = routeReducer(initState, {
                 type : 'DELETE_ROUTE',
-                payload: route
+                payload: {
+                    route: route,
+                    uri: "https://themrcesi.inrupt.net/profile/card#me"
+                }
             });
             let newRoutes = initState.routes.filter(r => r.id !== route.id);
             const expected = {...initState, routes:newRoutes};

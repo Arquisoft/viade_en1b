@@ -111,7 +111,7 @@ describe("Solid Routes", () => {
         let routes = await solid.getRoutesFromPod(userWebId);
         expect(routes.length).toEqual(0);
 
-        await solid.clearRouteFromPod(firstRouteUri, userWebId);
+        await solid.clearRouteFromPod(firstRouteFilename, userWebId);
         routes = await solid.getRoutesFromPod(userWebId);
         expect(routes.length).toEqual(0);
 
@@ -120,8 +120,8 @@ describe("Solid Routes", () => {
         routes = await solid.getRoutesFromPod(userWebId);
         expect(routes.length).toEqual(1);
 
-        let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
-        await solid.clearRouteFromPod(routeUri, userWebId);
+        let routeName = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].name.split(".")[0];
+        await solid.clearRouteFromPod(routeName, userWebId);
         routes = await solid.getRoutesFromPod(userWebId);
         expect(routes.length).toEqual(0);
 
