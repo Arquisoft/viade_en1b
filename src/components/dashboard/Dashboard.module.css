@@ -19,7 +19,7 @@
 }
 
 .mapContainer {
-  height: 70vh;
+  height: 65vh;
   width: 75vw;
   margin-left: 5em;
   margin-top: 1em;
@@ -35,7 +35,7 @@
   margin-top: 2em;
   padding: 1em;
   overflow: scroll;
-  max-height: 75%;
+  max-height: 70%;
   grid-column: 1 / 2;
   height: 100vh;
 }
