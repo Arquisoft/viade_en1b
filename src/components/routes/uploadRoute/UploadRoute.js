@@ -85,7 +85,6 @@ export class UploadRoute extends React.Component {
     this.props.uploadRoute.bind(this);
     this.props.uploadRoute(this.state, this.props.routes, this.props.userWebId);
     this.props.loadRoutes.bind(this);
-    this.props.loadRoutes();
     this.setState({ ...this.state, reset: true });
   }
 
@@ -136,6 +135,9 @@ export class UploadRoute extends React.Component {
               title="Submitted"
               closeText="Close"
               handleClose={() => {
+                setTimeout(() => {
+                  this.props.loadRoutes();
+                }, 3000);
                 this.setState(this.resetState());
               }}
               onOpen={this.submitForm.bind(this)}

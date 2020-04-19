@@ -36,8 +36,12 @@ export const RouteList = React.memo((props) => {
     >
       {props.loading ? (
         <Loader color={theme["--color-primary"]} type="Bars"></Loader>
-      ) : (
+      ) : summaries.length > 0 ? (
         summaries
+      ) : (
+        <span className={styles.noRoutes}>
+          Your routes will be displayed here
+        </span>
       )}
     </div>
   );

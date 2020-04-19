@@ -9,6 +9,19 @@
   grid-area: route;
 }
 
+.noRoutes {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.noRoutes svg {
+  fill: var(--color-primary);
+  transform: scale(5);
+}
+
 ::-webkit-scrollbar {
   width: 22px;
   direction: ltr;
