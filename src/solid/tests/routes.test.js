@@ -193,6 +193,7 @@ describe("Solid Routes", () => {
              await fc.deleteFolder(friendInboxFolderUri);
          }
         expect(await solid.shareRouteToPod(
+            userWebId,
             routeUri,
             userWebId, // Sharing with self
             firstRouteAuthor,
@@ -205,6 +206,7 @@ describe("Solid Routes", () => {
         expect(inboxFiles.files.length).toEqual(0);
 
         await solid.shareRouteToPod(
+            userWebId,
             routeUri,
             userWebId, // Sharing with self
             firstRouteAuthor,
@@ -243,6 +245,7 @@ describe("Solid Routes", () => {
         let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
 
         await solid.shareRouteToPod(
+            userWebId,
             routeUri,
             userWebId,
             firstRouteAuthor,
@@ -309,5 +312,8 @@ describe("Solid Routes", () => {
 
     });
 
+    /**
+     * Test permissions and .acl stuff.
+     */
 });
 
