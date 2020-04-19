@@ -39,6 +39,16 @@
   height: 100vh;
 }
 
+.routeList * {
+  margin-bottom: 10px;
+}
+
+.routeList svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .commentsButton {
   background-color: red;
 }

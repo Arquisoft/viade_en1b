@@ -1,56 +1,48 @@
-.routeList{
-    
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    
-    height: 80%;
-    margin-right: 3em;
-    /* Custom scrollbar for firefox*/
-    scrollbar-color: var(--color-primary) transparent;
-    scrollbar-base-color: var(--color-primary);
-    scroll-behavior: smooth;
-    
+.routeList {
+  display: flex;
+  overflow: scroll;
+  height: 100%;
+
+  scrollbar-color: var(--color-primary) transparent;
+  scrollbar-base-color: var(--color-primary);
+  scroll-behavior: smooth;
+  grid-area: route;
 }
 
 ::-webkit-scrollbar {
-    width:22px;
-    direction: ltr;
-    overflow: auto;
+  width: 22px;
+  direction: ltr;
+  overflow: auto;
 }
 
 ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 10px 10px transparent;
-    border: solid 3px transparent;
+  box-shadow: inset 0 0 10px 10px transparent;
+  border: solid 3px transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    box-shadow: inset 0 0 10px 10px var(--color-primary);
-    border: solid 10px transparent;
-    border-radius: 5px;
-
+  box-shadow: inset 0 0 10px 10px var(--color-primary);
+  border: solid 10px transparent;
+  border-radius: 5px;
 }
 
-@media (max-width: 800px){
-    #routeList{
-        scroll-snap-type: x mandatory;
-        scroll-padding: 10%;
-        grid-column: 1 / 2;
-        grid-row: 3 / 4;
-        display: flex;
-        flex-direction: row;
-        overflow: scroll;
-        margin-right: 0;
-        margin: 0;
-        z-index: 3;  
-        align-items: center; 
-        margin: 1em;
-    }
-    
+@media (max-width: 800px) {
+  #routeList {
+    scroll-snap-type: x mandatory;
+    scroll-padding: 10%;
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+    display: flex;
+    flex-direction: row;
+    overflow: scroll;
+    margin-right: 0;
+    margin: 0;
+    z-index: 3;
+    align-items: center;
+    margin: 1em;
+  }
 
-
-    #routeList::-webkit-scrollbar{
-        display: none;
-    }
-
+  #routeList::-webkit-scrollbar {
+    display: none;
+  }
 }
