@@ -22,7 +22,7 @@ Contained Building Blocks::
 | Building block       | Description
 | GUI components module             | Offers an interface to the system for the final user.
 | Parser module | Provides methods to parse files.
-| Redux module | Redux store in charge of state of the whole application.
+| Redux module | Redux module in charge of state of the whole application.
 | Middlewares module | Middlewares to perform async operations.
 | Solid module        | Offers an interface to the Solid POD.
 |==============================
