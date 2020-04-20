@@ -6,7 +6,7 @@ describe("Solid Routes", () => {
 
     const LocalPod = require("solid-local-pod");
     const solidFileFetchFirst = require("solid-local-pod/src/solidFileFetch");
-    //const solidFileFetchSecond = require("solid-local-pod/src/solidFileFetch");
+    const solidFileFetchSecond = require("solid-local-pod/src/solidFileFetch");
 
     const mkdirp = require("mkdirp");
 
@@ -16,14 +16,14 @@ describe("Solid Routes", () => {
         fetch: solidFileFetchFirst
     });
 
-    //const friendPod = new LocalPod({
-    //    port: 3333,
-    //    basePath: ".localpods/friendpod",
-    //    fetch: solidFileFetchSecond
-    //});
+    const friendPod = new LocalPod({
+        port: 3333,
+        basePath: ".localpods/friendpod",
+        fetch: solidFileFetchSecond
+    });
 
     const userWebId   = "http://localhost:" + userPod.port + "/profile/";
-    //const friendWebId = "http://localhost:" + friendPod.port + "/profile/";
+    const friendWebId = "http://localhost:" + friendPod.port + "/profile/";
 
     const firstRouteName    = "A nice route";
     const firstRouteAuthor  = "Mortadelo";
@@ -32,7 +32,7 @@ describe("Solid Routes", () => {
 
     const firstRouteFilename = "firstRoute.jsonld";
     const firstRouteUri = solid.getRoutesFolder(userWebId) + firstRouteFilename;
-    const friendInboxFolderUri = solid.getInboxFolder(userWebId); // Sharing with self
+    const friendInboxFolderUri = solid.getInboxFolder(friendWebId);
 
     const firstRoute =
         {
@@ -73,6 +73,11 @@ describe("Solid Routes", () => {
                 console.error(err);
             }
         });
+        mkdirp(friendPod.basePath, function (err) {
+            if (err) {
+                console.error(err);
+            }
+        });
         folders = [
             solid.getRoutesFolder(userWebId),
             solid.getCommentsFolder(userWebId),
@@ -83,12 +88,12 @@ describe("Solid Routes", () => {
             solid.getRoutesSharedWithFolder(userWebId)
         ];
         await userPod.startListening();
-        //friendPod.startListening();
+        await friendPod.startListening();
     });
 
     afterAll( () => {
-         userPod.stopListening();
-        //friendPod.stopListening();
+        userPod.stopListening();
+        friendPod.stopListening();
     });
 
     /**
@@ -185,37 +190,41 @@ describe("Solid Routes", () => {
      */
     test("Share a route", async () => {
 
+        // Get only one route in user's pod
         await solid.clearRoutesFromPod(userWebId);
         await solid.uploadRouteToPod(firstRoute, userWebId);
         let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
+        routeUri = routeUri.split(/\.acl$/)[0]; // In case it got the .acl
 
+        // Test shareRouteToPod returns null when inbox does not exist
          if (await fc.itemExists(friendInboxFolderUri)) {
              await fc.deleteFolder(friendInboxFolderUri);
          }
         expect(await solid.shareRouteToPod(
             userWebId,
             routeUri,
-            userWebId, // Sharing with self
+            friendWebId,
             firstRouteAuthor,
             secondRouteAuthor
         )).toBeNull();
 
+        // Create inbox folder in friend's and test it is empty
         await solid.createFolderIfAbsent(friendInboxFolderUri); // No global permissions
-
         let inboxFiles = await fc.readFolder(friendInboxFolderUri);
         expect(inboxFiles.files.length).toEqual(0);
 
+        // Share the route and test there is one notification
         await solid.shareRouteToPod(
             userWebId,
             routeUri,
-            userWebId, // Sharing with self
+            friendWebId,
             firstRouteAuthor,
             secondRouteAuthor
         );
-
         inboxFiles = await fc.readFolder(friendInboxFolderUri);
         expect(inboxFiles.files.length).toEqual(1);
 
+        // Test correct attributes of the notification
         let notification = await fc.readFile(inboxFiles.files[0].url);
         let notificationJSON = JSON.parse(notification);
         expect(notificationJSON.notification.actor.name).toEqual(firstRouteAuthor);
@@ -229,46 +238,51 @@ describe("Solid Routes", () => {
      */
     test("Process inbox notifications", async() => {
 
-        await solid.checkInboxForSharedRoutes(userWebId); // Should clear notifications
-        if (await fc.itemExists(solid.getSharedFolder(userWebId))) {
-            await fc.deleteFolder(solid.getSharedFolder(userWebId));
+        // Clear notifications and delete shared folder in friend's pod
+        await solid.checkInboxForSharedRoutes(friendWebId); // Should clear notifications
+        if (await fc.itemExists(solid.getSharedFolder(friendWebId))) {
+            await fc.deleteFolder(solid.getSharedFolder(friendWebId));
         }
 
+        // Delete user's routes
         if (await fc.itemExists(solid.getRoutesFolder(userWebId))) {
             await fc.deleteFolder(solid.getRoutesFolder(userWebId));
         }
 
-        let sharedRoutes = await solid.getSharedRoutesUris(userWebId);
+        // No shared folder, so 0 shared routes
+        let sharedRoutes = await solid.getSharedRoutesUris(friendWebId);
         expect(sharedRoutes.length).toEqual(0);
 
+        // Upload route and get its uri
         await solid.uploadRouteToPod(firstRoute, userWebId);
         let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
+        routeUri = routeUri.split(/\.acl$/)[0]; // In case it got the .acl
 
         await solid.shareRouteToPod(
             userWebId,
             routeUri,
-            userWebId,
+            friendWebId,
             firstRouteAuthor,
             secondRouteAuthor
         );
 
-        await solid.checkInboxForSharedRoutes(userWebId);
+        await solid.checkInboxForSharedRoutes(friendWebId);
 
-        let sharedFolder = solid.getSharedFolder(userWebId);
+        let sharedFolder = solid.getSharedFolder(friendWebId);
         let existsSharedRoutesFolder = await fc.itemExists(sharedFolder);
         expect(existsSharedRoutesFolder).toBeTruthy();
         let existsSharedRoutesFile = await fc.itemExists(sharedFolder + "sharedRoutes.jsonld");
         expect(existsSharedRoutesFile).toBeTruthy();
-        sharedRoutes = await solid.getSharedRoutesUris(userWebId);
+        sharedRoutes = await solid.getSharedRoutesUris(friendWebId);
         expect(sharedRoutes.length).toEqual(1);
         expect(sharedRoutes[0]).toEqual(routeUri);
 
-        await solid.checkInboxForSharedRoutes(userWebId);
+        await solid.checkInboxForSharedRoutes(friendWebId);
 
-        sharedRoutes = await solid.getSharedRoutesUris(userWebId);
+        sharedRoutes = await solid.getSharedRoutesUris(friendWebId);
         expect(sharedRoutes.length).toEqual(1);
         expect(sharedRoutes[0]).toEqual(routeUri);
-        let inboxFolder = solid.getInboxFolder(userWebId);
+        let inboxFolder = solid.getInboxFolder(friendWebId);
         let notifications = (await fc.readFolder(inboxFolder)).files;
         expect(notifications.length).toBe(0);
 

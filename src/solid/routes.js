@@ -157,8 +157,9 @@ export async function createAclGlobalWrite(path, userWebId) {
  * Creates the .acl file necessary to manipulate permissions of the given file, with write permissions to the
  * given user.
  */
-export async function createAclWrite(path, userWebId, allowedWebId) {
-    const permissions = [ { agents: allowedWebId, modes: [AccessControlList.MODES.WRITE] } ];
+export async function createAclReadWrite(path, userWebId, allowedWebId) {
+    let accessModes = AccessControlList.MODES;
+    const permissions = [ { agents: allowedWebId, modes: [accessModes.READ, accessModes.WRITE] } ];
     const ACLFile = new AccessControlList(userWebId, path, path + ".acl");
     await ACLFile.createACL(permissions);
 }
@@ -387,18 +388,28 @@ export async function getRouteFromPod(fileName, userWebId) {
  * Returns an array containing the routes in a given user's pod.
  */
 export async function getRoutesFromPod(userWebId) {
-    let url = getRoutesFolder(userWebId);
-    if (!(await fc.itemExists(url))) {
+    let routesFolderUrl = getRoutesFolder(userWebId);
+    if (!(await fc.itemExists(routesFolderUrl))) {
         return [];
     }
-    let folder = await fc.readFolder(url);
-    let routesFiles = folder.files.filter( (f) => ! /\.acl$/.test(f.name) );
     let routes = [];
+
+    // Own routes
+    let routesFolder = await fc.readFolder(routesFolderUrl);
+    let routesFiles = routesFolder.files.filter( (f) => ! /\.acl$/.test(f.name) );
     let i = 0;
     for (i; i < routesFiles.length; i++) {
         let route = await getRouteFromPod(routesFiles[i].name, userWebId);
         routes.push(route);
     }
+
+    // Routes shared with user
+    let sharedRoutes = await getSharedRoutesUris(userWebId);
+    i = 0;
+    for (i; i < sharedRoutes.length; i++) {
+        routes.push(sharedRoutes[i]);
+    }
+
     return routes;
 }
 
@@ -431,7 +442,7 @@ export async function shareRouteToPod(
     }
     let routeCommentsFileUri = getRouteCommentsFileFromRouteUri(routeUri);
     if ( !(await fc.itemExists(routeCommentsFileUri + ".acl")) ) { // Comment it
-        await createAclWrite(routeCommentsFileUri, userWebId, targetUserWebId);
+        await createAclReadWrite(routeCommentsFileUri, userWebId, targetUserWebId);
     }
     else {
         //await grantReadWritePermissions(routeCommentsFileUri, targetUserWebId);
@@ -532,6 +543,9 @@ export async function uploadRouteToPod(routeObject, userWebId) {
         JSON.stringify(routeSharedWithFile),
         "application/ld+json"
     );
+
+    // Needed for deleting
+    await createAclReadWrite(routeUrl, userWebId, userWebId);
 }
 
 /**
