@@ -36,6 +36,17 @@
   overflow: scroll;
   max-height: 80%;
   grid-column: 1 / 2;
+  height: 100vh;
+}
+
+.routeList * {
+  margin-bottom: 10px;
+}
+
+.routeList svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .commentsButton {

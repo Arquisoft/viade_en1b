@@ -8,7 +8,7 @@ database "POD" {
     
 }
 actor User
-Viade <-[#blue]up- POD:RDF
+Viade <-[#blue]up- POD:JsonLD
 Viade -up-> POD:Http
 User -> Viade:HTTP
 User <-[#blue]up- Viade:HTTP

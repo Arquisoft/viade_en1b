@@ -1,13 +1,11 @@
 import React from "react";
 import MyMap from "./myMap/MyMap";
-import "./Dashboard.css";
+import style from "./Dashboard.module.css";
 import RouteList from "./../routes/routeList/RouteList";
 import { connect } from "react-redux";
 import { showRoute } from "../../store/actions/RouteActions";
 import { LoggedIn, LoggedOut } from "@solid/react";
 import { Redirect } from "react-router-dom";
-
-
 
 function Dashboard(props) {
   const { routes } = props;
@@ -17,11 +15,11 @@ function Dashboard(props) {
   //header of the currently selected  route
   const currentSelectedMap =
     selectedRoute == null ? (
-      <div data-testid = "dashboard-header" id="titleHolder">
+      <div data-testid="dashboard-header" className={style.titleHolder}>
         <h1>Routes List</h1>
       </div>
     ) : (
-      <div data-testid = "dashboard-header" id="titleHolder">
+      <div data-testid="dashboard-header" className={style.titleHolder}>
         <h1>{selectedRoute.name}</h1> <p> by {selectedRoute.author}</p>
       </div>
     );
@@ -35,15 +33,18 @@ function Dashboard(props) {
       : selectedRoute.positions[selectedRoute.positions.length - 1];
 
   return (
-    <div data-testid="dashbaord-container" className="dashboard container">
+    <div data-testid="dashboard-container" className={style.dashboard}>
       <LoggedIn>
-        {currentSelectedMap}
         <RouteList
           currentMap={selectedRoute}
           routes={routes}
           onClick={showRoute}
+          style={style.routeList}
         />
-        <MyMap center={center} positions={positions} />
+        <div className={style.mapContainer}>
+          {currentSelectedMap}
+          <MyMap style={style.myMap} center={center} positions={positions} />
+        </div>
       </LoggedIn>
       <LoggedOut>
         <Redirect to="/"></Redirect>
@@ -52,16 +53,16 @@ function Dashboard(props) {
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     routes: state.route.routes,
     selectedRoute: state.route.selectedRoute,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    showRoute: route => dispatch(showRoute(route))
+    showRoute: (route) => dispatch(showRoute(route)),
   };
 };
 
