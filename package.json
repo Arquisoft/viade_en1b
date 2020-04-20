@@ -13,6 +13,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/react-hooks": "^3.2.1",
     "@testing-library/user-event": "^7.2.1",
+    "artillery": "^1.6.0",
     "babel-plugin-react-css-modules": "^5.2.6",
     "bootstrap": "^4.4.1",
     "chai": "^4.2.0",
@@ -46,7 +47,8 @@
     "test": "react-scripts test --coverage",
     "docs": "shx rm -rf build/docs && asciidoctor -D build/docs -a imagesdir=./images -r asciidoctor-diagram src/docs/index.adoc && shx cp -R src/docs/images build/docs",
     "eject": "react-scripts eject",
-    "cucumber": "./node_modules/.bin/cucumber-js"
+    "cucumber": "./node_modules/.bin/cucumber-js",
+    "artillery": "artillery run load-testing/*"
   },
   "eslintConfig": {
     "extends": "react-app"
