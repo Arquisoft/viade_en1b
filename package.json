@@ -36,7 +36,6 @@
     "react-scripts": "3.4.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "solid-acl-utils": "github:otto-aa/solid-acl-utils",
     "selenium-webdriver": "^4.0.0-alpha.7",
     "solid-auth-client": "^2.4.1",
     "solid-file-client": "^1.0.2",
