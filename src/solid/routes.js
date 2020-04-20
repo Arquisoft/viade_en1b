@@ -3,7 +3,7 @@ import auth from "solid-auth-client";
 import FC from "solid-file-client";
 import { v4 as uuidv4 } from "uuid";
 
-const SolidAclUtils = require("solid-acl-utils");
+//const SolidAclUtils = require("solid-acl-utils");
 
 /**
  * Functions in this file present an interface to add, get and manipulate routes
@@ -16,11 +16,11 @@ const sharedRoutesFilename = "sharedRoutes.jsonld";
 
 const fc = new FC(auth);
 
-const AclApi = SolidAclUtils.AclApi;
+/* const AclApi = SolidAclUtils.AclApi;
 const Permissions = SolidAclUtils.Permissions;
 const READ = Permissions.READ;
 const WRITE = Permissions.WRITE;
-const fetch = auth.fetch.bind(auth);
+const fetch = auth.fetch.bind(auth); */
 
 export async function createFolderIfAbsent(path) {
     if ( !(await fc.itemExists(path)) ) {
@@ -176,20 +176,20 @@ export async function createAclRead(path, userWebId, allowedWebId) {
 /**
  * Grants read and write permissions to the given file in a pod to the given user.
  */
-export async function grantReadWritePermissions(path, userWebId) {
+/* export async function grantReadWritePermissions(path, userWebId) {
     const aclApi = new AclApi(fetch, { autoSave: true });
     const acl = await aclApi.loadFromFileUrl(path);
     await acl.addRule([READ, WRITE], userWebId);
-}
+} */
 
 /**
  * Grants read permissions to the given file in a pod to the given user.
  */
-export async function grantReadPermissions(path, userWebId) {
+/* export async function grantReadPermissions(path, userWebId) {
     const aclApi = new AclApi(fetch, { autoSave: true });
     const acl = await aclApi.loadFromFileUrl(path);
     await acl.addRule(READ, userWebId);
-}
+} */
 
 /**
  * Returns a route in JSON-LD form as a string from the given route object, the webId of the pod's user and
@@ -427,14 +427,14 @@ export async function shareRouteToPod(
         await createAclRead(routeUri, userWebId, targetUserWebId);
     }
     else {
-        await grantReadPermissions(routeUri, targetUserWebId);
+        //await grantReadPermissions(routeUri, targetUserWebId);
     }
     let routeCommentsFileUri = getRouteCommentsFileFromRouteUri(routeUri);
     if ( !(await fc.itemExists(routeCommentsFileUri + ".acl")) ) { // Comment it
         await createAclWrite(routeCommentsFileUri, userWebId, targetUserWebId);
     }
     else {
-        await grantReadWritePermissions(routeCommentsFileUri, targetUserWebId);
+        //await grantReadWritePermissions(routeCommentsFileUri, targetUserWebId);
     }
 
     // Add target user to route's list of shared with.
