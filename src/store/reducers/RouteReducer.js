@@ -1,4 +1,5 @@
-import { uploadRouteToPod /*shareRouteToPod*/ } from "../../solid/routes";
+import { uploadRouteToPod, /*shareRouteToPod*/ 
+shareRouteToPod} from "../../solid/routes";
 import { deepClone } from "../../utils/functions";
 
 const initState = {
@@ -20,6 +21,7 @@ export const routeReducer = (state = initState, action) => {
       const id = action.payload.webId;
       const route = action.payload.route;
       const sharedWith = route.sharedWith ? route.sharedWith : [];
+      const comments = [route.comments]
       const newRoute = {
         name: route.name,
         description: route.description,
@@ -27,7 +29,8 @@ export const routeReducer = (state = initState, action) => {
         positions: route.positions,
         images: route.images,
         videos: route.videos,
-        sharedWith: sharedWith
+        sharedWith: sharedWith,
+        comments: comments
       };
       uploadRouteToPod(newRoute, action.payload.webId);
       //let previousRoutes = [...action.payload.routes];
@@ -63,7 +66,7 @@ export const routeReducer = (state = initState, action) => {
       newRoutes[sharedRouteId] = sharedRoute;
 
       if (action.payload.friends[0]) {
-        //shareRouteToPod(action.payload.route, action.payload.friends[0].uri);
+        shareRouteToPod(action.payload.route, action.payload.friends[0].uri);
       }
       console.log(newRoutes);
       return { ...state, routes: newRoutes };

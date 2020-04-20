@@ -1,10 +1,11 @@
 @startuml
 
 rectangle ViaDe {
-    [Solid module] as solidmod
-    [Map module] as map
-    [Route interpretation] as routes
-    [React] as react
+    [GUI Components] as react
+    [Parser] as parser 
+    [Middlewares] as middlewares
+    [Redux] as store 
+    [Solid] as solid
 }
 
 database "User's POD" as pod
@@ -12,11 +13,30 @@ database "User's POD" as pod
 () "Maps API" as imaps
 
 :User: --> react
-react --> map
-map --> routes
-map --> imaps
-routes --> solidmod
-react --> solidmod
-solidmod --> pod
+
+react <-- store
+react --> store
+
+react --> middlewares
+
+parser <- react
+parser -> react
+
+middlewares -> store
+
+store -> solid
+store <- solid
+
+solid -> pod
+solid <- pod
+
+react -> imaps
+imaps -> react
+
+
+
+
+
+
 
 @enduml

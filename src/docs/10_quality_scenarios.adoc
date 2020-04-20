@@ -1,7 +1,7 @@
 [[section-quality-scenarios]]
 == Quality Requirements
 
-This part shows all the quality requirements that the application should fullfill, as well as possible scenarios. This view will allow us to identify better the requirements of the application, in order to know which patterns should we take advange of.
+This part shows all the quality requirements that the application should fulfill, as well as possible scenarios. This view will allow us to identify better the requirements of the application, in order to know which patterns should we take advantage of.
 
 === Quality Tree
 
@@ -9,16 +9,13 @@ image:10-QualityTree.png["Quality Tree"]
 
 === Quality Scenarios
 
-[options="header", cols="0,4"]
+[options="header", cols="0,3,3,3"]
 |===
-| Quality attribute | Scenary
-| Learnability | Users will be able to send routes, share them and so on without needing to read how to use the functionalities of the application
-| Operability | Users could do actions in the application in the most possible easy way
-| Privacy | Only the owner of the route and the users that he want to share the route with are able to access it
-| Privacy | Only the owner of the route and the users that he want to share the route with are able to know the route that the owner is currently doing
-| Performance | When a user makes a request the applications must answer it, at least in 10 seconds.
-| Compatibility | A user should be able to access all his information about his routes using different applications
-| Co-existance | The application should be able to manage at least 10 users using the application simultaneously
-| Scalability | When the number of users increase the application performance should not be affected seriously
-| Scalability | If a new fuctionality needs to be added, this addition must be done without making problems to the rest of the application (Flexible)
+| Quality attribute | Stimulus | Response | Response measure
+| Learnability | A new user wants to learn how to use our application. | The user reads our manual and he perfectly knows how to use our application. | He will not need more than two minutes to read the manual.
+| Usability | A user tries to upload a route file with a non-valid format. | Our application shows a message informing about the invalid use. | The message should appear in less than one second.
+| Performance | A user wants to display a route in the map. | The route is correctly displayed in the map. | The route should be displayed in the map in less than one second.
+| Interoperability | A user of another team signs in to our application. | Routes should be correctly loaded. | Routes are loaded in less than 5 seconds.
+| Privacy | A user signs in to our application. | The log in is done by the SOLID platform and we do not know his credentials. | The users should be able to sign in in less than 5 seconds. 
 |===
+

@@ -1,7 +1,7 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
-The aim of the project is to create a decentralized routes management system based on the <<solid_definition,SOLID>> framework allowing users to control their own personal data.  
+The aim of the project is to create a decentralized routes management system based on the <<solid_definition,SOLID>> framework allowing users to control their own personal data.
 
 - Our application will consist of a decentralized architecture where user's data is separated from the app.
 - Users can store their routes in their own <<pod_definition, PODs>>.
@@ -11,7 +11,7 @@ The aim of the project is to create a decentralized routes management system bas
 - Users can have groups of friends to share the routes with.
 - It should be possible to view routes loaded by users that are using a different app, so interoperability with other route management systems should be taken into account.
 
-==== Optional Requirements
+=== Optional Requirements
 - The system could be mobile compatible.
 - Users can share their routes in real time.
 
@@ -33,7 +33,7 @@ The aim of the project is to create a decentralized routes management system bas
 [options="header",cols="1,2"]
 |===
 |Role/Name|Expectations
-| Developers | _Develop an application fulfilling the requierements that allow us to pass the course._
+| Developers | _Develop an application fulfilling the requirements that allow us to pass the course._
 | SOLID Developers | _Help us with our doubts concerning the SOLID specifications._
 | Course professors | _Evaluate our work and follow our progress throughout the course._
 | End users | _Be able to use our application and take advantage of the functionalities._

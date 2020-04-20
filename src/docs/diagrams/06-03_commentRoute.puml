@@ -1,0 +1,15 @@
+title A user post a comment in a route - Activity Diagram 
+
+start
+
+:Click in "My Route" section;
+
+:Select the route for the comment;
+
+:Click on the "Comment" button;
+
+:Write the comment;
+
+:The comment is saved when the button "Leave a comment" is clicked;
+
+stop

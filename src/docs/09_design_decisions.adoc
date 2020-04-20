@@ -1,4 +1,15 @@
 [[section-design-decisions]]
 == Design Decisions
 
-TBD
+=== Route specification
+We follow the https://github.com/Arquisoft/viadeSpec[Viade Specficiation] to set a format to manage the routes, so that interoperability can be achieved.
+
+=== Leaflet
+We chose this library because it is open source, free, and matches the philosophy of Solid.
+
+=== Template
+At the begining of the course, we had to choose using the Inrupt Generator or not. After some discussion, we decided not to use it in order to learn React from the basics, because the main goal of this subject is learning how to design a software arquitecture, and with a template extracted from the internet you are force to use the one that is provided.
+This decision carried us some disadvantages, for example we lost some time learning React, but we consider it worthy because of the knowledge gained.
+
+=== External Manual
+As it might be difficult for tech newbies the SOLID concepts of our application, we have created an external webpage that will work as a manual of our application. This was done in another webpage so the actual application was separated from this manual. This external manual will be hosted in https://lamasumas.github.io/Solid/[HERE].

@@ -1,0 +1,57 @@
+@startuml
+
+rectangle "GUI Components" as react {
+    folder "dashboard" as dashboard {
+        [Dahsboard] as das
+        [MyMap] as map
+    }
+    folder "layout" as layout {
+        [Footer] as footer
+        [LogIn] as login 
+        [Modal] as modal
+        [NavBar] as navbar
+        [PageNotFound] as pnf 
+        [Settings] as settings
+        [SlideShow] as ss
+        [ThemeContext] as tc 
+    }
+    folder "routes" as routes {
+        [MyRoutes] as mr 
+        [RouteDetails] as rd 
+        [RouteList] as rl 
+        [RouteSummary] as rs 
+        [ShareRoute] as sr 
+        [UploadRoute] as ur 
+        [RouteComment] as rc
+    }
+    folder "user" as user {
+        [FriendList] as fl 
+        [MyProfile] as mp 
+    }
+    [Routing] as routing
+    [App] as app
+}
+
+[Redux] as redux
+[Parser] as parser
+[Middlewares] as middlewares
+() "Maps API" as imaps
+
+:User: -right-> app
+ur --> parser
+parser --> ur
+map --> imaps
+imaps --> map
+react -down-> redux
+redux -up-> react
+react -down-> middlewares
+middlewares -right-> redux
+
+
+
+
+
+
+
+
+@enduml
