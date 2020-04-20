@@ -3,8 +3,6 @@ import auth from "solid-auth-client";
 import FC from "solid-file-client";
 import { v4 as uuidv4 } from "uuid";
 
-//const SolidAclUtils = require("solid-acl-utils");
-
 /**
  * Functions in this file present an interface to add, get and manipulate routes
  * stored in a pod. They are intented to keep a consistent signature over time
@@ -15,12 +13,6 @@ const appName = "viade";
 const sharedRoutesFilename = "sharedRoutes.jsonld";
 
 const fc = new FC(auth);
-
-/* const AclApi = SolidAclUtils.AclApi;
-const Permissions = SolidAclUtils.Permissions;
-const READ = Permissions.READ;
-const WRITE = Permissions.WRITE;
-const fetch = auth.fetch.bind(auth); */
 
 export async function createFolderIfAbsent(path) {
     if ( !(await fc.itemExists(path)) ) {
@@ -145,52 +137,67 @@ async function getRouteObjectFromPodRoute(userWebId, route, routeFilename) {
 }
 
 /**
- * Creates the .acl file necessary to manipulate permissions of the given file, with global write permissions.
+ * Sets the given permissions to the given resource for the given user. If user is null global perimssions
+ * are changed.
  */
-export async function createAclGlobalWrite(path, userWebId) {
-    const permissions = [ { agents: null, modes: [AccessControlList.MODES.WRITE] } ];
-    const ACLFile = new AccessControlList(userWebId, path, path + ".acl");
-    await ACLFile.createACL(permissions);
+async function setPermissionsForUser(path, userWebId, agent, modesToSet) {
+    const acl = new AccessControlList(userWebId, path);
+    let permissions;
+    let newPermission;
+    if (agent === null) {
+        newPermission = { agents: null, modes: modesToSet };
+    }
+    else {
+        newPermission = { agents: [ agent ], modes: modesToSet };
+    }
+    if (await fc.itemExists(path + ".acl")) {
+        permissions = await acl.getPermissions();
+        permissions = permissions.filter( (p) => ! (p.agents.includes(agent)) );
+        permissions.push(newPermission);
+    }
+    else {
+        permissions = [ newPermission ];
+    }
+    const aclFile = new AccessControlList(userWebId, path);
+    console.log("Path: " + path);
+    console.log("UserWebId: " + userWebId);
+    console.log("Agent: " + agent);
+    console.log("ModesToSet: " + modesToSet);
+    console.log("Permissions: " + JSON.stringify(permissions));
+    console.log("First permission: " + JSON.stringify(permissions[0]));
+    console.log("First permission's agents: " + permissions[0].agents);
+    try {
+        await aclFile.createACL(permissions);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 /**
- * Creates the .acl file necessary to manipulate permissions of the given file, with write permissions to the
+ * Changes the .acl file necessary to manipulate permissions of the given file, with write permissions to the
  * given user.
  */
 export async function createAclReadWrite(path, userWebId, allowedWebId) {
-    let accessModes = AccessControlList.MODES;
-    const permissions = [ { agents: allowedWebId, modes: [accessModes.READ, accessModes.WRITE] } ];
-    const ACLFile = new AccessControlList(userWebId, path, path + ".acl");
-    await ACLFile.createACL(permissions);
+    const possibleModes = AccessControlList.MODES;
+    const modes = [ possibleModes.READ, possibleModes.WRITE ];
+    await setPermissionsForUser(path, userWebId, allowedWebId, modes);
 }
 
 /**
- * Creates the .acl file necessary to manipulate permissions of the given file, with read permissions to the
+ * Changes the .acl file necessary to manipulate permissions of the given file, with global write permissions.
+ */
+export async function createAclGlobalWrite(path, userWebId) {
+    createAclReadWrite(path, userWebId, null);
+}
+
+/**
+ * Changes the .acl file necessary to manipulate permissions of the given file, with read permissions to the
  * given user.
  */
 export async function createAclRead(path, userWebId, allowedWebId) {
-    const permissions = [ { agents: allowedWebId, modes: [AccessControlList.MODES.READ] } ];
-    const ACLFile = new AccessControlList(userWebId, path, path + ".acl");
-    await ACLFile.createACL(permissions);
+    const modes = [ AccessControlList.MODES.READ ];
+    await setPermissionsForUser(path, userWebId, allowedWebId, modes);
 }
-
-/**
- * Grants read and write permissions to the given file in a pod to the given user.
- */
-/* export async function grantReadWritePermissions(path, userWebId) {
-    const aclApi = new AclApi(fetch, { autoSave: true });
-    const acl = await aclApi.loadFromFileUrl(path);
-    await acl.addRule([READ, WRITE], userWebId);
-} */
-
-/**
- * Grants read permissions to the given file in a pod to the given user.
- */
-/* export async function grantReadPermissions(path, userWebId) {
-    const aclApi = new AclApi(fetch, { autoSave: true });
-    const acl = await aclApi.loadFromFileUrl(path);
-    await acl.addRule(READ, userWebId);
-} */
 
 /**
  * Returns a route in JSON-LD form as a string from the given route object, the webId of the pod's user and
@@ -350,6 +357,20 @@ function getNewComment(commentText, year, month, day) {
 }
 
 /**
+ * Returns an array with the URIs of routes shared with the user.
+ */
+export async function getSharedRoutesUris(userWebId) {
+    let folderUri = getSharedFolder(userWebId);
+    let fileUri = folderUri + sharedRoutesFilename;
+    if ( !(await fc.itemExists(fileUri)) ) {
+        return [];
+    }
+    let fileContent = await fc.readFile(fileUri);
+    let fileContentJSON = JSON.parse(fileContent);
+    return fileContentJSON.routes;
+}
+
+/**
  * Creates the basic folder structure in a given user's pod.
  */
 export async function createBaseStructure(userWebId) {
@@ -434,19 +455,12 @@ export async function shareRouteToPod(
         "application/ld+json"
     );
 
-    if ( !(await fc.itemExists(routeUri + ".acl")) ) { // Read the route
-        await createAclRead(routeUri, userWebId, targetUserWebId);
-    }
-    else {
-        //await grantReadPermissions(routeUri, targetUserWebId);
-    }
+    // Read the route
+    await createAclRead(routeUri, userWebId, targetUserWebId);
+
+    // Comment it
     let routeCommentsFileUri = getRouteCommentsFileFromRouteUri(routeUri);
-    if ( !(await fc.itemExists(routeCommentsFileUri + ".acl")) ) { // Comment it
-        await createAclReadWrite(routeCommentsFileUri, userWebId, targetUserWebId);
-    }
-    else {
-        //await grantReadWritePermissions(routeCommentsFileUri, targetUserWebId);
-    }
+    await createAclReadWrite(routeCommentsFileUri, userWebId, targetUserWebId);
 
     // Add target user to route's list of shared with.
     let sharedWithUri = getRoutesSharedWithFileFromRouteUri(routeUri);
@@ -457,20 +471,6 @@ export async function shareRouteToPod(
         JSON.stringify(sharedWithContentJSON),
         "application/ld+json"
     );
-}
-
-/**
- * Returns an array with the URIs of routes shared with the user.
- */
-export async function getSharedRoutesUris(userWebId) {
-    let folderUri = getSharedFolder(userWebId);
-    let fileUri = folderUri + sharedRoutesFilename;
-    if ( !(await fc.itemExists(fileUri)) ) {
-        return [];
-    }
-    let fileContent = await fc.readFile(fileUri);
-    let fileContentJSON = JSON.parse(fileContent);
-    return fileContentJSON.routes;
 }
 
 /**
@@ -501,7 +501,6 @@ export async function checkInboxForSharedRoutes(userWebId) {
     let url = getInboxFolder(userWebId);
     await createFolderIfAbsent(url);
     let folder = await fc.readFolder(url);
-    //let notifications = [];
     let i = 0;
     for (i; i < folder.files.length; i++) {
         let notification = await fc.readFile(folder.files[i].url);
@@ -545,7 +544,7 @@ export async function uploadRouteToPod(routeObject, userWebId) {
     );
 
     // Needed for deleting
-    await createAclReadWrite(routeUrl, userWebId, userWebId);
+    //await createAclReadWrite(routeUrl, userWebId, userWebId);
 }
 
 /**
@@ -567,9 +566,7 @@ export async function uploadComment(userWebId, commentedRouteUri, commentText) {
     let year = date.getFullYear();
 
     let myCommentsUrl = getMyCommentsFolder(userWebId);
-    if (!(await fc.itemExists(myCommentsUrl))) {
-        await fc.createFolder(myCommentsUrl);
-    }
+    await createFolderIfAbsent(myCommentsUrl);
     let newCommentUrl = myCommentsUrl + uuidv4() + ".jsonld";
 
     // Create local comment file

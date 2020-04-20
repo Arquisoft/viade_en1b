@@ -22,8 +22,8 @@ describe("Solid Routes", () => {
         fetch: solidFileFetchSecond
     });
 
-    const userWebId   = "http://localhost:" + userPod.port + "/profile/";
-    const friendWebId = "http://localhost:" + friendPod.port + "/profile/";
+    const userWebId   = "http://localhost:" + userPod.port + "/profile/card#me";
+    const friendWebId = "http://localhost:" + friendPod.port + "/profile/card#me";
 
     const firstRouteName    = "A nice route";
     const firstRouteAuthor  = "Mortadelo";
@@ -292,37 +292,49 @@ describe("Solid Routes", () => {
      * Checks comments from a route can be obtained.
      */
     test("Get comments from route", async() => {
-        await fc.createFile(
-            firstRouteUri,
-            JSON.stringify(solid.getFormattedRoute(firstRoute, userWebId, firstRouteFilename)),
-            "application/ld+json"
-        );
-        await fc.createFile(
-            solid.getRouteCommentsFile(userWebId, firstRouteFilename),
-            JSON.stringify(solid.getNewCommentsFile(firstRouteUri)),
-            "application/ld+json"
-        );
+
+        if (await fc.itemExists(solid.getRoutesFolder(userWebId))) {
+            await fc.deleteFolder(solid.getRoutesFolder(userWebId));
+        }
+        if (await fc.itemExists(solid.getMyCommentsFolder(userWebId))) {
+            await fc.deleteFolder(solid.getMyCommentsFolder(userWebId));
+        }
+        if (await fc.itemExists(solid.getCommentsFolder(userWebId))) {
+            await fc.deleteFolder(solid.getCommentsFolder(userWebId));
+        }
+
+        // Upload route and get its uri
+        await solid.uploadRouteToPod(firstRoute, userWebId);
+        let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
+        routeUri = routeUri.split( /\.acl$/ )[0]; // In case it got the .acl
+        let routeFilename = routeUri.match( /[^/]*$/ )[0];
+        console.log("Route filename: " + routeFilename);
+
         const commentText = "Test comment";
 
         // Without folder
-        await fc.deleteFolder(solid.getMyCommentsFolder(userWebId));
-        await solid.uploadComment(userWebId, firstRouteUri, commentText);
-        let commentsUrls = await solid.getCommentsFromRoute(userWebId, firstRouteFilename);
+        if (await fc.itemExists(solid.getMyCommentsFolder(userWebId))) {
+            await fc.deleteFolder(solid.getMyCommentsFolder(userWebId));
+        }
+        console.log("Llego 1");
+        await solid.uploadComment(userWebId, routeUri, commentText);
+        console.log("Llego 2");
+        let commentsUrls = await solid.getCommentsFromRoute(userWebId, routeFilename);
         let commentFile = JSON.parse(await fc.readFile(commentsUrls[0]));
-        expect(commentFile.text).toEqual(commentText);
+        expect(commentFile.text).toEqual(commentText); // Comment uploaded
 
         // With folder
         await fc.createFile(
-            solid.getRouteCommentsFile(userWebId, firstRouteFilename),
-            JSON.stringify(solid.getNewCommentsFile(firstRouteUri)),
+            solid.getRouteCommentsFile(userWebId, routeFilename),
+            JSON.stringify(solid.getNewCommentsFile(routeUri)),
             "application/ld+json"
         );
         await fc.deleteFolder(solid.getMyCommentsFolder(userWebId));
         await fc.createFolder(solid.getMyCommentsFolder(userWebId));
-        await solid.uploadComment(userWebId, firstRouteUri, commentText);
-        commentsUrls = await solid.getCommentsFromRoute(userWebId, firstRouteFilename);
+        await solid.uploadComment(userWebId, routeUri, commentText);
+        commentsUrls = await solid.getCommentsFromRoute(userWebId, routeFilename);
         commentFile = JSON.parse(await fc.readFile(commentsUrls[0]));
-        expect(commentFile.text).toEqual(commentText);
+        expect(commentFile.text).toEqual(commentText); // Comment uploaded
 
     });
 
