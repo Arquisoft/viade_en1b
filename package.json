@@ -45,7 +45,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --coverage",
     "docs": "shx rm -rf build/docs && asciidoctor -D build/docs -a imagesdir=./images -r asciidoctor-diagram src/docs/index.adoc && shx cp -R src/docs/images build/docs",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cucumber": "./node_modules/.bin/cucumber-js"
   },
   "eslintConfig": {
     "extends": "react-app"
