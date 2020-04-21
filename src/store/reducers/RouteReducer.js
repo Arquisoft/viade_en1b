@@ -1,7 +1,10 @@
 import { uploadRouteToPod, /*shareRouteToPod*/
 shareRouteToPod,
-clearRouteFromPod} from "../../solid/routes";
+clearRouteFromPod,
+getRoutesFolder} from "../../solid/routes";
 import { deepClone } from "../../utils/functions";
+import {getWebId} from '../../solid/auth'
+import { getName } from "rdf-query/rdf-query";
 
 const initState = {
   routes: [],
@@ -67,9 +70,16 @@ export const routeReducer = (state = initState, action) => {
 
       let newRoutes = stateRoutes;
       newRoutes[sharedRouteId] = sharedRoute;
+      let friends = action.payload.friends;
 
-      if (action.payload.friends[0]) {
-        shareRouteToPod(action.payload.route, action.payload.friends[0].uri);
+      if (friends[0]) {
+        getWebId().then(userWebID => {
+
+          friends.forEach(friend => {
+            shareRouteToPod(userWebID, getRoutesFolder(userWebID)+ action.payload.route.id+".jsonld", friend.uri, getName(userWebID), friend.name);
+          }); 
+
+        });
       }
       //console.log(newRoutes);
       return { ...state, routes: newRoutes };

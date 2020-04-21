@@ -19,3 +19,7 @@ export const filterUnsharedFriends = (allFriends, alreadyShared) => {
 const findInHashByUri = (hash, friend) => {
   return hash[friend.uri];
 };
+
+export const getRouteUri = (routeID) => {
+  
+};
