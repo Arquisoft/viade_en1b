@@ -37,6 +37,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "selenium-webdriver": "^4.0.0-alpha.7",
+    "solid-acl-utils": "github:otto-aa/solid-acl-utils",
     "solid-auth-client": "^2.4.1",
     "solid-file-client": "^1.0.2",
     "solid-local-pod": "^0.2.1",
