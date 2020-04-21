@@ -1,7 +1,7 @@
 import auth from "solid-auth-client";
 import FC from "solid-file-client";
 import { v4 as uuidv4 } from "uuid";
-import SolidAclUtils from "solid-acl-utils";
+//import SolidAclUtils from "solid-acl-utils";
 
 /**
  * Functions in this file present an interface to add, get and manipulate routes
@@ -45,7 +45,7 @@ export function getMyCommentsFolder(userWebId) {
  * Returns a string containing the URI of the inbox folder for the given user.
  */
 export function getInboxFolder(userWebId) {
-  const inboxUrl = userWebId.split("/profile")[0] + "/" + appName + "/inbox/";
+  const inboxUrl = userWebId.split("/profile")[0] + appName + "/inbox/";
   return inboxUrl;
 }
 
@@ -82,19 +82,19 @@ export function getRoutesSharedWithFolder(userWebId) {
  * Returns a string containing the URI of the file which contains with whom a route has been shared for the
  * given user.
  */
-function getRoutesSharedWithFile(userWebId, routeFilename) {
+/* function getRoutesSharedWithFile(userWebId, routeFilename) {
   return getRoutesSharedWithFolder(userWebId) + routeFilename;
 }
-
+ */
 /**
  * Returns a string containing the filename of the given route.
  */
-function getRouteCommentsFileFromRouteUri(routeUri) {
+/* function getRouteCommentsFileFromRouteUri(routeUri) {
   let split = routeUri.split("routes/");
   let folder = split[0] + "/comments/routeComments/";
   let fileName = split[1];
   return folder + fileName;
-}
+} */
 
 /**
  * Returns a string containing the URI of the file which contains with whom a route has been shared for the
@@ -117,11 +117,11 @@ async function readToJson(url) {
 /**
  * Returns an array containing the users the given route is shared with.
  */
-async function getUsersRouteSharedWith(userWebId, routeFilename) {
+/* async function getUsersRouteSharedWith(userWebId, routeFilename) {
   let sharedFileUrl = getRoutesSharedWithFile(userWebId, routeFilename);
   let sharedFileContentJSON = await readToJson(sharedFileUrl);
   return sharedFileContentJSON.alreadyShared;
-}
+} */
 
 /**
  * Returns a route in JSON form from the given route in JSON-LD.
@@ -147,7 +147,7 @@ export function getFormattedRoute(routeObject, userWebId, fileName) {
       "@version": "1.1",
       comments: {
         "@id": "viade:comments",
-        "@type": "@id",
+        "@container": "@list",
       },
       description: {
         "@id": "schema:description",
@@ -380,14 +380,21 @@ export async function shareRouteToPod(
   sharerName,
   receiverName
 ) {
-  console.log(userWebId, routeUri, targetUserWebId, sharerName, receiverName);
+  console.log({
+    userWebId,
+    routeUri,
+    targetUserWebId,
+    sharerName,
+    receiverName,
+  });
   let url = getInboxFolder(targetUserWebId);
-  if (!(await fc.itemExists(url))) {
-    //return null; // Possibility: notify the user the target user does not have inbox folder
-    await createFolderIfAbsent(url);
-  }
+
+  //return null; // Possibility: notify the user the target user does not have inbox folder
+  console.log({ url });
+  await createFolderIfAbsent(url);
+
   let notificationUrl = url + uuidv4() + ".jsonld";
-  await fc.createFile(
+  await fc.postFile(
     notificationUrl,
     JSON.stringify(getNewNotification(routeUri, sharerName, receiverName)),
     "application/ld+json"
@@ -397,7 +404,7 @@ export async function shareRouteToPod(
   //  await createAclRead(routeUri, userWebId, targetUserWebId);
 
   // Comment it
-  let routeCommentsFileUri = getRouteCommentsFileFromRouteUri(routeUri);
+  //let routeCommentsFileUri = getRouteCommentsFileFromRouteUri(routeUri);
   //await createAclReadWrite(routeCommentsFileUri, userWebId, targetUserWebId);
 
   // Add target user to route's list of shared with.
@@ -456,7 +463,9 @@ export async function checkInboxForSharedRoutes(userWebId) {
  * Adds the given route to the given user's pod.
  */
 export async function uploadRouteToPod(routeObject, userWebId) {
-  let newRouteName = uuidv4() + ".jsonld";
+  //storeRouteToPOD(routeObject, userWebId);
+  let routeNameForFile = routeObject.name.replace(/ /g, "_");
+  let newRouteName = routeNameForFile + uuidv4() + ".jsonld";
   let newRoute = getFormattedRoute(routeObject, userWebId, newRouteName);
   let url = getRoutesFolder(userWebId);
   let routeUrl = url + newRouteName;
@@ -466,9 +475,6 @@ export async function uploadRouteToPod(routeObject, userWebId) {
     JSON.stringify(newRoute),
     "application/ld+json"
   );
-
-  // create ACL
-  //await permissionsToWrite(userWebId, routeUrl, newRouteName);
 
   await createFolderIfAbsent(getCommentsFolder(userWebId));
   let routeCommentsFile = getRouteCommentsFile(userWebId, newRouteName);
@@ -556,7 +562,7 @@ export async function clearRoutesFromPod(userWebId) {
   let folder = await fc.readFolder(url);
   let i = 0;
   for (i; i < folder.files.length; i++) {
-    await fc.deleteFile(folder.files[i].url);
+    await fc.delete(folder.files[i].url);
   }
 }
 
@@ -568,115 +574,6 @@ export async function clearRouteFromPod(routeId, userWebId) {
   let folder = await fc.readFolder(url);
   let fileName = routeId + ".jsonld";
   if (folder.files.some((f) => f.name === fileName)) {
-    await fc.deleteFile(url + fileName);
+    await fc.delete(url + fileName);
   }
 }
-/**
- *
- * @param {*} session
- * @param {*} routeName
- * @param {*} friend
- */
-
-async function modifyPermissions(session, routeName, friend) {
-  const { AclApi, Permissions } = SolidAclUtils;
-  const { READ } = Permissions;
-
-  let base = session.webId.split("profile/card#me")[0];
-  let routeUrl = base + "viade/routes/" + routeName;
-  let aclUrl = routeUrl + ".acl";
-
-  if (!(await fc.itemExists(aclUrl))) {
-    let content = await buildAcl(routeName);
-    await fc.createFile(aclUrl, content, "text/turtle");
-  }
-  let friendWebId = friend.webId + "profile/card#me";
-  const fetch = auth.fetch.bind(auth);
-  const aclApi = new AclApi(fetch, { autoSave: true });
-  const acl = await aclApi.loadFromFileUrl(routeUrl);
-
-  await acl.addRule(READ, friendWebId);
-}
-/**
- * Permissions to write
- * @param {*} userWebId
- * @param {*} routePath
- * @param {*} routeName
- */
-async function permissionsToWrite(userWebId, routePath, routeName) {
-  const { AclApi, Permissions } = SolidAclUtils;
-  const {
-    WRITE,
-  } = Permissions; /* 
-
-  let aclUrl = routePath + ".acl";
-  console.log(aclUrl);
-  if (!(await fc.itemExists(aclUrl))) {
-    let content = await buildAcl(routeName);
-    console.log(content);
-    await fc.createFile(aclUrl, content, "text/turtle");
-}*/
-  const aclApi = new AclApi(auth.fetch, { autoSave: true });
-  const acl = await aclApi.loadFromFileUrl(routePath);
-  await acl.addRule(WRITE, userWebId);
-}
-
-/* async function shareRoute(friend) {
-  const { t } = this.props;
-
-  try {
-    var session = await auth.currentSession();
-    var targetUrl = friend.webId.split("profile/card#me")[0] + "inbox/";
-    await this.modifyPermissions(this, session, this.getRouteName(), friend);
-    await this.sendMessage(this, session, targetUrl);
-    document.getElementById("btn" + friend.webId).innerHTML = t(
-      "routes.shared"
-    );
-    document.getElementById("btn" + friend.webId).disabled = true;
-  } catch (error) {
-    alert("Could not share the route");
-    console.log(error);
-  }
-}
- */
-function buildAcl(routeName) {
-  let content =
-    "@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n" +
-    "@prefix foaf: <http://xmlns.com/foaf/0.1/>.\n" +
-    "<#owner> a acl:Authorization;\n" +
-    "acl:agent </profile/card#me>;\n" +
-    "acl:accessTo <./" +
-    routeName +
-    ">;" +
-    "acl:mode acl:Write, acl:Control, acl:Read.";
-
-  return content;
-}
-
-/* async function sendMessage(app, session, targetUrl) {
-  var message = {};
-  message.date = new Date(Date.now());
-  message.id = message.date.getTime();
-  message.sender = session.webId;
-  message.recipient = targetUrl;
-
-  var baseSource = session.webId.split("profile/card#me")[0];
-  var source = baseSource + "viade/routes/";
-  message.content = source + app.getRouteName();
-  message.title = "Shared route by " + (await app.getSessionName());
-  message.url = message.recipient + message.id + ".ttl";
-
-  await app.buildMessage(session, message);
-}
-
-async function buildMessage(session, message) {
-  var mess = message.url;
-  await data[mess.toString()].schema$text.add(message.content);
-  await data[mess.toString()].rdfs$label.add(message.title);
-  await data[mess.toString()].schema$dateSent.add(message.date.toISOString());
-  await data[mess.toString()].rdf$type.add(
-    namedNode("https://schema.org/Message")
-  );
-  await data[mess.toString()].schema$sender.add(namedNode(session.webId));
-}
- */
