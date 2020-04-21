@@ -26,6 +26,7 @@ function Dashboard(props) {
 
   //positions of the route
   const positions = selectedRoute == null ? {} : selectedRoute.positions;
+  //console.log(positions);
   // center for the map
   const center =
     selectedRoute == null
