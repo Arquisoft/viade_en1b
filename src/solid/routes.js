@@ -444,6 +444,7 @@ export async function shareRouteToPod(
     sharerName,
     receiverName
 ) {
+    console.log(userWebId, routeUri, targetUserWebId, sharerName, receiverName);
     let url = getInboxFolder(targetUserWebId);
     if ( !(await fc.itemExists(url)) ) {
         return null; // Possibility: notify the user the target user does not have inbox folder

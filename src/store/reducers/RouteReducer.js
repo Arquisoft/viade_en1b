@@ -74,11 +74,9 @@ export const routeReducer = (state = initState, action) => {
 
       if (friends[0]) {
         getWebId().then(userWebID => {
-
           friends.forEach(friend => {
-            shareRouteToPod(userWebID, getRoutesFolder(userWebID)+ action.payload.route.id+".jsonld", friend.uri, getName(userWebID), friend.name);
-          }); 
-
+            shareRouteToPod(userWebID, getRoutesFolder(userWebID)+ action.payload.route.id+".jsonld", friend.uri, userWebID.split("//")[1].split(".")[0], friend.name);
+          });
         });
       }
       //console.log(newRoutes);
