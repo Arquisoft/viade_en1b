@@ -4,17 +4,18 @@ import style from "./FriendList.css";
 import { BsCheck } from "react-icons/bs";
 import { Redirect } from "react-router-dom";
 
-export const FriendList = props => {
+export const FriendList = (props) => {
   //Function used by the non-checked version of the component
-  const onClick = friend => {
+  const onClick = (friend) => {
     return <Redirect to={friend.uri} />;
   };
-  //Checked friendList to be used by the ShareRoute component
+
   let friendsCardsWithCheckBoxes = props.friends.map((friend, key) => {
     return (
       <Card
         data-testid={"card" + key}
         onClick={() => props.onClick(key)}
+        className={props.style ? props.style.card : ""}
         key={key}
       >
         <Card.Body style={{ marginLeft: "1em" }}>
@@ -33,7 +34,7 @@ export const FriendList = props => {
                       transform: "scale(2)",
                       display: "inline-block",
                       marginLeft: "1em",
-                      transition: "all 200ms ease-in-out"
+                      transition: "all 200ms ease-in-out",
                     }}
                     color="green"
                   ></BsCheck>
@@ -52,7 +53,7 @@ export const FriendList = props => {
     return (
       <Card
         key={index}
-        onClick={friend => onClick(friend)}
+        onClick={(friend) => onClick(friend)}
         data-testid={"friend-list-card" + index}
       >
         <Card.Body>
@@ -81,11 +82,12 @@ export const FriendList = props => {
 
   return (
     <div
-      className={style.friendListContainer}
+      className={
+        props.style ? props.style.container : style.friendListContainer
+      }
       data-testid="friend-list-container"
       id="friendListContainer"
     >
-      <h1 data-testid="friend-list-heading">Friends list:</h1>
       {friends}
     </div>
   );

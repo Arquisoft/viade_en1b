@@ -45,6 +45,7 @@ export function getMyCommentsFolder(userWebId) {
  * Returns a string containing the URI of the inbox folder for the given user.
  */
 export function getInboxFolder(userWebId) {
+  console.log(userWebId);
   const inboxUrl = userWebId.split("profile")[0] + appName + "/inbox/";
   return inboxUrl;
 }
@@ -116,7 +117,7 @@ async function readToJson(url) {
 /**
  * Returns an array containing the users the given route is shared with.
  */
-async function getUsersRouteSharedWith(userWebId, routeFilename) {
+export async function getUsersRouteSharedWith(userWebId, routeFilename) {
   let sharedFileUrl = getRoutesSharedWithFile(userWebId, routeFilename);
   let sharedFileContentJSON = await readToJson(sharedFileUrl);
   return sharedFileContentJSON.alreadyShared;

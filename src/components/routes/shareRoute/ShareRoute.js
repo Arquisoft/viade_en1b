@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import "./ShareRoute.css";
 import { connect } from "react-redux";
-import { shareRoute } from "../../../store/actions/RouteActions";
+import {
+  shareRoute,
+  loadRoutesRequest,
+  clearRoute,
+} from "../../../store/actions/RouteActions";
 import FriendList from "../../user/myProfile/FriendList";
-import style from "./ShareRoute.css";
+import style from "./ShareRoute.module.css";
 import ViadeModal from "../../layout/modal/Modal";
 import { deepClone, filterUnsharedFriends } from "../../../utils/functions";
 import { Badge } from "react-bootstrap";
@@ -11,59 +14,52 @@ import { Badge } from "react-bootstrap";
 export function ShareRoute(props) {
   const { selectedRoute } = props;
   const { shareRoute } = props;
-  const friendsToShow = filterUnsharedFriends(
-    props.friends,
-    props.sharedWith
-  ).map((friend) => (friend.checked = false));
+  const friendsToShow = (sharedWith) =>
+    filterUnsharedFriends(props.friends, sharedWith).map((friend) => ({
+      ...friend,
+      checked: false,
+    }));
   const alreadySharedWith = deepClone(props.sharedWith);
+
   const [state, setState] = useState({
-    friends: friendsToShow,
+    friends: filterUnsharedFriends(
+      props.friends,
+      props.sharedWith
+    ).map((friend) => ({ ...friend, checked: false })),
     friendsToShareWith: alreadySharedWith.map((friend) => ({
       ...friend,
       checked: false,
     })),
     shared: false,
   });
+
   useEffect(() => {
     setState({
       ...state,
-      friends: friendsToShow,
-      friendsToShareWith: deepClone(alreadySharedWith).map((friend) => ({
-        ...friend,
-        checked: false,
-      })),
+      friends: friendsToShow(props.sharedWith),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [props.sharedWith]);
 
-  const handleOnSave = () => {
+  const friendsForList = () => {
+    return state.friends;
+  };
+  const handleOnSave = async () => {
     shareRoute(selectedRoute, state.friendsToShareWith || []);
-    let newFriends = filterUnsharedFriends(
-      props.friends,
-      state.friendsToShareWith
-    );
-    setState({
-      ...state,
-      friends: newFriends,
-      friendsToShareWith: state.friendsToShareWith.map((friend) => ({
-        ...friend,
-        checked: false,
-      })),
-      shared: true,
-    });
+    setTimeout(async () => {
+      props.clearRoute();
+      props.loadRoutes();
+    }, 1000);
   };
 
   const handleClose = () => {
     if (!state.shared) {
-      setState({ ...state, friendsToShareWith: [] });
+      let uncheckedFriends = state.friends.map((friend) => ({
+        ...friend,
+        checked: false,
+      }));
+      setState({ ...state, friends: uncheckedFriends, friendsToShareWith: [] });
     }
-  };
-
-  const handleOnOpen = () => {
-    setState({
-      ...state,
-      friends: filterUnsharedFriends(props.friends, state.friendsToShareWith),
-    });
   };
 
   const handleOnClick = (key) => {
@@ -98,7 +94,7 @@ export function ShareRoute(props) {
   return (
     <ViadeModal
       data-testid="share-route-modal"
-      onOpen={handleOnOpen}
+      onOpen={() => {}}
       disabled={false}
       saveDisabled={activeSelectedFriends === 0}
       toggleText="Share"
@@ -111,8 +107,8 @@ export function ShareRoute(props) {
       <FriendList
         data-testid="share-route-friend-list"
         onClick={handleOnClick}
-        friends={state.friends}
-        className={style.friendsExpanded}
+        friends={friendsForList()}
+        style={{ container: style.friendsExpanded, card: style.cardExpanded }}
         checked
       ></FriendList>
     </ViadeModal>
@@ -123,12 +119,15 @@ const mapStateToProps = (state) => {
   return {
     friends: state.user.friends,
     sharedWith: state.route.selectedRoute.sharedWith,
+    userWebId: state.auth.userWebId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     shareRoute: (route, friends) => dispatch(shareRoute(route, friends)),
+    loadRoutes: () => dispatch(loadRoutesRequest()),
+    clearRoute: () => dispatch(clearRoute()),
   };
 };
 
