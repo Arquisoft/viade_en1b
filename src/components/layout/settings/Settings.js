@@ -1,11 +1,13 @@
 import React from "react";
 import "./Settings.css";
 import { DropdownButton, Dropdown,  ToggleButton, ButtonGroup } from "react-bootstrap";
+import { connect } from 'react-redux';
+import changeLocale from '../../../store/actions/localeAction';
 
-export default function Settings(props) {
+export  function Settings(props) {
 
     const {changeTheme} = props;
-    const {changeLanguage} = props;
+
 
     return(
         <div className="GeneralComponent">
@@ -25,10 +27,16 @@ export default function Settings(props) {
             </ButtonGroup>
             <h1 data-testid="settings-language"> Language </h1>
             <DropdownButton data-testid="settings-language-dropdown" id="dropdown-basic-button" title="Available Languages">
-                <Dropdown.Item data-testid="settings-language-english" onClick={() => changeLanguage("english")} active href="#"> English</Dropdown.Item>
-                <Dropdown.Item data-testid="settings-language-spanish" onClick={() => changeLanguage("spanish")} href="#"> Spanish </Dropdown.Item>
+                <Dropdown.Item data-testid="settings-language-english" onClick={() => props.changeLanguage("en")}  href="#"> English</Dropdown.Item>
+                <Dropdown.Item data-testid="settings-language-spanish" onClick={() => props.changeLanguage("es")} href="#"> Spanish </Dropdown.Item>
             </DropdownButton>
         </div>
     );
 
 }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        changeLanguage: (locale) => dispatch(changeLocale(locale))
+    };
+  };
+export default connect(null,mapDispatchToProps)(Settings)

@@ -14,7 +14,7 @@ const myStore = store;
 ReactDOM.render(
   <ThemeContext.Provider value={themes.purple}>
     <Provider store={myStore}>
-      <App />
+     <App  />
     </Provider>
   </ThemeContext.Provider>,
   document.getElementById("root")

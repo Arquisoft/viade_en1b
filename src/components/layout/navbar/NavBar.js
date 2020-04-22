@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { BsPerson, BsArrowBarUp, BsMap, BsCompass } from "react-icons/bs";
 import "./NavBar.css";
 import { LogoutButton } from "@solid/react";
@@ -13,6 +13,7 @@ import { loadRoutesRequest } from "../../../store/actions/RouteActions";
 import { contentLoaded } from "../../../store/actions/LoadActions";
 import { connect } from "react-redux";
 import { getWebId } from "../../../solid/auth";
+import {FormattedMessage} from "react-intl";
 
 export const MyNavBar = (props) => {
   const links = [
@@ -25,14 +26,14 @@ export const MyNavBar = (props) => {
     },
     {
       id: 1,
-      text: "My routes",
+      text: "MyRoutes",
       href: "/routes/MyRoutes",
       icon: <BsMap className="icon"></BsMap>,
       testId: "navbar-my-routes",
     },
     {
       id: 2,
-      text: "Upload route",
+      text: "UploadRoute",
       href: "/routes/upload",
       icon: <BsArrowBarUp className="icon"></BsArrowBarUp>,
       testId: "navbar-upload-route",
@@ -86,7 +87,7 @@ export const MyNavBar = (props) => {
                     className="nav-link"
                   >
                     {link.icon}
-                    {link.text}
+                    <FormattedMessage id={link.text} />
                   </Nav.Link>
                 </LinkContainer>
               </span>
@@ -119,6 +120,7 @@ export const MyNavBar = (props) => {
         </Nav>
       </Navbar.Collapse>
     </Navbar>
+    
   );
 };
 
