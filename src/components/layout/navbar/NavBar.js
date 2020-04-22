@@ -13,7 +13,7 @@ import { loadRoutesRequest } from "../../../store/actions/RouteActions";
 import { contentLoaded } from "../../../store/actions/LoadActions";
 import { connect } from "react-redux";
 import { getWebId } from "../../../solid/auth";
-import {FormattedMessage} from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 export const MyNavBar = (props) => {
   const links = [
@@ -120,7 +120,6 @@ export const MyNavBar = (props) => {
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-    
   );
 };
 

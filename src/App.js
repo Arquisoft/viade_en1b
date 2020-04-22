@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 
 export const App = (props) => {
   const theme = useContext(ThemeContext);
-  const {locale} = props;
+  const { locale } = props;
   useEffect(() => {
     Object.keys(theme).map((key) => {
       const value = theme[key];
@@ -27,11 +27,7 @@ export const App = (props) => {
     ) : null;
 
   return (
-    <IntlProvider
-      key={locale}
-      locale={locale}
-      messages={locales[props.locale]}
-    >
+    <IntlProvider key={locale} locale={locale} messages={locales[props.locale]}>
       <div data-testid="theApp" className="App">
         <Routing navBar={navBar} />
         <Footer></Footer>
