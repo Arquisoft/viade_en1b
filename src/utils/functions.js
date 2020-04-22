@@ -20,3 +20,22 @@ export const filterUnsharedFriends = (allFriends, alreadyShared) => {
 const findInHashByUri = (hash, friend) => {
   return hash[friend];
 };
+
+/**
+ * 
+ * @param {*} routes 
+ * @param {*} userWebID user logged in id
+ */
+export const getOwnRoutesNumber = (routes, userWebID) => {
+  console.log(routes, userWebID);
+  return routes.filter(route => route.author === userWebID.split("//")[1].split(".")[0]).length
+}
+
+/**
+ * 
+ * @param {*} routes 
+ * @param {*} userWebId  user logged in id
+ */
+export const getSharedRoutesNumber = (routes, userWebId) => {
+  return routes.length - getOwnRoutesNumber(routes, userWebId);
+}
