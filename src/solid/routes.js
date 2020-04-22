@@ -45,7 +45,7 @@ export function getMyCommentsFolder(userWebId) {
  * Returns a string containing the URI of the inbox folder for the given user.
  */
 export function getInboxFolder(userWebId) {
-  const inboxUrl = userWebId.split("/profile")[0] + appName + "/inbox/";
+  const inboxUrl = userWebId.split("profile")[0] + appName + "/inbox/";
   return inboxUrl;
 }
 
@@ -132,7 +132,9 @@ async function getRouteObjectFromPodRoute(userWebId, route, routeFilename) {
     name: route.name,
     description: route.description,
     author: route.author,
-    positions: route.points.map(point => {return [point.latitude, point.longitude]}),
+    positions: route.points.map((point) => {
+      return [point.latitude, point.longitude];
+    }),
     sharedWith: [] /*await getUsersRouteSharedWith(userWebId, routeFilename)*/,
   };
 }
@@ -193,7 +195,9 @@ export function getFormattedRoute(routeObject, userWebId, fileName) {
     comments: getRouteCommentsFile(userWebId, fileName),
     media: routeObject.images + routeObject.videos,
     waypoints: routeObject.positions,
-    points: routeObject.positions.map(position => {return {latitude: position[0], longitude: position[1]}}),
+    points: routeObject.positions.map((position) => {
+      return { latitude: position[0], longitude: position[1] };
+    }),
   };
   return output;
 }
