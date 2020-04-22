@@ -132,7 +132,7 @@ async function getRouteObjectFromPodRoute(userWebId, route, routeFilename) {
     name: route.name,
     description: route.description,
     author: route.author,
-    positions: route.waypoints,
+    positions: route.points.map(point => {return [point.latitude, point.longitude]}),
     sharedWith: [] /*await getUsersRouteSharedWith(userWebId, routeFilename)*/,
   };
 }
@@ -193,7 +193,7 @@ export function getFormattedRoute(routeObject, userWebId, fileName) {
     comments: getRouteCommentsFile(userWebId, fileName),
     media: routeObject.images + routeObject.videos,
     waypoints: routeObject.positions,
-    points: routeObject.positions,
+    points: routeObject.positions.map(position => {return {latitude: position[0], longitude: position[1]}}),
   };
   return output;
 }
