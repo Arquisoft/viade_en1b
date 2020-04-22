@@ -13,6 +13,7 @@ import { loadRoutesRequest } from "../../../store/actions/RouteActions";
 import { contentLoaded } from "../../../store/actions/LoadActions";
 import { connect } from "react-redux";
 import { getWebId } from "../../../solid/auth";
+import ThemePicker from "../theme/ThemePicker";
 
 export const MyNavBar = (props) => {
   const links = [
@@ -74,6 +75,7 @@ export const MyNavBar = (props) => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
         <Nav className="justify-content-end" activeKey="/home">
+          {<ThemePicker></ThemePicker>}
           {links.map((link) => {
             return (
               <span key={link.id}>

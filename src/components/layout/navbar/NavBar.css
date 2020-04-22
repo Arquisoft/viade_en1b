@@ -1,5 +1,6 @@
 nav.navbar {
   background-color: var(--color-primary) !important;
+  color: var(--color-tertiary) !important;
 }
 
 .navbar-brand {
@@ -28,7 +29,19 @@ nav.navbar span {
   pointer-events: none;
 }
 
-.nav-link {
+.show {
+  background-color: var(--color-primary);
+  opacity: 1;
+}
+
+.show a:hover {
+  background-color: transparent !important;
+  opacity: 1;
+}
+
+.nav-link:not(.show):not(.active) {
+  color: var(--color-tertiary) !important;
+  opacity: 0.5;
   transition: all 200ms ease-in-out;
 }
 
@@ -40,11 +53,12 @@ nav.navbar span {
 
 .nav-link:hover {
   color: var(--color-secondary) !important;
+  opacity: 1 !important;
 }
 
 .solid.auth.logout {
   background-color: transparent !important;
-  color: black !important;
+  color: var(--color-secondary) !important;
   width: 100%;
   display: flex;
   align-items: flex-start;
