@@ -1,5 +1,5 @@
-export const deepClone = array => {
-  let aux = array.map(item => ({ ...item }));
+export const deepClone = (array) => {
+  let aux = array.map((item) => ({ ...item }));
   return aux;
 };
 
@@ -8,8 +8,9 @@ export const filterUnsharedFriends = (allFriends, alreadyShared) => {
   let hash = {};
   if (alreadyShared.length === 0) return allFriends;
   //Initialize the hash table
-  alreadyShared.map(friend => hash[friend.uri] = true);
-  allFriends.map(friend => {
+  alreadyShared.map((friend) => (hash[friend.uri] = true));
+  console.log(hash);
+  allFriends.map((friend) => {
     if (!findInHashByUri(hash, friend)) return aux.push({ ...friend });
     return [];
   });
