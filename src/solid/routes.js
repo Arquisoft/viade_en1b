@@ -82,10 +82,10 @@ export function getRoutesSharedWithFolder(userWebId) {
  * Returns a string containing the URI of the file which contains with whom a route has been shared for the
  * given user.
  */
-/* function getRoutesSharedWithFile(userWebId, routeFilename) {
+function getRoutesSharedWithFile(userWebId, routeFilename) {
   return getRoutesSharedWithFolder(userWebId) + routeFilename;
 }
- */
+
 /**
  * Returns a string containing the filename of the given route.
  */
@@ -117,11 +117,11 @@ async function readToJson(url) {
 /**
  * Returns an array containing the users the given route is shared with.
  */
-/* async function getUsersRouteSharedWith(userWebId, routeFilename) {
+async function getUsersRouteSharedWith(userWebId, routeFilename) {
   let sharedFileUrl = getRoutesSharedWithFile(userWebId, routeFilename);
   let sharedFileContentJSON = await readToJson(sharedFileUrl);
   return sharedFileContentJSON.alreadyShared;
-} */
+}
 
 /**
  * Returns a route in JSON form from the given route in JSON-LD.
@@ -135,7 +135,7 @@ async function getRouteObjectFromPodRoute(userWebId, route, routeFilename) {
     positions: route.points.map((point) => {
       return [point.latitude, point.longitude];
     }),
-    sharedWith: [] /*await getUsersRouteSharedWith(userWebId, routeFilename)*/,
+    sharedWith: await getUsersRouteSharedWith(userWebId, routeFilename),
   };
 }
 
