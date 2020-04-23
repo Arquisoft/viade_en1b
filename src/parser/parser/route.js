@@ -1,5 +1,5 @@
-import Waypoint from './waypoint';
-import Link from './link';
+import Waypoint from "./waypoint";
+import Link from "./link";
 
 export default class Route {
   constructor(object) {

@@ -16,7 +16,7 @@ export default function Routing(props) {
       {navBar}
       <Switch>
         <Route exact path="/404" component={PageNotFound} />
-        <Route exact path="/" render={props => <Login {...props} />}></Route>
+        <Route exact path="/" render={(props) => <Login {...props} />}></Route>
         <Route
           exact
           path="/profile"

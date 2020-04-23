@@ -4,7 +4,7 @@ import {
   waitForElement,
   fireEvent,
   queryByTestId,
-  queryByText,
+  queryByText
 } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Login from "../Login.js";
