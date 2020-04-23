@@ -6,6 +6,7 @@ import FriendList from "./FriendList.js";
 import { Button, Badge } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { FormattedMessage } from "react-intl";
 
 export function MyProfile(props) {
   let email = props.userEmail ? <p>{props.userEmail}</p> : null;
@@ -26,7 +27,7 @@ export function MyProfile(props) {
           <div id="allData">
             <div id="profileData">
               <h1>
-                Hello,{" "}
+                <FormattedMessage id="Greetings" />,{" "}
                 <b>
                   <Value src="user.name" />
                 </b>
@@ -37,19 +38,22 @@ export function MyProfile(props) {
               <p>
                 <Badge variant="dark">
                   <Value src="user.vcard_role" />
-                  CEO
+                  <FormattedMessage id="CEO" />
                 </Badge>
               </p>
               <a href={useWebId()}>
-                Solid profile <BsBoxArrowUpRight></BsBoxArrowUpRight>
+                <FormattedMessage id="SolidProfile" />{" "}
+                <BsBoxArrowUpRight></BsBoxArrowUpRight>
               </a>
             </div>
             <div id="profileData">
               <Button variant="primary">
-                Routes <Badge variant="light">4</Badge>
+                <FormattedMessage id="Routes" />{" "}
+                <Badge variant="light">4</Badge>
               </Button>
               <Button variant="primary">
-                Shared routes <Badge variant="light">2</Badge>
+                <FormattedMessage id="SharedRoutes" />{" "}
+                <Badge variant="light">2</Badge>
               </Button>
             </div>
           </div>
@@ -63,12 +67,12 @@ export function MyProfile(props) {
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     userEmail: state.user.email,
     emailLoading: state.user.emailLoading,
     emailError: state.user.emailError,
-    friends: state.user.friends
+    friends: state.user.friends,
   };
 };
 

@@ -53,12 +53,22 @@ export const MyNavBar = (props) => {
   const dropDownElements = [
     {
       id: 0,
-      text: "My Profile",
+      text: <FormattedMessage id="MyProfile" />,
       href: "/profile",
       testId: "navbar-my-profile",
     },
-    { id: 1, text: "Settings", href: "/settings", testId: "navbar-settings" },
-    { id: 2, text: "Log Out", href: "#/", testId: "navbar-logout" },
+    {
+      id: 1,
+      text: <FormattedMessage id="Settings" />,
+      href: "/settings",
+      testId: "navbar-settings",
+    },
+    {
+      id: 2,
+      text: <FormattedMessage id="LogOut" />,
+      href: "#/",
+      testId: "navbar-logout",
+    },
   ];
 
   return (

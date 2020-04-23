@@ -8,14 +8,21 @@ import {
 } from "react-bootstrap";
 import { connect } from "react-redux";
 import changeLocale from "../../../store/actions/localeAction";
+import { FormattedMessage } from "react-intl";
 
 export function Settings(props) {
   const { changeTheme } = props;
 
   return (
     <div className="GeneralComponent">
-      <h2 data-testid="settings-title"> Settings </h2>
-      <h1 data-testid="settings-themes"> Themes</h1>
+      <h2 data-testid="settings-title">
+        {" "}
+        <FormattedMessage id="SettingsTitle" />{" "}
+      </h2>
+      <h1 data-testid="settings-themes">
+        {" "}
+        <FormattedMessage id="Themes" />
+      </h1>
       <ButtonGroup toggle>
         <ToggleButton
           data-testid="settings-theme-normal"
@@ -25,7 +32,7 @@ export function Settings(props) {
           value="Normal"
           onClick={() => changeTheme("normal")}
         >
-          Normal
+          <FormattedMessage id="Normal" />
         </ToggleButton>
         <ToggleButton
           data-testid="settings-theme-dark"
@@ -34,7 +41,7 @@ export function Settings(props) {
           value="Dark"
           onClick={() => changeTheme("dark")}
         >
-          Dark
+          <FormattedMessage id="Dark" />
         </ToggleButton>
         <ToggleButton
           data-testid="settings-theme-blind"
@@ -43,14 +50,17 @@ export function Settings(props) {
           value="Colorblind"
           onClick={() => changeTheme("blind")}
         >
-          Colorblind
+          <FormattedMessage id="ColorBlind" />
         </ToggleButton>
       </ButtonGroup>
-      <h1 data-testid="settings-language"> Language </h1>
+      <h1 data-testid="settings-language">
+        {" "}
+        <FormattedMessage id="Language" />{" "}
+      </h1>
       <DropdownButton
         data-testid="settings-language-dropdown"
         id="dropdown-basic-button"
-        title="Available Languages"
+        title={<FormattedMessage id="LanguageAvailable" />}
       >
         <Dropdown.Item
           data-testid="settings-language-english"
@@ -58,7 +68,7 @@ export function Settings(props) {
           href="#"
         >
           {" "}
-          English
+          <FormattedMessage id="English" />
         </Dropdown.Item>
         <Dropdown.Item
           data-testid="settings-language-spanish"
@@ -66,7 +76,7 @@ export function Settings(props) {
           href="#"
         >
           {" "}
-          Spanish{" "}
+          <FormattedMessage id="Spanish" />{" "}
         </Dropdown.Item>
       </DropdownButton>
     </div>
