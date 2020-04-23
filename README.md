@@ -34,8 +34,9 @@ This project was generated using [Create React App](https://create-react-app.dev
 ### Getting started
 In order to run this project, you will need to follow these steps:
 1. Install [Ruby](https://www.ruby-lang.org/es/)
-    > We recommend to install ruby using [RubyInstaller](https://rubyinstaller.org/)
-
+    
+> We recommend to install ruby using [RubyInstaller](https://rubyinstaller.org/)
+    
 1. Install [Node](https://nodejs.org/) & [NPM](https://www.npmjs.com/)
 
 1. Install [asciidoctor](https://asciidoctor.org/)
@@ -67,7 +68,7 @@ If you want to test the application in your local machine, you will need run a d
 2. Go to your browser and navigate to `http://localhost:3000/viade_en1b`.
 
 ### Building the application
-    
+
 If you want to build the applicatioin you need to run `npm run build` and all the files will be stored in `/build`.
 
 ### Runing unit tests
@@ -98,6 +99,8 @@ To get more help on the React use `npm help` or go to their [main webpage](https
 
 ## Application
 
+![mainApp](public/mainApp.png)
+
 ### Accesibility
 
 We are concerned about every kind of users, specially color blind people. 
@@ -110,6 +113,8 @@ Regarding this fact, we have included a functionality to change in runtime the t
 ### Internationalization
 
 Currently, our application is internationalized for English and Spanish.
+
+> This have been done using [React Intl](https://github.com/formatjs/react-intl).
 
 ### Basic use
 
