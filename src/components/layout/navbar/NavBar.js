@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { BsPerson, BsArrowBarUp, BsMap, BsCompass } from "react-icons/bs";
 import "./NavBar.css";
 import { LogoutButton } from "@solid/react";

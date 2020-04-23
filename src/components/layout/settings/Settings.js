@@ -6,7 +6,6 @@ import changeLocale from "../../../store/actions/localeAction";
 import { FormattedMessage } from "react-intl";
 
 export function Settings(props) {
-  const { changeLanguage } = props;
 
   return (
     <div className="GeneralComponent">
