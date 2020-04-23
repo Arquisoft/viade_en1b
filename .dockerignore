@@ -1,0 +1,22 @@
+# Github stuff
+.github
+
+# git
+.git/
+
+# node related files
+node_modules/
+build/
+.travis.yml
+codecov.yml
+README.md
+
+# tests
+cucumber.js
+load-testing/
+/coverage
+/.localpods
+/features
+
+# reports
+reports/
