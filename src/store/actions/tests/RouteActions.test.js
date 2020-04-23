@@ -127,7 +127,7 @@ describe("Route actions", () => {
       localeReducer: {},
     };
 
-    const mockFriends = ['marcos'];
+    const mockFriends = ["marcos"];
 
     let stateRoutes = deepClone(initialState.route.routes);
     let sharedRouteId = uploadedRoute.id;

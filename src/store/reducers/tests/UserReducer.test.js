@@ -1,7 +1,7 @@
-import userReducer from '../UserReducer'
-import '@testing-library/jest-dom'
+import userReducer from "../UserReducer"
+import "@testing-library/jest-dom"
 
-describe('User Reducer', () => {
+describe("User Reducer", () => {
 
     const initState = {
         email: null,

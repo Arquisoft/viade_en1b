@@ -1,5 +1,5 @@
 import { getOwnRoutesNumber, getSharedRoutesNumber } from "../functions";
-import '@testing-library/jest-dom'
+import "@testing-library/jest-dom"
 
 describe("compute number of routes", () => {
 

@@ -193,7 +193,7 @@ describe("Solid Routes", () => {
     /*
     test("Share a route", async () => {
 
-        // Get only one route in user's pod
+        // Get only one route in user"s pod
         await solid.clearRoutesFromPod(userWebId);
         await solid.uploadRouteToPod(firstRoute, userWebId);
         let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
@@ -211,7 +211,7 @@ describe("Solid Routes", () => {
             secondRouteAuthor
         )).toBeNull();
 
-        // Create inbox folder in friend's and test it is empty
+        // Create inbox folder in friend"s and test it is empty
         await solid.createFolderIfAbsent(friendInboxFolderUri); // No global permissions
         let inboxFiles = await fc.readFolder(friendInboxFolderUri);
         expect(inboxFiles.files.length).toEqual(0);
@@ -241,13 +241,13 @@ describe("Solid Routes", () => {
      */
     test("Process inbox notifications", async() => {
 
-        // Clear notifications and delete shared folder in friend's pod
+        // Clear notifications and delete shared folder in friend"s pod
         await solid.checkInboxForSharedRoutes(friendWebId); // Should clear notifications
         if (await fc.itemExists(solid.getSharedFolder(friendWebId))) {
             await fc.deleteFolder(solid.getSharedFolder(friendWebId));
         }
 
-        // Delete user's routes
+        // Delete user"s routes
         if (await fc.itemExists(solid.getRoutesFolder(userWebId))) {
             await fc.deleteFolder(solid.getRoutesFolder(userWebId));
         }

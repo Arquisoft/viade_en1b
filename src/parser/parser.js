@@ -1,4 +1,4 @@
-import GPX from './parser/gpx';
+import GPX from "./parser/gpx";
 
 export const parseGPX = (file) =>
 {

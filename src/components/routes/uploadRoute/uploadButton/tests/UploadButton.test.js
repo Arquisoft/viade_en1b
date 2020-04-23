@@ -1,15 +1,15 @@
-import React from 'react';
-import { render, waitForElement ,fireEvent, queryByTestId } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import UploadButton from '../UploadButton';
+import React from "react";
+import { render, waitForElement ,fireEvent, queryByTestId } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import UploadButton from "../UploadButton";
 
 let uploadButton = null;
 let rerenderFunc = () => {};
 let input = null;
 beforeEach(() => {
-    const { container, rerender } = render(<UploadButton onChange={(e) => e} text={'No images selected'}></UploadButton>);
+    const { container, rerender } = render(<UploadButton onChange={(e) => e} text={"No images selected"}></UploadButton>);
     uploadButton = container;
-    input = container.querySelector('input');
+    input = container.querySelector("input");
     rerenderFunc = rerender;
     
 });
@@ -17,11 +17,11 @@ beforeEach(() => {
 describe("Everything is rendered correctly", () => {
     test("label is correctly displayed when there are no files selected for a single file button", () => {
         waitForElement(() => {
-            expect(queryByTestId(uploadButton, 'upload-button-label').textContent).toBe("No images selected")
+            expect(queryByTestId(uploadButton, "upload-button-label").textContent).toBe("No images selected")
         });
     });
     test("label is correctly displayed when there are no files selected for a multple file button", () => {
-        rerenderFunc(<UploadButton multiple text="No files selected" onChange={e => e}></UploadButton>)
+        rerenderFunc(<UploadButton multiple text="No files selected" onChange={(e) => e}></UploadButton>)
         waitForElement(() => {
             expect(queryByTestId(uploadButton, "upload-button-label").textContent).toBe("No files selected")
         });
@@ -48,7 +48,7 @@ describe("Upload an element to a single file button", () => {
         let mockFile3 = new File(["test3"], "filename3.png", {type: "image/png"});
         
         let myRef = React.createRef();
-        rerenderFunc(<UploadButton text="No images" ref={myRef} onChange={e => e} multiple></UploadButton>);
+        rerenderFunc(<UploadButton text="No images" ref={myRef} onChange={(e) => e} multiple></UploadButton>);
         waitForElement(() => {
             Object.defineProperty(input, "files", {
                 value: [mockFile1, mockFile2, mockFile3]
@@ -62,7 +62,7 @@ describe("Upload an element to a single file button", () => {
 
 describe("State is resetet when the prop 'reset' is provided", () => {
     test("state resets for single file button", () => {
-        rerenderFunc(<UploadButton onChange={e => e} text="No file selected" reset></UploadButton>);
+        rerenderFunc(<UploadButton onChange={(e) => e} text="No file selected" reset></UploadButton>);
         waitForElement(() => {
             expect(queryByTestId(uploadButton, "upload-button-label").textContent).toBe("No file selected");
         });

@@ -47,7 +47,7 @@ Given('We put our page {string}, we put the credentials username {string} and pa
       }
     );
 
-  })
+  });
 });
 
 Then('The home page appears', function () {
