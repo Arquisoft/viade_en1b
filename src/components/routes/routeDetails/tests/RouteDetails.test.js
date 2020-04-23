@@ -11,6 +11,9 @@ import { testStoreMultiple, testStore } from "../../../../utils/index";
 import { authReducer } from "../../../../store/reducers/AuthReducer";
 import { routeReducer } from "../../../../store/reducers/RouteReducer";
 import { Provider } from "react-redux";
+import { locales } from "../../../../utils/locales";
+import { IntlProvider } from "react-intl";
+
 const initState = {
   auth: { userWebId: "" },
   route: {
@@ -43,6 +46,7 @@ const initState = {
       },
     ],
   },
+  localeReducer:{},
 };
 
 const store = testStore(routeReducer, initState);
@@ -73,12 +77,14 @@ let mock = jest.fn();
 beforeEach(() => {
   render(
     <Provider store={store}>
-      <RouteDetails
-        deleteRoute={() => {}}
-        _store={store}
-        userWebId=""
-        selectedRoute={selectedRoute}
-      ></RouteDetails>
+      <IntlProvider key={"en"} locale={"en"} messages={locales["en"]}>
+        <RouteDetails
+          deleteRoute={() => {}}
+          _store={store}
+          userWebId=""
+          selectedRoute={selectedRoute}
+        ></RouteDetails>
+      </IntlProvider>
     </Provider>
   );
 });
