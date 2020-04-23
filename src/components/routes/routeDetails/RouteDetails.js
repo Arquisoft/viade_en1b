@@ -10,6 +10,7 @@ import Comments from "../../layout/comments/Comments.js";
 export const RouteDetails = (props) => {
   const { selectedRoute } = props;
   const { deleteRoute } = props;
+  const {userWebId} = props;
 
   if (selectedRoute != null) {
     let comments = [];
@@ -33,7 +34,7 @@ export const RouteDetails = (props) => {
           <Button
             data-testid="route-details-button-delete"
             id="deleteButton"
-            onClick={() => deleteRoute(selectedRoute)}
+            onClick={() => deleteRoute(selectedRoute, userWebId)}
           >
             Delete
           </Button>
@@ -64,8 +65,14 @@ export const RouteDetails = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteRoute: (route) => dispatch(deleteRoute(route)),
+    deleteRoute: (route, userWebId) => dispatch(deleteRoute(route, userWebId)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(RouteDetails);
+const mapStateToProps = (state) => {
+  return {
+    userWebId : state.auth.userWebId
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RouteDetails);

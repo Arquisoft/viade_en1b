@@ -156,7 +156,7 @@ describe("Route actions", () => {
     };
     const store = testStore(rootReducer, initState);
 
-    store.dispatch(deleteRoute(uploadedRoute));
+    store.dispatch(deleteRoute(uploadedRoute, "https://themrcesi.inrupt.net/profile/card#me"));
     const newState = store.getState().route;
 
     expect(newState).toStrictEqual(expectedState);
