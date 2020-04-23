@@ -311,7 +311,7 @@ export async function getSharedRoutesUris(userWebId) {
   let fileContentJSON = JSON.parse(fileContent);
   return fileContentJSON.routes;
 }
-/* 
+
 
 export async function createBaseStructure(userWebId) {
   let folders = [
@@ -328,9 +328,9 @@ export async function createBaseStructure(userWebId) {
     await createFolderIfAbsent(folders[i]);
   }
   if (!(await fc.itemExists(getInboxFolder(userWebId) + ".acl"))) {
-    await createAclGlobalWrite(getInboxFolder(userWebId), userWebId);
+    //await createAclGlobalWrite(getInboxFolder(userWebId), userWebId);
   }
-} */
+} 
 
 /**
  * Returns a route from a given user's pod given the name of the route, or null if not found.
