@@ -5,14 +5,16 @@ import { connect } from "react-redux";
 import changeLocale from "../../../store/actions/localeAction";
 import { FormattedMessage } from "react-intl";
 
-export  function Settings(props) {
+export function Settings(props) {
   const { changeLanguage } = props;
 
   return (
     <div className="GeneralComponent">
-      <h2 data-testid="settings-title">      <FormattedMessage id="SettingsTitle" />{" "}
+      <h2 data-testid="settings-title">
+        {" "}
+        <FormattedMessage id="SettingsTitle" />{" "}
       </h2>
-   
+
       <h1 data-testid="settings-language">
         {" "}
         <FormattedMessage id="Language" />{" "}

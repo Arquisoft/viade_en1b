@@ -45,7 +45,7 @@ export function MyProfile(props) {
                   {<Value src="user.vcard_role" /> ? (
                     <Value src="user.vcard_role" />
                   ) : (
-                    <FormattedMessage id="CEO"/>
+                    <FormattedMessage id="CEO" />
                   )}
                 </Badge>
               </p>

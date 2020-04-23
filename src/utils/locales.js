@@ -7,6 +7,8 @@ export const locales = {
     MyProfile: "My Profile",
     Settings: "Settings",
     LogOut: "Log Out",
+    //ThemePicker.js
+    Themes: "Temas",
     //FriendList.js
     FriendsList: "Friends list:",
     //Profile.js
@@ -37,10 +39,6 @@ export const locales = {
     PageNotFound: "Sorry, page not found!",
     //Settings.js
     SettingsTitle: "Settings",
-    Themes: "Themes",
-    Normal: "Normal",
-    Dark: "Dark",
-    ColorBlind: "Colorblind",
     Language: "Languages",
     English: "English",
     Spanish: "Spanish",
@@ -75,6 +73,8 @@ export const locales = {
     MyProfile: "Mi Perfil",
     Settings: "Ajustes",
     LogOut: "Cerrar sesion",
+    //ThemePicker.js
+    Themes: "Temas",
     //FriendList.js
     FriendsList: "Lista de amigos:",
     //Profile.js
@@ -105,10 +105,6 @@ export const locales = {
     PageNotFound: "Sorry, page not found!",
     //Settings.js
     SettingsTitle: "Ajustes",
-    Themes: "Temas",
-    Normal: "Normal",
-    Dark: "Oscuro",
-    ColorBlind: "Daltonico",
     Language: "Idiomas",
     English: "Ingles",
     Spanish: "Español",

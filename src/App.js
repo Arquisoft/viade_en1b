@@ -14,7 +14,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 export const App = (props) => {
-
   const [theme, changeTheme] = useState(themes.purple);
   const { locale } = props;
 
@@ -32,20 +31,14 @@ export const App = (props) => {
     ) : null;
 
   return (
-
     <IntlProvider key={locale} locale={locale} messages={locales[props.locale]}>
-
-    <ThemeContext.Provider value={{ theme, changeTheme }}>
-
-      <div data-testid="theApp" className="App">
-        <Routing navBar={navBar} />
-        <Footer></Footer>
-      </div>
-
-    </ThemeContext.Provider>
-
+      <ThemeContext.Provider value={{ theme, changeTheme }}>
+        <div data-testid="theApp" className="App">
+          <Routing navBar={navBar} />
+          <Footer></Footer>
+        </div>
+      </ThemeContext.Provider>
     </IntlProvider>
-
   );
 };
 
