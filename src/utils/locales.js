@@ -43,6 +43,12 @@ export const locales = {
     English: "English",
     Spanish: "Spanish",
     LanguageAvailable: "Available Languages",
+    Technical: "Technical information",
+    TechnicalDescription: "If you are interested on how our project was planned and how it was built you can visit",
+    ThisPage: "THIS PAGE",
+    HowToUse: "How to use this application / About us",
+    HowToUseDescription: "As you might have any doubt of how to use this application or you might want to know more about us, we have created a support webpage for these two purpose.",
+    Here: "Here is the webpage.",
     //Slideshow.js
     NoMediaElemts: "There are no media elements",
     //RouteDetails.js
@@ -109,6 +115,12 @@ export const locales = {
     English: "Ingles",
     Spanish: "Español",
     LanguageAvailable: "Idiomas Disponibles",
+    Technical: "Información técnica",
+    TechnicalDescription: "Si estás interesado en como se planeo y se construyo nuestra aplicación puedes visitar",
+    ThisPage: "ESTA PÁGINA",
+    HowToUse: "Como usar esta aplicación / Nuestro equipo",
+    HowToUseDescription: "Si te a surgido alguna duda sobre como usar esta aplicación o quieres saber más sobre quienes somos, hemos creado una página web extra para esto.",
+    Here: "Aqui esta la pagina web",
     //Slideshow.js
     NoMediaElemts: "No hay imágenes",
     //RouteDetails.js
