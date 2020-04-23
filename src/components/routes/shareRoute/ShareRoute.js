@@ -7,6 +7,7 @@ import style from "./ShareRoute.css";
 import ViadeModal from "../../layout/modal/Modal";
 import { deepClone, filterUnsharedFriends } from "../../../utils/functions";
 import { Badge } from "react-bootstrap";
+import { FormattedMessage } from "react-intl";
 
 export function ShareRoute(props) {
   const { selectedRoute } = props;
@@ -14,24 +15,24 @@ export function ShareRoute(props) {
   const friendsToShow = filterUnsharedFriends(
     props.friends,
     props.sharedWith
-  ).map(friend => (friend.checked = false));
+  ).map((friend) => (friend.checked = false));
   const alreadySharedWith = deepClone(props.sharedWith);
   const [state, setState] = useState({
     friends: friendsToShow,
-    friendsToShareWith: alreadySharedWith.map(friend => ({
+    friendsToShareWith: alreadySharedWith.map((friend) => ({
       ...friend,
-      checked: false
+      checked: false,
     })),
-    shared: false
+    shared: false,
   });
   useEffect(() => {
     setState({
       ...state,
       friends: friendsToShow,
-      friendsToShareWith: deepClone(alreadySharedWith).map(friend => ({
+      friendsToShareWith: deepClone(alreadySharedWith).map((friend) => ({
         ...friend,
-        checked: false
-      }))
+        checked: false,
+      })),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -45,11 +46,11 @@ export function ShareRoute(props) {
     setState({
       ...state,
       friends: newFriends,
-      friendsToShareWith: state.friendsToShareWith.map(friend => ({
+      friendsToShareWith: state.friendsToShareWith.map((friend) => ({
         ...friend,
-        checked: false
+        checked: false,
       })),
-      shared: true
+      shared: true,
     });
   };
 
@@ -62,11 +63,11 @@ export function ShareRoute(props) {
   const handleOnOpen = () => {
     setState({
       ...state,
-      friends: filterUnsharedFriends(props.friends, state.friendsToShareWith)
+      friends: filterUnsharedFriends(props.friends, state.friendsToShareWith),
     });
   };
 
-  const handleOnClick = key => {
+  const handleOnClick = (key) => {
     state.friends[key].checked = !state.friends[key].checked;
     let shared = deepClone(state.friendsToShareWith);
     let friends = deepClone(state.friends);
@@ -79,12 +80,12 @@ export function ShareRoute(props) {
     setState({ ...state, friendsToShareWith: shared, friends: friends });
   };
   let activeSelectedFriends = state.friendsToShareWith.filter(
-    friend => friend.checked
+    (friend) => friend.checked
   ).length;
   const shareButtonText =
     activeSelectedFriends > 0 ? (
       <span data-testid="share-route-share-button-numbers">
-        Share
+        <FormattedMessage id="Share" />
         <Badge className={style.badge} color="secondary">
           <span data-testid="share-route-share-button-number">
             {activeSelectedFriends}
@@ -101,11 +102,11 @@ export function ShareRoute(props) {
       onOpen={handleOnOpen}
       disabled={false}
       saveDisabled={activeSelectedFriends === 0}
-      toggleText="Share"
+      toggleText={<FormattedMessage id="Share" />}
       handleClose={handleClose}
       onSave={handleOnSave}
-      title="Pick some friends"
-      closeText="Close"
+      title={<FormattedMessage id="ShareModalTitle" />}
+      closeText={<FormattedMessage id="Close" />}
       saveText={shareButtonText}
     >
       <FriendList
@@ -119,16 +120,16 @@ export function ShareRoute(props) {
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     friends: state.user.friends,
-    sharedWith: state.route.selectedRoute.sharedWith
+    sharedWith: state.route.selectedRoute.sharedWith,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    shareRoute: (route, friends) => dispatch(shareRoute(route, friends))
+    shareRoute: (route, friends) => dispatch(shareRoute(route, friends)),
   };
 };
 

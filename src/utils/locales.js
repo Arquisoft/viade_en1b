@@ -28,7 +28,8 @@ export const locales = {
     CommentsButtonTitle: "Comment",
     //Login.js
     LoginTitle: "Manage your routes like never before.",
-    LoginParagraph: "A new descentralized system where your information is truly yours.",
+    LoginParagraph:
+      "A new descentralized system where your information is truly yours.",
     LoginButtonTitle: "Login",
     LoginButton: "Login here!",
     LogoutButton: "Log me out",
@@ -52,8 +53,19 @@ export const locales = {
     Delete: "Delete",
     Share: "Share",
     CommentsTitle: "Comments",
-
-
+    //RouteList.js
+    NoRoutes: "Your routes will be displayed here",
+    //ShareRoute.js
+    ShareModalTitle: "Pick some friends",
+    //UploadRoute.js
+    NameOfTheRoute: "Name of the route",
+    RouteNamePlaceholder: "Route name",
+    DescriptionPlaceholder: "Add a description",
+    CommentPlaceholder: "Add a comment",
+    SubmitedRoute: "Your route has been submited",
+    Submited: "Submited",
+    UploadButton: "Choose a route",
+    Submit: "Submit",
   },
   es: {
     //NavBar.js
@@ -80,11 +92,12 @@ export const locales = {
     Comments: "Comentario:",
     LeaveComment: "Dejar un comentario",
     Close: "Cerrar",
-    CommentsModelTitle:"Escribe un comentario para la ruta {theRoute} ",
+    CommentsModelTitle: "Escribe un comentario para la ruta {theRoute} ",
     CommentsButtonTitle: "Comentar",
     //Login.js
     LoginTitle: "Administras tus rutas como nunca antes.",
-    LoginParagraph: "Un nuevo sistema descentralizado donde tu informacion es tuya de verdad.",
+    LoginParagraph:
+      "Un nuevo sistema descentralizado donde tu informacion es tuya de verdad.",
     LoginButtonTitle: "Iniciar sesion",
     LoginButton: "Entrar aquí!",
     LogoutButton: "Salir de aquí",
@@ -108,5 +121,18 @@ export const locales = {
     Delete: "Borrar",
     Share: "Compartir",
     CommentsTitle: "Comentarios",
+    //RouteList.js
+    NoRoutes: "Tus rutas se mostraran aquí",
+    //ShareRoute.js
+    ShareModalTitle: "Escoge algún amigo",
+    //UploadRoute.js
+    NameOfTheRoute: "Nombre de la ruta",
+    RouteNamePlaceholder: "Escribe el nombre de la ruta",
+    DescriptionPlaceholder: "Escribe una descripción",
+    CommentPlaceholder: "Escribe un comentario",
+    SubmitedRoute: "Tu ruta a sido enviada",
+    Submited: "Enviado",
+    UploadButton: "Escoge una ruta",
+    Submit: "Enviar",
   },
 };
