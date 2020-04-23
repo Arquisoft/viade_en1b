@@ -46,7 +46,7 @@ const initState = {
       },
     ],
   },
-  localeReducer:{},
+  localeReducer: {},
 };
 
 const store = testStore(routeReducer, initState);
