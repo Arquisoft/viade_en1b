@@ -35,7 +35,7 @@ describe("Routes Reducer", () => {
     });
 
     describe("Should return state if receiving type", () =>{
-        const route = { id: 5, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: 'A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing', images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: [] }
+        const route = { id: 5, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: 'A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing', images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: [] };
         
         test("Type SHOW_ROUTE", () => {
             const newState = routeReducer(initState, {
@@ -57,7 +57,7 @@ describe("Routes Reducer", () => {
                 type : 'CLEAR_ROUTE',
                 payload: null
             });
-            const expected = {...initState, selectedRoute:null}
+            const expected = {...initState, selectedRoute:null};
             expect(newState).toEqual(expected);
         })
 

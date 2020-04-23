@@ -97,4 +97,4 @@ describe('User Reducer', () => {
         })
 
     });
-})
+});

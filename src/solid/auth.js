@@ -6,5 +6,5 @@ export async function getWebId() {
     if (session) {
       return session.webId;
     }
-    return session
+    return session;
 }

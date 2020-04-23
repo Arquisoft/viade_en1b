@@ -8,31 +8,31 @@ const UploadButton = (props) => {
     const [state, setState] = useState({
         filename: '',
         numberOfFiles: 0
-    })
+    });
 
     useEffect(() => {
         if(props.reset) resetState()
-    }, [props.reset])
+    }, [props.reset]);
 
     const resetState = () => {
         setState({
             filename: '',
             numberOfFiles: 0
         })
-    }
+    };
     const file = useRef()
 
-    const handleSingleFileChanged = e => {
+    const handleSingleFileChanged = (e) => {
         props.onChange(e)
         let name = file.current.files[0].name
         setState({...state, filename: name})
-    }
+    };
 
-    const handleMultipleFileChanged = e => {
+    const handleMultipleFileChanged = (e) => {
         props.onChange(e)
         let number = file.current.files.length
         setState({...state, numberOfFiles: number})
-    }
+    };
 
     const uploadButton = !props.multiple
                             ? 
@@ -65,7 +65,7 @@ const UploadButton = (props) => {
 
     return (
         uploadButton
-    )
-}
+    );
+};
 
-export default UploadButton
+export default UploadButton;

@@ -1,5 +1,5 @@
 import { render, queryByTestId, waitForElement } from "@testing-library/react";
-import React from 'react'
+import React from 'react';
 import MyMap, { myMap } from "../MyMap";
 
 describe('MyMap Component', () => {
