@@ -4,7 +4,7 @@ import {
   screen,
   fireEvent,
   cleanup,
-  waitForDomChange
+  waitForDomChange,
 } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { ShareRoute } from "../ShareRoute";
@@ -17,7 +17,7 @@ let selectedRoute = {
   images: [],
   videos: [],
   sharedWith: [],
-  id: 0
+  id: 0,
 };
 
 let selectedRoute2 = {
@@ -28,16 +28,16 @@ let selectedRoute2 = {
   images: [],
   videos: [],
   sharedWith: [],
-  id: 1
+  id: 1,
 };
 let inigo = {
   uri: "inigosUri",
-  name: "Iñigo"
+  name: "Iñigo",
 };
 
 let cesar = {
   uri: "cesarsUri",
-  name: "César"
+  name: "César",
 };
 
 let byTestId;
@@ -58,6 +58,7 @@ beforeEach(() => {
       friends={[inigo, cesar]}
       sharedWith={[]}
       shareRoute={onSave}
+      userWebId=""
     ></ShareRoute>
   );
 });
@@ -117,7 +118,9 @@ describe("Behaviour testing", () => {
 
     //Click again in the share button
     fireEvent.click(screen.queryByTestId("modalButton"));
-    expect(screen.queryByText("Iñigo")).not.toBeInTheDocument();
-    expect(screen.queryByText("César")).toBeInTheDocument();
+    waitForDomChange(() => {
+      expect(screen.queryByText("César")).toBeInTheDocument();
+      expect(screen.queryByText("Iñigo")).not.toBeInTheDocument();
+    });
   });
 });
