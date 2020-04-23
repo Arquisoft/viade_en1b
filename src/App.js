@@ -8,9 +8,14 @@ import {
 import { useLoggedIn } from "@solid/react";
 import Routing from "./components/routing/Routing";
 import Footer from "./components/layout/footer/Footer";
+import { IntlProvider } from "react-intl";
+import { locales } from "./utils/locales";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 export const App = (props) => {
   const [theme, changeTheme] = useState(themes.purple);
+  const { locale } = props;
 
   useEffect(() => {
     Object.keys(theme).map((key) => {
@@ -26,13 +31,23 @@ export const App = (props) => {
     ) : null;
 
   return (
-    <ThemeContext.Provider value={{ theme, changeTheme }}>
-      <div data-testid="theApp" className="App">
-        <Routing navBar={navBar} />
-        <Footer></Footer>
-      </div>
-    </ThemeContext.Provider>
+    <IntlProvider key={locale} locale={locale} messages={locales[props.locale]}>
+      <ThemeContext.Provider value={{ theme, changeTheme }}>
+        <div data-testid="theApp" className="App">
+          <Routing navBar={navBar} />
+          <Footer></Footer>
+        </div>
+      </ThemeContext.Provider>
+    </IntlProvider>
   );
 };
 
-export default App;
+App.protoTypes = {
+  locale: PropTypes.string,
+};
+
+const mapStateToProps = (state) => {
+  return { locale: state.localeReducer.locale };
+};
+
+export default connect(mapStateToProps)(App);

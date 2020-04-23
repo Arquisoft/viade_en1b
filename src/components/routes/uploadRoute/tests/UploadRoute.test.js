@@ -8,17 +8,21 @@ import {
 } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { UploadRoute } from "../UploadRoute";
+import { locales } from "../../../../utils/locales";
+import { IntlProvider } from "react-intl";
 
 let uploadRoute = null;
 let rerenderFunc = () => {};
 
 beforeEach(() => {
   const { container, rerender } = render(
-    <UploadRoute
-      routes={[]}
-      uploadRoute={(route) => {}}
-      loadRoutes={() => {}}
-    ></UploadRoute>
+    <IntlProvider key={"en"} locale={"en"} messages={locales["en"]}>
+      <UploadRoute
+        routes={[]}
+        uploadRoute={(route) => {}}
+        loadRoutes={() => {}}
+      ></UploadRoute>
+    </IntlProvider>
   );
   uploadRoute = container;
   rerenderFunc = rerender;
@@ -76,11 +80,13 @@ describe("Behaviour", () => {
     const spy = jest.spyOn(UploadRoute.prototype, "submitForm");
     const mockFunc = jest.fn();
     rerenderFunc(
-      <UploadRoute
-        routes={[]}
-        uploadRoute={mockFunc}
-        loadRoutes={mockFunc}
-      ></UploadRoute>
+      <IntlProvider key={"en"} locale={"en"} messages={locales["en"]}>
+        <UploadRoute
+          routes={[]}
+          uploadRoute={mockFunc}
+          loadRoutes={mockFunc}
+        ></UploadRoute>
+      </IntlProvider>
     );
     let submitButton = queryByText(uploadRoute, "Submit");
     expect(spy).not.toBeCalled();
@@ -100,11 +106,13 @@ describe("Behaviour", () => {
       "Add a description"
     );
     rerenderFunc(
-      <UploadRoute
-        routes={[]}
-        uploadRoute={mockFunc}
-        loadRoutes={mockFunc}
-      ></UploadRoute>
+      <IntlProvider key={"en"} locale={"en"} messages={locales["en"]}>
+        <UploadRoute
+          routes={[]}
+          uploadRoute={mockFunc}
+          loadRoutes={mockFunc}
+        ></UploadRoute>
+      </IntlProvider>
     );
 
     expect(spy).not.toBeCalled();

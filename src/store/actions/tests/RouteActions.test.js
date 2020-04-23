@@ -41,7 +41,8 @@ describe("Route actions", () => {
       selectedRoute: null
     },
     auth: {},
-    user: {}
+    user: {},
+    localeReducer: {},
   };
 
   const initNewState = {
@@ -53,6 +54,7 @@ describe("Route actions", () => {
     },
     auth: {},
     user: {},
+    localeReducer: {},
   };
 
   test("show route action", () => {
@@ -121,7 +123,8 @@ describe("Route actions", () => {
       route: routesReducerState,
       auth: {},
       user: {},
-      control: {}
+      control: {},
+      localeReducer: {},
     };
 
     const mockFriends = ['marcos'];

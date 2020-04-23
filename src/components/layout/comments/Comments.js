@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import ViadeModal from "../modal/Modal.js";
 import { connect } from "react-redux";
 import "../comments/Comments.css";
+import { FormattedMessage } from "react-intl";
 export function Comments(props) {
   const [state, setState] = useState({});
 
   const CommentButtonText = (
-    <span data-testid="Leave-Cooment-text">Leave a comment</span>
+    <span data-testid="Leave-Cooment-text">
+      <FormattedMessage id="LeaveComment" />
+    </span>
   );
   const handleOpen = () => {
     setState({ ...state, theRoute: props.selectedRoute.name });
@@ -28,9 +31,14 @@ export function Comments(props) {
         className={props.style}
         data-testid="Modal-component"
         disabled={false}
-        toggleText="Comment"
-        title={"Write a comment for " + state.theRoute + " route"}
-        closeText="Close"
+        toggleText={<FormattedMessage id="CommentsButtonTitle" />}
+        title={
+          <FormattedMessage
+            id="CommentsModelTitle"
+            values={{ theRoute: state.theRoute }}
+          />
+        }
+        closeText={<FormattedMessage id="Close" />}
         onOpen={handleOpen}
         handleClose={() => {}}
         saveText={CommentButtonText}
@@ -38,7 +46,8 @@ export function Comments(props) {
       >
         <form id="myForm" data-testid="form-component">
           <label data-testid="label-component">
-            Comment:<br></br>
+            <FormattedMessage id="Comments" />
+            <br></br>
             <textarea
               id="myTextArea"
               data-testid="textarea-component"

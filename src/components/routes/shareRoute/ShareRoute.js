@@ -10,6 +10,7 @@ import style from "./ShareRoute.module.css";
 import ViadeModal from "../../layout/modal/Modal";
 import { deepClone, filterUnsharedFriends } from "../../../utils/functions";
 import { Badge } from "react-bootstrap";
+import { FormattedMessage } from "react-intl";
 
 export function ShareRoute(props) {
   const { selectedRoute } = props;
@@ -80,7 +81,7 @@ export function ShareRoute(props) {
   const shareButtonText =
     activeSelectedFriends > 0 ? (
       <span data-testid="share-route-share-button-numbers">
-        Share
+        <FormattedMessage id="Share" />
         <Badge className={style.badge} color="secondary">
           <span data-testid="share-route-share-button-number">
             {activeSelectedFriends}
@@ -97,11 +98,11 @@ export function ShareRoute(props) {
       onOpen={() => {}}
       disabled={false}
       saveDisabled={activeSelectedFriends === 0}
-      toggleText="Share"
+      toggleText={<FormattedMessage id="Share" />}
       handleClose={handleClose}
       onSave={handleOnSave}
-      title="Pick some friends"
-      closeText="Close"
+      title={<FormattedMessage id="ShareModalTitle" />}
+      closeText={<FormattedMessage id="Close" />}
       saveText={shareButtonText}
     >
       <FriendList

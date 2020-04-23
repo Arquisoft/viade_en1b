@@ -11,21 +11,25 @@ import { HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { testStore } from "../../../../utils";
 import rootReducer from "../../../../store/reducers/RootReducer";
-
+import { locales } from "../../../../utils/locales"
+import { IntlProvider } from "react-intl";
 let rendered = null;
 const state = {
   route: {},
   auth: {},
   user: {},
   control: {},
+  localeReducer:{},
 };
 beforeEach(() => {
   const store = testStore(rootReducer, state);
   const { container } = render(
     <Provider store={store}>
+      <IntlProvider key={"en"} locale={"en"} messages={locales["en"]}>
       <HashRouter>
         <Navbar></Navbar>
       </HashRouter>
+      </IntlProvider>
     </Provider>
   );
   rendered = container;

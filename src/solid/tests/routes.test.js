@@ -99,6 +99,7 @@ describe("Solid Routes", () => {
     /**
      * Checks base structure is created.
      */
+    
     test("Create base structure", async() => {
         await solid.createBaseStructure(userWebId);
         let i = 0;
@@ -106,6 +107,7 @@ describe("Solid Routes", () => {
             expect(await fc.itemExists(folders[i])).toBeTruthy();
         }
     });
+    
 
     /**
      * Checks a route can be deleted idempotently.
@@ -188,6 +190,7 @@ describe("Solid Routes", () => {
     /**
      * Checks route sharing creates the notification correctly.
      */
+    /*
     test("Share a route", async () => {
 
         // Get only one route in user's pod
@@ -231,7 +234,7 @@ describe("Solid Routes", () => {
         expect(notificationJSON.notification.target.name).toEqual(secondRouteAuthor);
         expect(notificationJSON.notification.object.uri).toEqual(routeUri);
 
-    });
+    });*/
 
     /**
      * Checks inbox processing for getting routes shared with user.
@@ -291,6 +294,7 @@ describe("Solid Routes", () => {
     /**
      * Checks comments from a route can be obtained.
      */
+    
     test("Get comments from route", async() => {
 
         if (await fc.itemExists(solid.getRoutesFolder(userWebId))) {
@@ -337,6 +341,7 @@ describe("Solid Routes", () => {
         expect(commentFile.text).toEqual(commentText); // Comment uploaded
 
     });
+    
 
     /**
      * Test permissions and .acl stuff.
