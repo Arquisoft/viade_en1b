@@ -4,10 +4,7 @@ import { BsPerson, BsArrowBarUp, BsMap, BsCompass } from "react-icons/bs";
 import "./NavBar.css";
 import { LogoutButton } from "@solid/react";
 import { LinkContainer } from "react-router-bootstrap";
-import {
-  loadFriendsRequest,
-  loadEmailRequest,
-} from "../../../store/actions/UserActions";
+import {loadFriendsRequest,  loadEmailRequest} from "../../../store/actions/UserActions";
 import { updateWebId } from "../../../store/actions/AuthActions";
 import { loadRoutesRequest } from "../../../store/actions/RouteActions";
 import { contentLoaded } from "../../../store/actions/LoadActions";
