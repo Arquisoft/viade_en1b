@@ -1,7 +1,10 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import MyNavBar from "./components/layout/navbar/NavBar";
-import { ThemeContext } from "./components/layout/themeContext/ThemeContext";
+import {
+  ThemeContext,
+  themes,
+} from "./components/layout/themeContext/ThemeContext";
 import { useLoggedIn } from "@solid/react";
 import Routing from "./components/routing/Routing";
 import Footer from "./components/layout/footer/Footer";
@@ -11,8 +14,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 export const App = (props) => {
-  const theme = useContext(ThemeContext);
+
+  const [theme, changeTheme] = useState(themes.purple);
   const { locale } = props;
+
   useEffect(() => {
     Object.keys(theme).map((key) => {
       const value = theme[key];
@@ -27,12 +32,20 @@ export const App = (props) => {
     ) : null;
 
   return (
+
     <IntlProvider key={locale} locale={locale} messages={locales[props.locale]}>
+
+    <ThemeContext.Provider value={{ theme, changeTheme }}>
+
       <div data-testid="theApp" className="App">
         <Routing navBar={navBar} />
         <Footer></Footer>
       </div>
+
+    </ThemeContext.Provider>
+
     </IntlProvider>
+
   );
 };
 

@@ -10,12 +10,13 @@ export const FriendList = (props) => {
   const onClick = (friend) => {
     return <Redirect to={friend.uri} />;
   };
-  //Checked friendList to be used by the ShareRoute component
+
   let friendsCardsWithCheckBoxes = props.friends.map((friend, key) => {
     return (
       <Card
         data-testid={"card" + key}
         onClick={() => props.onClick(key)}
+        className={props.style ? props.style.card : ""}
         key={key}
       >
         <Card.Body style={{ marginLeft: "1em" }}>
@@ -79,7 +80,9 @@ export const FriendList = (props) => {
 
   return (
     <div
-      className={style.friendListContainer}
+      className={
+        props.style ? props.style.container : style.friendListContainer
+      }
       data-testid="friend-list-container"
       id="friendListContainer"
     >

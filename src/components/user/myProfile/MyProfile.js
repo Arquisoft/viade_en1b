@@ -7,10 +7,15 @@ import { Button, Badge } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
+import {
+  getOwnRoutesNumber,
+  getSharedRoutesNumber,
+} from "../../../utils/functions";
 
 export function MyProfile(props) {
   let email = props.userEmail ? <p>{props.userEmail}</p> : null;
   let emailLoading = props.loading === true ? <p>Loading...</p> : null;
+  const { routes } = props;
 
   return (
     <div id="generalComponent">
@@ -37,8 +42,11 @@ export function MyProfile(props) {
               {emailLoading}
               <p>
                 <Badge variant="dark">
-                  <Value src="user.vcard_role" />
-                  <FormattedMessage id="CEO" />
+                  {<Value src="user.vcard_role" /> ? (
+                    <Value src="user.vcard_role" />
+                  ) : (
+                    <FormattedMessage id="CEO"/>
+                  )}
                 </Badge>
               </p>
               <a href={useWebId()}>
@@ -48,12 +56,16 @@ export function MyProfile(props) {
             </div>
             <div id="profileData">
               <Button variant="primary">
-                <FormattedMessage id="Routes" />{" "}
-                <Badge variant="light">4</Badge>
+                <FormattedMessage id="Routes" />
+                <Badge variant="light">
+                  {getOwnRoutesNumber(routes, useWebId())}
+                </Badge>
               </Button>
               <Button variant="primary">
                 <FormattedMessage id="SharedRoutes" />{" "}
-                <Badge variant="light">2</Badge>
+                <Badge variant="light">
+                  {getSharedRoutesNumber(routes, useWebId())}
+                </Badge>
               </Button>
             </div>
           </div>
@@ -73,6 +85,7 @@ const mapStateToProps = (state) => {
     emailLoading: state.user.emailLoading,
     emailError: state.user.emailError,
     friends: state.user.friends,
+    routes: state.route.routes,
   };
 };
 

@@ -1,12 +1,17 @@
-import { uploadRouteToPod, /*shareRouteToPod*/ 
-shareRouteToPod} from "../../solid/routes";
+import {
+  uploadRouteToPod /*shareRouteToPod*/,
+  shareRouteToPod,
+  clearRouteFromPod,
+  getRoutesFolder,
+} from "../../solid/routes";
 import { deepClone } from "../../utils/functions";
+import { getWebId } from "../../solid/auth";
 
 const initState = {
   routes: [],
   selectedRoute: null,
   routesLoading: false,
-  routesError: null
+  routesError: null,
 };
 
 export const routeReducer = (state = initState, action) => {
@@ -14,14 +19,14 @@ export const routeReducer = (state = initState, action) => {
     case "SHOW_ROUTE":
       return {
         ...state,
-        selectedRoute: action.payload
+        selectedRoute: action.payload,
       };
     case "UPLOAD_ROUTE":
       console.log(action.payload.webId);
       const id = action.payload.webId;
       const route = action.payload.route;
       const sharedWith = route.sharedWith ? route.sharedWith : [];
-      const comments = [route.comments]
+      const comments = [route.comments];
       const newRoute = {
         name: route.name,
         description: route.description,
@@ -30,61 +35,75 @@ export const routeReducer = (state = initState, action) => {
         images: route.images,
         videos: route.videos,
         sharedWith: sharedWith,
-        comments: comments
+        comments: comments,
       };
       uploadRouteToPod(newRoute, action.payload.webId);
       //let previousRoutes = [...action.payload.routes];
       //previousRoutes.push(action.payload.route);
       return {
-        ...state
+        ...state,
       };
 
     case "DELETE_ROUTE":
-      let routes = state.routes.filter(r => r.id !== action.payload.id);
+      console.log(action.payload);
+      clearRouteFromPod(action.payload.route.id, action.payload.uri);
+      let routes = state.routes.filter((r) => r.id !== action.payload.route.id);
       return {
         ...state,
         routes: routes,
-        selectedRoute: null
+        selectedRoute: null,
       };
     case "CLEAR_ROUTE":
       return {
         ...state,
-        selectedRoute: action.payload
+        selectedRoute: action.payload,
       };
     case "SHARE_ROUTE":
       let stateRoutes = deepClone(state.routes);
       let sharedRouteId = action.payload.route.id;
       let alreadyShared = stateRoutes.filter(
-        route => route.id === action.payload.route.id
+        (route) => route.id === action.payload.route.id
       )[0].sharedWith;
       let sharedRoute = {
         ...action.payload.route,
-        sharedWith: action.payload.friends.concat(alreadyShared)
+        sharedWith: action.payload.friends.concat(alreadyShared),
       };
 
       let newRoutes = stateRoutes;
       newRoutes[sharedRouteId] = sharedRoute;
+      let friends = action.payload.friends;
 
-      if (action.payload.friends[0]) {
-        shareRouteToPod(action.payload.route, action.payload.friends[0].uri);
+      if (friends[0]) {
+        getWebId().then((userWebID) => {
+          friends.forEach((friend) => {
+            shareRouteToPod(
+              userWebID,
+              getRoutesFolder(userWebID) + action.payload.route.id + ".jsonld",
+              friend.uri,
+              userWebID.split("//")[1].split(".")[0],
+              friend.name,
+              sharedRouteId
+            );
+          });
+        });
       }
-      console.log(newRoutes);
+      //console.log(newRoutes);
       return { ...state, routes: newRoutes };
     case "LOAD_ROUTES_REQUEST":
       return {
         ...state,
-        routesLoading: action.payload
+        routesLoading: action.payload,
       };
     case "LOAD_ROUTES_SUCCESS":
       return {
         ...state,
         routes: action.payload,
-        routesLoading: false
+        routesLoading: false,
       };
     case "LOAD_ROUTES_ERROR":
       return {
         ...state,
-        routesError: action.payload
+        routesError: action.payload,
       };
     default:
       return state;

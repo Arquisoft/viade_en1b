@@ -4,14 +4,20 @@ import thunk from "redux-thunk";
 import {
   myLogger,
   asyncRouteFetch,
-  asyncProfileFetch
+  asyncProfileFetch,
 } from "./middlewares/middlewares";
 
 export const middlewares = [
   thunk,
   myLogger,
   asyncRouteFetch,
-  asyncProfileFetch
+  asyncProfileFetch,
+];
+
+export const middlewaresForTesting = [
+  thunk,
+  asyncRouteFetch,
+  asyncProfileFetch,
 ];
 
 export const createStoreWithMiddleware = applyMiddleware(...middlewares)(

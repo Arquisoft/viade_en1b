@@ -10,8 +10,8 @@ const mockFriends = [
   {
     name: "mockFriend2",
     uri: "https://viandetest2020.solid.community",
-    checked: true
-  }
+    checked: true,
+  },
 ];
 beforeEach(() => {
   window.location = { href: mockFriends[0].uri + "profile/card#me" };
@@ -20,7 +20,6 @@ describe("FriendList component", () => {
   test("renders correctly with normal setting", () => {
     render(<FriendList friends={mockFriends}></FriendList>);
     expect(screen.queryByTestId("friend-list-container")).toBeInTheDocument();
-    expect(screen.queryByTestId("friend-list-heading")).toBeInTheDocument();
     expect(screen.queryByTestId("friend-list-main")).toBeInTheDocument();
     expect(screen.queryByTestId("friend-list-card0")).toBeInTheDocument();
     expect(screen.queryByTestId("friend-list-friend-uri0")).toBeInTheDocument();

@@ -1,7 +1,10 @@
-export const deleteRoute = route => {
+export const deleteRoute = (route, userWebId) => {
   return {
     type: "DELETE_ROUTE",
-    payload: route
+    payload: {
+      route: route,
+      uri: userWebId
+    }
   };
 };
 
