@@ -16,12 +16,12 @@ More information about how this project has been setup is available [in the wiki
 
 ## Contributors
 
-- [Marcos Álvarez García](https://github.com/alvarezGarciaMarcos)
-- [Pelayo García Álvarez](https://github.com/garciaAlvarezPelayo)
-- [Álvaro García Infante](https://github.com/alvarogarinf)
-- [Íñigo Gutiérrez Fernández](https://github.com/InigoGutierrez)
-- [Eduardo Lamas Suarez](https://github.com/lamasumas)
-- [César García Cabeza](https://github.com/themrcesi)
+- Marcos Álvarez García - [alvarezGarciaMarcos](https://github.com/alvarezGarciaMarcos)
+- Pelayo García Álvarez - [garciaAlvarezPelayo](https://github.com/garciaAlvarezPelayo)
+- Álvaro García Infante - [alvaro_garinf](https://github.com/alvarogarinf)
+- Íñigo Gutiérrez Gernández - [InigoGutierrez](https://github.com/InigoGutierrez)
+- Eduardo Lamas Suárez - [lamasumas](https://github.com/lamasumas)
+- César García Cabeza - [themrcesi](https://github.com/themrcesi)
 
 ## Documentation
 
@@ -49,7 +49,7 @@ In order to run this project, you will need to follow these steps:
     ```shell
     npm install 
     ```
-    > to have all the dependencies needed.
+    to have all the dependencies needed.
 
 ### Generating the documentation
 
@@ -82,11 +82,38 @@ Run `npm run cucumber`.
 
 ### Running load tests
 
-Run `npm run artillery`.
+TODO
+
 > This tests have been created using [Artillery](https://artillery.io/).
 
 ### Docker
 
 TBD
 
+### Further help
+
+To get more help on the React use `npm help` or go to their [main webpage](https://es.reactjs.org/).
+
 ---
+
+## Application
+
+### Accesibility
+
+We are concerned about every kind of users, specially color blind people. 
+
+Regarding this fact, we have included a functionality to change in runtime the theme of our application in order to solve the main three color blindnesses: 
+1. Protanopia: confusion of reds and greens and loss of sensitivity to red light.
+2. Tritanopia: confusion of blues and greens an which sensitivity to blue is reduced.
+3. Deuteranopia: confusion of blues and greens, of greens and reds and which sensitivity of green is reduced.
+
+### Internationalization
+
+Currently, our application is internationalized for English and Spanish.
+
+### Basic use
+
+If you want to know about how to use our application, you can go to our [user manual](https://lamasumas.github.io/Solid/).
+
+
+
