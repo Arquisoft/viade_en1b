@@ -8,14 +8,30 @@ This repository contains a skeleton of the VIADE project.
 
 This project is an assignment for the [Software Architecture course](https://arquisoft.github.io/) following [these requirements](https://labra.solid.community/public/SoftwareArchitecture/AssignmentDescription/).
 
-The app is deployed at [https://arquisoft.github.io/viade_en1b/](https://arquisoft.github.io/viade_en1b/) which also contains a [technical documentation](https://arquisoft.github.io/viade_en1b/docs).
-
 More information about how this project has been setup is available [in the wiki](https://github.com/Arquisoft/viade_en1b/wiki).
 
 ---
 
-## Building Instructions
-### Dependencies
+[Check it out!](https://arquisoft.github.io/viade_en1b/)
+
+## Contributors
+
+- [Marcos Álvarez García](https://github.com/alvarezGarciaMarcos)
+- [Pelayo García Álvarez](https://github.com/garciaAlvarezPelayo)
+- [Álvaro García Infante](https://github.com/alvarogarinf)
+- [Íñigo Gutiérrez Fernández](https://github.com/InigoGutierrez)
+- [Eduardo Lamas Suarez](https://github.com/lamasumas)
+- [César García Cabeza](https://github.com/themrcesi)
+
+## Documentation
+
+The documentation is available [here](https://arquisoft.github.io/viade_en1b/docs).
+
+## Development
+
+This project was generated using [Create React App](https://create-react-app.dev/).
+
+### Getting started
 In order to run this project, you will need to follow these steps:
 1. Install [Ruby](https://www.ruby-lang.org/es/)
     > We recommend to install ruby using [RubyInstaller](https://rubyinstaller.org/)
@@ -33,18 +49,44 @@ In order to run this project, you will need to follow these steps:
     ```shell
     npm install 
     ```
-### Running the project
-Once you have all the dependencies installed, you should issue the following command:
-```shell
-npm start
+    > to have all the dependencies needed.
+
+### Generating the documentation
+
+Execute 
 ```
+    npm run docs
+```
+to generate the html documents and dependencies (all the documents will be stored in `/build/docs`).
+
+### Development server
+
+If you want to test the application in your local machine, you will need run a development server in your machine.
+
+1. Run `npm start`.
+2. Go to your browser and navigate to `http://localhost:3000/viade_en1b`.
+
+### Building the application
+    
+If you want to build the applicatioin you need to run `npm run build` and all the files will be stored in `/build`.
+
+### Runing unit tests
+
+To execute the unit tests, you need to run `npm test`. 
+> This tests have been created using [Jest](https://jestjs.io/).
+
+### Running end-to-end tests
+
+Run `npm run cucumber`. 
+> This tests have been created using [Cucumber](https://cucumber.io/) and [Selenium](https://www.selenium.dev/).
+
+### Running load tests
+
+Run `npm run artillery`.
+> This tests have been created using [Artillery](https://artillery.io/).
+
+### Docker
+
+TBD
+
 ---
-
-## Contributors
-
-- [Marcos Álvarez García](https://github.com/alvarezGarciaMarcos)
-- [Pelayo García Álvarez](https://github.com/garciaAlvarezPelayo)
-- [César García Cabeza](https://github.com/themrcesi)
-- [Álvaro García Infante](https://github.com/alvarogarinf)
-- [Íñigo Gutiérrez Fernández](https://github.com/InigoGutierrez)
-- [Eduardo Lamas Suarez](https://github.com/lamasumas)
