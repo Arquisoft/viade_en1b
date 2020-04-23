@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import { getWebId } from "../../../solid/auth";
 import { FormattedMessage } from "react-intl";
 import ThemePicker from "../theme/ThemePicker";
-import { createBaseStructure, checkInboxForSharedRoutes } from "../../../solid/routes";
+//import { createBaseStructure, checkInboxForSharedRoutes } from "../../../solid/routes";
 
 export const MyNavBar = (props) => {
   const links = [
