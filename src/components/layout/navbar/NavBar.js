@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { getWebId } from "../../../solid/auth";
 import { FormattedMessage } from "react-intl";
 import ThemePicker from "../theme/ThemePicker";
+import { createBaseStructure, checkInboxForSharedRoutes } from "../../../solid/routes";
 
 export const MyNavBar = (props) => {
   const links = [
@@ -46,6 +47,8 @@ export const MyNavBar = (props) => {
       props.updateWebId(id);
       props.loadFriendsRequest();
       props.loadEmailRequest();
+      //createBaseStructure(id);
+      //checkInboxForSharedRoutes(id);
       props.loadRoutesRequest();
       props.contentLoaded();
     });
