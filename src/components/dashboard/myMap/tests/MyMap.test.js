@@ -15,7 +15,7 @@ describe('MyMap Component', () => {
         wrapperb = <MyMap center={props.center} positions={props.positions}></MyMap>;
     });
     
-    test('Component renders correctly', () => {
+    test("Component renders correctly", () => {
         waitForElement(() => {
             expect(wrapperb.prop('positions')).not.toBeNull();
             expect(wrapperb.prop('center')).not.toBeNull();

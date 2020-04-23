@@ -12,18 +12,18 @@ describe('User Reducer', () => {
         friendsError: null
     };
 
-    test('Should return default state', () => {
+    test("Should return default state", () => {
         const newState = userReducer(undefined, {});
         expect(newState).toEqual(initState);
     });
 
-    describe('Should return state if receiving type', () => {
+    describe("Should return state if receiving type", () => {
 
         const mockPayload = "mock";
 
-        test('Type SHOW_ROUTE', () => {
+        test("Type SHOW_ROUTE", () => {
             const newState = userReducer(initState, {
-                type: 'LOAD_EMAIL_REQUEST',
+                type: "LOAD_EMAIL_REQUEST",
                 payload: mockPayload
             });
             const expected = {
@@ -33,9 +33,9 @@ describe('User Reducer', () => {
             expect(newState).toEqual(expected);
         })
 
-        test('Type LOAD_EMAIL_ERROR', () => {
+        test("Type LOAD_EMAIL_ERROR", () => {
             const newState = userReducer(initState, {
-                type: 'LOAD_EMAIL_ERROR',
+                type: "LOAD_EMAIL_ERROR",
                 payload: mockPayload
             });
             const expected = {
@@ -45,9 +45,9 @@ describe('User Reducer', () => {
             expect(newState).toEqual(expected);
         })
 
-        test('Type LOAD_EMAIL_SUCCESS', () => {
+        test("Type LOAD_EMAIL_SUCCESS", () => {
             const newState = userReducer(initState, {
-                type: 'LOAD_EMAIL_SUCCESS',
+                type: "LOAD_EMAIL_SUCCESS",
                 payload: mockPayload
             });
             const expected = {
@@ -58,9 +58,9 @@ describe('User Reducer', () => {
             expect(newState).toEqual(expected);
         })
 
-        test('Type LOAD_FRIENDS_REQUEST', () => {
+        test("Type LOAD_FRIENDS_REQUEST", () => {
             const newState = userReducer(initState, {
-                type: 'LOAD_FRIENDS_REQUEST',
+                type: "LOAD_FRIENDS_REQUEST",
                 payload: mockPayload
             });
             const expected = { 
@@ -70,9 +70,9 @@ describe('User Reducer', () => {
             expect(newState).toEqual(expected);
         })
 
-        test('Type LOAD_FRIENDS_SUCCESS', () => {
+        test("Type LOAD_FRIENDS_SUCCESS", () => {
             const newState = userReducer(initState, {
-                type: 'LOAD_FRIENDS_SUCCESS',
+                type: "LOAD_FRIENDS_SUCCESS",
                 payload: mockPayload
             });
             const expected = { 
@@ -83,9 +83,9 @@ describe('User Reducer', () => {
             expect(newState).toEqual(expected);
         })
 
-        test('Type LOAD_FRIENDS_ERROR', () => {
+        test("Type LOAD_FRIENDS_ERROR", () => {
             const newState = userReducer(initState, {
-                type: 'LOAD_FRIENDS_ERROR',
+                type: "LOAD_FRIENDS_ERROR",
                 payload: mockPayload
             });
             const expected = { 

@@ -16,6 +16,6 @@ export const parseGPX = (file) =>
         routeList.push(routePositions)
     })
     return routeList[0] //en caso de haber más de un track por archivo solo devolvemos el primer track
-}
+};
 
-export default parseGPX
+export default parseGPX;

@@ -146,4 +146,4 @@ describe("Routes Reducer", () => {
         });
         
     });
-})
+});

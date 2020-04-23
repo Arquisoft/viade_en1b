@@ -8,7 +8,7 @@ describe("Auth Reducer", () => {
         userWebId: null
     }
    
-    test("Should return default state", () =>{
+    test("Should return default state", () => {
         const newState = authReducer(undefined, {});
         expect(newState).toEqual(initState);
     });
