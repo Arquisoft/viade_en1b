@@ -16,12 +16,12 @@ More information about how this project has been setup is available [in the wiki
 
 ## Contributors
 
-  - Marcos Álvarez García — [alvarezGarciaMarcos](https://github.com/alvarezGarciaMarcos)
-  - Pelayo García Álvarez — [garciaAlvarezPelayo](https://github.com/garciaAlvarezPelayo)
-  - Álvaro García Infante — [alvaro_garinf](https://github.com/alvarogarinf)
-  - Íñigo Gutiérrez Gernández — [InigoGutierrez](https://github.com/InigoGutierrez)
-  - Eduardo Lamas Suárez — [lamasumas](https://github.com/lamasumas)
-  - César García Cabeza — [themrcesi](https://github.com/themrcesi)
+- Marcos Álvarez García — [alvarezGarciaMarcos](https://github.com/alvarezGarciaMarcos)
+- Pelayo García Álvarez — [garciaAlvarezPelayo](https://github.com/garciaAlvarezPelayo)
+- Álvaro García Infante — [alvaro_garinf](https://github.com/alvarogarinf)
+- Íñigo Gutiérrez Gernández — [InigoGutierrez](https://github.com/InigoGutierrez)
+- Eduardo Lamas Suárez — [lamasumas](https://github.com/lamasumas)
+- César García Cabeza — [themrcesi](https://github.com/themrcesi)
 
 ## Documentation
 
@@ -68,8 +68,8 @@ to generate the html documents and dependencies (all the documents will be store
 
 If you want to test the application in your local machine, you will need run a development server in your machine.
 
- 1. Run `npm start`.
- 2. Go to your browser and navigate to `http://localhost:3000/viade_en1b`.
+1. Run `npm start`.
+2. Go to your browser and navigate to `http://localhost:3000/viade_en1b`.
 
 ### Building the application
 
