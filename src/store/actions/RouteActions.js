@@ -13,7 +13,7 @@ export const shareRoute = (route, friends) => {
     type: "SHARE_ROUTE",
     payload: {
       route: route,
-      friends: friends
+      friends: friends,
     }
   };
 };

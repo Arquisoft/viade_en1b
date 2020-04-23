@@ -39,27 +39,31 @@ export function Settings(props) {
           <FormattedMessage id="Spanish" />{" "}
         </Dropdown.Item>
       </DropdownButton>
-      <h2><FormattedMessage id="Technical"/></h2>
+      <h2>
+        <FormattedMessage id="Technical" />
+      </h2>
       <p>
-      <FormattedMessage id="TechnicalDescription"/>{" "}
+        <FormattedMessage id="TechnicalDescription" />{" "}
         <a
           href="https://arquisoft.github.io/viade_en1b/docs/"
           target="_blank"
           rel="noopener noreferrer"
         >
-            <FormattedMessage id="ThisPage"/>
+          <FormattedMessage id="ThisPage" />
         </a>{" "}
       </p>
-      <h2> <FormattedMessage id="HowToUse"/></h2>
+      <h2>
+        {" "}
+        <FormattedMessage id="HowToUse" />
+      </h2>
       <p>
-      <FormattedMessage id="HowToUseDescription"/> {" "}
-      <br></br>
+        <FormattedMessage id="HowToUseDescription" /> <br></br>
         <a
           href="https://lamasumas.github.io/Solid/"
           target="_blank"
           rel="noopener noreferrer"
         >
-           <FormattedMessage id="Here"/>
+          <FormattedMessage id="Here" />
         </a>{" "}
       </p>
     </div>
