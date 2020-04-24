@@ -13,10 +13,7 @@ import {
 
 export const myLogger = (store) => (next) => (action) => {
   console.groupCollapsed(action.type);
-  console.log("PAYLOAD: ", action.payload);
-  console.log("previous state", store.getState());
   next(action);
-  console.log("actual state", store.getState());
   console.groupEnd();
 };
 export const asyncRouteFetch = (store) => (next) => (action) => {

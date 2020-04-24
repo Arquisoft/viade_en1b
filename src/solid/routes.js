@@ -45,7 +45,6 @@ export function getMyCommentsFolder(userWebId) {
  * Returns a string containing the URI of the inbox folder for the given user.
  */
 export function getInboxFolder(userWebId) {
-  console.log(userWebId);
   const inboxUrl = userWebId.split("profile")[0] + appName + "/inbox/";
   return inboxUrl;
 }
@@ -384,17 +383,9 @@ export async function shareRouteToPod(
   sharerName,
   receiverName
 ) {
-  console.log({
-    userWebId,
-    routeUri,
-    targetUserWebId,
-    sharerName,
-    receiverName,
-  });
   let url = getInboxFolder(targetUserWebId);
 
   //return null; // Possibility: notify the user the target user does not have inbox folder
-  console.log({ url });
   await createFolderIfAbsent(url);
 
   let notificationUrl = url + uuidv4() + ".jsonld";

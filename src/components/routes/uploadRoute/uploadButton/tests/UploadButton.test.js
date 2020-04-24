@@ -54,7 +54,6 @@ describe("Upload an element to a single file button", () => {
                 value: [mockFile1, mockFile2, mockFile3]
             });
             fireEvent.change(input);
-            console.log(myRef.current);
             expect(queryByTestId(uploadButton, "upload-button-label").textContent).toBe("3 files selected");
         });
     });
