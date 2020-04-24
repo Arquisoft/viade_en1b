@@ -24,6 +24,11 @@ export default function Routing(props) {
         ></Route>
         <Route
           exact
+          path="/notifications"
+          render={() => <Notifications {...props} />}
+        ></Route>
+        <Route
+          exact
           path="/dashboard"
           render={() => <Dashboard {...props} />}
         ></Route>
