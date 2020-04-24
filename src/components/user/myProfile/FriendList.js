@@ -3,6 +3,7 @@ import { Card, Form } from "react-bootstrap";
 import style from "./FriendList.css";
 import { BsCheck } from "react-icons/bs";
 import { Redirect } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 
 export const FriendList = (props) => {
   //Function used by the non-checked version of the component
@@ -72,10 +73,7 @@ export const FriendList = (props) => {
       {props.checked ? (
         friendsCardsWithCheckBoxes
       ) : (
-        <React.Fragment>
-          <h1>Friends List</h1>
-          {friendsCards}
-        </React.Fragment>
+        <React.Fragment>{friendsCards}</React.Fragment>
       )}
     </div>
   );
@@ -88,6 +86,9 @@ export const FriendList = (props) => {
       data-testid="friend-list-container"
       id="friendListContainer"
     >
+      <h1 data-testid="friend-list-heading">
+        <FormattedMessage id="FriendsList" />
+      </h1>
       {friends}
     </div>
   );

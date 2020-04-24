@@ -3,13 +3,18 @@ import { BrowserRouter } from "react-router-dom";
 import { render, queryByTestId, waitForElement } from "@testing-library/react";
 import { MyRoutes } from "../MyRoutes";
 import "@testing-library/jest-dom";
+import { locales } from "../../../../utils/locales";
+import { IntlProvider } from "react-intl";
+
 let myRoutes = null;
 let rerenderFunc = () => {};
 beforeEach(() => {
   const { container, rerender } = render(
-    <BrowserRouter>
-      <MyRoutes></MyRoutes>
-    </BrowserRouter>
+    <IntlProvider key={"en"} locale={"en"} messages={locales["en"]}>
+      <BrowserRouter>
+        <MyRoutes></MyRoutes>
+      </BrowserRouter>
+    </IntlProvider>
   );
   myRoutes = container;
   rerenderFunc = rerender;

@@ -9,6 +9,9 @@ import {
 import "@testing-library/jest-dom";
 import { ShareRoute } from "../ShareRoute";
 import { findRenderedComponentWithType } from "react-dom/test-utils";
+import { locales } from "../../../../utils/locales";
+import { IntlProvider } from "react-intl";
+
 let selectedRoute = {
   name: "Sequoia National Park",
   description: "",
@@ -53,13 +56,15 @@ afterEach(cleanup);
 
 beforeEach(() => {
   render(
-    <ShareRoute
-      selectedRoute={selectedRoute}
-      friends={[inigo, cesar]}
-      sharedWith={[]}
-      shareRoute={onSave}
-      userWebId=""
-    ></ShareRoute>
+    <IntlProvider key={"en"} locale={"en"} messages={locales["en"]}>
+      <ShareRoute
+        selectedRoute={selectedRoute}
+        friends={[inigo, cesar]}
+        sharedWith={[]}
+        shareRoute={onSave}
+        userWebId=""
+      ></ShareRoute>
+    </IntlProvider>
   );
 });
 

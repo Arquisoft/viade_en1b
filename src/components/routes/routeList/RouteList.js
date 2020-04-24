@@ -4,6 +4,7 @@ import styles from "./RouteList.module.css";
 import { connect } from "react-redux";
 import Loader from "react-loader-spinner";
 import { ThemeContext } from "../../layout/themeContext/ThemeContext";
+import { FormattedMessage } from "react-intl";
 
 export const RouteList = React.memo((props) => {
   const theme = useContext(ThemeContext);
@@ -40,7 +41,7 @@ export const RouteList = React.memo((props) => {
         summaries
       ) : (
         <span className={styles.noRoutes}>
-          Your routes will be displayed here
+          <FormattedMessage id="NoRoutes" />
         </span>
       )}
     </div>

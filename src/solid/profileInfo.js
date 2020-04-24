@@ -34,7 +34,7 @@ export function getFriendProfile(friendWebId) {
   else if (tempFriendurl.includes("solid.community"))
     tempFriendurl =
       tempFriendurl.split("solid.community")[0] + "solid.community";
-  else tempFriendurl = tempFriendurl.split("/profile/")[0];
+  else {tempFriendurl = tempFriendurl.split("/profile/")[0]; }
 
   return tempFriendurl + "/profile/card#me";
 }
