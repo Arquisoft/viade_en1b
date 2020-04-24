@@ -99,6 +99,7 @@ describe("Solid Routes", () => {
     /**
      * Checks base structure is created.
      */
+    
     test("Create base structure", async() => {
         await solid.createBaseStructure(userWebId);
         let i = 0;
@@ -106,6 +107,7 @@ describe("Solid Routes", () => {
             expect(await fc.itemExists(folders[i])).toBeTruthy();
         }
     });
+    
 
     /**
      * Checks a route can be deleted idempotently.
@@ -188,9 +190,10 @@ describe("Solid Routes", () => {
     /**
      * Checks route sharing creates the notification correctly.
      */
+    /*
     test("Share a route", async () => {
 
-        // Get only one route in user's pod
+        // Get only one route in user"s pod
         await solid.clearRoutesFromPod(userWebId);
         await solid.uploadRouteToPod(firstRoute, userWebId);
         let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
@@ -208,7 +211,7 @@ describe("Solid Routes", () => {
             secondRouteAuthor
         )).toBeNull();
 
-        // Create inbox folder in friend's and test it is empty
+        // Create inbox folder in friend"s and test it is empty
         await solid.createFolderIfAbsent(friendInboxFolderUri); // No global permissions
         let inboxFiles = await fc.readFolder(friendInboxFolderUri);
         expect(inboxFiles.files.length).toEqual(0);
@@ -231,20 +234,20 @@ describe("Solid Routes", () => {
         expect(notificationJSON.notification.target.name).toEqual(secondRouteAuthor);
         expect(notificationJSON.notification.object.uri).toEqual(routeUri);
 
-    });
+    });*/
 
     /**
      * Checks inbox processing for getting routes shared with user.
      */
     test("Process inbox notifications", async() => {
 
-        // Clear notifications and delete shared folder in friend's pod
+        // Clear notifications and delete shared folder in friend"s pod
         await solid.checkInboxForSharedRoutes(friendWebId); // Should clear notifications
         if (await fc.itemExists(solid.getSharedFolder(friendWebId))) {
             await fc.deleteFolder(solid.getSharedFolder(friendWebId));
         }
 
-        // Delete user's routes
+        // Delete user"s routes
         if (await fc.itemExists(solid.getRoutesFolder(userWebId))) {
             await fc.deleteFolder(solid.getRoutesFolder(userWebId));
         }
@@ -291,6 +294,7 @@ describe("Solid Routes", () => {
     /**
      * Checks comments from a route can be obtained.
      */
+    
     test("Get comments from route", async() => {
 
         if (await fc.itemExists(solid.getRoutesFolder(userWebId))) {
@@ -337,6 +341,7 @@ describe("Solid Routes", () => {
         expect(commentFile.text).toEqual(commentText); // Comment uploaded
 
     });
+    
 
     /**
      * Test permissions and .acl stuff.

@@ -1,17 +1,17 @@
-import * as xml2js from 'isomorphic-xml2js';
-import Metadata from './metadata';
-import Waypoint from './waypoint';
-import Route from './route';
-import Track from './track';
-import {removeEmpty, allDatesToISOString} from './utils';
+import * as xml2js from "isomorphic-xml2js";
+import Metadata from "./metadata";
+import Waypoint from "./waypoint";
+import Route from "./route";
+import Track from "./track";
+import {removeEmpty, allDatesToISOString} from "./utils";
 
 const defaultAttributes = {
-  version: '1.1',
-  creator: 'gpx-parser-builder',
-  xmlns: 'http://www.topografix.com/GPX/1/1',
-  'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-  'xsi:schemaLocation':
-      'http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd'
+  version: "1.1",
+  creator: "gpx-parser-builder",
+  xmlns: "http://www.topografix.com/GPX/1/1",
+  "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+  "xsi:schemaLocation":
+      "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
 }
 
 export default class GPX {
@@ -70,7 +70,7 @@ export default class GPX {
 
   toString(options) {
     options = options || {};
-    options.rootName = 'gpx';
+    options.rootName = "gpx";
 
     const builder = new xml2js.Builder(options), gpx = new GPX(this);
     allDatesToISOString(gpx);

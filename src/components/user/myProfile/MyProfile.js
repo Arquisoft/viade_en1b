@@ -6,12 +6,16 @@ import FriendList from "./FriendList.js";
 import { Button, Badge } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { getOwnRoutesNumber, getSharedRoutesNumber } from "../../../utils/functions";
+import { FormattedMessage } from "react-intl";
+import {
+  getOwnRoutesNumber,
+  getSharedRoutesNumber,
+} from "../../../utils/functions";
 
 export function MyProfile(props) {
   let email = props.userEmail ? <p>{props.userEmail}</p> : null;
   let emailLoading = props.loading === true ? <p>Loading...</p> : null;
-  const {routes} = props;
+  const { routes } = props;
 
   return (
     <div id="generalComponent">
@@ -28,7 +32,7 @@ export function MyProfile(props) {
           <div id="allData">
             <div id="profileData">
               <h1>
-                Hello,{" "}
+                <FormattedMessage id="Greetings" />,{" "}
                 <b>
                   <Value src="user.name" />
                 </b>
@@ -38,19 +42,30 @@ export function MyProfile(props) {
               {emailLoading}
               <p>
                 <Badge variant="dark">
-                  {<Value src="user.vcard_role" /> ? <Value src="user.vcard_role" /> : "CEO"}
+                  {<Value src="user.vcard_role" /> ? (
+                    <Value src="user.vcard_role" />
+                  ) : (
+                    <FormattedMessage id="CEO" />
+                  )}
                 </Badge>
               </p>
               <a href={useWebId()}>
-                Solid profile <BsBoxArrowUpRight></BsBoxArrowUpRight>
+                <FormattedMessage id="SolidProfile" />{" "}
+                <BsBoxArrowUpRight></BsBoxArrowUpRight>
               </a>
             </div>
             <div id="profileData">
               <Button variant="primary">
-                Routes <Badge variant="light">{getOwnRoutesNumber(routes, useWebId())}</Badge>
+                <FormattedMessage id="Routes" />
+                <Badge variant="light">
+                  {getOwnRoutesNumber(routes, useWebId())}
+                </Badge>
               </Button>
               <Button variant="primary">
-                Shared routes <Badge variant="light">{getSharedRoutesNumber(routes, useWebId())}</Badge>
+                <FormattedMessage id="SharedRoutes" />{" "}
+                <Badge variant="light">
+                  {getSharedRoutesNumber(routes, useWebId())}
+                </Badge>
               </Button>
             </div>
           </div>
@@ -64,13 +79,13 @@ export function MyProfile(props) {
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     userEmail: state.user.email,
     emailLoading: state.user.emailLoading,
     emailError: state.user.emailError,
     friends: state.user.friends,
-    routes: state.route.routes
+    routes: state.route.routes,
   };
 };
 

@@ -5,14 +5,14 @@ export const loadEmailRequest = () => {
   };
 };
 
-export const loadEmailSuccess = email => {
+export const loadEmailSuccess = (email) => {
   return {
     type: "LOAD_EMAIL_SUCCESS",
     payload: email
   };
 };
 
-export const loadEmailError = error => {
+export const loadEmailError = (error) => {
   return {
     type: "LOAD_EMAIL_ERROR",
     payload: error
@@ -26,14 +26,14 @@ export const loadFriendsRequest = () => {
   };
 };
 
-export const loadFriendsSuccess = friends => {
+export const loadFriendsSuccess = (friends) => {
   return {
     type: "LOAD_FRIENDS_SUCCESS",
     payload: friends
   };
 };
 
-export const loadFriendsError = error => {
+export const loadFriendsError = (error) => {
   return {
     type: "LOAD_FRIENDS_ERROR",
     payload: error
