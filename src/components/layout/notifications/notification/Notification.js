@@ -6,7 +6,7 @@ export default function Notification(props) {
     const {notification} = props;
 
     return (
-        <Card data-testid = "notification-card" id={props.id} onClick={() => {}}>
+        <Card data-testid = "notification-card" onClick={() => {}}>
             <Card.Body>
                 <Card.Text>{notification.text}</Card.Text>
             </Card.Body>

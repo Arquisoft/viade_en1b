@@ -3,6 +3,8 @@ import NotificationsList from './notificationsList/NotificationsList'
 
 export default function Notifications(props) {
     return (
-        <NotificationsList props = {props}></NotificationsList>
+        <div class="container">
+            <NotificationsList props = {props}></NotificationsList>
+        </div>
     )
 }
