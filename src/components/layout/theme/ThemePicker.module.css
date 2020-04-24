@@ -1,0 +1,12 @@
+.picker a {
+  color: var(--color-secondary) !important;
+}
+
+.picker button {
+  margin: 0.5em 0;
+}
+
+.picker:focus {
+  border: none;
+  outline: none;
+}

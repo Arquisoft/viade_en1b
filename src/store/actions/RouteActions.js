@@ -1,7 +1,10 @@
-export const deleteRoute = route => {
+export const deleteRoute = (route, userWebId) => {
   return {
     type: "DELETE_ROUTE",
-    payload: route
+    payload: {
+      route: route,
+      uri: userWebId
+    }
   };
 };
 
@@ -10,12 +13,12 @@ export const shareRoute = (route, friends) => {
     type: "SHARE_ROUTE",
     payload: {
       route: route,
-      friends: friends
+      friends: friends,
     }
   };
 };
 
-export const showRoute = route => {
+export const showRoute = (route) => {
   return {
     type: "SHOW_ROUTE",
     payload: route
@@ -47,14 +50,14 @@ export const loadRoutesRequest = () => {
   };
 };
 
-export const loadRoutesSuccess = routes => {
+export const loadRoutesSuccess = (routes) => {
   return {
     type: "LOAD_ROUTES_SUCCESS",
     payload: routes
   };
 };
 
-export const loadRoutesError = error => {
+export const loadRoutesError = (error) => {
   return {
     type: "LOAD_ROUTES_ERROR",
     payload: error

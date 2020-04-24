@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { showRoute } from "../../store/actions/RouteActions";
 import { LoggedIn, LoggedOut } from "@solid/react";
 import { Redirect } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 
 function Dashboard(props) {
   const { routes } = props;
@@ -16,11 +17,17 @@ function Dashboard(props) {
   const currentSelectedMap =
     selectedRoute == null ? (
       <div data-testid="dashboard-header" className={style.titleHolder}>
-        <h1>Routes List</h1>
+        <h1>
+          <FormattedMessage id="RoutesList" />
+        </h1>
       </div>
     ) : (
       <div data-testid="dashboard-header" className={style.titleHolder}>
-        <h1>{selectedRoute.name}</h1> <p> by {selectedRoute.author}</p>
+        <h1>{selectedRoute.name}</h1>{" "}
+        <p>
+          {" "}
+          <FormattedMessage id="By" /> {selectedRoute.author}
+        </p>
       </div>
     );
 

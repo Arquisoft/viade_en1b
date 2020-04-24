@@ -12,7 +12,7 @@ function allDatesToISOString(obj) {
   Object.entries(obj).forEach(([key, val]) => {
     if (val) {
       if (val instanceof Date) {
-        obj[key] = val.toISOString().split('.')[0] + 'Z';
+        obj[key] = val.toISOString().split(".")[0] + "Z";
       } else if (val instanceof Object) {
         allDatesToISOString(val);
       }

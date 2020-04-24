@@ -2,6 +2,7 @@ import React from "react";
 import { AuthButton, LoggedIn, LoggedOut } from "@solid/react";
 import "./Login.css";
 import { Redirect } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 
 function Login(props) {
   return (
@@ -12,18 +13,22 @@ function Login(props) {
             alt="Viade logo"
             src={process.env.PUBLIC_URL + "/viade-logo.svg"}
           ></img>
-          <h1>Manage your routes like never before.</h1>
+          <h1>
+            <FormattedMessage id="LoginTitle" />
+          </h1>
           <p>
-            A new descentralized system where your information is truly yours.
+            <FormattedMessage id="LoginParagraph" />
           </p>
         </div>
         <div id="clipped"></div>
         <div id="login-another-div">
-          <h3 data-testid="login-header">Login</h3>
+          <h3 data-testid="login-header">
+            <FormattedMessage id="LoginButtonTitle" />
+          </h3>
           <AuthButton
             popup="https://solid.github.io/solid-auth-client/dist/popup.html"
-            login="Login here!"
-            logout="Log me out"
+            login={<FormattedMessage id="LoginButton" />}
+            logout={<FormattedMessage id="LogoutButton" />}
           />
         </div>
       </LoggedOut>

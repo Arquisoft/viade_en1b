@@ -3,12 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faReact } from "@fortawesome/free-brands-svg-icons";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 import "./Footer.css";
+import { FormattedMessage } from "react-intl";
 
 export const Footer = () => {
   return (
     <div data-testid="footer" id="footer">
       <div className="footerElement">
-        <b data-testid="footer-dev">Dev team: </b> Viade_en1b{" "}
+        <b data-testid="footer-dev"><FormattedMessage id="DevTeam"/> </b> Viade_en1b{" "}
       </div>
       <div className="footerElement">
         <a

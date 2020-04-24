@@ -3,6 +3,11 @@
   display: inline;
 }
 
+.footerElement svg {
+  transition: color 200ms ease-in-out;
+  color: var(--color-secondary);
+}
+
 #githubIcon {
   font-size: 150%;
 }

@@ -1,0 +1,14 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 20
+scenarios:
+  - flow:
+      - get:
+          url: "/viade_en1b#/dashboard"
+    name: "Dashboard"
+  - flow:
+      - get:
+          url: "/viade_en1b#/routes/MyRoutes"
+    name: "MyRoutes"
