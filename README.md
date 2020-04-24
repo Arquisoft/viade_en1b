@@ -82,7 +82,7 @@ To execute the unit tests, you need to run `npm test`.
 
 ### Running end-to-end tests
 
-Run `npm run cucumber`.
+First of all run `npm start` and then run `npm run cucumber`.
 > This tests have been created using [Cucumber](https://cucumber.io/) and [Selenium](https://www.selenium.dev/).
 
 ### Running load tests
