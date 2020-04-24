@@ -3,6 +3,8 @@ import "@testing-library/jest-dom";
 import React from "react";
 import { FriendList } from "../FriendList";
 import TestingRouter from "../../../routing/utils/TestingRouter";
+import { locales } from "../../../../utils/locales";
+import { IntlProvider } from "react-intl";
 
 const mockOnClick = jest.fn();
 const mockFriends = [
@@ -10,17 +12,20 @@ const mockFriends = [
   {
     name: "mockFriend2",
     uri: "https://viandetest2020.solid.community",
-    checked: true
-  }
+    checked: true,
+  },
 ];
 beforeEach(() => {
   window.location = { href: mockFriends[0].uri + "profile/card#me" };
 });
 describe("FriendList component", () => {
   test("renders correctly with normal setting", () => {
-    render(<FriendList friends={mockFriends}></FriendList>);
+    render(
+      <IntlProvider key={"en"} locale={"en"} messages={locales["en"]}>
+        <FriendList friends={mockFriends}></FriendList>
+      </IntlProvider>
+    );
     expect(screen.queryByTestId("friend-list-container")).toBeInTheDocument();
-    expect(screen.queryByTestId("friend-list-heading")).toBeInTheDocument();
     expect(screen.queryByTestId("friend-list-main")).toBeInTheDocument();
     expect(screen.queryByTestId("friend-list-card0")).toBeInTheDocument();
     expect(screen.queryByTestId("friend-list-friend-uri0")).toBeInTheDocument();
@@ -37,11 +42,13 @@ describe("FriendList component", () => {
   });
   test("renders correctly with checkbox setting", () => {
     render(
-      <FriendList
-        checked
-        onClick={mockOnClick}
-        friends={mockFriends}
-      ></FriendList>
+      <IntlProvider key={"en"} locale={"en"} messages={locales["en"]}>
+        <FriendList
+          checked
+          onClick={mockOnClick}
+          friends={mockFriends}
+        ></FriendList>
+      </IntlProvider>
     );
     expect(screen.queryByTestId("friend-list-main")).toBeInTheDocument();
     expect(screen.queryByTestId("card0")).toBeInTheDocument();
@@ -53,10 +60,12 @@ describe("FriendList component", () => {
   });
   test("change location", () => {
     const { container } = render(
-      <TestingRouter
-        redirectUrl={mockFriends[0].uri}
-        ComponentWithRedirection={() => <FriendList friends={mockFriends} />}
-      />
+      <IntlProvider key={"en"} locale={"en"} messages={locales["en"]}>
+        <TestingRouter
+          redirectUrl={mockFriends[0].uri}
+          ComponentWithRedirection={() => <FriendList friends={mockFriends} />}
+        />
+      </IntlProvider>
     );
     const redirectUrl = mockFriends[0].uri;
     expect(container.innerHTML).toEqual(expect.stringContaining(redirectUrl));

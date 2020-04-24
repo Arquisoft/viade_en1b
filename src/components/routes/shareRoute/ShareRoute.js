@@ -1,72 +1,69 @@
 import React, { useState, useEffect } from "react";
-import "./ShareRoute.css";
 import { connect } from "react-redux";
-import { shareRoute } from "../../../store/actions/RouteActions";
+import {
+  shareRoute,
+  loadRoutesRequest,
+  clearRoute,
+} from "../../../store/actions/RouteActions";
 import FriendList from "../../user/myProfile/FriendList";
-import style from "./ShareRoute.css";
+import style from "./ShareRoute.module.css";
 import ViadeModal from "../../layout/modal/Modal";
 import { deepClone, filterUnsharedFriends } from "../../../utils/functions";
 import { Badge } from "react-bootstrap";
+import { FormattedMessage } from "react-intl";
 
 export function ShareRoute(props) {
   const { selectedRoute } = props;
   const { shareRoute } = props;
-  const friendsToShow = filterUnsharedFriends(
-    props.friends,
-    props.sharedWith
-  ).map(friend => (friend.checked = false));
-  const alreadySharedWith = deepClone(props.sharedWith);
-  const [state, setState] = useState({
-    friends: friendsToShow,
-    friendsToShareWith: alreadySharedWith.map(friend => ({
+  const friendsToShow = (sharedWith) =>
+    filterUnsharedFriends(props.friends, sharedWith).map((friend) => ({
       ...friend,
-      checked: false
+      checked: false,
+    }));
+  const alreadySharedWith = deepClone(props.sharedWith);
+
+  const [state, setState] = useState({
+    friends: filterUnsharedFriends(
+      props.friends,
+      props.sharedWith
+    ).map((friend) => ({ ...friend, checked: false })),
+    friendsToShareWith: alreadySharedWith.map((friend) => ({
+      ...friend,
+      checked: false,
     })),
-    shared: false
+    shared: false,
   });
+
   useEffect(() => {
     setState({
       ...state,
-      friends: friendsToShow,
-      friendsToShareWith: deepClone(alreadySharedWith).map(friend => ({
-        ...friend,
-        checked: false
-      }))
+      friends: friendsToShow(props.sharedWith),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [props.sharedWith]);
 
-  const handleOnSave = () => {
+  const friendsForList = () => {
+    return state.friends;
+  };
+  const handleOnSave = async () => {
     shareRoute(selectedRoute, state.friendsToShareWith || []);
-    let newFriends = filterUnsharedFriends(
-      props.friends,
-      state.friendsToShareWith
-    );
-    setState({
-      ...state,
-      friends: newFriends,
-      friendsToShareWith: state.friendsToShareWith.map(friend => ({
-        ...friend,
-        checked: false
-      })),
-      shared: true
-    });
+    setTimeout(async () => {
+      props.clearRoute();
+      props.loadRoutes();
+    }, 1000);
   };
 
   const handleClose = () => {
     if (!state.shared) {
-      setState({ ...state, friendsToShareWith: [] });
+      let uncheckedFriends = state.friends.map((friend) => ({
+        ...friend,
+        checked: false,
+      }));
+      setState({ ...state, friends: uncheckedFriends, friendsToShareWith: [] });
     }
   };
 
-  const handleOnOpen = () => {
-    setState({
-      ...state,
-      friends: filterUnsharedFriends(props.friends, state.friendsToShareWith)
-    });
-  };
-
-  const handleOnClick = key => {
+  const handleOnClick = (key) => {
     state.friends[key].checked = !state.friends[key].checked;
     let shared = deepClone(state.friendsToShareWith);
     let friends = deepClone(state.friends);
@@ -79,12 +76,12 @@ export function ShareRoute(props) {
     setState({ ...state, friendsToShareWith: shared, friends: friends });
   };
   let activeSelectedFriends = state.friendsToShareWith.filter(
-    friend => friend.checked
+    (friend) => friend.checked
   ).length;
   const shareButtonText =
     activeSelectedFriends > 0 ? (
       <span data-testid="share-route-share-button-numbers">
-        Share
+        <FormattedMessage id="Share" />
         <Badge className={style.badge} color="secondary">
           <span data-testid="share-route-share-button-number">
             {activeSelectedFriends}
@@ -98,37 +95,40 @@ export function ShareRoute(props) {
   return (
     <ViadeModal
       data-testid="share-route-modal"
-      onOpen={handleOnOpen}
+      onOpen={() => {}}
       disabled={false}
       saveDisabled={activeSelectedFriends === 0}
-      toggleText="Share"
+      toggleText={<FormattedMessage id="Share" />}
       handleClose={handleClose}
       onSave={handleOnSave}
-      title="Pick some friends"
-      closeText="Close"
+      title={<FormattedMessage id="ShareModalTitle" />}
+      closeText={<FormattedMessage id="Close" />}
       saveText={shareButtonText}
     >
       <FriendList
         data-testid="share-route-friend-list"
         onClick={handleOnClick}
-        friends={state.friends}
-        className={style.friendsExpanded}
+        friends={friendsForList()}
+        style={{ container: style.friendsExpanded, card: style.cardExpanded }}
         checked
       ></FriendList>
     </ViadeModal>
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     friends: state.user.friends,
-    sharedWith: state.route.selectedRoute.sharedWith
+    sharedWith: state.route.selectedRoute.sharedWith,
+    userWebId: state.auth.userWebId,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    shareRoute: (route, friends) => dispatch(shareRoute(route, friends))
+    shareRoute: (route, friends) => dispatch(shareRoute(route, friends)),
+    loadRoutes: () => dispatch(loadRoutesRequest()),
+    clearRoute: () => dispatch(clearRoute()),
   };
 };
 

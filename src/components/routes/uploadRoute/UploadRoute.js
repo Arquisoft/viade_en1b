@@ -9,6 +9,7 @@ import {
 import UploadButton from "./uploadButton/UploadButton";
 import ViadeModal from "../../layout/modal/Modal";
 import parseGPX from "../../../parser/parser";
+import { FormattedMessage } from "react-intl";
 
 export class UploadRoute extends React.Component {
   state = {
@@ -94,46 +95,64 @@ export class UploadRoute extends React.Component {
         <Form className={style.form}>
           <div id="form-info">
             <Form.Group htmlFor="routeName">
-              <Form.Label htmlFor="name">Name of the route</Form.Label>
-              <Form.Control
-                id="name"
-                onChange={this.changeHandlerRoute.bind(this)}
-                placeholder="Route name"
-                value={this.state.name}
-                type="text"
-              />
+              <Form.Label htmlFor="name">
+                <FormattedMessage id="NameOfTheRoute" />
+              </Form.Label>
+              <FormattedMessage id="RouteNamePlaceholder">
+                {(placeholder) => (
+                  <Form.Control
+                    id="name"
+                    onChange={this.changeHandlerRoute.bind(this)}
+                    placeholder={placeholder}
+                    value={this.state.name}
+                    type="text"
+                  />
+                )}
+              </FormattedMessage>
             </Form.Group>
 
             <Form.Group htmlFor="routeDescription">
-              <Form.Label htmlFor="description">Description</Form.Label>
-              <Form.Control
-                id="description"
-                onChange={this.changeHandlerRoute.bind(this)}
-                value={this.state.description}
-                as="textarea"
-                rows="4"
-                placeholder="Add a description"
-              />
+              <Form.Label htmlFor="description">
+                <FormattedMessage id="Description" />
+              </Form.Label>
+              <FormattedMessage id="DescriptionPlaceholder">
+                {(placeholder) => (
+                  <Form.Control
+                    id="description"
+                    onChange={this.changeHandlerRoute.bind(this)}
+                    value={this.state.description}
+                    as="textarea"
+                    rows="4"
+                    placeholder={placeholder}
+                  />
+                )}
+              </FormattedMessage>
             </Form.Group>
 
             <Form.Group htmlFor="routeDescription">
-              <Form.Label htmlFor="comments">Comment</Form.Label>
-              <Form.Control
-                id="comments"
-                onChange={this.changeHandlerRoute.bind(this)}
-                value={this.state.comments}
-                as="textarea"
-                rows="4"
-                placeholder="Add a comment"
-              />
+              <Form.Label htmlFor="comments">
+                <FormattedMessage id="Comments" />
+              </Form.Label>
+              <FormattedMessage id="CommentPlaceholder">
+                {(placeholder) => (
+                  <Form.Control
+                    id="comments"
+                    onChange={this.changeHandlerRoute.bind(this)}
+                    value={this.state.comments}
+                    as="textarea"
+                    rows="4"
+                    placeholder={placeholder}
+                  />
+                )}
+              </FormattedMessage>
             </Form.Group>
 
             <ViadeModal
               disabled={this.isEmpty()}
-              toggleText="Submit"
+              toggleText={<FormattedMessage id="Submit" />}
               onSave={() => {}}
-              title="Submitted"
-              closeText="Close"
+              title={<FormattedMessage id="Submited" />}
+              closeText={<FormattedMessage id="Close" />}
               handleClose={() => {
                 setTimeout(() => {
                   this.props.loadRoutes();
@@ -143,7 +162,9 @@ export class UploadRoute extends React.Component {
               onOpen={this.submitForm.bind(this)}
               change
             >
-              <p>Your route has been submited</p>
+              <p>
+                <FormattedMessage id="SubmitedRoute" />
+              </p>
             </ViadeModal>
           </div>
 
@@ -153,7 +174,7 @@ export class UploadRoute extends React.Component {
               reset={this.state.reset}
               onChange={this.changeHandlerFiles.bind(this)}
               id="file"
-              text="Choose a route"
+              text={<FormattedMessage id="UploadButton" />}
             ></UploadButton>
           </div>
         </Form>

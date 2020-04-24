@@ -4,9 +4,11 @@ import {
   waitForElement,
   fireEvent,
   queryByTestId,
-  waitForDomChange
+  waitForDomChange,
 } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import { locales } from "../../../../utils/locales";
+import { IntlProvider } from "react-intl";
 import ViadeModal from "../Modal";
 
 let modal;
@@ -14,13 +16,15 @@ let mock = jest.fn();
 let rerenderFunc;
 beforeEach(() => {
   const { container, rerender } = render(
-    <ViadeModal
-      disabled={false}
-      title="Submitted"
-      onOpen={mock}
-      saveText="Save"
-      closeText="Close"
-    ></ViadeModal>
+    <IntlProvider key={"en"} locale={"en"} messages={locales["en"]}>
+      <ViadeModal
+        disabled={false}
+        title="Submitted"
+        onOpen={mock}
+        saveText="Save"
+        closeText="Close"
+      ></ViadeModal>
+    </IntlProvider>
   );
   modal = container;
   rerenderFunc = rerender;

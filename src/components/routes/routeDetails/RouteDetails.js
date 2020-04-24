@@ -6,10 +6,12 @@ import { connect } from "react-redux";
 import { deleteRoute } from "../../../store/actions/RouteActions";
 import ShareRoute from "../shareRoute/ShareRoute";
 import Comments from "../../layout/comments/Comments.js";
+import { FormattedMessage } from "react-intl";
 
 export const RouteDetails = (props) => {
   const { selectedRoute } = props;
   const { deleteRoute } = props;
+  const {userWebId} = props;
 
   if (selectedRoute != null) {
     let comments = [];
@@ -19,23 +21,27 @@ export const RouteDetails = (props) => {
         return <li key={key}>{comment}</li>;
       });
     }
-    const description = selectedRoute.description
-      ? selectedRoute.description
-      : "There is not description for this route";
+    const description = selectedRoute.description ? (
+      selectedRoute.description
+    ) : (
+      <FormattedMessage id="NoDescription" />
+    );
 
     return (
       <div className={props.style ? props.style : style.details}>
         <div className={style.description}>
-          <h3>Descripción</h3>
+          <h3>
+            <FormattedMessage id="Description"></FormattedMessage>
+          </h3>
           <p data-testid="route-details-description">{description}</p>
         </div>
         <div className={style.buttons}>
           <Button
             data-testid="route-details-button-delete"
             id="deleteButton"
-            onClick={() => deleteRoute(selectedRoute)}
+            onClick={() => deleteRoute(selectedRoute, userWebId)}
           >
-            Delete
+            <FormattedMessage id="Delete" />
           </Button>
           {
             <ShareRoute
@@ -43,12 +49,14 @@ export const RouteDetails = (props) => {
               id="shareButton"
               selectedRoute={selectedRoute}
             >
-              Share
+              <FormattedMessage id="Share" />
             </ShareRoute>
           }
         </div>
         <div className={style.comments}>
-          <h3>Comments</h3>
+          <h3>
+            <FormattedMessage id="CommentsTitle" />
+          </h3>
           <ul>{comments}</ul>
           <Comments
             style={style.commentsButton}
@@ -64,8 +72,14 @@ export const RouteDetails = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteRoute: (route) => dispatch(deleteRoute(route)),
+    deleteRoute: (route, userWebId) => dispatch(deleteRoute(route, userWebId)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(RouteDetails);
+const mapStateToProps = (state) => {
+  return {
+    userWebId : state.auth.userWebId
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RouteDetails);
