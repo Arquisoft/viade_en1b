@@ -17,19 +17,19 @@ More information about how this project has been setup is available [in the wiki
 ## Building Instructions
 ### Dependencies
 In order to run this project, you will need to follow these steps:
-1. Install [Ruby](https://www.ruby-lang.org/es/)
+1.  Install [Ruby](https://www.ruby-lang.org/es/)
     > We recommend to install ruby using [RubyInstaller](https://rubyinstaller.org/)
 
-1. Install [Node](https://nodejs.org/) & [NPM](https://www.npmjs.com/)
+2. Install [Node](https://nodejs.org/) & [NPM](https://www.npmjs.com/)
 
-1. Install [asciidoctor](https://asciidoctor.org/)
+3. Install [asciidoctor](https://asciidoctor.org/)
     1. Then, install [asciidoctor-diagram](https://asciidoctor.org/docs/asciidoctor-diagram/):
         ``` shell
         gem install asciidoctor-diagram
         ```
         > In windows issue this command using the terminal provided by RubyInstaller. In linux 'sudo' may be needed, depending on the installation.
 
-1. Run 
+4. Run 
     ```shell
     npm install 
     ```
@@ -42,9 +42,9 @@ npm start
 
 ## Contributors
 
-- [Marcos Álvarez García](https://github.com/alvarezGarciaMarcos)
-- [Pelayo García Álvarez](https://github.com/garciaAlvarezPelayo)
-- [César García Cabeza](https://github.com/themrcesi)
-- [Álvaro García Infante](https://github.com/alvarogarinf)
-- [Íñigo Gutiérrez Fernández](https://github.com/InigoGutierrez)
-- [Eduardo Lamas Suarez](https://github.com/lamasumas)
+-   [Marcos Álvarez García](https://github.com/alvarezGarciaMarcos)
+-   [Pelayo García Álvarez](https://github.com/garciaAlvarezPelayo)
+-   [César García Cabeza](https://github.com/themrcesi)
+-   [Álvaro García Infante](https://github.com/alvarogarinf)
+-   [Íñigo Gutiérrez Fernández](https://github.com/InigoGutierrez)
+-   [Eduardo Lamas Suarez](https://github.com/lamasumas)

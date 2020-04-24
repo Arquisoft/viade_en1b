@@ -7,11 +7,14 @@ assignees: ''
 
 ---
 
-# What is the target component?
+## Target component
+
 Describe the component that is going to be affected by the style changes.
 
-# What is missing?
+## Missing work 
+
 Describe what is wrong with the component.
 
-# Expected style
+## Expected style 
+
 Describe how the style should be.

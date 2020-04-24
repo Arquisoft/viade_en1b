@@ -14,7 +14,7 @@ export const RouteSummary = (props) => {
             </Card.Body>
         </Card>
     );
-}
+};
 
 export default RouteSummary;
 

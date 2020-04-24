@@ -4,14 +4,14 @@ export const parseGPX = (file) =>
 {
     const gpx = GPX.parse(file);
     const routeList = [];
-    gpx.trk.forEach(track => {
+    gpx.trk.forEach((track) => {
         const routePositions = [];
-        track.trkseg.forEach(trSegment =>{
+        track.trkseg.forEach((trSegment) => {
             const segmentPositions = [];
-            trSegment.trkpt.forEach(pt =>{
+            trSegment.trkpt.forEach((pt) => {
                 segmentPositions.push([pt.$.lat,pt.$.lon])
             });
-            segmentPositions.forEach(pos => routePositions.push(pos));
+            segmentPositions.forEach((pos) => routePositions.push(pos));
         });
         routeList.push(routePositions);
     });

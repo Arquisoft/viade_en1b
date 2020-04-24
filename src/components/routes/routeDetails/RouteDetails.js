@@ -13,7 +13,7 @@ export const RouteDetails = (props) => {
   const { deleteRoute } = props;
   const {userWebId} = props;
 
-  if (selectedRoute != null) {
+  if (selectedRoute !== null) {
     let comments = [];
     if (selectedRoute.comments != null) {
       comments = selectedRoute.comments;

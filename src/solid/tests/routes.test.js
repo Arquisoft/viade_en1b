@@ -312,7 +312,6 @@ describe("Solid Routes", () => {
         let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
         routeUri = routeUri.split( /\.acl$/ )[0]; // In case it got the .acl
         let routeFilename = routeUri.match( /[^/]*$/ )[0];
-        console.log("Route filename: " + routeFilename);
 
         const commentText = "Test comment";
 
@@ -320,9 +319,7 @@ describe("Solid Routes", () => {
         if (await fc.itemExists(solid.getMyCommentsFolder(userWebId))) {
             await fc.deleteFolder(solid.getMyCommentsFolder(userWebId));
         }
-        console.log("Llego 1");
         await solid.uploadComment(userWebId, routeUri, commentText);
-        console.log("Llego 2");
         let commentsUrls = await solid.getCommentsFromRoute(userWebId, routeFilename);
         let commentFile = JSON.parse(await fc.readFile(commentsUrls[0]));
         expect(commentFile.text).toEqual(commentText); // Comment uploaded

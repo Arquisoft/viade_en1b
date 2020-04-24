@@ -1,5 +1,5 @@
-import {routeReducer} from "../RouteReducer"
-import "@testing-library/jest-dom"
+import {routeReducer} from "../RouteReducer";
+import "@testing-library/jest-dom";
 import { uploadRoute } from "../../actions/RouteActions";
 
 describe("Routes Reducer", () => {
@@ -34,7 +34,7 @@ describe("Routes Reducer", () => {
         });
     });
 
-    describe("Should return state if receiving type", () =>{
+    describe("Should return state if receiving type", () => {
         const route = { id: 5, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing", images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: [] };
         
         test("Type SHOW_ROUTE", () => {
@@ -44,13 +44,13 @@ describe("Routes Reducer", () => {
             });
             const expected = {...initState, selectedRoute:route};
             expect(newState).toEqual(expected);
-        })
+        });
 
         test("Type UPLOAD_ROUTE", () => {
             const newState = routeReducer(initState, uploadRoute(routes,routes,"https://themrcesi.inrupt.net/profile/card#me"));          
-            const expected = {...initState}
+            const expected = {...initState};
             expect(newState).toEqual(expected);
-        })
+        });
 
         test("Type CLEAR_ROUTE", () => {
             const newState = routeReducer(initState, {
@@ -59,7 +59,7 @@ describe("Routes Reducer", () => {
             });
             const expected = {...initState, selectedRoute:null};
             expect(newState).toEqual(expected);
-        })
+        });
 
         test("Type DELETE_ROUTE", () => {
             const newState = routeReducer(initState, {
@@ -69,10 +69,10 @@ describe("Routes Reducer", () => {
                     uri: "https://themrcesi.inrupt.net/profile/card#me"
                 }
             });
-            let newRoutes = initState.routes.filter(r => r.id !== route.id);
+            let newRoutes = initState.routes.filter((r) => r.id !== route.id);
             const expected = {...initState, routes:newRoutes};
             expect(newState).toEqual(expected);
-        })
+        });
 
         test("Type SHARE_ROUTE", () => {
             let route = { id: 0, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing", images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: [] };
@@ -91,9 +91,9 @@ describe("Routes Reducer", () => {
             const expected = {
                 routes : routes,
                 selectedRoute: null
-            }
+            };
             expect(newState).toEqual(expected);
-        })
+        });
 
         const mockPayload = "";
 
