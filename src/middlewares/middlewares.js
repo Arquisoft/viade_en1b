@@ -70,7 +70,8 @@ export const asyncProfileFetch = (store) => (next) => (action) => {
 
               store.dispatch(loadFriendsSuccess(friendsObjects));
             });
-          });
+          })
+          .catch((error) => {});
       break;
     default:
       break;
