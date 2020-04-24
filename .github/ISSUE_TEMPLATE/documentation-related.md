@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-# What section is going to be affected\?
+## What section is going to be affected? 
 
-# What is missing\? 
+## What is missing?  
  
