@@ -21,6 +21,12 @@ const state = {
   control: {},
   localeReducer:{},
 };
+const getCurrentPage = () => {
+  let currentPage = window.location.href;
+  currentPage = currentPage.split("/");
+  currentPage = currentPage[currentPage.length - 1];
+  return currentPage;
+};
 beforeEach(() => {
   const store = testStore(rootReducer, state);
   const { container } = render(
@@ -82,9 +88,4 @@ describe("Navbar is correctly rendered", () => {
   });
 });
 
-const getCurrentPage = () => {
-  let currentPage = window.location.href;
-  currentPage = currentPage.split("/");
-  currentPage = currentPage[currentPage.length - 1];
-  return currentPage;
-};
+

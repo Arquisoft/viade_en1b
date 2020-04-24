@@ -1,5 +1,5 @@
-import {routeReducer} from "../RouteReducer"
-import "@testing-library/jest-dom"
+import {routeReducer} from "../RouteReducer";
+import "@testing-library/jest-dom";
 import { uploadRoute } from "../../actions/RouteActions";
 
 describe("Routes Reducer", () => {
@@ -48,7 +48,7 @@ describe("Routes Reducer", () => {
 
         test("Type UPLOAD_ROUTE", () => {
             const newState = routeReducer(initState, uploadRoute(routes,routes,"https://themrcesi.inrupt.net/profile/card#me"));          
-            const expected = {...initState}
+            const expected = {...initState};
             expect(newState).toEqual(expected);
         });
 

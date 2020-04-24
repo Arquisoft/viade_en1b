@@ -133,7 +133,7 @@ describe("Route actions", () => {
     let sharedRouteId = uploadedRoute.id;
 
     let alreadyShared = stateRoutes.filter(
-      route => route.id == uploadedRoute.id
+      (route) => route.id === uploadedRoute.id
     )[0].sharedWith;
     let sharedRoute = {
       ...uploadedRoute,
