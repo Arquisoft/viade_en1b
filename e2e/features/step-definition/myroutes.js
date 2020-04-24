@@ -32,7 +32,7 @@ Given('We log in', function () {
     var input = driver.findElement(By.xpath("/html/body/div/div/form/input"));
     input.sendKeys("https://viandetest2020.solid.community/profile/card#me");
     driver.findElement(By.xpath("/html/body/div/div/form/button")).click();
-    driver.wait(until.elementsLocated(By.xpath("/html/body/div/div[2]/div[1]/div[1]/div/form/div[1]/div/input")), 10000).then(
+    driver.wait(until.elementsLocated(By.xpath("/html/body/div/div[2]/div[1]/div[1]/div/form/div[1]/div/input")), 100000).then(
       function () {
         driver.findElement(By.xpath("/html/body/div/div[2]/div[1]/div[1]/div/form/div[1]/div/input")).sendKeys("ViandeTest2020");
         driver.findElement(By.xpath("/html/body/div/div[2]/div[1]/div[1]/div/form/div[2]/div/input")).sendKeys("uO257611__");
@@ -60,7 +60,7 @@ When('We push the My routes button', function () {
         if (isHandleCount1) {
           driver.switchTo().window(handles[0]);
           //here we do the things
-          driver.wait(until.elementsLocated(By.xpath("/html/body/div/div/nav/div/div/span[2]/a")), 10000).then(
+          driver.wait(until.elementsLocated(By.xpath("/html/body/div/div/nav/div/div/span[2]/a")), 100000).then(
             function () {
               var buttonUpload = driver.findElement(By.xpath("/html/body/div/div/nav/div/div/span[2]/a"));
               buttonUpload.click();
@@ -92,7 +92,7 @@ Then('We can see the routes', function () {
         if (isHandleCount1) {
           driver.switchTo().window(handles[0]);
           //here we do the things
-          driver.wait(until.elementsLocated(By.xpath("/html/body/div/div/nav/div/div/span[2]/a")), 10000).then(
+          driver.wait(until.elementsLocated(By.xpath("/html/body/div/div/nav/div/div/span[2]/a")), 100000).then(
             function () {
               var routeList = driver.findElement(By.xpath("/html/body/div/div/nav/div/div/span[2]/a"));
               expect(routeList!=null);

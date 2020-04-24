@@ -35,7 +35,7 @@ Given('We put our page {string}, we put the credentials username {string} and pa
     var input = driver.findElement(By.xpath("/html/body/div/div/form/input"));
     input.sendKeys(string);
     driver.findElement(By.xpath("/html/body/div/div/form/button")).click();
-    driver.wait(until.elementsLocated(By.xpath("/html/body/div/div[2]/div[1]/div[1]/div/form/div[1]/div/input")), 10000).then(
+    driver.wait(until.elementsLocated(By.xpath("/html/body/div/div[2]/div[1]/div[1]/div/form/div[1]/div/input")), 100000).then(
       function () {
         driver.findElement(By.xpath("/html/body/div/div[2]/div[1]/div[1]/div/form/div[1]/div/input")).sendKeys(string2);
         driver.findElement(By.xpath("/html/body/div/div[2]/div[1]/div[1]/div/form/div[2]/div/input")).sendKeys(string3);
@@ -64,7 +64,7 @@ When('We push the Upload Route button', function () {
         if (isHandleCount1) {
           driver.switchTo().window(handles[0]);
           //here we do the things
-          driver.wait(until.elementsLocated(By.xpath("/html/body/div/div/nav/div/div/span[3]/a")), 100000).then(
+          driver.wait(until.elementsLocated(By.xpath("/html/body/div/div/nav/div/div/span[3]/a")), 1000000).then(
             function () {
               var buttonUpload = driver.findElement(By.xpath("/html/body/div/div/nav/div/div/span[3]/a"));
               buttonUpload.click();
@@ -95,7 +95,7 @@ Then('We can see the form to upload route', function () {
         if (isHandleCount1) {
           driver.switchTo().window(handles[0]);
           //here we do the things
-          driver.wait(until.elementsLocated(By.xpath("/html/body/div/div/div[1]/form/div[1]/div[3]/textarea")), 100000).then(
+          driver.wait(until.elementsLocated(By.xpath("/html/body/div/div/div[1]/form/div[1]/div[3]/textarea")), 1000000).then(
             function () {
               var buttonChooseARoute = driver.findElement(By.xpath("/html/body/div/div/div[1]/form/div[1]/div[3]/textarea"));
               expect(buttonChooseARoute!=null);
