@@ -29,8 +29,8 @@ export const filterUnsharedFriends = (allFriends, alreadyShared) => {
  */
 export const getOwnRoutesNumber = (routes, userWebID) => {
   console.log(routes, userWebID);
-  return routes.filter((route) => route.author === userWebID.split("//")[1].split(".")[0]).length
-}
+  return routes.filter((route) => route.author === userWebID.split("//")[1].split(".")[0]).length;
+};
 
 /**
  * 
@@ -39,4 +39,4 @@ export const getOwnRoutesNumber = (routes, userWebID) => {
  */
 export const getSharedRoutesNumber = (routes, userWebId) => {
   return routes.length - getOwnRoutesNumber(routes, userWebId);
-}
+};
