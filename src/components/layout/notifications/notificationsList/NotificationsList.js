@@ -2,7 +2,6 @@ import React from "react";
 import Notification from "../notification/Notification";
 import { connect } from "react-redux";
 import style from "./NotificationsList.module.css";
-
 export function NotificationsList(props) {
   const { userWebId } = props;
   let notifications = [

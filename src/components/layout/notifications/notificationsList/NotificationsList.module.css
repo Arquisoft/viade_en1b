@@ -1,7 +1,7 @@
 .notificationsListContainer {
   display: flex;
   flex-direction: column;
-  margin: 7em auto;
+  margin: 5em auto;
   align-items: center;
   justify-items: center;
   width: 100vh;
@@ -23,7 +23,7 @@
   flex-direction: column;
   overflow-y: auto;
   align-items: center;
-  height: 70vh;
+  height: 68vh;
 }
 
 .notificationsListContainer *:hover {
