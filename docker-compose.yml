@@ -1,0 +1,18 @@
+version: "3"
+services:
+  solidserver:
+    image: solidserver
+    volumes:
+      - ./volumes/soliddata:/usr/src/app/data
+      - ./volumes/soliddb:/usr/src/app/.db
+    ports:
+      - "8443:8443"
+  viade:
+    build: ./
+    ports:
+      - "80:3000"
+volumes:
+  soliddata:
+    external: false
+  soliddb:
+    external: false
