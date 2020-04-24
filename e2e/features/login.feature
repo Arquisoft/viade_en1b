@@ -5,7 +5,7 @@ Feature: Viade_en1b
         When We push the Upload Route button
         Then We can see the form to upload route
 
-    Scenario: The user is not already logged in
+    Scenario: The user already logged in
         Given We log in
         When We push the My routes button
         Then We can see the routes

@@ -77,6 +77,8 @@ If you want to build the application you need to run `npm run build` and all the
 
 ### Running unit tests
 
+If you have any development server running, close it please, because tests need the port 3000 in order to run (solid stuff :smile:).
+
 To execute the unit tests, you need to run `npm test`.
 > This tests have been created using [Jest](https://jestjs.io/).
 
@@ -86,6 +88,8 @@ First of all run `npm start` and then run `npm run cucumber`.
 > This tests have been created using [Cucumber](https://cucumber.io/) and [Selenium](https://www.selenium.dev/).
 
 ### Running load tests
+
+First of all you need to run the development server with `npm start`.
 
 TODO
 
