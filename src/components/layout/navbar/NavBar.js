@@ -1,10 +1,19 @@
 import React from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
-import { BsPerson, BsArrowBarUp, BsMap, BsCompass, BsBell } from "react-icons/bs";
+import {
+  BsPerson,
+  BsArrowBarUp,
+  BsMap,
+  BsCompass,
+  BsBell,
+} from "react-icons/bs";
 import "./NavBar.css";
 import { LogoutButton } from "@solid/react";
 import { LinkContainer } from "react-router-bootstrap";
-import {loadFriendsRequest,  loadEmailRequest} from "../../../store/actions/UserActions";
+import {
+  loadFriendsRequest,
+  loadEmailRequest,
+} from "../../../store/actions/UserActions";
 import { updateWebId } from "../../../store/actions/AuthActions";
 import { loadRoutesRequest } from "../../../store/actions/RouteActions";
 import { contentLoaded } from "../../../store/actions/LoadActions";
@@ -42,8 +51,8 @@ export const MyNavBar = (props) => {
       text: "Notifications",
       href: "/notifications",
       icon: <BsBell className="icon"></BsBell>,
-      testId: "navbar-notifications"
-    }
+      testId: "navbar-notifications",
+    },
   ];
 
   if (!props.loaded) {

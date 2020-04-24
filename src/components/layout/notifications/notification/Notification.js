@@ -1,21 +1,18 @@
-import React from 'react'
-import { Card } from 'react-bootstrap'
+import React from "react";
+import { Card } from "react-bootstrap";
 
 export default function Notification(props) {
+  const { notification } = props;
 
-    const {notification} = props;
-
-    return (
-        <Card data-testid = "notification-card" onClick={() => {}}>
-            <Card.Body>
-                <Card.Text>{notification.text}</Card.Text>
-            </Card.Body>
-        </Card>
-    );
+  return (
+    <Card
+      data-testid="notification-card"
+      className="notification"
+      onClick={() => {}}
+    >
+      <Card.Body>
+        <Card.Text>{notification.text}</Card.Text>
+      </Card.Body>
+    </Card>
+  );
 }
-
-
-
-
-
-
