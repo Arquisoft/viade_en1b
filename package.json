@@ -55,7 +55,6 @@
     "eject": "react-scripts eject",
     "cucumber": "./node_modules/.bin/cucumber-js",
     "artillery": "artillery run load-testing/*"
-    
   },
   "eslintConfig": {
     "extends": "react-app"

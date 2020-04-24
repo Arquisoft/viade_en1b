@@ -92,9 +92,9 @@ Then('We can see the routes', function () {
         if (isHandleCount1) {
           driver.switchTo().window(handles[0]);
           //here we do the things
-          driver.wait(until.elementsLocated(By.xpath("/html/body/div/div/div[1]/div[1]/span")), 10000).then(
+          driver.wait(until.elementsLocated(By.xpath("/html/body/div/div/nav/div/div/span[2]/a")), 10000).then(
             function () {
-              var routeList = driver.findElement(By.xpath("/html/body/div/div/div[1]/div[1]/span"));
+              var routeList = driver.findElement(By.xpath("/html/body/div/div/nav/div/div/span[2]/a"));
               expect(routeList!=null);
             }
           )
