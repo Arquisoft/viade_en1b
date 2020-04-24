@@ -1,3 +1,8 @@
+
+const findInHashByUri = (hash, friend) => {
+  return hash[friend];
+};
+
 export const deepClone = (array) => {
   let aux = array.map((item) => ({ ...item }));
   return aux;
@@ -6,19 +11,15 @@ export const deepClone = (array) => {
 export const filterUnsharedFriends = (allFriends, alreadyShared) => {
   let aux = [];
   let hash = {};
-  if (alreadyShared.length === 0) return allFriends;
+  if (alreadyShared.length === 0) {return allFriends;}
   //Initialize the hash table
   alreadyShared.map((friend) => (hash[friend] = true));
   allFriends.map((friend) => {
-    if (!findInHashByUri(hash, friend.uri)) return aux.push({ ...friend });
+    if (!findInHashByUri(hash, friend.uri)) {return aux.push({ ...friend });}
     return [];
   });
 
   return aux;
-};
-
-const findInHashByUri = (hash, friend) => {
-  return hash[friend];
 };
 
 /**
@@ -28,7 +29,7 @@ const findInHashByUri = (hash, friend) => {
  */
 export const getOwnRoutesNumber = (routes, userWebID) => {
   console.log(routes, userWebID);
-  return routes.filter(route => route.author === userWebID.split("//")[1].split(".")[0]).length
+  return routes.filter((route) => route.author === userWebID.split("//")[1].split(".")[0]).length
 }
 
 /**

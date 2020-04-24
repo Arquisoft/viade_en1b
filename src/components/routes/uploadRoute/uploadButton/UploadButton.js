@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from "react"
-import { Form } from "react-bootstrap"
-import { BsUpload } from "react-icons/bs"
-import "./UploadButton.css"
+import React, { useState, useRef, useEffect } from "react";
+import { Form } from "react-bootstrap";
+import { BsUpload } from "react-icons/bs";
+import "./UploadButton.css";
 
 const UploadButton = (props) => {
 
@@ -11,7 +11,7 @@ const UploadButton = (props) => {
     });
 
     useEffect(() => {
-        if(props.reset) resetState()
+        if(props.reset) {resetState()}
     }, [props.reset]);
 
     const resetState = () => {
@@ -29,9 +29,9 @@ const UploadButton = (props) => {
     };
 
     const handleMultipleFileChanged = (e) => {
-        props.onChange(e)
-        let number = file.current.files.length
-        setState({...state, numberOfFiles: number})
+        props.onChange(e);
+        let number = file.current.files.length;
+        setState({...state, numberOfFiles: number});
     };
 
     const uploadButton = !props.multiple

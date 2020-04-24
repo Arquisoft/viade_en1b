@@ -17,13 +17,13 @@ beforeEach(() => {
 describe("Everything is rendered correctly", () => {
     test("label is correctly displayed when there are no files selected for a single file button", () => {
         waitForElement(() => {
-            expect(queryByTestId(uploadButton, "upload-button-label").textContent).toBe("No images selected")
+            expect(queryByTestId(uploadButton, "upload-button-label").textContent).toBe("No images selected");
         });
     });
     test("label is correctly displayed when there are no files selected for a multple file button", () => {
-        rerenderFunc(<UploadButton multiple text="No files selected" onChange={(e) => e}></UploadButton>)
+        rerenderFunc(<UploadButton multiple text="No files selected" onChange={(e) => e}></UploadButton>);
         waitForElement(() => {
-            expect(queryByTestId(uploadButton, "upload-button-label").textContent).toBe("No files selected")
+            expect(queryByTestId(uploadButton, "upload-button-label").textContent).toBe("No files selected");
         });
     });
     

@@ -14,13 +14,13 @@ export default class Track {
       if (!Array.isArray(object.link)) {
         object.link = [object.link];
       }
-      this.link = object.link.map(l => new Link(l));
+      this.link = object.link.map((l) => new Link(l));
     }
     if (object.trkseg) {
       if (!Array.isArray(object.trkseg)) {
         object.trkseg = [object.trkseg];
       }
-      this.trkseg = object.trkseg.map(seg => new TrackSegment(seg));
+      this.trkseg = object.trkseg.map((seg) => new TrackSegment(seg));
     }
   }
 }
