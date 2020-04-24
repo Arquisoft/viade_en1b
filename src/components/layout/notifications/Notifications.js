@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 
 export function Notifications(props) {
 
-  const { userWebId } = props;
-
   const notifications = [
     { text: "Notification 1" },
     { text: "Notification 2" },
