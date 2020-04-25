@@ -108,9 +108,9 @@ In order to use our Dockerized application, you have yo have Docker installed on
 - Set yourself on the root directory of our cloned repo
 - Type the following command:
 
-  - `shell docker build -t viadeapp`
+  - `docker build -t viadeapp`
     - This will build the Docker image for you, that can be run later on a container.
-  - `shell docker run -p 80:3000 viadeapp`
+  - `docker run -p 80:3000 viadeapp`
     - This will launch a container with the viadeapp image, and will expose map your localhost port 80, to the container port 3000.
 
 - Now, the only thing you have to do is to go to your favourite web browser, and browse to: http://localhost and you will be served with the Viade app!
