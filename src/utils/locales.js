@@ -54,6 +54,10 @@ export const locales = {
     //RouteDetails.js
     NoDescription: "There is not description for this route",
     Description: "Description",
+    Images: "Images",
+    NoImages: "There is not any images for this route",
+    Videos: "Videos",
+    NoVideos: "There is not any videos for this route",
     Delete: "Delete",
     Share: "Share",
     CommentsTitle: "Comments",
@@ -69,6 +73,8 @@ export const locales = {
     SubmitedRoute: "Your route has been submited",
     Submited: "Submited",
     UploadButton: "Choose a route",
+    UploadImages: "Choose images",
+    UploadVideos: "Choose videos",
     Submit: "Submit",
   },
   es: {
@@ -125,7 +131,11 @@ export const locales = {
     NoMediaElemts: "No hay imágenes",
     //RouteDetails.js
     NoDescription: " No hay ninguna descripción para esta ruta",
+    NoImages: "No hay imagenes para esta ruta",
     Description: "Descripción",
+    Images: "Imágenes",
+    Videos: "Vídeos",
+    NoVideos: "No hay vídeos para esta ruta",
     Delete: "Borrar",
     Share: "Compartir",
     CommentsTitle: "Comentarios",
@@ -141,6 +151,8 @@ export const locales = {
     SubmitedRoute: "Tu ruta a sido enviada",
     Submited: "Enviado",
     UploadButton: "Escoge una ruta",
+    UploadImages: "Escoge imágenes",
+    UploadVideos: "Escoge vídeos",
     Submit: "Enviar",
   },
 };

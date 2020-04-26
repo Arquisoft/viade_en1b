@@ -26,6 +26,16 @@ export const RouteDetails = (props) => {
     ) : (
       <FormattedMessage id="NoDescription" />
     );
+    const images = selectedRoute.images ? (
+      selectedRoute.images
+    ) : (
+      <FormattedMessage id="NoImages" />
+    );
+    const videos = selectedRoute.videos ? (
+      selectedRoute.videos
+    ) : (
+      <FormattedMessage id="NoVideos" />
+    );
 
     return (
       <div className={props.style ? props.style : style.details}>
@@ -34,6 +44,18 @@ export const RouteDetails = (props) => {
             <FormattedMessage id="Description"></FormattedMessage>
           </h3>
           <p data-testid="route-details-description">{description}</p>
+        </div>
+        <div className={style.description}>
+          <h3>
+            <FormattedMessage id="Images"></FormattedMessage>
+          </h3>
+          <p data-testid="route-details-images">{images}</p>
+        </div>
+        <div className={style.description}>
+          <h3>
+            <FormattedMessage id="Videos"></FormattedMessage>
+          </h3>
+          <p data-testid="route-details-videos">{videos}</p>
         </div>
         <div className={style.buttons}>
           <Button
