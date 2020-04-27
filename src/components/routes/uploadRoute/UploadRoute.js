@@ -177,6 +177,7 @@ export class UploadRoute extends React.Component {
               reset={this.state.reset}
               onChange={this.changeHandlerFiles.bind(this)}
               id="file"
+              file={true}
               text={<FormattedMessage id="UploadButton" />}
             ></UploadButton>
             <UploadButton
@@ -184,13 +185,15 @@ export class UploadRoute extends React.Component {
               reset={this.state.reset}
               onChange={this.changeHandlerImages.bind(this)}
               id="images"
+              images={true}
               text={<FormattedMessage id="UploadImages" />}
             ></UploadButton>
             <UploadButton
               className={style.uploadButton}
               reset={this.state.reset}
-              onChange={this.changeHandlerImages.bind(this)}
+              onChange={this.changeHandlerVideos.bind(this)}
               id="videos"
+              videos={true}
               text={<FormattedMessage id="UploadVideos" />}
             ></UploadButton>
           </div>
