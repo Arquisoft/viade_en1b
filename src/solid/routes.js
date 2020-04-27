@@ -162,7 +162,7 @@ async function getRouteObjectFromPodRoute(userWebId, route, routeFilename) {
     positions: route.points.map((point) => {
       return [point.latitude, point.longitude];
     }),
-    sharedWith: await getUsersRouteSharedWith(userWebId, routeFilename),
+    sharedWith: [] /*await getUsersRouteSharedWith(userWebId, routeFilename)*/,
   };
 }
 
@@ -270,13 +270,30 @@ export async function getRoutesFromPod(userWebId) {
     routes.push(route);
   }
 
-  // Routes shared with user
-  /*   let sharedRoutes = await getSharedRoutesUris(userWebId);
-  i = 0;
-  for (i; i < sharedRoutes.length; i++) {
-    routes.push(sharedRoutes[i]);
-  } */
-
+  // Now read shared routes
+  let sharedFolderUri = getSharedFolder(userWebId);
+  let sharedFiles = (await fc.readFolder(sharedFolderUri)).files;
+  console.log({ sharedFolderUri, sharedFiles });
+  for (let i = 0; i < sharedFiles.length; i++) {
+    let file = JSON.parse(await fc.readFile(sharedFiles[i].url));
+    let routesUris = file.routes;
+    // All routes uris of a file (of a friend)
+    routesUris = routesUris.map((route) => route["@id"]);
+    let routeObjects = routesUris.map(async (route) => {
+      let parsed = JSON.parse(await fc.readFile(route));
+      let fileName = route.split("/");
+      fileName = fileName[fileName.length - 1];
+      let object = await getRouteObjectFromPodRoute(
+        userWebId,
+        parsed,
+        fileName
+      );
+      return object;
+    });
+    Promise.all(routeObjects).then((objects) =>
+      objects.map((object) => routes.push(object))
+    );
+  }
   return routes;
 }
 
@@ -298,7 +315,6 @@ export async function shareRouteToPod(
 
   let url = getInboxFolder(targetUserWebId);
 
-  await createFolderIfAbsent(url);
   // Sending the notification
   let notificationUrl = url + uuidv4() + ".jsonld";
   await fc.postFile(
@@ -307,9 +323,12 @@ export async function shareRouteToPod(
     "application/ld+json"
   );
 
-  // Comment it
-  //let routeCommentsFileUri = getRouteCommentsFileFromRouteUri(routeUri);
-  //await createAclReadWrite(routeCommentsFileUri, userWebId, targetUserWebId);
+  // Giving permissions to receiver to write comments
+  let commentsFile = routeUri.split("/");
+  commentsFile = commentsFile[commentsFile.length - 1];
+  aclApi = new AclApi(auth.fetch, { autoSave: true });
+  acl = await aclApi.loadFromFileUrl(getRouteCommentsFile(userWebId));
+  await acl.addRule([READ, APPEND], targetUserWebId);
 
   // Add target user to route's list of shared with.
   /*
@@ -329,23 +348,33 @@ export async function shareRouteToPod(
  */
 async function addRouteUriToShared(userWebId, uri) {
   let folder = getSharedFolder(userWebId);
-  await createFolderIfAbsent(folder);
-  let filePath = folder + sharedRoutesFilename;
   let sharedRoutesJSON;
+  let userUri = uri.split("//")[1].split("/")[0] + ".jsonld";
+  let filePath = folder + userUri;
+
+  console.log(
+    { folder, sharedRoutesJSON, userUri, filePath },
+    "addRouteUriShared"
+  );
   if (!(await fc.itemExists(filePath))) {
+    // This is the first time that a user shared a route with the current user
     sharedRoutesJSON = getNewSharedRoutesFileContent();
   } else {
     let sharedRoutes = await fc.readFile(filePath);
     sharedRoutesJSON = JSON.parse(sharedRoutes);
   }
-  // Possibility: Add a check to not duplicate routes
-  //sharedRoutesJSON.routes.push({"@id": uri}); // Old version
-  sharedRoutesJSON.routes.push(uri);
-  await fc.createFile(
-    filePath,
-    JSON.stringify(sharedRoutesJSON),
-    "application/ld+json"
+  console.log(filePath);
+  let duplicatited = sharedRoutesJSON.routes.filter(
+    (route) => route["@id"] == uri
   );
+  if (duplicatited.length == 0) {
+    sharedRoutesJSON.routes.push({ "@id": uri });
+    await fc.createFile(
+      filePath,
+      JSON.stringify(sharedRoutesJSON),
+      "application/ld+json"
+    );
+  }
 }
 
 /**
@@ -354,7 +383,6 @@ async function addRouteUriToShared(userWebId, uri) {
  */
 export async function checkInboxForSharedRoutes(userWebId) {
   let url = getInboxFolder(userWebId);
-  await createFolderIfAbsent(url);
   let folder = await fc.readFolder(url);
   let i = 0;
   for (i; i < folder.files.length; i++) {
@@ -375,14 +403,13 @@ export async function uploadRouteToPod(routeObject, userWebId) {
   let newRoute = getFormattedRoute(routeObject, userWebId, newRouteName);
   let url = getRoutesFolder(userWebId);
   let routeUrl = url + newRouteName;
-  await createFolderIfAbsent(url);
+
   await fc.createFile(
     routeUrl,
     JSON.stringify(newRoute),
     "application/ld+json"
   );
 
-  await createFolderIfAbsent(getCommentsFolder(userWebId));
   let routeCommentsFile = getRouteCommentsFile(userWebId, newRouteName);
   await fc.createFile(
     routeCommentsFile,
@@ -510,4 +537,27 @@ export async function getNotifications(userWebId) {
   } */
 
   return notifications;
+}
+
+export async function unshareRoute(authorWebId, routeId, userWebId) {
+  // Read share folder
+  let shareFolderUri = getSharedFolder(userWebId);
+  let sharedUserFiles = await fc.readFolder(shareFolderUri);
+  sharedUserFiles = sharedUserFiles.files;
+  sharedUserFiles = sharedUserFiles.filter((userFile) =>
+    userFile.name.includes(authorWebId)
+  );
+  let sharedUserFileContent = JSON.parse(
+    await fc.readFile(sharedUserFiles[0].url)
+  );
+  let routesToKeep = sharedUserFileContent.routes.filter(
+    (route) => !route["@id"].includes(routeId)
+  );
+  sharedUserFileContent.routes = routesToKeep;
+
+  await fc.createFile(
+    sharedUserFiles[0].url,
+    JSON.stringify(sharedUserFileContent),
+    "application/ld+json"
+  );
 }

@@ -44,10 +44,12 @@ export const locales = {
     Spanish: "Spanish",
     LanguageAvailable: "Available Languages",
     Technical: "Technical information",
-    TechnicalDescription: "If you are interested on how our project was planned and how it was built you can visit",
+    TechnicalDescription:
+      "If you are interested on how our project was planned and how it was built you can visit",
     ThisPage: "THIS PAGE",
     HowToUse: "How to use this application / About us",
-    HowToUseDescription: "As you might have any doubt of how to use this application or you might want to know more about us, we have created a support webpage for these two purpose.",
+    HowToUseDescription:
+      "As you might have any doubt of how to use this application or you might want to know more about us, we have created a support webpage for these two purpose.",
     Here: "Here is the webpage.",
     //Slideshow.js
     NoMediaElemts: "There are no media elements",
@@ -55,6 +57,7 @@ export const locales = {
     NoDescription: "There is not description for this route",
     Description: "Description",
     Delete: "Delete",
+    Unshare: "Unshare",
     Share: "Share",
     CommentsTitle: "Comments",
     //RouteList.js
@@ -116,10 +119,12 @@ export const locales = {
     Spanish: "Español",
     LanguageAvailable: "Idiomas Disponibles",
     Technical: "Información técnica",
-    TechnicalDescription: "Si estás interesado en como se planeo y se construyo nuestra aplicación puedes visitar",
+    TechnicalDescription:
+      "Si estás interesado en como se planeo y se construyo nuestra aplicación puedes visitar",
     ThisPage: "ESTA PÁGINA",
     HowToUse: "Como usar esta aplicación / Nuestro equipo",
-    HowToUseDescription: "Si te a surgido alguna duda sobre como usar esta aplicación o quieres saber más sobre quienes somos, hemos creado una página web extra para esto.",
+    HowToUseDescription:
+      "Si te a surgido alguna duda sobre como usar esta aplicación o quieres saber más sobre quienes somos, hemos creado una página web extra para esto.",
     Here: "Aqui esta la pagina web",
     //Slideshow.js
     NoMediaElemts: "No hay imágenes",
@@ -127,6 +132,7 @@ export const locales = {
     NoDescription: " No hay ninguna descripción para esta ruta",
     Description: "Descripción",
     Delete: "Borrar",
+    Unshare: "Descompartir",
     Share: "Compartir",
     CommentsTitle: "Comentarios",
     //RouteList.js

@@ -64,7 +64,7 @@ export const MyNavBar = (props) => {
       props.loadFriendsRequest();
       props.loadEmailRequest();
       createBaseStructure(id);
-      //checkInboxForSharedRoutes(id);
+      checkInboxForSharedRoutes(id);
       props.loadRoutesRequest();
       props.contentLoaded();
     });

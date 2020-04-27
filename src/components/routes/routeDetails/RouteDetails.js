@@ -7,11 +7,10 @@ import { deleteRoute } from "../../../store/actions/RouteActions";
 import ShareRoute from "../shareRoute/ShareRoute";
 import Comments from "../../layout/comments/Comments.js";
 import { FormattedMessage } from "react-intl";
+import { unshareRoute } from "../../../store/actions/RouteActions";
 
 export const RouteDetails = (props) => {
-  const { selectedRoute } = props;
-  const { deleteRoute } = props;
-  const {userWebId} = props;
+  const { selectedRoute, deleteRoute, userWebId, unshareRoute } = props;
 
   if (selectedRoute !== null) {
     let comments = [];
@@ -21,6 +20,22 @@ export const RouteDetails = (props) => {
         return <li key={key}>{comment}</li>;
       });
     }
+
+    const checkAuthority = () => {
+      let username = userWebId.split("//")[1].split("/")[0].split(".")[0];
+      return selectedRoute.author == username;
+    };
+    const deleteFunction = () => {
+      return checkAuthority()
+        ? deleteRoute(selectedRoute, userWebId)
+        : unshareRoute(selectedRoute.author, selectedRoute.id, userWebId);
+    };
+
+    const buttonText = () => {
+      let id = checkAuthority() ? "Delete" : "Unshare";
+      return <FormattedMessage id={id}></FormattedMessage>;
+    };
+
     const description = selectedRoute.description ? (
       selectedRoute.description
     ) : (
@@ -39,9 +54,9 @@ export const RouteDetails = (props) => {
           <Button
             data-testid="route-details-button-delete"
             id="deleteButton"
-            onClick={() => deleteRoute(selectedRoute, userWebId)}
+            onClick={() => deleteFunction()}
           >
-            <FormattedMessage id="Delete" />
+            {buttonText()}
           </Button>
           {
             <ShareRoute
@@ -73,12 +88,14 @@ export const RouteDetails = (props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteRoute: (route, userWebId) => dispatch(deleteRoute(route, userWebId)),
+    unshareRoute: (authorWebId, routeId, userWebId) =>
+      dispatch(unshareRoute(authorWebId, routeId, userWebId)),
   };
 };
 
 const mapStateToProps = (state) => {
   return {
-    userWebId : state.auth.userWebId
+    userWebId: state.auth.userWebId,
   };
 };
 

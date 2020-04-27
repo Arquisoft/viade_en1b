@@ -3,10 +3,19 @@ import Notification from "../notification/Notification";
 import { connect } from "react-redux";
 import style from "./NotificationsList.module.css";
 import { useNotifications } from "../../../../utils/hooks/hooks";
+import { Button } from "react-bootstrap";
+import { checkInboxForSharedRoutes } from "../../../../solid/routes";
+import { loadRoutesRequest } from "../../../../store/actions/RouteActions";
 
 export function NotificationsList(props) {
-  const { userWebId } = props;
+  const { userWebId, loadRoutes } = props;
   let notifications = useNotifications(userWebId);
+  const handleOnClick = () => {
+    console.log("Clicked");
+    checkInboxForSharedRoutes(userWebId).then((routes) => {
+      loadRoutes();
+    });
+  };
 
   const notificationsComponent = notifications.map((notification, key) => {
     return <Notification key={key} notification={notification}></Notification>;
@@ -20,6 +29,8 @@ export function NotificationsList(props) {
       }
     >
       <h1>Notifications</h1>
+      <Button onClick={handleOnClick}>Accept all</Button>
+
       <div className={style.notificationsList}>{notificationsComponent}</div>
     </div>
   );
@@ -31,4 +42,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(NotificationsList);
+const mapDispathToProps = (dispath) => {
+  return {
+    loadRoutes: () => dispath(loadRoutesRequest()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispathToProps)(NotificationsList);

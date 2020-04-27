@@ -3,6 +3,7 @@ import {
   shareRouteToPod,
   clearRouteFromPod,
   getRoutesFolder,
+  unshareRoute,
 } from "../../solid/routes";
 import { deepClone } from "../../utils/functions";
 import { getWebId } from "../../solid/auth";
@@ -45,7 +46,6 @@ export const routeReducer = (state = initState, action) => {
       };
 
     case "DELETE_ROUTE":
-      console.log(action.payload);
       clearRouteFromPod(action.payload.route.id, action.payload.uri);
       let routes = state.routes.filter((r) => r.id !== action.payload.route.id);
       return {
@@ -89,6 +89,20 @@ export const routeReducer = (state = initState, action) => {
       }
       //console.log(newRoutes);
       return { ...state, routes: newRoutes };
+    case "UNSHARE_ROUTE":
+      unshareRoute(
+        action.payload.authorWebId,
+        action.payload.routeId,
+        action.payload.userWebId
+      );
+      let anotherNewRoutes = state.routes.filter(
+        (r) => r.id !== action.payload.routeId
+      );
+      return {
+        ...state,
+        routes: anotherNewRoutes,
+        selectedRoute: null,
+      };
     case "LOAD_ROUTES_REQUEST":
       return {
         ...state,
