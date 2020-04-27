@@ -39,7 +39,7 @@ export function getRoutesFolder(userWebId) {
   return userWebId.split("/profile")[0] + "/" + appName + "/routes/";
 }
 export function getRootFolder(userWebId) {
-  return userWebId.split("/profile")[0] + "/" + appName;
+  return userWebId.split("/profile")[0] + "/" + appName + "/";
 }
 /**
  * Returns a string containing the URI of the comments folder for the given user.
@@ -349,44 +349,55 @@ export async function createBaseStructure(userWebId) {
     getResourcesFolder(userWebId),
     getSharedFolder(userWebId),
   ];
+  console.log(folders);
   let i = 0;
   for (i; i < folders.length; i++) {
     await createFolderIfAbsent(folders[i]);
+    await createOwnAcl(folders[i]);
   }
-  if (!(await fc.itemExists(getInboxFolder(userWebId) + ".acl"))) {
-    await createAclGlobalWrite(getInboxFolder(userWebId), userWebId);
-  }
+  await createAclPublicWrite(getInboxFolder(userWebId), userWebId);
 }
 /**
  * Gives global permissions to write in a folder
  * @param {uri of the folder} folderURI
  * @param {uri of the user} userWebId
  */
-export async function createAclGlobalWrite(folderURI, userWebId) {
-  let aclUrl = folderURI + ".acl";
-  if (!(await fc.itemExists(aclUrl))) {
-    let content = buildAclFolder(folderURI);
-    await fc.createFile(aclUrl, content, "text/turtle");
-  }
+export async function createAclPublicWrite(folderURI, userWebId) {
   const aclApi = new AclApi(auth.fetch, { autoSave: true });
   const acl = await aclApi.loadFromFileUrl(folderURI);
   await acl.addRule(WRITE, Agents.PUBLIC);
 }
 
-export function buildAclFolder(folderURI) {
+/**
+ * Gives global permissions to own folder
+ * @param {uri of the folder} folderURI
+ * @param {uri of the user} userWebId
+ */
+export async function createOwnAcl(folderURI) {
+  let aclUrl = folderURI + ".acl";
+  if (!(await fc.itemExists(aclUrl))) {
+    let content = giveOwnFolderPermissions(folderURI);
+    await fc.createFile(aclUrl, content, "text/turtle");
+  }
+}
+
+export function giveOwnFolderPermissions(folderURI) {
   let profile = folderURI.split("/viade")[0] + "/profile/card#me";
   let content =
-    "@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n" +
-    "@prefix foaf: <http://xmlns.com/foaf/0.1/>.\n" +
-    "<#owner> a acl:Authorization;\n" +
-    "acl:agent <" +
+    `
+
+@prefix acl: <http://www.w3.org/ns/auth/acl#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+<#owner>
+    a acl:Authorization;
+    acl:agent
+        <` +
     profile +
-    ">; \n" +
-    "acl:accessTo <./" +
-    folderURI +
-    ">;\n" +
-    "acl:default <./>; \n" +
-    "acl:mode acl:Write, acl:Control, acl:Read.";
+    `>;
+    acl:accessTo <./>;
+    acl:default <./>;
+    acl:mode
+        acl:Read, acl:Write, acl:Control.`;
   return content;
 }
 
