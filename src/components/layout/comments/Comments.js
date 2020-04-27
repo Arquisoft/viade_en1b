@@ -3,8 +3,11 @@ import ViadeModal from "../modal/Modal.js";
 import { connect } from "react-redux";
 import "../comments/Comments.css";
 import { FormattedMessage } from "react-intl";
+import { uploadComment } from "../../../solid/routes";
+
 export function Comments(props) {
   const [state, setState] = useState({});
+  const { userWebId } = props;
 
   const CommentButtonText = (
     <span data-testid="Leave-Cooment-text">
@@ -18,6 +21,7 @@ export function Comments(props) {
     if (state.comment !== null && state.comment !== "") {
       //Call whatever function to save the comment
       // The comment is save in state.comment
+      uploadComment(userWebId, "", state.comment);
     }
   };
   const handlerTextArea = (event) => {
@@ -63,6 +67,7 @@ export function Comments(props) {
 const mapStateToProps = (theState) => {
   return {
     selectedRoute: theState.route.selectedRoute,
+    userWebId: theState.auth.userWebId,
   };
 };
 

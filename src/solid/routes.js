@@ -474,24 +474,17 @@ export async function uploadComment(userWebId, commentedRouteUri, commentText) {
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
 
-  let myCommentsUrl = getMyCommentsFolder(userWebId);
-  await createFolderIfAbsent(myCommentsUrl);
-  let newCommentUrl = myCommentsUrl + uuidv4() + ".jsonld";
+  let myCommentsUrl = getCommentsFolder(userWebId);
 
   // Create local comment file
   let newComment = getNewComment(commentText, year, month, day);
-  await fc.createFile(
-    newCommentUrl,
-    JSON.stringify(newComment),
-    "application/ld+json"
-  );
 
   // Add comment's url to route's comments file
   let route = await fc.readFile(commentedRouteUri);
   let routeJSON = JSON.parse(route);
   let commentsFileContent = await fc.readFile(routeJSON.comments);
   let commentsFileContentJSON = JSON.parse(commentsFileContent);
-  commentsFileContentJSON.comments.push(newCommentUrl);
+  //commentsFileContentJSON.comments.push(newCommentUrl);
   await fc.createFile(
     routeJSON.comments,
     JSON.stringify(commentsFileContentJSON),

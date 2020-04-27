@@ -51,8 +51,9 @@ export function getNewCommentsFile(routeUrl) {
 /**
  * Returns a new comment file in JSON form.
  */
-export function getNewComment(commentText, year, month, day) {
+export function getNewComment(author, commentText, year, month, day) {
   return {
+    /*
     "@context": {
       "@version": 1.1,
       viade: "http://arquisoft.github.io/viadeSpec/",
@@ -66,6 +67,10 @@ export function getNewComment(commentText, year, month, day) {
         "@type": "xsd:string",
       },
     },
+    text: commentText,
+    dateCreated: year + "-" + month + "-" + day,
+    */
+    author: author,
     text: commentText,
     dateCreated: year + "-" + month + "-" + day,
   };

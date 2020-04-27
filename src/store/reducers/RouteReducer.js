@@ -31,7 +31,7 @@ export const routeReducer = (state = initState, action) => {
       const newRoute = {
         name: route.name,
         description: route.description,
-        author: id.split("//")[1].split(".")[0],
+        author: id.split("//")[1].split("/")[0],
         positions: route.positions,
         images: route.images,
         videos: route.videos,
