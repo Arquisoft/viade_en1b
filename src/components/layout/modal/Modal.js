@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 
-const ViadeModal = props => {
+const ViadeModal = (props) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
     props.handleClose();
     setShow(false);
   };
-  const handleShow = e => {
+  const handleShow = (e) => {
     props.onOpen();
     setShow(true);
   };

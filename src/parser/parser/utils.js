@@ -2,7 +2,7 @@ function removeEmpty(obj) {
   Object.entries(obj).forEach(([key, val]) => {
     if (val && val instanceof Object) {
       removeEmpty(val);
-    } else if (val == null) {
+    } else if (val === null) {
       delete obj[key];
     }
   });

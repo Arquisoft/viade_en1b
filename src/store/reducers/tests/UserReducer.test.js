@@ -1,5 +1,5 @@
-import userReducer from "../UserReducer"
-import "@testing-library/jest-dom"
+import userReducer from "../UserReducer";
+import "@testing-library/jest-dom";
 
 describe("User Reducer", () => {
 
@@ -31,7 +31,7 @@ describe("User Reducer", () => {
                 emailLoading: mockPayload
             };
             expect(newState).toEqual(expected);
-        })
+        });
 
         test("Type LOAD_EMAIL_ERROR", () => {
             const newState = userReducer(initState, {
@@ -43,7 +43,7 @@ describe("User Reducer", () => {
                 emailError: mockPayload
             }
             expect(newState).toEqual(expected);
-        })
+        });
 
         test("Type LOAD_EMAIL_SUCCESS", () => {
             const newState = userReducer(initState, {
@@ -56,7 +56,7 @@ describe("User Reducer", () => {
                 email: mockPayload
             };
             expect(newState).toEqual(expected);
-        })
+        });
 
         test("Type LOAD_FRIENDS_REQUEST", () => {
             const newState = userReducer(initState, {
@@ -68,7 +68,7 @@ describe("User Reducer", () => {
                 friendsLoading: mockPayload
              };
             expect(newState).toEqual(expected);
-        })
+        });
 
         test("Type LOAD_FRIENDS_SUCCESS", () => {
             const newState = userReducer(initState, {
@@ -81,7 +81,7 @@ describe("User Reducer", () => {
                 friends: mockPayload
              };
             expect(newState).toEqual(expected);
-        })
+        });
 
         test("Type LOAD_FRIENDS_ERROR", () => {
             const newState = userReducer(initState, {
@@ -94,7 +94,7 @@ describe("User Reducer", () => {
                 friendsError: mockPayload
              };
             expect(newState).toEqual(expected);
-        })
+        });
 
     });
 });

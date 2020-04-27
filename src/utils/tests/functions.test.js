@@ -1,5 +1,5 @@
 import { getOwnRoutesNumber, getSharedRoutesNumber } from "../functions";
-import "@testing-library/jest-dom"
+import "@testing-library/jest-dom";
 
 describe("compute number of routes", () => {
 
@@ -12,6 +12,6 @@ describe("compute number of routes", () => {
 
     test("share routes", () => {
         expect(getSharedRoutesNumber(routes, userWebId)).toBe(1);
-    })
+    });
 
 });
