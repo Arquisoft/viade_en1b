@@ -221,7 +221,7 @@ export async function createBaseStructure(userWebId) {
 export async function createAclPublicWrite(folderURI, userWebId) {
   const aclApi = new AclApi(auth.fetch, { autoSave: true });
   const acl = await aclApi.loadFromFileUrl(folderURI);
-  await acl.addRule(APPEND, Agents.PUBLIC);
+  await acl.addRule([READ, APPEND], Agents.PUBLIC);
 }
 
 /**
