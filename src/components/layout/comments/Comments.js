@@ -34,7 +34,7 @@ export function Comments(props) {
       let authorWebId =
         "https://" + props.selectedRoute.author + "/profile/card#me";
 
-      uploadComment(authorWebId, routeUri, state.comment).then((response) => {
+      uploadComment(userWebId, routeUri, state.comment).then((response) => {
         props.loadRoutesRequest();
         props.clearRoute();
       });
