@@ -11,7 +11,6 @@ export const RouteList = React.memo((props) => {
   const { routes } = props;
   const { onClick } = props;
   const { currentMap } = props;
-  console.log(routes);
   const summaries = routes.map((route) => {
     return currentMap ? (
       <RouteSummary

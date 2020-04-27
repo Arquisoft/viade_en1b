@@ -355,7 +355,7 @@ export async function shareRouteToPod(
   acl = await aclApi.loadFromFileUrl(
     getRouteCommentsFile(userWebId, commentsFile)
   );
-  await acl.addRule([READ, APPEND], targetUserWebId);
+  await acl.addRule([READ, APPEND, WRITE], targetUserWebId);
 
   // Add target user to route's list of shared with.
   /*
@@ -501,7 +501,7 @@ export async function uploadComment(
   comments.push(newComment);
   //commentsFileContentJSON.comments.push(newCommentUrl);
   commentsJson.comments = comments;
-  await fc.postFile(
+  await fc.putFile(
     commentRouteFile,
     JSON.stringify(commentsJson),
     "application/ld+json"
