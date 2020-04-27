@@ -501,7 +501,7 @@ export async function uploadComment(
   comments.push(newComment);
   //commentsFileContentJSON.comments.push(newCommentUrl);
   commentsJson.comments = comments;
-  await fc.createFile(
+  await fc.postFile(
     commentRouteFile,
     JSON.stringify(commentsJson),
     "application/ld+json"
