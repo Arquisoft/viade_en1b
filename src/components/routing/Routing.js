@@ -8,6 +8,7 @@ import PageNotFound from "../layout/pageNotFound/PageNotFound";
 import MyRoutes from "../routes/myRoutes/MyRoutes";
 import Settings from "../layout/settings/Settings";
 import ShareRoute from "../routes/shareRoute/ShareRoute";
+import Notifications from "../layout/notifications/Notifications";
 
 export default function Routing(props) {
   const { navBar } = props;
@@ -21,6 +22,11 @@ export default function Routing(props) {
           exact
           path="/profile"
           render={() => <MyProfile {...props} />}
+        ></Route>
+        <Route
+          exact
+          path="/notifications"
+          render={() => <Notifications {...props} />}
         ></Route>
         <Route
           exact

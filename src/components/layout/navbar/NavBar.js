@@ -1,6 +1,12 @@
 import React from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
-import { BsPerson, BsArrowBarUp, BsMap, BsCompass } from "react-icons/bs";
+import {
+  BsPerson,
+  BsArrowBarUp,
+  BsMap,
+  BsCompass,
+  BsBell,
+} from "react-icons/bs";
 import "./NavBar.css";
 import { LogoutButton } from "@solid/react";
 import { LinkContainer } from "react-router-bootstrap";
@@ -42,6 +48,13 @@ export const MyNavBar = (props) => {
       href: "/routes/upload",
       icon: <BsArrowBarUp className="icon"></BsArrowBarUp>,
       testId: "navbar-upload-route",
+    },
+    {
+      id: 3,
+      text: "Notifications",
+      href: "/notifications",
+      icon: <BsBell className="icon"></BsBell>,
+      testId: "navbar-notifications",
     },
   ];
 
