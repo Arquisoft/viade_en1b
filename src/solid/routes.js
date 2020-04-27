@@ -8,6 +8,7 @@ import {
   getNewComment,
   getNewNotification,
   getNewSharedRoutesFileContent,
+  getNotification,
 } from "./parser";
 const SolidAclUtils = require("solid-acl-utils");
 // You could also use SolidAclUtils.Permissions.READ instead of following
@@ -298,22 +299,20 @@ export async function shareRouteToPod(
   let url = getInboxFolder(targetUserWebId);
 
   await createFolderIfAbsent(url);
-
+  // Sending the notification
   let notificationUrl = url + uuidv4() + ".jsonld";
-  await fc.copyFile(
+  await fc.postFile(
     notificationUrl,
     JSON.stringify(getNewNotification(routeUri, sharerName, receiverName)),
-    "text/turtle"
+    "application/jsonld"
   );
-
-  // Read the route
-  //  await createAclRead(routeUri, userWebId, targetUserWebId);
 
   // Comment it
   //let routeCommentsFileUri = getRouteCommentsFileFromRouteUri(routeUri);
   //await createAclReadWrite(routeCommentsFileUri, userWebId, targetUserWebId);
 
   // Add target user to route's list of shared with.
+  /*
   let sharedWithUri = getRoutesSharedWithFileFromRouteUri(routeUri);
   let sharedWithContentJSON = await readToJson(sharedWithUri);
   sharedWithContentJSON.alreadyShared.push(targetUserWebId);
@@ -322,6 +321,7 @@ export async function shareRouteToPod(
     JSON.stringify(sharedWithContentJSON),
     "application/ld+json"
   );
+  */
 }
 
 /**
@@ -482,4 +482,32 @@ export async function clearRouteFromPod(routeId, userWebId) {
   if (folder.files.some((f) => f.name === fileName)) {
     await fc.delete(url + fileName);
   }
+}
+
+export async function getNotifications(userWebId) {
+  let inboxFolderUri = getInboxFolder(userWebId);
+  if (!(await fc.itemExists(inboxFolderUri))) {
+    return [];
+  }
+  let notifications = [];
+
+  // Own routes
+  let inboxFolder = await fc.readFolder(inboxFolderUri);
+  //let notifications = inboxFolder.files.filter((f) => !/\.acl$/.test(f.name));
+  let notificationFiles = inboxFolder.files;
+
+  let i = 0;
+  for (i; i < notificationFiles.length; i++) {
+    let notification = await getNotification(notificationFiles[i]);
+    notifications.push(notification);
+  }
+
+  // Routes shared with user
+  /*   let sharedRoutes = await getSharedRoutesUris(userWebId);
+  i = 0;
+  for (i; i < sharedRoutes.length; i++) {
+    routes.push(sharedRoutes[i]);
+  } */
+
+  return notifications;
 }

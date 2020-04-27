@@ -170,3 +170,12 @@ export function giveOwnFolderPermissions(folderURI) {
         acl:Read, acl:Write, acl:Control.`;
   return content;
 }
+
+export function getNotification(notificationFile) {
+  let parsed = JSON.parse(notificationFile);
+  let sharer = parsed.notification.actor.name;
+  let content = parsed.notification.object.uri;
+  return {
+    text: sharer + " has shared " + content + " with you",
+  };
+}
