@@ -36,8 +36,12 @@ const sharedRoutesFilename = "sharedRoutes.jsonld";
 const fc = new FC(auth);
 
 export async function createFolderIfAbsent(path) {
-  if (!(await fc.itemExists(path))) {
-    await fc.createFolder(path);
+  try {
+    if (!(await fc.itemExists(path))) {
+      await fc.createFolder(path);
+    }
+  } catch {
+    console.log("this is an error");
   }
 }
 
@@ -81,7 +85,7 @@ export function getInboxFolder(userWebId) {
  * Returns a string containing the URI of the comments file of a given route for the given user.
  */
 export function getRouteCommentsFile(userWebId, fileName) {
-  return getCommentsFolder(userWebId) + "routeComments/" + fileName;
+  return getCommentsFolder(userWebId) + fileName;
 }
 
 /**
@@ -200,8 +204,6 @@ export async function createBaseStructure(userWebId) {
     getRootFolder(userWebId),
     getRoutesFolder(userWebId),
     getCommentsFolder(userWebId),
-    getMyCommentsFolder(userWebId),
-    getRouteCommentsFolder(userWebId),
     getInboxFolder(userWebId),
     getResourcesFolder(userWebId),
     getSharedFolder(userWebId),
@@ -212,17 +214,33 @@ export async function createBaseStructure(userWebId) {
     await createFolderIfAbsent(folders[i]);
     await createOwnAcl(folders[i]);
   }
-  await createAclPublicWrite(getInboxFolder(userWebId), userWebId);
+  await createPublicPermissions(getInboxFolder(userWebId), [READ, APPEND]);
+  await createPublicPermissions(getCommentsFolder(userWebId), [READ, APPEND]);
 }
 /**
  * Gives global permissions to write in a folder
  * @param {uri of the folder} folderURI
  * @param {uri of the user} userWebId
  */
-export async function createAclPublicWrite(folderURI, userWebId) {
+export async function createPublicPermissions(folderURI, permissions) {
   const aclApi = new AclApi(auth.fetch, { autoSave: true });
-  const acl = await aclApi.loadFromFileUrl(folderURI);
-  await acl.addRule([READ, APPEND], Agents.PUBLIC);
+  let acl = {};
+  try {
+    acl = await aclApi.loadFromFileUrl(folderURI);
+
+    let hasAlreadyThePermissions = acl.getPermissionsFor(Agents.PUBLIC);
+    let alreadyPermissions = Array.from(
+      hasAlreadyThePermissions.permissions
+    ).map((permission) => {});
+
+    if (!hasPermissions(alreadyPermissions))
+      acl.addRule(permissions, Agents.PUBLIC);
+  } catch {}
+}
+
+function hasPermissions(permissions) {
+  if (permissions.length == 0) return false;
+  return true;
 }
 
 /**
@@ -271,7 +289,9 @@ export async function getRoutesFromPod(userWebId) {
   }
 
   // Now read shared routes
+
   let sharedFolderUri = getSharedFolder(userWebId);
+  await createFolderIfAbsent(sharedFolderUri);
   let sharedFiles = (await fc.readFolder(sharedFolderUri)).files;
   console.log({ sharedFolderUri, sharedFiles });
   for (let i = 0; i < sharedFiles.length; i++) {
@@ -310,7 +330,7 @@ export async function shareRouteToPod(
   // give permission to targetUserWebId
 
   const aclApi = new AclApi(auth.fetch, { autoSave: true });
-  const acl = await aclApi.loadFromFileUrl(routeUri);
+  let acl = await aclApi.loadFromFileUrl(routeUri);
   await acl.addRule(READ, targetUserWebId);
 
   let url = getInboxFolder(targetUserWebId);
@@ -326,8 +346,9 @@ export async function shareRouteToPod(
   // Giving permissions to receiver to write comments
   let commentsFile = routeUri.split("/");
   commentsFile = commentsFile[commentsFile.length - 1];
-  aclApi = new AclApi(auth.fetch, { autoSave: true });
-  acl = await aclApi.loadFromFileUrl(getRouteCommentsFile(userWebId));
+  acl = await aclApi.loadFromFileUrl(
+    getRouteCommentsFile(userWebId, commentsFile)
+  );
   await acl.addRule([READ, APPEND], targetUserWebId);
 
   // Add target user to route's list of shared with.
@@ -410,6 +431,7 @@ export async function uploadRouteToPod(routeObject, userWebId) {
     "application/ld+json"
   );
 
+  // Create comments file
   let routeCommentsFile = getRouteCommentsFile(userWebId, newRouteName);
   await fc.createFile(
     routeCommentsFile,
@@ -417,6 +439,9 @@ export async function uploadRouteToPod(routeObject, userWebId) {
     "application/ld+json"
   );
 
+  // Set permissions for comments file
+
+  // Our sharedwith field
   let routesSharedWithFolder = getRoutesSharedWithFolder(userWebId);
   await createFolderIfAbsent(routesSharedWithFolder);
   let routeSharedWithFile = { alreadyShared: [] };
