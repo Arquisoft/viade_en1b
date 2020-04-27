@@ -1,6 +1,14 @@
 import auth from "solid-auth-client";
 import FC from "solid-file-client";
 import { v4 as uuidv4 } from "uuid";
+import {
+  getNewCommentsFile,
+  giveOwnFolderPermissions,
+  getFormattedRoute,
+  getNewComment,
+  getNewNotification,
+  getNewSharedRoutesFileContent,
+} from "./parser";
 const SolidAclUtils = require("solid-acl-utils");
 // You could also use SolidAclUtils.Permissions.READ instead of following
 // This is just more convenient
@@ -158,162 +166,10 @@ async function getRouteObjectFromPodRoute(userWebId, route, routeFilename) {
 }
 
 /**
- * Returns a route in JSON-LD form as a string from the given route object, the webId of the pod's user and
- * the file name of the route for the pod.
- */
-export function getFormattedRoute(routeObject, userWebId, fileName) {
-  let output = {
-    "@context": {
-      "@version": "1.1",
-      comments: {
-        "@id": "viade:comments",
-        "@container": "@list",
-      },
-      description: {
-        "@id": "schema:description",
-        "@type": "xsd:string",
-      },
-      media: {
-        "@container": "@list",
-        "@id": "viade:media",
-      },
-      name: {
-        "@id": "schema:name",
-        "@type": "xsd:string",
-      },
-      points: {
-        "@container": "@list",
-        "@id": "viade:points",
-      },
-      latitude: {
-        "@id": "schema:latitude",
-        "@type": "xsd:double",
-      },
-      longitude: {
-        "@id": "schema:longitude",
-        "@type": "xsd:double",
-      },
-      elevation: {
-        "@id": "schema:elevation",
-        "@type": "xsd:double",
-      },
-      author: {
-        "@id": "schema:author",
-        "@type": "@id",
-      },
-      rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-      rdfs: "http://www.w3.org/2000/01/rdf-schema#",
-      schema: "http://schema.org/",
-      viade: "http://arquisoft.github.io/viadeSpec/",
-      xsd: "http://www.w3.org/2001/XMLSchema#",
-    },
-    name: routeObject.name,
-    author: routeObject.author,
-    description: routeObject.description,
-    comments: getRouteCommentsFile(userWebId, fileName),
-    media: routeObject.images + routeObject.videos,
-    waypoints: routeObject.positions,
-    points: routeObject.positions.map((position) => {
-      return { latitude: position[0], longitude: position[1] };
-    }),
-  };
-  return output;
-}
-
-/**
  * Returns the URI of the route from a notification object.
  */
 function getRouteUriFromShareNotification(notification) {
   return notification.notification.object.uri;
-}
-
-/**
- * Returns a new shared routes file in JSON form.
- */
-function getNewSharedRoutesFileContent() {
-  return {
-    "@context": {
-      "@version": 1.1,
-      routes: {
-        "@container": "@list",
-        "@id": "viade:routes",
-      },
-      viade: "http://arquisoft.github.io/viadeSpec/",
-    },
-    routes: [],
-  };
-}
-
-/**
- * Returns a new notification in JSON form.
- */
-function getNewNotification(routeUri, sharerName, receiverName) {
-  return {
-    "@context": {
-      "@version": 1.1,
-      as: "https://www.w3.org/ns/activitystreams#",
-      viade: "http://arquisoft.github.io/viadeSpec/",
-      notification: {
-        "@id": "as:Offer",
-      },
-    },
-    notification: {
-      actor: {
-        type: "Person",
-        name: sharerName,
-      },
-      object: {
-        type: "viade:route",
-        uri: routeUri,
-      },
-      target: {
-        type: "Person",
-        name: receiverName,
-      },
-    },
-  };
-}
-
-/**
- * Returns a new comments file for a route in JSON form.
- */
-export function getNewCommentsFile(routeUrl) {
-  return {
-    "@context": {
-      "@version": 1.1,
-      viade: "http://arquisoft.github.io/viadeSpec/",
-      schema: "http://schema.org/",
-      comments: {
-        "@container": "@list",
-        "@id": "viade:comments",
-      },
-    },
-    routeUri: routeUrl,
-    comments: [],
-  };
-}
-
-/**
- * Returns a new comment file in JSON form.
- */
-function getNewComment(commentText, year, month, day) {
-  return {
-    "@context": {
-      "@version": 1.1,
-      viade: "http://arquisoft.github.io/viadeSpec/",
-      schema: "http://schema.org/",
-      dateCreated: {
-        "@id": "viade:dateCreated",
-        "@type": "xsd:date",
-      },
-      text: {
-        "@id": "viade:text",
-        "@type": "xsd:string",
-      },
-    },
-    text: commentText,
-    dateCreated: year + "-" + month + "-" + day,
-  };
 }
 
 /**
@@ -365,7 +221,7 @@ export async function createBaseStructure(userWebId) {
 export async function createAclPublicWrite(folderURI, userWebId) {
   const aclApi = new AclApi(auth.fetch, { autoSave: true });
   const acl = await aclApi.loadFromFileUrl(folderURI);
-  await acl.addRule(WRITE, Agents.PUBLIC);
+  await acl.addRule(APPEND, Agents.PUBLIC);
 }
 
 /**
@@ -379,26 +235,6 @@ export async function createOwnAcl(folderURI) {
     let content = giveOwnFolderPermissions(folderURI);
     await fc.createFile(aclUrl, content, "text/turtle");
   }
-}
-
-export function giveOwnFolderPermissions(folderURI) {
-  let profile = folderURI.split("/viade")[0] + "/profile/card#me";
-  let content =
-    `
-
-@prefix acl: <http://www.w3.org/ns/auth/acl#>.
-@prefix foaf: <http://xmlns.com/foaf/0.1/>.
-<#owner>
-    a acl:Authorization;
-    acl:agent
-        <` +
-    profile +
-    `>;
-    acl:accessTo <./>;
-    acl:default <./>;
-    acl:mode
-        acl:Read, acl:Write, acl:Control.`;
-  return content;
 }
 
 /**
@@ -453,16 +289,21 @@ export async function shareRouteToPod(
   sharerName,
   receiverName
 ) {
+  // give permission to targetUserWebId
+
+  const aclApi = new AclApi(auth.fetch, { autoSave: true });
+  const acl = await aclApi.loadFromFileUrl(routeUri);
+  await acl.addRule(READ, targetUserWebId);
+
   let url = getInboxFolder(targetUserWebId);
 
-  //return null; // Possibility: notify the user the target user does not have inbox folder
   await createFolderIfAbsent(url);
 
   let notificationUrl = url + uuidv4() + ".jsonld";
-  await fc.postFile(
+  await fc.copyFile(
     notificationUrl,
     JSON.stringify(getNewNotification(routeUri, sharerName, receiverName)),
-    "application/ld+json"
+    "text/turtle"
   );
 
   // Read the route
