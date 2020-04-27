@@ -304,7 +304,7 @@ export async function shareRouteToPod(
   await fc.postFile(
     notificationUrl,
     JSON.stringify(getNewNotification(routeUri, sharerName, receiverName)),
-    "application/jsonld"
+    "application/ld+json"
   );
 
   // Comment it
@@ -498,7 +498,7 @@ export async function getNotifications(userWebId) {
 
   let i = 0;
   for (i; i < notificationFiles.length; i++) {
-    let notification = await getNotification(notificationFiles[i]);
+    let notification = await getNotification(fc, notificationFiles[i]);
     notifications.push(notification);
   }
 

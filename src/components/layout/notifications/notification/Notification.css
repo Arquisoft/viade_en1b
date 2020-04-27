@@ -1,0 +1,12 @@
+p.notificationText.card-text {
+  width: 100%;
+  margin-top: 5em;
+}
+
+.card-body {
+  margin-top: 2em;
+}
+.notificationCardBody {
+  width: 100% !important;
+  margin-top: 5em;
+}

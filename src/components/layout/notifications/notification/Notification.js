@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import "./Notification.css";
 
 export default function Notification(props) {
   const { notification } = props;
@@ -10,8 +11,8 @@ export default function Notification(props) {
       className="notification"
       onClick={() => {}}
     >
-      <Card.Body>
-        <Card.Text>{notification.text}</Card.Text>
+      <Card.Body className="notificationCardBody">
+        <Card.Text className="notificationText">{notification.text}</Card.Text>
       </Card.Body>
     </Card>
   );

@@ -6,7 +6,6 @@ import { useNotifications } from "../../../../utils/hooks/hooks";
 
 export function NotificationsList(props) {
   const { userWebId } = props;
-  console.log(userWebId);
   let notifications = useNotifications(userWebId);
 
   const notificationsComponent = notifications.map((notification, key) => {

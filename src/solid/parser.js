@@ -171,10 +171,12 @@ export function giveOwnFolderPermissions(folderURI) {
   return content;
 }
 
-export function getNotification(notificationFile) {
-  let parsed = JSON.parse(notificationFile);
+export async function getNotification(fc, notificationFile) {
+  let parsed = JSON.parse(await fc.readFile(notificationFile.url));
+  console.log(notificationFile.url);
   let sharer = parsed.notification.actor.name;
-  let content = parsed.notification.object.uri;
+  let content = parsed.notification.object.uri.split("/");
+  content = content[content.length - 1];
   return {
     text: sharer + " has shared " + content + " with you",
   };

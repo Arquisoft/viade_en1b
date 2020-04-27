@@ -5,9 +5,11 @@ export function useNotifications(userWebId) {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    getNotifications(userWebId).then((notifications) => {
-      setNotifications(notifications);
-    });
+    if (userWebId != null) {
+      getNotifications(userWebId).then((notifications) => {
+        setNotifications(notifications);
+      });
+    }
   }, [userWebId]);
 
   return notifications;
