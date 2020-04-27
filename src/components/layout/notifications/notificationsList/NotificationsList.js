@@ -2,22 +2,12 @@ import React from "react";
 import Notification from "../notification/Notification";
 import { connect } from "react-redux";
 import style from "./NotificationsList.module.css";
+import { useNotifications } from "../../../../utils/hooks/hooks";
+
 export function NotificationsList(props) {
   const { userWebId } = props;
-  let notifications = [
-    { text: "Notification 1" },
-    { text: "Notification 2" },
-    { text: "Notification 3" },
-    { text: "Notification 4" },
-    { text: "Notification 5" },
-    { text: "Notification 6" },
-    { text: "Notification 7" },
-    { text: "Notification 8" },
-    { text: "Notification 9" },
-    { text: "Notification 10" },
-    { text: "Notification 11" },
-    { text: "Notification 12" },
-  ]; // = getNotifications(userWebId)
+  console.log(userWebId);
+  let notifications = useNotifications(userWebId);
 
   const notificationsComponent = notifications.map((notification, key) => {
     return <Notification key={key} notification={notification}></Notification>;
