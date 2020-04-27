@@ -1,6 +1,18 @@
 import auth from "solid-auth-client";
 import FC from "solid-file-client";
 import { v4 as uuidv4 } from "uuid";
+const SolidAclUtils = require("solid-acl-utils");
+// You could also use SolidAclUtils.Permissions.READ instead of following
+// This is just more convenient
+const {
+  AclApi,
+  AclDoc,
+  AclParser,
+  AclRule,
+  Permissions,
+  Agents,
+} = SolidAclUtils;
+const { READ, WRITE, APPEND, CONTROL } = Permissions;
 //import SolidAclUtils from "solid-acl-utils";
 
 /**
@@ -26,7 +38,9 @@ export async function createFolderIfAbsent(path) {
 export function getRoutesFolder(userWebId) {
   return userWebId.split("/profile")[0] + "/" + appName + "/routes/";
 }
-
+export function getRootFolder(userWebId) {
+  return userWebId.split("/profile")[0] + "/" + appName;
+}
 /**
  * Returns a string containing the URI of the comments folder for the given user.
  */
@@ -41,9 +55,14 @@ export function getMyCommentsFolder(userWebId) {
   return getCommentsFolder(userWebId) + "myComments/";
 }
 
+export function getRouteCommentsFolder(userWebId) {
+  return getCommentsFolder(userWebId) + "routeComments/";
+}
+
 /**
  * Returns a string containing the URI of the inbox folder for the given user.
  */
+// create ACL for the folder
 export function getInboxFolder(userWebId) {
   const inboxUrl = userWebId.split("profile")[0] + appName + "/inbox/";
   return inboxUrl;
@@ -311,25 +330,65 @@ export async function getSharedRoutesUris(userWebId) {
   return fileContentJSON.routes;
 }
 
-
+// Crear carpeta viade
+//--> routes
+//--> comments
+//----> my comments
+//----> route comments
+//--> resources
+//--> inbox (WRITE ALL)
+//--> shared
 export async function createBaseStructure(userWebId) {
   let folders = [
+    getRootFolder(userWebId),
     getRoutesFolder(userWebId),
     getCommentsFolder(userWebId),
     getMyCommentsFolder(userWebId),
+    getRouteCommentsFolder(userWebId),
     getInboxFolder(userWebId),
     getResourcesFolder(userWebId),
     getSharedFolder(userWebId),
-    getRoutesSharedWithFolder(userWebId),
   ];
   let i = 0;
   for (i; i < folders.length; i++) {
     await createFolderIfAbsent(folders[i]);
   }
   if (!(await fc.itemExists(getInboxFolder(userWebId) + ".acl"))) {
-    //await createAclGlobalWrite(getInboxFolder(userWebId), userWebId);
+    await createAclGlobalWrite(getInboxFolder(userWebId), userWebId);
   }
-} 
+}
+/**
+ * Gives global permissions to write in a folder
+ * @param {uri of the folder} folderURI
+ * @param {uri of the user} userWebId
+ */
+export async function createAclGlobalWrite(folderURI, userWebId) {
+  let aclUrl = folderURI + ".acl";
+  if (!(await fc.itemExists(aclUrl))) {
+    let content = buildAclFolder(folderURI);
+    await fc.createFile(aclUrl, content, "text/turtle");
+  }
+  const aclApi = new AclApi(auth.fetch, { autoSave: true });
+  const acl = await aclApi.loadFromFileUrl(folderURI);
+  await acl.addRule(WRITE, Agents.PUBLIC);
+}
+
+export function buildAclFolder(folderURI) {
+  let profile = folderURI.split("/viade")[0] + "/profile/card#me";
+  let content =
+    "@prefix acl: <http://www.w3.org/ns/auth/acl#>.\n" +
+    "@prefix foaf: <http://xmlns.com/foaf/0.1/>.\n" +
+    "<#owner> a acl:Authorization;\n" +
+    "acl:agent <" +
+    profile +
+    ">; \n" +
+    "acl:accessTo <./" +
+    folderURI +
+    ">;\n" +
+    "acl:default <./>; \n" +
+    "acl:mode acl:Write, acl:Control, acl:Read.";
+  return content;
+}
 
 /**
  * Returns a route from a given user's pod given the name of the route, or null if not found.

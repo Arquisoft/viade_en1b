@@ -4,7 +4,10 @@ import { BsPerson, BsArrowBarUp, BsMap, BsCompass } from "react-icons/bs";
 import "./NavBar.css";
 import { LogoutButton } from "@solid/react";
 import { LinkContainer } from "react-router-bootstrap";
-import {loadFriendsRequest,  loadEmailRequest} from "../../../store/actions/UserActions";
+import {
+  loadFriendsRequest,
+  loadEmailRequest,
+} from "../../../store/actions/UserActions";
 import { updateWebId } from "../../../store/actions/AuthActions";
 import { loadRoutesRequest } from "../../../store/actions/RouteActions";
 import { contentLoaded } from "../../../store/actions/LoadActions";
@@ -12,7 +15,10 @@ import { connect } from "react-redux";
 import { getWebId } from "../../../solid/auth";
 import { FormattedMessage } from "react-intl";
 import ThemePicker from "../theme/ThemePicker";
-//import { createBaseStructure, checkInboxForSharedRoutes } from "../../../solid/routes";
+import {
+  createBaseStructure,
+  checkInboxForSharedRoutes,
+} from "../../../solid/routes";
 
 export const MyNavBar = (props) => {
   const links = [
@@ -44,7 +50,7 @@ export const MyNavBar = (props) => {
       props.updateWebId(id);
       props.loadFriendsRequest();
       props.loadEmailRequest();
-      //createBaseStructure(id);
+      createBaseStructure(id);
       //checkInboxForSharedRoutes(id);
       props.loadRoutesRequest();
       props.contentLoaded();
