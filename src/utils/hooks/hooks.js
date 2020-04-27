@@ -14,3 +14,14 @@ export function useNotifications(userWebId) {
 
   return notifications;
 }
+
+export function useComments(selectedRoute) {
+  const [comments, setComments] = useState([]);
+  useEffect(() => {
+    if (selectedRoute != null) {
+      console.log(selectedRoute.comments);
+      setComments(selectedRoute.comments);
+    }
+  });
+  return comments;
+}

@@ -8,19 +8,13 @@ import ShareRoute from "../shareRoute/ShareRoute";
 import Comments from "../../layout/comments/Comments.js";
 import { FormattedMessage } from "react-intl";
 import { unshareRoute } from "../../../store/actions/RouteActions";
+import { CommentList } from "../../layout/comments/CommentList/CommentList";
+import { useComments } from "../../../utils/hooks/hooks";
 
 export const RouteDetails = (props) => {
   const { selectedRoute, deleteRoute, userWebId, unshareRoute } = props;
-
+  let comments = useComments(selectedRoute);
   if (selectedRoute !== null) {
-    let comments = [];
-    if (selectedRoute.comments != null) {
-      comments = selectedRoute.comments;
-      comments = comments.map((comment, key) => {
-        return <li key={key}>{comment}</li>;
-      });
-    }
-
     const checkAuthority = () => {
       let username = userWebId.split("//")[1].split("/")[0];
       return selectedRoute.author == username;
@@ -30,6 +24,8 @@ export const RouteDetails = (props) => {
         ? deleteRoute(selectedRoute, userWebId)
         : unshareRoute(selectedRoute.author, selectedRoute.id, userWebId);
     };
+
+    const commentList = <CommentList comments={comments}></CommentList>;
 
     const buttonText = () => {
       let id = checkAuthority() ? "Delete" : "Unshare";
@@ -72,7 +68,7 @@ export const RouteDetails = (props) => {
           <h3>
             <FormattedMessage id="CommentsTitle" />
           </h3>
-          <ul>{comments}</ul>
+          {commentList}
           <Comments
             style={style.commentsButton}
             data-testid="Comments-button"

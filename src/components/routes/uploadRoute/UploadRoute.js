@@ -36,10 +36,7 @@ export class UploadRoute extends React.Component {
       reader.readAsText(file, "UTF-8");
       reader.onload = function (evt) {
         parseado = parseGPX(evt.target.result);
-        //console.log(self.state);
-        //console.log(parseado);
         self.state.positions = parseado;
-        //console.log(self.state);
       };
       reader.onerror = function (evt) {};
     }
@@ -69,7 +66,7 @@ export class UploadRoute extends React.Component {
       author: "",
       positions: [],
       reset: false,
-      comments: [],
+      comments: "",
     };
   }
 

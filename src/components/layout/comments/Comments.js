@@ -4,6 +4,10 @@ import { connect } from "react-redux";
 import "../comments/Comments.css";
 import { FormattedMessage } from "react-intl";
 import { uploadComment } from "../../../solid/routes";
+import {
+  loadRoutesRequest,
+  clearRoute,
+} from "../../../store/actions/RouteActions.js";
 
 export function Comments(props) {
   const [state, setState] = useState({});
@@ -21,7 +25,19 @@ export function Comments(props) {
     if (state.comment !== null && state.comment !== "") {
       //Call whatever function to save the comment
       // The comment is save in state.comment
-      uploadComment(userWebId, "", state.comment);
+      let routeUri =
+        "https://" +
+        props.selectedRoute.author +
+        "/viade/comments/" +
+        props.selectedRoute.id +
+        ".jsonld";
+      let authorWebId =
+        "https://" + props.selectedRoute.author + "/profile/card#me";
+
+      uploadComment(authorWebId, routeUri, state.comment).then((response) => {
+        props.loadRoutesRequest();
+        props.clearRoute();
+      });
     }
   };
   const handlerTextArea = (event) => {
@@ -71,4 +87,11 @@ const mapStateToProps = (theState) => {
   };
 };
 
-export default connect(mapStateToProps)(Comments);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadRoutesRequest: () => dispatch(loadRoutesRequest()),
+    clearRoute: () => dispatch(clearRoute()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Comments);

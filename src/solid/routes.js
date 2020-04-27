@@ -163,11 +163,17 @@ async function getRouteObjectFromPodRoute(userWebId, route, routeFilename) {
     name: route.name,
     description: route.description,
     author: route.author,
+    comments: await readComments(route.comments),
     positions: route.points.map((point) => {
       return [point.latitude, point.longitude];
     }),
     sharedWith: [] /*await getUsersRouteSharedWith(userWebId, routeFilename)*/,
   };
+}
+
+export async function readComments(commentsUri) {
+  let contents = JSON.parse(await fc.readFile(commentsUri));
+  return contents.comments;
 }
 
 /**
@@ -439,6 +445,10 @@ export async function uploadRouteToPod(routeObject, userWebId) {
     "application/ld+json"
   );
 
+  if (routeObject.comments !== "") {
+    await uploadComment(userWebId, routeCommentsFile, routeObject.comments);
+  }
+
   // Set permissions for comments file
 
   // Our sharedwith field
@@ -468,26 +478,32 @@ export async function uploadRouteToPod(routeObject, userWebId) {
  * @param {string} commentText
  *      The text of the comment
  */
-export async function uploadComment(userWebId, commentedRouteUri, commentText) {
+export async function uploadComment(
+  authorWebId,
+  commentRouteFile,
+  commentText
+) {
   let date = new Date();
   let day = date.getDate();
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
 
-  let myCommentsUrl = getCommentsFolder(userWebId);
+  let myCommentsUrl = getCommentsFolder(authorWebId);
 
   // Create local comment file
-  let newComment = getNewComment(commentText, year, month, day);
+  let authorUsername = authorWebId.split("//")[1].split("/")[0];
+  let newComment = getNewComment(authorUsername, commentText, year, month, day);
 
   // Add comment's url to route's comments file
-  let route = await fc.readFile(commentedRouteUri);
-  let routeJSON = JSON.parse(route);
-  let commentsFileContent = await fc.readFile(routeJSON.comments);
-  let commentsFileContentJSON = JSON.parse(commentsFileContent);
+  let commentsFile = await fc.readFile(commentRouteFile);
+  let commentsJson = JSON.parse(commentsFile);
+  let comments = commentsJson.comments;
+  comments.push(newComment);
   //commentsFileContentJSON.comments.push(newCommentUrl);
+  commentsJson.comments = comments;
   await fc.createFile(
-    routeJSON.comments,
-    JSON.stringify(commentsFileContentJSON),
+    commentRouteFile,
+    JSON.stringify(commentsJson),
     "application/ld+json"
   );
 }
