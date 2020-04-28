@@ -18,7 +18,7 @@ describe("Solid Routes", () => {
 
     const friendPod = new LocalPod({
         port: 3333,
-        basePath: ".localpods/friendpod",
+        basePath: ".localpods/friendpod/",
         fetch: solidFileFetchSecond
     });
 
@@ -46,7 +46,9 @@ describe("Solid Routes", () => {
                 [43.360831, -5.849717],
                 [43.355001, -5.851482]
             ],
-            description: "Starting at Gascona, you will end right in front of the EII."
+            description: "Starting at Gascona, you will end right in front of the EII.",
+            images: [],
+            videos: []
         };
     const secondRoute =
         {
@@ -79,13 +81,12 @@ describe("Solid Routes", () => {
             }
         });
         folders = [
+            solid.getRootFolder(userWebId),
             solid.getRoutesFolder(userWebId),
             solid.getCommentsFolder(userWebId),
-            solid.getMyCommentsFolder(userWebId),
             solid.getInboxFolder(userWebId),
             solid.getResourcesFolder(userWebId),
             solid.getSharedFolder(userWebId),
-            solid.getRoutesSharedWithFolder(userWebId)
         ];
         await userPod.startListening();
         await friendPod.startListening();
