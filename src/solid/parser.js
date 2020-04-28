@@ -1,5 +1,4 @@
 import { getRouteCommentsFile } from "./routes";
-import { deepClone } from "../utils/functions";
 /**
  * Returns a new notification in JSON form.
  */

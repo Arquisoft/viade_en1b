@@ -15,7 +15,7 @@ const Slideshow = (props) => {
     }
   };
 
-  const picturesTags = props.images.map((image) => <img src={image}></img>);
+  const picturesTags = props.images.map((image) => <img alt="animg" src={image}></img>);
   const [state, dispatch] = useReducer(reducer, { picture: 0 });
 
   const previousButton =

@@ -18,7 +18,7 @@ export const RouteDetails = (props) => {
   if (selectedRoute !== null) {
     const checkAuthority = () => {
       let username = userWebId.split("//")[1].split("/")[0];
-      return selectedRoute.author == username;
+      return selectedRoute.author === username;
     };
     const deleteFunction = () => {
       return checkAuthority()

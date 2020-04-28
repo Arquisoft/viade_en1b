@@ -5,7 +5,6 @@ import {
   getRoutesFolder,
   unshareRoute,
 } from "../../solid/routes";
-import { deepClone } from "../../utils/functions";
 import { getWebId } from "../../solid/auth";
 
 const initState = {
@@ -58,28 +57,10 @@ export const routeReducer = (state = initState, action) => {
         ...state,
         selectedRoute: action.payload,
       };
-    case "SHARE_ROUTE":
-      let stateRoutes = deepClone(state.routes);
-      let sharedRouteId = action.payload.route.id;
-      let alreadyShared = stateRoutes.filter(
-        (route) => route.id === action.payload.route.id
-      )[0].sharedWith;
-      //console.log(alreadyShared);
-      let sharedRoute = {
-        ...action.payload.route,
-        sharedWith: action.payload.friends.concat(alreadyShared),
-      };
-
-      //let newRoutes = stateRoutes;
-      //newRoutes[sharedRouteId] = sharedRoute;
+    case "SHARE_ROUTE":      
+      
       let friends = action.payload.friends;
-      /* console.log({
-        stateRoutes,
-        sharedRoute,
-        alreadyShared,
-        newRoutes,
-        sharedRouteId,
-      }); */
+     
       if (friends[0]) {
         getWebId().then((userWebID) => {
           friends.forEach((friend) => {

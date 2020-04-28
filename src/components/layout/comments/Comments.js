@@ -31,8 +31,6 @@ export function Comments(props) {
         "/viade/comments/" +
         props.selectedRoute.id +
         ".jsonld";
-      let authorWebId =
-        "https://" + props.selectedRoute.author + "/profile/card#me";
 
       uploadComment(userWebId, routeUri, state.comment).then((response) => {
         props.loadRoutesRequest();

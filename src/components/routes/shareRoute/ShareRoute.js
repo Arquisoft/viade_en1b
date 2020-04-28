@@ -64,7 +64,7 @@ export function ShareRoute(props) {
 
   const checkAuthority = () => {
     let username = userWebId.split("//")[1].split("/")[0];
-    return selectedRoute.author == username;
+    return selectedRoute.author === username;
   };
 
   const handleOnClick = (key) => {

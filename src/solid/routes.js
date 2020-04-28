@@ -15,13 +15,10 @@ const SolidAclUtils = require("solid-acl-utils");
 // This is just more convenient
 const {
   AclApi,
-  AclDoc,
-  AclParser,
-  AclRule,
   Permissions,
   Agents,
 } = SolidAclUtils;
-const { READ, WRITE, APPEND, CONTROL } = Permissions;
+const { READ, WRITE, APPEND } = Permissions;
 //import SolidAclUtils from "solid-acl-utils";
 
 /**
@@ -129,12 +126,12 @@ function getRoutesSharedWithFile(userWebId, routeFilename) {
  * Returns a string containing the URI of the file which contains with whom a route has been shared for the
  * given user, given the route URI.
  */
-function getRoutesSharedWithFileFromRouteUri(routeUri) {
+/* function getRoutesSharedWithFileFromRouteUri(routeUri) {
   let split = routeUri.split("routes/");
   let folder = split[0] + "shared/routesSharedWith/";
   let fileName = split[1];
   return folder + fileName;
-}
+} */
 
 /**
  * Returns the contents of the given url in JSON form.
@@ -244,7 +241,7 @@ export async function createPublicPermissions(folderURI, permissions) {
     let hasAlreadyThePermissions = acl.getPermissionsFor(Agents.PUBLIC);
     let alreadyPermissions = Array.from(
       hasAlreadyThePermissions.permissions
-    ).map((permission) => {});
+    ).map((permission) => {return permission});
 
     if (!hasPermissions(alreadyPermissions))
       acl.addRule(permissions, Agents.PUBLIC);
@@ -252,7 +249,7 @@ export async function createPublicPermissions(folderURI, permissions) {
 }
 
 function hasPermissions(permissions) {
-  if (permissions.length == 0) return false;
+  if (permissions.length === 0) return false;
   return true;
 }
 
@@ -396,9 +393,9 @@ async function addRouteUriToShared(userWebId, uri) {
     sharedRoutesJSON = JSON.parse(sharedRoutes);
   }
   let duplicatited = sharedRoutesJSON.routes.filter(
-    (route) => route["@id"] == uri
+    (route) => route["@id"] === uri
   );
-  if (duplicatited.length == 0) {
+  if (duplicatited.length === 0) {
     sharedRoutesJSON.routes.push({ "@id": uri });
     await fc.createFile(
       filePath,
@@ -493,8 +490,6 @@ export async function uploadComment(
   let day = date.getDate();
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
-
-  let myCommentsUrl = getCommentsFolder(authorWebId);
 
   // Create local comment file
   let authorUsername = authorWebId.split("//")[1].split("/")[0];

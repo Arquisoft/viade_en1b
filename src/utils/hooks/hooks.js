@@ -21,6 +21,6 @@ export function useComments(selectedRoute) {
     if (selectedRoute != null) {
       setComments(selectedRoute.comments);
     }
-  });
+  }, [selectedRoute]);
   return comments;
 }
