@@ -47,7 +47,7 @@ describe("Solid Routes", () => {
             description: "Starting at Gascona, you will end right in front of the EII.",
             images: [],
             videos: [],
-            comments: ["A nice route indeed!"]
+            comments: "A nice route indeed!"
         };
     const secondRoute =
         {
@@ -64,7 +64,7 @@ describe("Solid Routes", () => {
             description: "Description of a second route.",
             images: [],
             videos: [],
-            comments: ["Comment for the second route"]
+            comments: "Comment for the second route"
         };
 
     const fc = new FC(auth);
@@ -277,7 +277,7 @@ describe("Solid Routes", () => {
         let routeCommentsUri = solid.getRouteCommentsFile(userWebId, routeFilename);
         await solid.uploadComment(userWebId, routeCommentsUri, commentText);
         let comments = await solid.getCommentsFromRoute(userWebId, routeFilename);
-        expect(comments[0].text).toEqual(firstRoute.comments[0]);
+        expect(comments[0].text).toEqual(firstRoute.comments);
         expect(comments[1].text).toEqual(commentText); // Comment uploaded in order
 
     });

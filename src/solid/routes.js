@@ -428,8 +428,8 @@ export async function uploadRouteToPod(routeObject, userWebId) {
     "application/ld+json"
   );
 
-  if (routeObject.comments[0] !== "") {
-    await uploadComment(userWebId, routeCommentsFile, routeObject.comments[0]);
+  if (routeObject.comments !== "") {
+    await uploadComment(userWebId, routeCommentsFile, routeObject.comments);
   }
 }
 
