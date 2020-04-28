@@ -42,6 +42,9 @@ export class UploadRoute extends React.Component {
       };
       reader.onerror = function (evt) {};
     }
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
   }
 
   //This is part of the state, and states should not be tested.
@@ -78,7 +81,7 @@ export class UploadRoute extends React.Component {
   }
 
   isEmpty = () => {
-    return this.state.name === "" && this.state.description === "";
+    return !(this.state.name !== "" && this.state.file !== "");
   };
 
   componentDidUpdate() {
@@ -91,6 +94,8 @@ export class UploadRoute extends React.Component {
     this.props.loadRoutes.bind(this);
     this.setState({ ...this.state, reset: true });
   }
+
+
 
   render() {
     return (
