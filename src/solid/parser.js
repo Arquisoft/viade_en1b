@@ -1,4 +1,5 @@
 import { getRouteCommentsFile } from "./routes";
+import { deepClone } from "../utils/functions";
 /**
  * Returns a new notification in JSON form.
  */
@@ -81,6 +82,7 @@ export function getNewComment(author, commentText, year, month, day) {
  * the file name of the route for the pod.
  */
 export function getFormattedRoute(routeObject, userWebId, fileName) {
+  console.log(routeObject);
   let output = {
     "@context": {
       "@version": "1.1",
@@ -129,13 +131,14 @@ export function getFormattedRoute(routeObject, userWebId, fileName) {
     name: routeObject.name,
     author: routeObject.author,
     description: routeObject.description,
+    media: [],
     comments: getRouteCommentsFile(userWebId, fileName),
-    media: routeObject.images + routeObject.videos,
     waypoints: routeObject.positions,
     points: routeObject.positions.map((position) => {
       return { latitude: position[0], longitude: position[1] };
     }),
   };
+  console.log(output, "output");
   return output;
 }
 

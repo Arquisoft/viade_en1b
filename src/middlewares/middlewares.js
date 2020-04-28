@@ -27,7 +27,6 @@ export const asyncRouteFetch = (store) => (next) => (action) => {
       if (webId) {
         getRoutesFromPod(webId)
           .then((routes) => {
-            console.log(routes);
             store.dispatch(loadRoutesSuccess(routes));
           })
           .catch((error) => {

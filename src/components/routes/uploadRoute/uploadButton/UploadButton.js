@@ -11,7 +11,7 @@ const UploadButton = (props) => {
     });
 
     useEffect(() => {
-        if(props.reset) {resetState();}
+        if (props.reset) { resetState(); }
     }, [props.reset]);
 
     const resetState = () => {
@@ -25,43 +25,41 @@ const UploadButton = (props) => {
     const handleSingleFileChanged = (e) => {
         props.onChange(e);
         let name = file.current.files[0].name;
-        setState({...state, filename: name});
+        setState({ ...state, filename: name });
     };
 
     const handleMultipleFileChanged = (e) => {
         props.onChange(e);
         let number = file.current.files.length;
-        setState({...state, numberOfFiles: number});
+        setState({ ...state, numberOfFiles: number });
     };
 
-    const uploadButton = !props.multiple
-                            ? 
-                            <Form.Group className={props.className}>
-                                <Form.Control ref={file} onChange={handleSingleFileChanged} id={props.id} type="file" accept=".kml,.gpx"></Form.Control>
-                                <Form.Label className="uploadLabel" htmlFor={props.id}>
-                                    <p data-testid="upload-button-label">{state.filename !== "" ? state.filename : props.text}</p>
-                                    <BsUpload></BsUpload>
-                                    
-                                </Form.Label>
-                            </Form.Group>
-
-                            : (!props.image ?
-                                <Form.Group>
-                                <Form.Control multiple ref={file} onChange={handleMultipleFileChanged} id={props.id} type="file" accept="video/*"></Form.Control>
-                                <Form.Label className="uploadLabel" htmlFor={props.id}>
-                                    <p>{state.numberOfFiles !== 0 ? state.numberOfFiles + " files selected": props.text }</p>
-                                    <BsUpload></BsUpload>
-                                </Form.Label>
-                            </Form.Group> : 
-                            <Form.Group>
-                            <Form.Control multiple ref={file} onChange={handleMultipleFileChanged} id={props.id} type="file" accept="image/*"></Form.Control>
-                            <Form.Label className="uploadLabel" htmlFor={props.id}>
-                                <p>{state.numberOfFiles !== 0 ? state.numberOfFiles + " files selected": props.text }</p>
-                                <BsUpload></BsUpload>
-                            </Form.Label>
-                        </Form.Group>
-                            )
-                            
+    const uploadButton = (props.file)
+        ?
+        <Form.Group className={props.className}>
+            <Form.Control ref={file} onChange={handleSingleFileChanged} id={props.id} type="file" accept=".gpx"></Form.Control>
+            <Form.Label className="uploadLabel" htmlFor={props.id}>
+                <p data-testid="upload-button-label">{state.filename !== "" ? state.filename : props.text}</p>
+                <BsUpload></BsUpload>
+            </Form.Label>
+        </Form.Group>
+        :
+        (props.videos ?
+            <Form.Group className={props.className}>
+                <Form.Control multiple ref={file} onChange={handleMultipleFileChanged} id={props.id} type="file" accept="video/*"></Form.Control>
+                <Form.Label className="uploadLabel" htmlFor={props.id}>
+                    <p>{state.numberOfFiles !== 0 ? state.numberOfFiles + " files selected" : props.text}</p>
+                    <BsUpload></BsUpload>
+                </Form.Label>
+            </Form.Group> :
+            <Form.Group className={props.className}>
+                <Form.Control multiple ref={file} onChange={handleMultipleFileChanged} id={props.id} type="file" accept="image/*"></Form.Control>
+                <Form.Label className="uploadLabel" htmlFor={props.id}>
+                    <p>{state.numberOfFiles !== 0 ? state.numberOfFiles + " files selected" : props.text}</p>
+                    <BsUpload></BsUpload>
+                </Form.Label>
+            </Form.Group>
+        )
 
     return (
         uploadButton

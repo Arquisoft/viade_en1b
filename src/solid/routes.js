@@ -40,9 +40,7 @@ export async function createFolderIfAbsent(path) {
     if (!(await fc.itemExists(path))) {
       await fc.createFolder(path);
     }
-  } catch {
-    console.log("this is an error");
-  }
+  } catch {}
 }
 
 /**
@@ -167,6 +165,7 @@ async function getRouteObjectFromPodRoute(userWebId, route, routeFilename) {
     positions: route.points.map((point) => {
       return [point.latitude, point.longitude];
     }),
+    media: await readMedia(route.media),
     sharedWith: [] /*await getUsersRouteSharedWith(userWebId, routeFilename)*/,
   };
 }
@@ -174,6 +173,16 @@ async function getRouteObjectFromPodRoute(userWebId, route, routeFilename) {
 export async function readComments(commentsUri) {
   let contents = JSON.parse(await fc.readFile(commentsUri));
   return contents.comments;
+}
+
+export async function readMedia(medias) {
+  let contentsUri = medias.map((media) => media["@id"]);
+  let contents = [];
+  console.log({ medias, contentsUri });
+  for (let uri of contentsUri) {
+    contents.push(uri);
+  }
+  return contents;
 }
 
 /**
@@ -334,14 +343,11 @@ export async function shareRouteToPod(
   // give permission to targetUserWebId
 
   const aclApi = new AclApi(auth.fetch, { autoSave: true });
-  console.log(routeUri);
   let acl;
   try {
     acl = await aclApi.loadFromFileUrl(routeUri);
     await acl.addRule(READ, targetUserWebId);
   } catch {}
-
-  console.log(targetUserWebId);
 
   let url = getInboxFolder(targetUserWebId);
   // Sending the notification
@@ -360,6 +366,16 @@ export async function shareRouteToPod(
     );
     await acl.addRule([READ, APPEND, WRITE], targetUserWebId);
   } catch {}
+
+  //Give permissions to resources
+  let routeContent = await readToJson(routeUri);
+  try {
+    for (let media of routeContent.media) {
+      let mediaUri = media["@id"];
+      acl = await aclApi.loadFromFileUrl(mediaUri);
+      await acl.addRule([READ], targetUserWebId);
+    }
+  } catch {}
 }
 
 /**
@@ -371,10 +387,6 @@ async function addRouteUriToShared(userWebId, uri) {
   let userUri = uri.split("//")[1].split("/")[0] + ".jsonld";
   let filePath = folder + userUri;
 
-  console.log(
-    { folder, sharedRoutesJSON, userUri, filePath },
-    "addRouteUriShared"
-  );
   if (!(await fc.itemExists(filePath))) {
     // This is the first time that a user shared a route with the current user
     sharedRoutesJSON = getNewSharedRoutesFileContent();
@@ -382,7 +394,6 @@ async function addRouteUriToShared(userWebId, uri) {
     let sharedRoutes = await fc.readFile(filePath);
     sharedRoutesJSON = JSON.parse(sharedRoutes);
   }
-  console.log(filePath);
   let duplicatited = sharedRoutesJSON.routes.filter(
     (route) => route["@id"] == uri
   );
@@ -419,10 +430,28 @@ export async function uploadRouteToPod(routeObject, userWebId) {
   //storeRouteToPOD(routeObject, userWebId);
   let routeNameForFile = routeObject.name.replace(/ /g, "_");
   let newRouteName = routeNameForFile + uuidv4() + ".jsonld";
+
+  // Writting media
+  let resourcesFolder = getResourcesFolder(userWebId);
+  let resourcesCreated = [];
+  let resources = routeObject.images.concat(routeObject.videos);
+  // Adding media
+  for (let i = 0; i < resources.length; i++) {
+    let uri = resourcesFolder + resources[i].name;
+    await fc.createFile(uri, resources[i], resources[i].type);
+    resourcesCreated.push({ uri: uri, name: resources[i].name });
+  }
   let newRoute = getFormattedRoute(routeObject, userWebId, newRouteName);
+
+  // Writting media references
+  for (let i = 0; i < resourcesCreated.length; i++) {
+    newRoute.media.push(resourcesCreated[i]);
+  }
   let url = getRoutesFolder(userWebId);
   let routeUrl = url + newRouteName;
-
+  let media = newRoute.media;
+  media = resourcesCreated.map((res) => ({ "@id": res.uri, name: res.name }));
+  newRoute.media = media;
   await fc.createFile(
     routeUrl,
     JSON.stringify(newRoute),

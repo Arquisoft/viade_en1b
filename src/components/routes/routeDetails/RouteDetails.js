@@ -10,6 +10,7 @@ import { FormattedMessage } from "react-intl";
 import { unshareRoute } from "../../../store/actions/RouteActions";
 import { CommentList } from "../../layout/comments/CommentList/CommentList";
 import { useComments } from "../../../utils/hooks/hooks";
+import Slideshow from "../../layout/slideshow/Slideshow";
 
 export const RouteDetails = (props) => {
   const { selectedRoute, deleteRoute, userWebId, unshareRoute } = props;
@@ -37,6 +38,11 @@ export const RouteDetails = (props) => {
     ) : (
       <FormattedMessage id="NoDescription" />
     );
+    const images = selectedRoute.media ? (
+      <Slideshow images={selectedRoute.media}></Slideshow>
+    ) : (
+      <FormattedMessage id="NoImages" />
+    );
 
     return (
       <div className={props.style ? props.style : style.details}>
@@ -46,6 +52,13 @@ export const RouteDetails = (props) => {
           </h3>
           <p data-testid="route-details-description">{description}</p>
         </div>
+        <div className={style.description}>
+          <h3>
+            <FormattedMessage id="Images"></FormattedMessage>
+          </h3>
+          <p data-testid="route-details-images">{images}</p>
+        </div>
+
         <div className={style.buttons}>
           <Button
             data-testid="route-details-button-delete"
