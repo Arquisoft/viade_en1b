@@ -27,7 +27,6 @@ const { READ, WRITE, APPEND } = Permissions;
  */
 
 const appName = "viade";
-const sharedRoutesFilename = "sharedRoutes.jsonld";
 
 const fc = new FC(auth);
 
