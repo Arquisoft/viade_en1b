@@ -8,7 +8,7 @@ export const locales = {
     Settings: "Settings",
     LogOut: "Log Out",
     //ThemePicker.js
-    Themes: "Temas",
+    Themes: "Themes",
     //FriendList.js
     FriendsList: "Friends list:",
     //Profile.js
