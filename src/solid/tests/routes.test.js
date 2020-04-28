@@ -62,7 +62,9 @@ describe("Solid Routes", () => {
                 [43.364831, -5.849717],
                 [43.354001, -5.851482]
             ],
-            description: "Description of a second route."
+            description: "Description of a second route.",
+            images: [],
+            videos: []
         };
 
     const fc = new FC(auth);
