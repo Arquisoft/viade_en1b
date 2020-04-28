@@ -214,7 +214,6 @@ export async function createBaseStructure(userWebId) {
     getResourcesFolder(userWebId),
     getSharedFolder(userWebId),
   ];
-  console.log(folders);
   let i = 0;
   for (i; i < folders.length; i++) {
     await createFolderIfAbsent(folders[i]);
@@ -299,7 +298,6 @@ export async function getRoutesFromPod(userWebId) {
   let sharedFolderUri = getSharedFolder(userWebId);
   await createFolderIfAbsent(sharedFolderUri);
   let sharedFiles = (await fc.readFolder(sharedFolderUri)).files;
-  console.log({ sharedFolderUri, sharedFiles });
   for (let i = 0; i < sharedFiles.length; i++) {
     let file = JSON.parse(await fc.readFile(sharedFiles[i].url));
     let routesUris = file.routes;
@@ -336,11 +334,16 @@ export async function shareRouteToPod(
   // give permission to targetUserWebId
 
   const aclApi = new AclApi(auth.fetch, { autoSave: true });
-  let acl = await aclApi.loadFromFileUrl(routeUri);
-  await acl.addRule(READ, targetUserWebId);
+  console.log(routeUri);
+  let acl;
+  try {
+    acl = await aclApi.loadFromFileUrl(routeUri);
+    await acl.addRule(READ, targetUserWebId);
+  } catch {}
+
+  console.log(targetUserWebId);
 
   let url = getInboxFolder(targetUserWebId);
-
   // Sending the notification
   let notificationUrl = url + uuidv4() + ".jsonld";
   await fc.postFile(
@@ -348,26 +351,15 @@ export async function shareRouteToPod(
     JSON.stringify(getNewNotification(routeUri, sharerName, receiverName)),
     "application/ld+json"
   );
-
   // Giving permissions to receiver to write comments
   let commentsFile = routeUri.split("/");
   commentsFile = commentsFile[commentsFile.length - 1];
-  acl = await aclApi.loadFromFileUrl(
-    getRouteCommentsFile(userWebId, commentsFile)
-  );
-  await acl.addRule([READ, APPEND, WRITE], targetUserWebId);
-
-  // Add target user to route's list of shared with.
-  /*
-  let sharedWithUri = getRoutesSharedWithFileFromRouteUri(routeUri);
-  let sharedWithContentJSON = await readToJson(sharedWithUri);
-  sharedWithContentJSON.alreadyShared.push(targetUserWebId);
-  await fc.createFile(
-    sharedWithUri,
-    JSON.stringify(sharedWithContentJSON),
-    "application/ld+json"
-  );
-  */
+  try {
+    acl = await aclApi.loadFromFileUrl(
+      getRouteCommentsFile(userWebId, commentsFile)
+    );
+    await acl.addRule([READ, APPEND, WRITE], targetUserWebId);
+  } catch {}
 }
 
 /**
@@ -448,22 +440,6 @@ export async function uploadRouteToPod(routeObject, userWebId) {
   if (routeObject.comments !== "") {
     await uploadComment(userWebId, routeCommentsFile, routeObject.comments);
   }
-
-  // Set permissions for comments file
-
-  // Our sharedwith field
-  let routesSharedWithFolder = getRoutesSharedWithFolder(userWebId);
-  await createFolderIfAbsent(routesSharedWithFolder);
-  let routeSharedWithFile = { alreadyShared: [] };
-  let newSharedWithFileUrl = routesSharedWithFolder + newRouteName;
-  await fc.createFile(
-    newSharedWithFileUrl,
-    JSON.stringify(routeSharedWithFile),
-    "application/ld+json"
-  );
-
-  // Needed for deleting
-  //await createAclReadWrite(routeUrl, userWebId, userWebId);
 }
 
 /**

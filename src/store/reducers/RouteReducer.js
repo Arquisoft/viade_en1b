@@ -64,15 +64,22 @@ export const routeReducer = (state = initState, action) => {
       let alreadyShared = stateRoutes.filter(
         (route) => route.id === action.payload.route.id
       )[0].sharedWith;
+      //console.log(alreadyShared);
       let sharedRoute = {
         ...action.payload.route,
         sharedWith: action.payload.friends.concat(alreadyShared),
       };
 
-      let newRoutes = stateRoutes;
-      newRoutes[sharedRouteId] = sharedRoute;
+      //let newRoutes = stateRoutes;
+      //newRoutes[sharedRouteId] = sharedRoute;
       let friends = action.payload.friends;
-
+      /* console.log({
+        stateRoutes,
+        sharedRoute,
+        alreadyShared,
+        newRoutes,
+        sharedRouteId,
+      }); */
       if (friends[0]) {
         getWebId().then((userWebID) => {
           friends.forEach((friend) => {
@@ -81,14 +88,13 @@ export const routeReducer = (state = initState, action) => {
               getRoutesFolder(userWebID) + action.payload.route.id + ".jsonld",
               friend.uri,
               userWebID.split("//")[1].split(".")[0],
-              friend.name,
-              sharedRouteId
+              friend.name
             );
           });
         });
       }
       //console.log(newRoutes);
-      return { ...state, routes: newRoutes };
+      return { ...state };
     case "UNSHARE_ROUTE":
       unshareRoute(
         action.payload.authorWebId,

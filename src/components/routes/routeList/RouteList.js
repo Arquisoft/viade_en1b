@@ -6,7 +6,7 @@ import Loader from "react-loader-spinner";
 import { ThemeContext } from "../../layout/themeContext/ThemeContext";
 import { FormattedMessage } from "react-intl";
 
-export const RouteList = React.memo((props) => {
+export const RouteList = (props) => {
   const theme = useContext(ThemeContext);
   const { routes } = props;
   const { onClick } = props;
@@ -46,7 +46,7 @@ export const RouteList = React.memo((props) => {
       )}
     </div>
   );
-});
+};
 
 const mapStateToProps = (state) => {
   return {
