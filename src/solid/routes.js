@@ -417,10 +417,11 @@ export async function checkInboxForSharedRoutes(userWebId) {
   let folder = await fc.readFolder(url);
   let i = 0;
   for (i; i < folder.files.length; i++) {
+    if(!folder.files[i].url.includes(".acl")){
     let notification = await fc.readFile(folder.files[i].url);
     let routeUri = getRouteUriFromShareNotification(JSON.parse(notification));
     await addRouteUriToShared(userWebId, routeUri);
-    await fc.deleteFile(folder.files[i].url);
+    await fc.deleteFile(folder.files[i].url);}
   }
 }
 

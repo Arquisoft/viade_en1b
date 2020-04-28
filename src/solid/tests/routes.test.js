@@ -48,7 +48,8 @@ describe("Solid Routes", () => {
             ],
             description: "Starting at Gascona, you will end right in front of the EII.",
             images: [],
-            videos: []
+            videos: [],
+            comments: ""
         };
     const secondRoute =
         {
@@ -64,7 +65,8 @@ describe("Solid Routes", () => {
             ],
             description: "Description of a second route.",
             images: [],
-            videos: []
+            videos: [],
+            comments: ""
         };
 
     const fc = new FC(auth);
@@ -105,6 +107,7 @@ describe("Solid Routes", () => {
     
     test("Create base structure", async() => {
         await solid.createBaseStructure(userWebId);
+        await solid.createBaseStructure(friendWebId);
         let i = 0;
         for (i; i < folders.length; i++) {
             expect(await fc.itemExists(folders[i])).toBeTruthy();
