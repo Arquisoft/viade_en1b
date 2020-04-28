@@ -178,7 +178,6 @@ export async function readComments(commentsUri) {
 export async function readMedia(medias) {
   let contentsUri = medias.map((media) => media["@id"]);
   let contents = [];
-  console.log({ medias, contentsUri });
   for (let uri of contentsUri) {
     contents.push(uri);
   }
@@ -372,7 +371,9 @@ export async function shareRouteToPod(
   try {
     for (let media of routeContent.media) {
       let mediaUri = media["@id"];
+      console.log(mediaUri);
       acl = await aclApi.loadFromFileUrl(mediaUri);
+      console.log(acl);
       await acl.addRule([READ], targetUserWebId);
     }
   } catch {}
