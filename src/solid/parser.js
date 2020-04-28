@@ -53,23 +53,6 @@ export function getNewCommentsFile(routeUrl) {
  */
 export function getNewComment(author, commentText, year, month, day) {
   return {
-    /*
-    "@context": {
-      "@version": 1.1,
-      viade: "http://arquisoft.github.io/viadeSpec/",
-      schema: "http://schema.org/",
-      dateCreated: {
-        "@id": "viade:dateCreated",
-        "@type": "xsd:date",
-      },
-      text: {
-        "@id": "viade:text",
-        "@type": "xsd:string",
-      },
-    },
-    text: commentText,
-    dateCreated: year + "-" + month + "-" + day,
-    */
     author: author,
     text: commentText,
     dateCreated: year + "-" + month + "-" + day,
@@ -81,7 +64,6 @@ export function getNewComment(author, commentText, year, month, day) {
  * the file name of the route for the pod.
  */
 export function getFormattedRoute(routeObject, userWebId, fileName) {
-  console.log(routeObject);
   let output = {
     "@context": {
       "@version": "1.1",
@@ -137,7 +119,6 @@ export function getFormattedRoute(routeObject, userWebId, fileName) {
       return { latitude: position[0], longitude: position[1] };
     }),
   };
-  console.log(output, "output");
   return output;
 }
 
@@ -180,7 +161,6 @@ export function giveOwnFolderPermissions(folderURI) {
 
 export async function getNotification(fc, notificationFile) {
   let parsed = JSON.parse(await fc.readFile(notificationFile.url));
-  console.log(notificationFile.url);
   let sharer = parsed.notification.actor.name;
   let content = parsed.notification.object.uri.split("/");
   content = content[content.length - 1];
