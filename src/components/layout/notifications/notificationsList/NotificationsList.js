@@ -1,5 +1,5 @@
 import React from "react";
-import Notification from "../notification/Notification";
+import {Notification} from "../notification/Notification";
 import { connect } from "react-redux";
 import style from "./NotificationsList.module.css";
 import { useNotifications } from "../../../../utils/hooks/hooks";
@@ -19,10 +19,11 @@ export function NotificationsList(props) {
   };
 
   const notificationsComponent = notifications.map((notification, key) => {
-    return <Notification key={key} notification={notification}></Notification>;
+    return <Notification data-testid="notification" key={key} notification={notification}></Notification>;
   });
   return (
     <div
+      data-testid = "notificationslist-div"
       className={
         style.notificationsListContainer
           ? style.notificationsListContainer
@@ -30,9 +31,9 @@ export function NotificationsList(props) {
       }
     >
       <h1><FormattedMessage id="Notifications"/></h1>
-      <Button onClick={handleOnClick}><FormattedMessage id="Accepts"/></Button>
+      <Button data-testid="notificationslist-button" onClick={handleOnClick}><FormattedMessage id="Accepts"/></Button>
 
-      <div className={style.notificationsList}>{notificationsComponent}</div>
+      <div data-testid = "notificationslist-divcomponent" className={style.notificationsList}>{notificationsComponent}</div>
     </div>
   );
 }
