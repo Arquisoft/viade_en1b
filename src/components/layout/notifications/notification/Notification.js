@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import "./Notification.css";
 
-export default function Notification(props) {
+export function Notification(props) {
   const { notification } = props;
 
   return (
@@ -12,8 +12,10 @@ export default function Notification(props) {
       onClick={() => {}}
     >
       <Card.Body className="notificationCardBody">
-        <Card.Text className="notificationText">{notification.text}</Card.Text>
+        <Card.Text data-testid="notification-card-text" className="notificationText">{notification.text}</Card.Text>
       </Card.Body>
     </Card>
   );
 }
+
+export default Notification;
