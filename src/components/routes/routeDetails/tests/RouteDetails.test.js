@@ -50,7 +50,6 @@ const initState = {
 };
 
 const store = testStore(rootReducer, initState);
-console.log(store);
 const selectedRoute = {
   id: 0,
   name: "Hiking Naranco ",
