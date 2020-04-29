@@ -6,6 +6,7 @@ import { useNotifications } from "../../../../utils/hooks/hooks";
 import { Button } from "react-bootstrap";
 import { checkInboxForSharedRoutes } from "../../../../solid/routes";
 import { loadRoutesRequest } from "../../../../store/actions/RouteActions";
+import { FormattedMessage } from "react-intl";
 
 export function NotificationsList(props) {
   const { userWebId, loadRoutes } = props;
@@ -28,8 +29,8 @@ export function NotificationsList(props) {
           : "notification-list-div"
       }
     >
-      <h1>Notifications</h1>
-      <Button onClick={handleOnClick}>Accept all</Button>
+      <h1><FormattedMessage id="Notifications"/></h1>
+      <Button onClick={handleOnClick}><FormattedMessage id="Accepts"/></Button>
 
       <div className={style.notificationsList}>{notificationsComponent}</div>
     </div>
