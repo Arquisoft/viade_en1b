@@ -20,6 +20,8 @@ export class UploadRoute extends React.Component {
     reset: false,
     positions: [],
     comments: "",
+    images: [],
+    videos: [],
   };
   changeHandlerRoute(e) {
     this.setState({
@@ -36,10 +38,7 @@ export class UploadRoute extends React.Component {
       reader.readAsText(file, "UTF-8");
       reader.onload = function (evt) {
         parseado = parseGPX(evt.target.result);
-        //console.log(self.state);
-        //console.log(parseado);
         self.state.positions = parseado;
-        //console.log(self.state);
       };
       reader.onerror = function (evt) {};
     }
@@ -49,7 +48,10 @@ export class UploadRoute extends React.Component {
   //This behaviour is tested in the upload button
   changeHandlerImages(e) {
     let docs = [];
-    Array.from(e.target.files).forEach((file) => docs.push(file.name));
+    Array.from(e.target.files).forEach((file) => {
+      docs.push(file);
+    });
+
     this.setState({ ...this.state, images: docs });
   }
 
@@ -57,7 +59,7 @@ export class UploadRoute extends React.Component {
   //This behaviour is tested in the upload button
   changeHandlerVideos(e) {
     let docs = [];
-    Array.from(e.target.files).forEach((file) => docs.push(file.name));
+    Array.from(e.target.files).forEach((file) => docs.push(file));
     this.setState({ ...this.state, videos: docs });
   }
 
@@ -69,7 +71,9 @@ export class UploadRoute extends React.Component {
       author: "",
       positions: [],
       reset: false,
-      comments: [],
+      comments: "",
+      images: [],
+      videos: [],
     };
   }
 
@@ -82,7 +86,6 @@ export class UploadRoute extends React.Component {
   }
 
   submitForm() {
-    console.log(this.state);
     this.props.uploadRoute.bind(this);
     this.props.uploadRoute(this.state, this.props.routes, this.props.userWebId);
     this.props.loadRoutes.bind(this);
@@ -174,7 +177,16 @@ export class UploadRoute extends React.Component {
               reset={this.state.reset}
               onChange={this.changeHandlerFiles.bind(this)}
               id="file"
+              file={true}
               text={<FormattedMessage id="UploadButton" />}
+            ></UploadButton>
+            <UploadButton
+              className={style.uploadButton}
+              reset={this.state.reset}
+              onChange={this.changeHandlerImages.bind(this)}
+              id="images"
+              images={true}
+              text={<FormattedMessage id="UploadImages" />}
             ></UploadButton>
           </div>
         </Form>
@@ -184,6 +196,7 @@ export class UploadRoute extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
     routes: state.route.routes,
     userWebId: state.auth.userWebId,

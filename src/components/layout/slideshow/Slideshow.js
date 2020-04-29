@@ -15,6 +15,7 @@ const Slideshow = (props) => {
     }
   };
 
+  const picturesTags = props.images.map((image) => <img alt="animg" src={image}></img>);
   const [state, dispatch] = useReducer(reducer, { picture: 0 });
 
   const previousButton =
@@ -54,7 +55,7 @@ const Slideshow = (props) => {
     props.images.length === 0 ? (
       <FormattedMessage id="NoMediaElements" />
     ) : (
-      props.images[state.picture]
+      picturesTags
     );
 
   const buttons =

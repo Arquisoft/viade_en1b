@@ -13,8 +13,7 @@ import { Badge } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 
 export function ShareRoute(props) {
-  const { selectedRoute } = props;
-  const { shareRoute } = props;
+  const { selectedRoute, shareRoute, userWebId } = props;
   const friendsToShow = (sharedWith) =>
     filterUnsharedFriends(props.friends, sharedWith).map((friend) => ({
       ...friend,
@@ -63,6 +62,11 @@ export function ShareRoute(props) {
     }
   };
 
+  const checkAuthority = () => {
+    let username = userWebId.split("//")[1].split("/")[0];
+    return selectedRoute.author === username;
+  };
+
   const handleOnClick = (key) => {
     state.friends[key].checked = !state.friends[key].checked;
     let shared = deepClone(state.friendsToShareWith);
@@ -96,7 +100,7 @@ export function ShareRoute(props) {
     <ViadeModal
       data-testid="share-route-modal"
       onOpen={() => {}}
-      disabled={false}
+      disabled={!checkAuthority()}
       saveDisabled={activeSelectedFriends === 0}
       toggleText={<FormattedMessage id="Share" />}
       handleClose={handleClose}

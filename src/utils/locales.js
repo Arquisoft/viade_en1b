@@ -44,17 +44,24 @@ export const locales = {
     Spanish: "Spanish",
     LanguageAvailable: "Available Languages",
     Technical: "Technical information",
-    TechnicalDescription: "If you are interested on how our project was planned and how it was built you can visit",
+    TechnicalDescription:
+      "If you are interested on how our project was planned and how it was built you can visit",
     ThisPage: "THIS PAGE",
     HowToUse: "How to use this application / About us",
-    HowToUseDescription: "As you might have any doubt of how to use this application or you might want to know more about us, we have created a support webpage for these two purpose.",
+    HowToUseDescription:
+      "As you might have any doubt of how to use this application or you might want to know more about us, we have created a support webpage for these two purpose.",
     Here: "Here is the webpage.",
     //Slideshow.js
     NoMediaElemts: "There are no media elements",
     //RouteDetails.js
     NoDescription: "There is not description for this route",
     Description: "Description",
+    Images: "Images",
+    NoImages: "There is not any images for this route",
+    Videos: "Videos",
+    NoVideos: "There is not any videos for this route",
     Delete: "Delete",
+    Unshare: "Unshare",
     Share: "Share",
     CommentsTitle: "Comments",
     //RouteList.js
@@ -69,6 +76,8 @@ export const locales = {
     SubmitedRoute: "Your route has been submited",
     Submited: "Submited",
     UploadButton: "Choose a route",
+    UploadImages: "Choose images",
+    UploadVideos: "Choose videos",
     Submit: "Submit",
   },
   es: {
@@ -116,17 +125,24 @@ export const locales = {
     Spanish: "Español",
     LanguageAvailable: "Idiomas Disponibles",
     Technical: "Información técnica",
-    TechnicalDescription: "Si estás interesado en como se planeo y se construyo nuestra aplicación puedes visitar",
+    TechnicalDescription:
+      "Si estás interesado en como se planeo y se construyo nuestra aplicación puedes visitar",
     ThisPage: "ESTA PÁGINA",
     HowToUse: "Como usar esta aplicación / Nuestro equipo",
-    HowToUseDescription: "Si te a surgido alguna duda sobre como usar esta aplicación o quieres saber más sobre quienes somos, hemos creado una página web extra para esto.",
+    HowToUseDescription:
+      "Si te a surgido alguna duda sobre como usar esta aplicación o quieres saber más sobre quienes somos, hemos creado una página web extra para esto.",
     Here: "Aqui esta la pagina web",
     //Slideshow.js
     NoMediaElemts: "No hay imágenes",
     //RouteDetails.js
     NoDescription: " No hay ninguna descripción para esta ruta",
+    NoImages: "No hay imagenes para esta ruta",
     Description: "Descripción",
+    Images: "Imágenes",
+    Videos: "Vídeos",
+    NoVideos: "No hay vídeos para esta ruta",
     Delete: "Borrar",
+    Unshare: "Descompartir",
     Share: "Compartir",
     CommentsTitle: "Comentarios",
     //RouteList.js
@@ -141,6 +157,8 @@ export const locales = {
     SubmitedRoute: "Tu ruta a sido enviada",
     Submited: "Enviado",
     UploadButton: "Escoge una ruta",
+    UploadImages: "Escoge imágenes",
+    UploadVideos: "Escoge vídeos",
     Submit: "Enviar",
   },
 };

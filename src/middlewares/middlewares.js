@@ -3,17 +3,21 @@ import { getFriends, getName } from "rdf-query/rdf-query";
 import {
   loadEmailError,
   loadEmailSuccess,
-  loadFriendsSuccess
+  loadFriendsSuccess,
 } from "../store/actions/UserActions";
 import { getRoutesFromPod } from "../solid/routes";
 import {
   loadRoutesSuccess,
-  loadRoutesError
+  loadRoutesError,
 } from "../store/actions/RouteActions";
 
 export const myLogger = (store) => (next) => (action) => {
   console.groupCollapsed(action.type);
+  //Dont delete this console logs, they are for testing purposes
+  console.log("PAYLOAD: ", action.payload);
+  console.log("previous state", store.getState());
   next(action);
+  console.log("actual state", store.getState());
   console.groupEnd();
 };
 export const asyncRouteFetch = (store) => (next) => (action) => {
@@ -63,7 +67,7 @@ export const asyncProfileFetch = (store) => (next) => (action) => {
               for (let i = 0; i < friendsNames.length; i++) {
                 let friend = {
                   name: friendsNames[i],
-                  uri: friendsUri[i]
+                  uri: friendsUri[i],
                 };
                 friendsObjects.push(friend);
               }
