@@ -23,7 +23,6 @@ import { FormattedMessage } from "react-intl";
 import ThemePicker from "../theme/ThemePicker";
 import {
   createBaseStructure,
-  checkInboxForSharedRoutes,
 } from "../../../solid/routes";
 
 export const MyNavBar = (props) => {
