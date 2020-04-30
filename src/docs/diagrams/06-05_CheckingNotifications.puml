@@ -1,0 +1,11 @@
+title A user checks his new notifications - Activity Diagram 
+
+start
+
+:Click on the bell of the navbar;
+
+:Review all the notifications;
+
+:Click in "Accept all";
+
+stop

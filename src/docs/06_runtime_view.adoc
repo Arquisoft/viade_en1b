@@ -55,6 +55,51 @@ Our users will be able to access from the viade app to any of their friends prof
 include::diagrams/06-04_accessingFriend.puml[]
 ----
 
+
+==== Cheching notifications
+
+In order to check for new notifications is quite simple:
+
+. First the user needs to click on the bell simbol of the navbar.
+. Now, all the notifications will load, so the user can check them
+. Once he finish, the user can click on "Accept all", so all the notifications will be deleted
+
+[plantuml,"Checking Notifications",png]
+----
+include::diagrams/06-05_CheckingNotifications.puml[]
+----
+
+==== Changing the application language
+
+As all the user are not going to be english speakers, we add more languages, so this problem could be overcome. However, to change the locale (language) we need to:
+
+. First, the user needs to click on the "Settings" option of the navbar.
+. After that, the user needs to click on "Available Languages".
+. Now, a new drop down menu will appear with all the possible locales ("languages"), so the user only needs to select one of them.
+. Finally, the applicaiton will refresh with the correct langugae.
+
+[plantuml, "Changing the application language", png]
+----
+include::diagrams/06-06_ChangeLanguage.puml[]
+----
+
+==== Changing the application theme
+Although our main audience/users will not have any vision deficiency (color-blindness), we have implemented a small support for those who have it. Also, we have added some extra customization themes.
+In order to change the theme the user needs to do the following steps:
+
+. First click in "Themes" in the navbar.
+. A new drop down menu will appear with all the possible theme options.
+. Select the desired theme.
+
+[plantuml, "Changing the application theme", png]
+----
+include::diagrams/06-07_ThemesChange.puml[]
+----
+
+
+
+
+
 === Sequence diagrams
 
 The previous diagrams describe some actions but at a very high-level of detail. Now we are going to focus on some more _difficult_ actions trying to explain them more in detail, at a low level.
@@ -117,4 +162,6 @@ In this diagram we can perfectly observe the redux architecture:
 . The user clicks on a route and an event is triggered.
 . An action is dispatched and the reducer updates the state.
 . Once the state is updated, the map component receives the positions of the route and the route is displayed.
+
+
 
