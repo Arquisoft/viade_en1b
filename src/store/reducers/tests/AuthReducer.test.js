@@ -1,12 +1,12 @@
-import authReducer from "../AuthReducer"
-import "@testing-library/jest-dom"
+import authReducer from "../AuthReducer";
+import "@testing-library/jest-dom";
 
 describe("Auth Reducer", () => {
 
 
     const initState = {
         userWebId: null
-    }
+    };
    
     test("Should return default state", () => {
         const newState = authReducer(undefined, {});

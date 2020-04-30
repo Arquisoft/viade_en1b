@@ -11,6 +11,7 @@
 
 # production
 /build
+/viade_en1b
 
 # misc
 .DS_Store

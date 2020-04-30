@@ -26,7 +26,7 @@ export default class Waypoint {
       if (!Array.isArray(object.link)) {
         object.link = [object.link];
       }
-      this.link = object.link.map(l => new Link(l));
+      this.link = object.link.map((l) => new Link(l));
     }
   }
 }

@@ -39,7 +39,7 @@ In order to run this project, you will need to follow these steps:
 
 > We recommend to install ruby using [RubyInstaller](https://rubyinstaller.org/)
 
-1. Install [Node](https://nodejs.org/) & [NPM](https://www.npmjs.com/)
+2. Install [Node](https://nodejs.org/) & [NPM](https://www.npmjs.com/)
 
 1. Install [asciidoctor](https://asciidoctor.org/)
 

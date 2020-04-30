@@ -1,28 +1,28 @@
 const { Given, When, Then } = require("cucumber");
-const { Builder, By, Capabilities, Key, until } = require('selenium-webdriver');
-const { expect } = require('chai');
+const { Builder, By, Capabilities, Key, until } = require("selenium-webdriver");
+const { expect } = require("chai");
 const { firefox } = require("selenium-webdriver/firefox");
 var webdriver = require("selenium-webdriver");
 require("chromedriver");
-path = "C:\Users\alvar\geckodriver-v0.26.0-win64.exe";
+const path = "C:\Users\alvar\geckodriver-v0.26.0-win64.exe";
 const capabilities = Capabilities.chrome();
 var chromeOptions = {
-  'args': ['--test-type', '--start-maximized']
-}
-capabilities.set('chromeOptions', chromeOptions);
-const driver = new webdriver.Builder().forBrowser('chrome').build();
+  "args": ["--test-type", "--start-maximized"]
+};
+capabilities.set("chromeOptions", chromeOptions);
+const driver = new webdriver.Builder().forBrowser("chrome").build();
 var originalWindow = null;
 
 
 
 //-------------------------------------------SECOND FEATURE --------------------------------------------------//
 
-Given('We log in', function () {
+Given("We log in", function () {
   driver.get("http://localhost:3000/viade_en1b");
   driver.findElement(By.xpath("/html/body/div/div/div[1]/div[3]/button")).click();
   driver.wait(function () {
     return driver.getAllWindowHandles().then(function (handles) {
-      var isHandleCount2 = (handles.length == 2);
+      var isHandleCount2 = (handles.length === 2);
       if (isHandleCount2) {
         driver.switchTo().window(handles[1]);
       }
@@ -42,10 +42,10 @@ Given('We log in', function () {
   })
 });
 
-When('We push the My routes button', function () {
+When("We push the My routes button", function () {
   driver.wait(function () {
     return driver.getAllWindowHandles().then(function (handles) {
-      var isHandleCount2 = (handles.length == 2);
+      var isHandleCount2 = (handles.length === 2);
       originalWindow = handles[0];
       if (isHandleCount2) {
         driver.switchTo().window(handles[1]);
@@ -55,7 +55,7 @@ When('We push the My routes button', function () {
   }).then(function () {
     driver.wait(function () {
       return driver.getAllWindowHandles().then(function (handles) {
-        var isHandleCount1 = (handles.length == 1);
+        var isHandleCount1 = (handles.length === 1);
         originalWindow = handles[0];
         if (isHandleCount1) {
           driver.switchTo().window(handles[0]);
@@ -74,10 +74,10 @@ When('We push the My routes button', function () {
 });
 
 
-Then('We can see the routes', function () {
+Then("We can see the routes", function () {
   driver.wait(function () {
     return driver.getAllWindowHandles().then(function (handles) {
-      var isHandleCount2 = (handles.length == 2);
+      var isHandleCount2 = (handles.length === 2);
       originalWindow = handles[0];
       if (isHandleCount2) {
         driver.switchTo().window(handles[1]);
@@ -87,7 +87,7 @@ Then('We can see the routes', function () {
   }).then(function () {
     driver.wait(function () {
       return driver.getAllWindowHandles().then(function (handles) {
-        var isHandleCount1 = (handles.length == 1);
+        var isHandleCount1 = (handles.length === 1);
         originalWindow = handles[0];
         if (isHandleCount1) {
           driver.switchTo().window(handles[0]);
@@ -95,13 +95,13 @@ Then('We can see the routes', function () {
           driver.wait(until.elementsLocated(By.xpath("/html/body/div/div/nav/div/div/span[2]/a")), 100000).then(
             function () {
               var routeList = driver.findElement(By.xpath("/html/body/div/div/nav/div/div/span[2]/a"));
-              expect(routeList!=null);
+              expect(routeList !== null);
             }
-          )
+          );
         }
         return isHandleCount1;
       });
-    })
+    });
   });
 });
 

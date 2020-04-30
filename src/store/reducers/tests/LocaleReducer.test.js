@@ -15,7 +15,7 @@ describe("Locale reducer", () => {
         locale: "es"
     };
 
-    test("Should return default state", () =>{
+    test("Should return default state", () => {
         const newState = localeReducer(undefined, {});
         expect(newState).toEqual(initState);
     });
