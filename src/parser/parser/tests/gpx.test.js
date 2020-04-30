@@ -6,7 +6,6 @@ import GPX from '../gpx'
 describe("gpx", () => {
 
     const parsed = GPX.parse(text);
-    console.log(parsed);
 
     test("parsing", () => {
         expect(parsed.metadata.name).toEqual("Picos de Europa");
