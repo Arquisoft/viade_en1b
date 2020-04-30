@@ -251,8 +251,7 @@ export async function getRouteFromPod(fileName, userWebId) {
       console.log("[ERROR] Skipped reading a wrong route: " + fileName);
       return null;
     }
-  return null;
-}
+}}
 
 /**
  * Returns an array containing the routes in a given user's pod.
@@ -410,9 +409,13 @@ export async function checkInboxForSharedRoutes(userWebId) {
   for (i; i < folder.files.length; i++) {
     if(!folder.files[i].url.includes(".acl")){
       let notification = await fc.readFile(folder.files[i].url);
-      let routeUri = getRouteUriFromShareNotification(JSON.parse(notification));
-      await addRouteUriToShared(userWebId, routeUri);
-      await fc.deleteFile(folder.files[i].url);
+      try{
+        let routeUri = getRouteUriFromShareNotification(JSON.parse(notification));
+        await addRouteUriToShared(userWebId, routeUri);
+        await fc.deleteFile(folder.files[i].url);
+      } catch{
+        console.log("Please, be polite and don´t try to make our app crash.")
+      }
     }
   }
 }
