@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import {text} from "../../mockRoute"
+import {text} from "../../test/mockRoute"
 import GPX from '../gpx'
 
 
