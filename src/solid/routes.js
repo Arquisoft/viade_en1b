@@ -40,6 +40,7 @@ export async function createFolderIfAbsent(path) {
 
 /**
  * Returns a string containing the URI of the routes folder for the given user.
+ * @param {string} userWebId - The full web ID of the user's pod.
  */
 export function getRoutesFolder(userWebId) {
   return userWebId.split("/profile")[0] + "/" + appName + "/routes/";
@@ -47,6 +48,7 @@ export function getRoutesFolder(userWebId) {
 
 /**
  * Returns a string containing the URI of the root folder of the application for the given user.
+ * @param {string} userWebId - The full web ID of the user's pod.
  */
 export function getRootFolder(userWebId) {
   return userWebId.split("/profile")[0] + "/" + appName + "/";
@@ -54,6 +56,7 @@ export function getRootFolder(userWebId) {
 
 /**
  * Returns a string containing the URI of the comments folder for the given user.
+ * @param {string} userWebId - The full web ID of the user's pod.
  */
 export function getCommentsFolder(userWebId) {
   return userWebId.split("/profile")[0] + "/" + appName + "/comments/";
@@ -61,6 +64,7 @@ export function getCommentsFolder(userWebId) {
 
 /**
  * Returns a string containing the URI of the inbox folder for the given user.
+ * @param {string} userWebId - The full web ID of the user's pod.
  */
 export function getInboxFolder(userWebId) {
   const inboxUrl = userWebId.split("profile")[0] + appName + "/inbox/";
@@ -69,6 +73,8 @@ export function getInboxFolder(userWebId) {
 
 /**
  * Returns a string containing the URI of the comments file of a given route for the given user.
+ * @param {string} userWebId - The full web ID of the user's pod.
+ * @param {string} fileName - The file name of the route, whose comments file's will be the same.
  */
 export function getRouteCommentsFile(userWebId, fileName) {
   return getCommentsFolder(userWebId) + fileName;
@@ -76,6 +82,7 @@ export function getRouteCommentsFile(userWebId, fileName) {
 
 /**
  * Returns a string containing the URI of the resources folder for the given user.
+ * @param {string} userWebId - The full web ID of the user's pod.
  */
 export function getResourcesFolder(userWebId) {
   return userWebId.split("/profile")[0] + "/" + appName + "/resources/";
@@ -83,45 +90,24 @@ export function getResourcesFolder(userWebId) {
 
 /**
  * Returns a string containing the URI of the shared folder for the given user.
+ * @param {string} userWebId - The full web ID of the user's pod.
  */
 export function getSharedFolder(userWebId) {
   return userWebId.split("/profile")[0] + "/" + appName + "/shared/";
 }
 
 /**
- * Returns a string containing the URI of the folder which contains with whom routes have been shared for the
- * given user.
- */
-export function getRoutesSharedWithFolder(userWebId) {
-  return getSharedFolder(userWebId) + "routesSharedWith/";
-}
-
-/**
- * Returns a string containing the URI of the file which contains with whom a route has been shared for the
- * given user.
- */
-function getRoutesSharedWithFile(userWebId, routeFilename) {
-  return getRoutesSharedWithFolder(userWebId) + routeFilename;
-}
-
-/**
  * Returns the contents of the given url in JSON form.
+ * @param {string} url - The url to read
  */
 async function readToJson(url) {
   return JSON.parse(await fc.readFile(url));
 }
 
 /**
- * Returns an array containing the users the given route is shared with.
- */
-export async function getUsersRouteSharedWith(userWebId, routeFilename) {
-  let sharedFileUrl = getRoutesSharedWithFile(userWebId, routeFilename);
-  let sharedFileContentJSON = await readToJson(sharedFileUrl);
-  return sharedFileContentJSON.alreadyShared;
-}
-
-/**
  * Returns a route in JSON form from the given route in JSON-LD.
+ * @param {object} route - The route from a POD.
+ * @param {string} routeFilename - The name of the file of the route.
  */
 async function getRouteObjectFromPodRoute(route, routeFilename) {
   return {
@@ -134,15 +120,23 @@ async function getRouteObjectFromPodRoute(route, routeFilename) {
       return [point.latitude, point.longitude];
     }),
     media: await readMedia(route.media),
-    sharedWith: [] /*await getUsersRouteSharedWith(userWebId, routeFilename)*/,
+    sharedWith: [],
   };
 }
 
+/**
+ * Returns comments read from the uri of a comments file of a route.
+ * @param {string} commentsUri - The uri of the file containing the comments.
+ */
 export async function readComments(commentsUri) {
   let contents = JSON.parse(await fc.readFile(commentsUri));
   return contents.comments;
 }
 
+/**
+ * Returns the uris of medias from a JSON of medias.
+ * @param {object} - The JSON containing the uris of the medias.
+ */
 export async function readMedia(medias) {
   let contentsUri = medias.map((media) => media["@id"]);
   let contents = [];
@@ -154,6 +148,7 @@ export async function readMedia(medias) {
 
 /**
  * Returns the URI of the route from a notification object.
+ * @param {object} - The notification in JSON form.
  */
 function getRouteUriFromShareNotification(notification) {
   return notification.notification.object.uri;
@@ -168,6 +163,8 @@ function getRouteUriFromShareNotification(notification) {
  * --> resources
  * --> inbox (WRITE ALL)
  * --> shared
+ *
+ * @param {string} userWebId - The full web ID of the user's pod.
  */
 export async function createBaseStructure(userWebId) {
   let folders = [
@@ -189,8 +186,8 @@ export async function createBaseStructure(userWebId) {
 
 /**
  * Gives global permissions to write in a folder
- * @param {uri of the folder} folderURI
- * @param {uri of the user} userWebId
+ * @param {string} folderURI - The uri of the folder
+ * @param {object} permissions - The permissions to set
  */
 export async function createPublicPermissions(folderURI, permissions) {
   const aclApi = new AclApi(auth.fetch, { autoSave: true });
@@ -208,6 +205,10 @@ export async function createPublicPermissions(folderURI, permissions) {
   } catch {}
 }
 
+/**
+ * Checks a permissions object to see if it actually contains permissions.
+ * @param {object} permissions - The permissions object to check.
+ */
 function hasPermissions(permissions) {
   if (permissions.length === 0) return false;
   return true;
@@ -215,8 +216,7 @@ function hasPermissions(permissions) {
 
 /**
  * Gives global permissions to own folder
- * @param {uri of the folder} folderURI
- * @param {uri of the user} userWebId
+ * @param {string} folderURI - The uri of the folder
  */
 export async function createOwnAcl(folderURI) {
   let aclUrl = folderURI + ".acl";
@@ -228,6 +228,8 @@ export async function createOwnAcl(folderURI) {
 
 /**
  * Returns a route from a given user's pod given the name of the route, or null if not found.
+ * @param {string} filename - The filename of the route.
+ * @param {string} userWebId - The full web ID of the user's pod.
  */
 export async function getRouteFromPod(fileName, userWebId) {
   let url = getRoutesFolder(userWebId);
@@ -241,6 +243,7 @@ export async function getRouteFromPod(fileName, userWebId) {
 
 /**
  * Returns an array containing the routes in a given user's pod.
+ * @param {string} userWebId - The full web ID of the user's pod.
  */
 export async function getRoutesFromPod(userWebId) {
   let routesFolderUrl = getRoutesFolder(userWebId);
@@ -288,6 +291,11 @@ export async function getRoutesFromPod(userWebId) {
 
 /**
  * Adds a notification to the given user's inbox marking the intention of sharing a route.
+ * @param {string} userWebId - The full web ID of the owner's pod.
+ * @param {string} routeUri - The uri of the route to share.
+ * @param {string} targetUserWebId - The full web ID of the target user's pod.
+ * @param {string} sharerName - The name of the user who shares the route.
+ * @param {string} receiverName - The name of the user who receives the route.
  */
 export async function shareRouteToPod(
   userWebId,
@@ -336,6 +344,8 @@ export async function shareRouteToPod(
 
 /**
  * Adds a given URI to the list of routes shared with the given user.
+ * @param {string} userWebId - The full web ID of the user's pod.
+ * @param {string} uri - The uri of the route to add to the shared routes list.
  */
 async function addRouteUriToShared(userWebId, uri) {
   let folder = getSharedFolder(userWebId);
@@ -366,6 +376,7 @@ async function addRouteUriToShared(userWebId, uri) {
 /**
  * Reads the target user's inbox, adding to shared routes the ones found in the notifications present there
  * and then deletes those notifications.
+ * @param {string} userWebId - The full web ID of the user's pod.
  */
 export async function checkInboxForSharedRoutes(userWebId) {
   let url = getInboxFolder(userWebId);
@@ -387,6 +398,8 @@ export async function checkInboxForSharedRoutes(userWebId) {
 
 /**
  * Adds the given route to the given user's pod.
+ * @param {object} routeObject - The route to upload.
+ * @param {string} userWebId - The full web ID of the user's pod.
  */
 export async function uploadRouteToPod(routeObject, userWebId) {
   let routeNameForFile = routeObject.name.replace(/ /g, "_");
@@ -435,15 +448,9 @@ export async function uploadRouteToPod(routeObject, userWebId) {
 
 /**
  * Adds a comment to a route.
- *
- * @param {string} userWebId
- *      The commentator's URI
- *
- * @param {string} commentedRouteUri
- *      The commented route's URI
- *
- * @param {string} commentText
- *      The text of the comment
+ * @param {string} userWebId - The commentator's URI
+ * @param {string} commentedRouteUri - The commented route's URI
+ * @param {string} commentText - The text of the comment
  */
 export async function uploadComment(
   authorWebId,
@@ -473,6 +480,8 @@ export async function uploadComment(
 
 /**
  * Gets the URLs of comments from a given route.
+ * @param {string} userWebId - The full web ID of the user's pod.
+ * @param {string} fileName - The name of the file to get comments from.
  */
 export async function getCommentsFromRoute(userWebId, fileName) {
   let commentsFileUrl = getRouteCommentsFile(userWebId, fileName);
@@ -483,6 +492,7 @@ export async function getCommentsFromRoute(userWebId, fileName) {
 
 /**
  * Removes all routes from a given user's pod.
+ * @param {string} userWebId - The full web ID of the user's pod.
  */
 export async function clearRoutesFromPod(userWebId) {
   let url = getRoutesFolder(userWebId);
@@ -498,6 +508,8 @@ export async function clearRoutesFromPod(userWebId) {
 
 /**
  * Removes a route from given user's pod, given the name of the route.
+ * @param {string} routeId - The id of the route to delete.
+ * @param {string} userWebId - The full web ID of the user's pod.
  */
 export async function clearRouteFromPod(routeId, userWebId) {
   let url = getRoutesFolder(userWebId);
@@ -508,6 +520,10 @@ export async function clearRouteFromPod(routeId, userWebId) {
   }
 }
 
+/**
+ * Returns an array with the notifications a user has.
+ * @param {string} userWebId - The full web ID of the user's pod.
+ */
 export async function getNotifications(userWebId) {
   let inboxFolderUri = getInboxFolder(userWebId);
   if (!(await fc.itemExists(inboxFolderUri))) {
@@ -527,6 +543,12 @@ export async function getNotifications(userWebId) {
   return notifications;
 }
 
+/**
+ * Removes a route from the shared ones on another person's POD and revokes their over to it.
+ * @param {string} authorWebId - The full web ID of the sharer's pod.
+ * @param {string} routeId - The id of the route to unshare.
+ * @param {string} userWebId - The full web ID of the user the route had been shared with.
+ */
 export async function unshareRoute(authorWebId, routeId, userWebId) {
   // Read share folder
   let shareFolderUri = getSharedFolder(userWebId);
