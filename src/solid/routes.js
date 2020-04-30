@@ -285,21 +285,25 @@ export async function getRoutesFromPod(userWebId) {
       let file = await readToJson(sharedFiles[i].url);
       if (file !== null) {
         let routesUris = file.routes;
-        // All routes uris of a file (of a friend)
-        routesUris = routesUris.map((route) => route["@id"]);
-        let routeObjects = routesUris.map(async (route) => {
-          let parsed = JSON.parse(await fc.readFile(route));
-          let fileName = route.split("/");
-          fileName = fileName[fileName.length - 1];
-          let object = await getRouteObjectFromPodRoute(
-            parsed,
-            fileName
+        try {
+          // All routes uris of a file (of a friend)
+          routesUris = routesUris.map((route) => route["@id"]);
+          let routeObjects = routesUris.map(async (route) => {
+            let parsed = JSON.parse(await fc.readFile(route));
+            let fileName = route.split("/");
+            fileName = fileName[fileName.length - 1];
+            let object = await getRouteObjectFromPodRoute(
+              parsed,
+              fileName
+            );
+            return object;
+          });
+          await Promise.all(routeObjects).then((objects) =>
+            objects.map((object) => routes.push(object))
           );
-          return object;
-        });
-        await Promise.all(routeObjects).then((objects) =>
-          objects.map((object) => routes.push(object))
-        );
+        } catch {
+          console.log("[ERROR] Some shared route was wrong.");
+        }
       }
     }
   }
