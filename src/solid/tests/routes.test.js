@@ -335,8 +335,9 @@ describe("Solid Routes", () => {
         // Recreate friend inbox folder
         if (await fc.itemExists(solid.getInboxFolder(friendWebId))) {
             await fc.deleteFolder(solid.getInboxFolder(friendWebId));
-            await fc.createFolder(solid.getInboxFolder(friendWebId));
         }
+
+      await solid.createFolderIfAbsent(solid.getInboxFolder(friendWebId));
 
         // Upload route and get its uri
         await solid.uploadRouteToPod(firstRoute, userWebId);

@@ -251,7 +251,9 @@ export async function getRouteFromPod(fileName, userWebId) {
       console.log("[ERROR] Skipped reading a wrong route: " + fileName);
       return null;
     }
-}}
+  }
+  return null;
+}
 
 /**
  * Returns an array containing the routes in a given user's pod.
