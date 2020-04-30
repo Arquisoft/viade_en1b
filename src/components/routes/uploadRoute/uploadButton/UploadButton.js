@@ -22,10 +22,28 @@ const UploadButton = (props) => {
     };
     const file = useRef()
 
+    const checkFileIsGPX = (file) => {
+        var parts = file.split('.');
+        var ext = parts[parts.length - 1];
+        switch (ext.toLowerCase()) {
+            case 'gpx':
+                return true;
+            default:
+                return false;
+        }
+    };
+
     const handleSingleFileChanged = (e) => {
         props.onChange(e);
-        let name = file.current.files[0].name;
-        setState({ ...state, filename: name });
+        if (file.current.files[0] !== undefined && checkFileIsGPX(file.current.files[0].name)) {
+            let name = file.current.files[0].name;
+            setState({ ...state, filename: name });
+        }
+        else {
+            let name = "";
+            setState({ ...state, filename: name });
+        }
+
     };
 
     const handleMultipleFileChanged = (e) => {

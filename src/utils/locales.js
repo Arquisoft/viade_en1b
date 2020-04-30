@@ -8,7 +8,7 @@ export const locales = {
     Settings: "Settings",
     LogOut: "Log Out",
     //ThemePicker.js
-    Themes: "Temas",
+    Themes: "Themes",
     //FriendList.js
     FriendsList: "Friends list:",
     //Profile.js
@@ -79,6 +79,9 @@ export const locales = {
     UploadImages: "Choose images",
     UploadVideos: "Choose videos",
     Submit: "Submit",
+    //Notifications
+    Notifications: "Notifications",
+    Accepts: "Accept all",
   },
   es: {
     //NavBar.js
@@ -160,5 +163,8 @@ export const locales = {
     UploadImages: "Escoge imágenes",
     UploadVideos: "Escoge vídeos",
     Submit: "Enviar",
+    //Notifications
+    Notifications: "Notificaciones",
+    Accepts: "Aceptar todas",
   },
 };

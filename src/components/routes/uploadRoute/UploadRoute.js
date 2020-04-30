@@ -29,19 +29,37 @@ export class UploadRoute extends React.Component {
     });
   }
 
+  checkFileIsGPX = (file) => {
+    var parts = file.split('.');
+    var ext = parts[parts.length - 1];
+    switch (ext.toLowerCase()) {
+      case 'gpx':
+        return true;
+      default:
+        return false;
+    }
+  };
+
   changeHandlerFiles(e) {
     let file = e.target.files[0];
     let parseado = null;
     const self = this;
-    if (file) {
+    if (file && this.checkFileIsGPX(file.name)) {
       var reader = new FileReader();
       reader.readAsText(file, "UTF-8");
       reader.onload = function (evt) {
         parseado = parseGPX(evt.target.result);
         self.state.positions = parseado;
       };
-      reader.onerror = function (evt) {};
+      reader.onerror = function (evt) { };
     }
+    else {
+      alert("Incorrect file type, please input a .gpx file");
+      self.state.file = "";
+    }
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
   }
 
   //This is part of the state, and states should not be tested.
@@ -78,8 +96,10 @@ export class UploadRoute extends React.Component {
   }
 
   isEmpty = () => {
-    return this.state.name === "" && this.state.description === "";
+    return !(this.state.name !== "" && this.state.file !== "" && this.checkFileIsGPX(this.state.file));
   };
+
+
 
   componentDidUpdate() {
     if (this.state.reset) this.setState(this.resetState());
@@ -91,6 +111,8 @@ export class UploadRoute extends React.Component {
     this.props.loadRoutes.bind(this);
     this.setState({ ...this.state, reset: true });
   }
+
+
 
   render() {
     return (
@@ -153,7 +175,7 @@ export class UploadRoute extends React.Component {
             <ViadeModal
               disabled={this.isEmpty()}
               toggleText={<FormattedMessage id="Submit" />}
-              onSave={() => {}}
+              onSave={() => { }}
               title={<FormattedMessage id="Submited" />}
               closeText={<FormattedMessage id="Close" />}
               handleClose={() => {
