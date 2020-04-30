@@ -17,6 +17,8 @@ export function MyProfile(props) {
   let emailLoading = props.loading === true ? <p>Loading...</p> : null;
   const { routes } = props;
   const {userWebId} = props;
+  let own = getOwnRoutesNumber(routes, userWebId);
+  let shared = getSharedRoutesNumber(routes, userWebId);
 
   return (
     <div id="generalComponent">
@@ -59,13 +61,13 @@ export function MyProfile(props) {
               <Button variant="primary">
                 <FormattedMessage id="Routes" />
                 <Badge variant="light">
-                  {getOwnRoutesNumber(routes, userWebId)}
+                  {own}
                 </Badge>
               </Button>
               <Button variant="primary">
                 <FormattedMessage id="SharedRoutes" />{" "}
                 <Badge variant="light">
-                  {getSharedRoutesNumber(routes, userWebId)}
+                  {shared}
                 </Badge>
               </Button>
             </div>
