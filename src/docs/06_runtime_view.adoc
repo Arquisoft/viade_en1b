@@ -62,7 +62,7 @@ In order to check for new notifications is quite simple:
 
 . First the user needs to click on the bell simbol of the navbar.
 . Now, all the notifications will load, so the user can check them
-. Once he finish, the user can click on "Accept all", so all the notifications will be deleted
+. Once he finish, the user can click on "Accept all", so all the notifications will be deleted and shared routes will be loaded.
 
 [plantuml,"Checking Notifications",png]
 ----
@@ -76,7 +76,7 @@ As all the user are not going to be english speakers, we add more languages, so 
 . First, the user needs to click on the "Settings" option of the navbar.
 . After that, the user needs to click on "Available Languages".
 . Now, a new drop down menu will appear with all the possible locales ("languages"), so the user only needs to select one of them.
-. Finally, the applicaiton will refresh with the correct langugae.
+. Finally, the application will refresh with the correct langugae.
 
 [plantuml, "Changing the application language", png]
 ----

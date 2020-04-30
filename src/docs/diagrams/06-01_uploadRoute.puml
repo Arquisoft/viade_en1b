@@ -2,12 +2,12 @@ title A user uploads a route to his own POD - Activity Diagram
 
 start
 
-:Click import route;
+:Click "Upload routes";
 
-:Select a route to upload;
+:Fill in the form;
 
-:Add the route to the user´s POD;
+:Click "Submit";
 
-:Display the route in our app;
+:The route is uploaded to user´s POD;
 
 stop
