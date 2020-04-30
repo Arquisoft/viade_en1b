@@ -110,6 +110,28 @@ async function readToJson(url) {
 }
 
 /**
+ * Returns comments read from the uri of a comments file of a route.
+ * @param {string} commentsUri - The uri of the file containing the comments.
+ */
+export async function readComments(commentsUri) {
+  let contents = JSON.parse(await fc.readFile(commentsUri));
+  return contents.comments;
+}
+
+/**
+ * Returns the uris of medias from a JSON of medias.
+ * @param {object} - The JSON containing the uris of the medias.
+ */
+export async function readMedia(medias) {
+  let contentsUri = medias.map((media) => media["@id"]);
+  let contents = [];
+  for (let uri of contentsUri) {
+    contents.push(uri);
+  }
+  return contents;
+}
+
+/**
  * Returns a route in JSON form from the given route in JSON-LD.
  * @param {object} route - The route from a POD.
  * @param {string} routeFilename - The name of the file of the route.
@@ -134,33 +156,54 @@ async function getRouteObjectFromPodRoute(route, routeFilename) {
 }
 
 /**
- * Returns comments read from the uri of a comments file of a route.
- * @param {string} commentsUri - The uri of the file containing the comments.
- */
-export async function readComments(commentsUri) {
-  let contents = JSON.parse(await fc.readFile(commentsUri));
-  return contents.comments;
-}
-
-/**
- * Returns the uris of medias from a JSON of medias.
- * @param {object} - The JSON containing the uris of the medias.
- */
-export async function readMedia(medias) {
-  let contentsUri = medias.map((media) => media["@id"]);
-  let contents = [];
-  for (let uri of contentsUri) {
-    contents.push(uri);
-  }
-  return contents;
-}
-
-/**
  * Returns the URI of the route from a notification object.
  * @param {object} - The notification in JSON form.
  */
 function getRouteUriFromShareNotification(notification) {
   return notification.notification.object.uri;
+}
+
+/**
+ * Gives global permissions to own folder
+ * @param {string} folderURI - The uri of the folder
+ */
+export async function createOwnAcl(folderURI) {
+  let aclUrl = folderURI + ".acl";
+  if (!(await fc.itemExists(aclUrl))) {
+    let content = giveOwnFolderPermissions(folderURI);
+    await fc.createFile(aclUrl, content, "text/turtle");
+  }
+}
+
+/**
+ * Checks a permissions object to see if it actually contains permissions.
+ * @param {object} permissions - The permissions object to check.
+ */
+function hasPermissions(permissions) {
+  if (permissions.length === 0) { return false; }
+  return true;
+}
+
+/**
+ * Gives global permissions to write in a folder
+ * @param {string} folderURI - The uri of the folder
+ * @param {object} permissions - The permissions to set
+ */
+export async function createPublicPermissions(folderURI, permissions) {
+  const aclApi = new AclApi(auth.fetch, { autoSave: true });
+  let acl = {};
+  try {
+    acl = await aclApi.loadFromFileUrl(folderURI);
+
+    let hasAlreadyThePermissions = acl.getPermissionsFor(Agents.PUBLIC);
+    let alreadyPermissions = Array.from(
+      hasAlreadyThePermissions.permissions
+    ).map((permission) => {return permission;});
+
+    if (!hasPermissions(alreadyPermissions)) {
+      acl.addRule(permissions, Agents.PUBLIC);
+    }
+  } catch {}
 }
 
 /**
@@ -191,48 +234,6 @@ export async function createBaseStructure(userWebId) {
   }
   await createPublicPermissions(getInboxFolder(userWebId), [READ, APPEND]);
   await createPublicPermissions(getCommentsFolder(userWebId), [READ, APPEND]);
-}
-
-/**
- * Gives global permissions to write in a folder
- * @param {string} folderURI - The uri of the folder
- * @param {object} permissions - The permissions to set
- */
-export async function createPublicPermissions(folderURI, permissions) {
-  const aclApi = new AclApi(auth.fetch, { autoSave: true });
-  let acl = {};
-  try {
-    acl = await aclApi.loadFromFileUrl(folderURI);
-
-    let hasAlreadyThePermissions = acl.getPermissionsFor(Agents.PUBLIC);
-    let alreadyPermissions = Array.from(
-      hasAlreadyThePermissions.permissions
-    ).map((permission) => {return permission});
-
-    if (!hasPermissions(alreadyPermissions))
-      acl.addRule(permissions, Agents.PUBLIC);
-  } catch {}
-}
-
-/**
- * Checks a permissions object to see if it actually contains permissions.
- * @param {object} permissions - The permissions object to check.
- */
-function hasPermissions(permissions) {
-  if (permissions.length === 0) return false;
-  return true;
-}
-
-/**
- * Gives global permissions to own folder
- * @param {string} folderURI - The uri of the folder
- */
-export async function createOwnAcl(folderURI) {
-  let aclUrl = folderURI + ".acl";
-  if (!(await fc.itemExists(aclUrl))) {
-    let content = giveOwnFolderPermissions(folderURI);
-    await fc.createFile(aclUrl, content, "text/turtle");
-  }
 }
 
 /**
@@ -412,10 +413,42 @@ export async function checkInboxForSharedRoutes(userWebId) {
         await addRouteUriToShared(userWebId, routeUri);
         await fc.deleteFile(folder.files[i].url);
       } catch{
-        console.log("Please, be polite and don´t try to make our app crash.")
+        console.log("Please, be polite and don´t try to make our app crash.");
       }
     }
   }
+}
+
+/**
+ * Adds a comment to a route.
+ * @param {string} userWebId - The commentator's URI
+ * @param {string} commentedRouteUri - The commented route's URI
+ * @param {string} commentText - The text of the comment
+ */
+export async function uploadComment(
+  authorWebId,
+  commentRouteFile,
+  commentText
+) {
+  let date = new Date();
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+
+  let authorUsername = authorWebId.split("//")[1].split("/")[0].split(":")[0];
+  let newComment = getNewComment(authorUsername, commentText, year, month, day);
+
+  // Add comment to route's comments file
+  let commentsFile = await fc.readFile(commentRouteFile);
+  let commentsJson = JSON.parse(commentsFile);
+  let comments = commentsJson.comments;
+  comments.push(newComment);
+  commentsJson.comments = comments;
+  await fc.putFile(
+    commentRouteFile,
+    JSON.stringify(commentsJson),
+    "application/ld+json"
+  );
 }
 
 /**
@@ -466,38 +499,6 @@ export async function uploadRouteToPod(routeObject, userWebId) {
   if (routeObject.comments !== "") {
     await uploadComment(userWebId, routeCommentsFile, routeObject.comments);
   }
-}
-
-/**
- * Adds a comment to a route.
- * @param {string} userWebId - The commentator's URI
- * @param {string} commentedRouteUri - The commented route's URI
- * @param {string} commentText - The text of the comment
- */
-export async function uploadComment(
-  authorWebId,
-  commentRouteFile,
-  commentText
-) {
-  let date = new Date();
-  let day = date.getDate();
-  let month = date.getMonth() + 1;
-  let year = date.getFullYear();
-
-  let authorUsername = authorWebId.split("//")[1].split("/")[0].split(":")[0];
-  let newComment = getNewComment(authorUsername, commentText, year, month, day);
-
-  // Add comment to route's comments file
-  let commentsFile = await fc.readFile(commentRouteFile);
-  let commentsJson = JSON.parse(commentsFile);
-  let comments = commentsJson.comments;
-  comments.push(newComment);
-  commentsJson.comments = comments;
-  await fc.putFile(
-    commentRouteFile,
-    JSON.stringify(commentsJson),
-    "application/ld+json"
-  );
 }
 
 /**

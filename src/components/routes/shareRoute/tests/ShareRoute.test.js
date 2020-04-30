@@ -10,9 +10,9 @@ import "@testing-library/jest-dom";
 import  ShareRoute  from "../ShareRoute";
 import { locales } from "../../../../utils/locales";
 import { IntlProvider } from "react-intl";
-import { Provider } from 'react-redux'
-import {authReducer} from '../../../../store/reducers/AuthReducer'
-import {testStore} from '../../../../utils'
+import { Provider } from "react-redux";
+import {authReducer} from "../../../../store/reducers/AuthReducer";
+import {testStore} from "../../../../utils";
 
 let selectedRoute = {
   name: "Sequoia National Park",
@@ -47,9 +47,9 @@ let initState = {
     friends: [inigo, cesar]
   },
   control: {},
-}
+};
 
-let store = testStore(authReducer, initState)
+let store = testStore(authReducer, initState);
 
 let onSave = jest.fn();
 afterEach(cleanup);
@@ -113,7 +113,7 @@ describe("Behaviour testing", () => {
     expect(
       screen.queryByTestId("share-route-share-button-numbers")
     ).not.toBeInTheDocument();
- 
-    })
+
+    });
       });
 });
