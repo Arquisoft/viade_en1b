@@ -380,10 +380,6 @@ async function addRouteUriToShared(userWebId, uri) {
  */
 export async function checkInboxForSharedRoutes(userWebId) {
   let url = getInboxFolder(userWebId);
-  if (! await fc.itemExists(url)) {
-    await fc.createFolder(url);
-    await createPublicPermissions(getInboxFolder(userWebId), [READ, APPEND]);
-  }
   let folder = await fc.readFolder(url);
   let i = 0;
   for (i; i < folder.files.length; i++) {
