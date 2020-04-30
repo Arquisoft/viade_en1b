@@ -105,7 +105,7 @@ export function ShareRoute(props) {
       toggleText={<FormattedMessage id="Share" />}
       handleClose={handleClose}
       onSave={handleOnSave}
-      title={<FormattedMessage id="ShareModalTitle" />}
+      title={<FormattedMessage data-testid="share-modal-title" id="ShareModalTitle" />}
       closeText={<FormattedMessage id="Close" />}
       saveText={shareButtonText}
     >

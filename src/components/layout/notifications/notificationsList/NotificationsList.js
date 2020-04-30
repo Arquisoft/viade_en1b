@@ -1,18 +1,15 @@
 import React from "react";
 import { Notification } from "../notification/Notification";
-import { connect } from "react-redux";
 import style from "./NotificationsList.module.css";
 import { useNotifications } from "../../../../utils/hooks/hooks";
 import { Button } from "react-bootstrap";
 import { checkInboxForSharedRoutes } from "../../../../solid/routes";
-import { loadRoutesRequest } from "../../../../store/actions/RouteActions";
 import { FormattedMessage } from "react-intl";
 
 export function NotificationsList(props) {
   const { userWebId, loadRoutes } = props;
   let notifications = useNotifications(userWebId);
   const handleOnClick = () => {
-    console.log("Clicked");
     checkInboxForSharedRoutes(userWebId).then((routes) => {
       loadRoutes();
     });
@@ -64,16 +61,4 @@ export function NotificationsList(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    userWebId: state.auth.userWebId,
-  };
-};
-
-const mapDispathToProps = (dispath) => {
-  return {
-    loadRoutes: () => dispath(loadRoutesRequest()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispathToProps)(NotificationsList);
+export default NotificationsList;
