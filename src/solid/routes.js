@@ -129,7 +129,7 @@ async function getRouteObjectFromPodRoute(route, routeFilename) {
       sharedWith: [],
     };
   } catch {
-    console.log("[ERROR] Route does not follow the specification: " + routeFilename.
+    console.log("[ERROR] Route does not follow the specification: " + routeFilename);
   }
 }
 
@@ -248,7 +248,7 @@ export async function getRouteFromPod(fileName, userWebId) {
       let podRoute = await readToJson(url + fileName);
       return getRouteObjectFromPodRoute(podRoute, fileName);
     } catch {
-      console.log("Skipped reading a wrong route: " + fileName);
+      console.log("[ERROR] Skipped reading a wrong route: " + fileName);
       return null;
     }
   return null;
