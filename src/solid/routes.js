@@ -105,6 +105,7 @@ async function readToJson(url) {
     return JSON.parse(await fc.readFile(url));
   } catch {
     console.log("[ERROR] Tried to read non-json file: " + url);
+    return null;
   }
 }
 
@@ -281,23 +282,25 @@ export async function getRoutesFromPod(userWebId) {
   for (let i = 0; i < sharedFiles.length; i++) {
     if(!sharedFiles[i].url.includes(".acl"))
     {
-      let file = JSON.parse(await fc.readFile(sharedFiles[i].url));
-      let routesUris = file.routes;
-      // All routes uris of a file (of a friend)
-      routesUris = routesUris.map((route) => route["@id"]);
-      let routeObjects = routesUris.map(async (route) => {
-        let parsed = JSON.parse(await fc.readFile(route));
-        let fileName = route.split("/");
-        fileName = fileName[fileName.length - 1];
-        let object = await getRouteObjectFromPodRoute(
-          parsed,
-          fileName
+      let file = await readToJson(sharedFiles[i].url);
+      if (file !== null) {
+        let routesUris = file.routes;
+        // All routes uris of a file (of a friend)
+        routesUris = routesUris.map((route) => route["@id"]);
+        let routeObjects = routesUris.map(async (route) => {
+          let parsed = JSON.parse(await fc.readFile(route));
+          let fileName = route.split("/");
+          fileName = fileName[fileName.length - 1];
+          let object = await getRouteObjectFromPodRoute(
+            parsed,
+            fileName
+          );
+          return object;
+        });
+        await Promise.all(routeObjects).then((objects) =>
+          objects.map((object) => routes.push(object))
         );
-        return object;
-      });
-      await Promise.all(routeObjects).then((objects) =>
-        objects.map((object) => routes.push(object))
-      );
+      }
     }
   }
   return routes;
