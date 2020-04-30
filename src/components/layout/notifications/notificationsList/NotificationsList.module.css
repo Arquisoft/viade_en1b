@@ -1,0 +1,38 @@
+.notificationsListContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 5em auto;
+  align-items: center;
+  justify-items: center;
+  width: 100vh;
+  overflow: hidden;
+  height: 100%;
+}
+
+.notificationsListContainer * {
+  text-align: left;
+  width: 70%;
+  opacity: 1;
+  margin: 1em 0;
+}
+
+.notificationsList {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  align-items: center;
+  height: 68vh;
+}
+
+.notificationsListContainer *:hover {
+  background-color: transparent !important;
+  color: black !important;
+  cursor: default;
+  opacity: 1 !important;
+}
+
+.card:hover {
+  cursor: default;
+}

@@ -16,6 +16,9 @@ export function MyProfile(props) {
   let email = props.userEmail ? <p>{props.userEmail}</p> : null;
   let emailLoading = props.loading === true ? <p>Loading...</p> : null;
   const { routes } = props;
+  const {userWebId} = props;
+  let own = getOwnRoutesNumber(routes, userWebId);
+  let shared = getSharedRoutesNumber(routes, userWebId);
 
   return (
     <div id="generalComponent">
@@ -58,13 +61,13 @@ export function MyProfile(props) {
               <Button variant="primary">
                 <FormattedMessage id="Routes" />
                 <Badge variant="light">
-                  {getOwnRoutesNumber(routes, useWebId())}
+                  {own}
                 </Badge>
               </Button>
               <Button variant="primary">
                 <FormattedMessage id="SharedRoutes" />{" "}
                 <Badge variant="light">
-                  {getSharedRoutesNumber(routes, useWebId())}
+                  {shared}
                 </Badge>
               </Button>
             </div>
@@ -86,6 +89,7 @@ const mapStateToProps = (state) => {
     emailError: state.user.emailError,
     friends: state.user.friends,
     routes: state.route.routes,
+    userWebId: state.auth.userWebId
   };
 };
 

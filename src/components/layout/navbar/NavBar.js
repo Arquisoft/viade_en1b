@@ -1,10 +1,19 @@
 import React from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
-import { BsPerson, BsArrowBarUp, BsMap, BsCompass } from "react-icons/bs";
+import {
+  BsPerson,
+  BsArrowBarUp,
+  BsMap,
+  BsCompass,
+  BsBell,
+} from "react-icons/bs";
 import "./NavBar.css";
 import { LogoutButton } from "@solid/react";
 import { LinkContainer } from "react-router-bootstrap";
-import {loadFriendsRequest,  loadEmailRequest} from "../../../store/actions/UserActions";
+import {
+  loadFriendsRequest,
+  loadEmailRequest,
+} from "../../../store/actions/UserActions";
 import { updateWebId } from "../../../store/actions/AuthActions";
 import { loadRoutesRequest } from "../../../store/actions/RouteActions";
 import { contentLoaded } from "../../../store/actions/LoadActions";
@@ -12,7 +21,10 @@ import { connect } from "react-redux";
 import { getWebId } from "../../../solid/auth";
 import { FormattedMessage } from "react-intl";
 import ThemePicker from "../theme/ThemePicker";
-//import { createBaseStructure, checkInboxForSharedRoutes } from "../../../solid/routes";
+import {
+  createBaseStructure,
+  checkInboxForSharedRoutes,
+} from "../../../solid/routes";
 
 export const MyNavBar = (props) => {
   const links = [
@@ -37,15 +49,32 @@ export const MyNavBar = (props) => {
       icon: <BsArrowBarUp className="icon"></BsArrowBarUp>,
       testId: "navbar-upload-route",
     },
+    {
+      id: 3,
+      text: "Notifications",
+      href: "/notifications",
+      icon: <BsBell className="icon"></BsBell>,
+      testId: "navbar-notifications",
+    },
   ];
+
+  const forTestingPurposes = "http://testing.inrupt.net/profile/card#me";
 
   if (!props.loaded) {
     getWebId().then((id) => {
       props.updateWebId(id);
       props.loadFriendsRequest();
       props.loadEmailRequest();
-      //createBaseStructure(id);
-      //checkInboxForSharedRoutes(id);
+      if(id===null) { //just for testing is needed, fucking travis
+        createBaseStructure(forTestingPurposes).then((response) => {
+          checkInboxForSharedRoutes(forTestingPurposes);
+        });
+      }
+      else{
+        createBaseStructure(id).then((response) => {
+          checkInboxForSharedRoutes(id);
+        });
+      }
       props.loadRoutesRequest();
       props.contentLoaded();
     });
