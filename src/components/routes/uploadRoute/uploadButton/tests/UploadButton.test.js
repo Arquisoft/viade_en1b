@@ -38,7 +38,9 @@ describe("Upload an element to a single file button", () => {
             value: [mockFile]
         });
         fireEvent.change(input);
+      waitForElement(() => {
         expect(queryByTestId(uploadButton, "upload-button-label").textContent).toBe(filename);
+      })
     });
 
 
