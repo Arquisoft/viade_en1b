@@ -54,8 +54,7 @@
     "docs": "shx rm -rf build/docs && asciidoctor -D build/docs -a imagesdir=./images -r asciidoctor-diagram src/docs/index.adoc && shx cp -R src/docs/images build/docs",
     "eject": "react-scripts eject",
     "cucumber": "./node_modules/.bin/cucumber-js ./e2e/",
-    "artillery-linux": "./execute-load-tests.sh",
-    "artillery-windows":"npx artillery run ./load-testing/dashboard.yml -o ./reports/load-testing/report.json && npx artillery report ./reports/load-testing/report.json -o report.html && rm ./reports/load-testing/report.json"
+    "artillery-linux": "./execute-load-tests.sh"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -96,13 +96,27 @@ First of all run `npm start` and then run `npm run cucumber`.
 
 First of all you need to run the development server with `npm start`.
 
-TODO
+#### Windows
 
+In Windows, you must run the following commands:
+1. `mkdir .\reports\load-testing` (only the first time)
+2. `npx artillery run ./load-testing/dashboard.yml -o .\reports\load-testing\reportName.json`
+3. `npx artillery report /reports/load-testing/report.json -o .\reports\load-testing\reportName.html`
+
+The report will be in `/reports/load-testing`. Enjoy it!
+
+#### Linux
+
+In Linux, it is as simple as doing:
+```
+npm run artillery-linux
+```
+Then the report will be in `/reports/load-testing`. Enjoy it!
 > This tests have been created using [Artillery](https://artillery.io/).
 
 ### Docker
 
-In order to use our Dockerized application, you have yo have Docker installed on your computer. Once that's done, you have to follow these steps:
+In order to use our Dockerized application, you must to have Docker installed on your computer. Once that's done, you have to follow these steps:
 
 - Open a command prompt.
 - Set yourself on the root directory of our cloned repo
@@ -129,11 +143,13 @@ To get more help on the React use `npm help` or go to their [main webpage](https
 
 We are concerned about every kind of users, specially color blind people.
 
-Regarding this fact, we have included a functionality to change in runtime the theme of our application in order to solve the main three color blindnesses:
+Regarding this fact, we have included a functionality to change in runtime the theme of our application in order to solve the three main color blindnesses:
 
 1. Protanopia: confusion of reds and greens and loss of sensitivity to red light.
 2. Tritanopia: confusion of blues and greens an which sensitivity to blue is reduced.
 3. Deuteranopia: confusion of blues and greens, of greens and reds and which sensitivity of green is reduced.
+
+> In Chrome you can check it using this [plugin](https://chrome.google.com/webstore/detail/colorblinding/dgbgleaofjainknadoffbjkclicbbgaa).
 
 ### Internationalization
 
