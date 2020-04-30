@@ -17,5 +17,6 @@ image:10-QualityTree.png["Quality Tree"]
 | Performance | A user wants to display a route in the map. | The route is correctly displayed in the map. | The route should be displayed in the map in less than one second.
 | Interoperability | A user of another team signs in to our application. | Routes should be correctly loaded. | Routes are loaded in less than 5 seconds.
 | Privacy | A user signs in to our application. | The log in is done by the SOLID platform and we do not know his credentials. | The users should be able to sign in in less than 5 seconds. 
+| Accessibility | A color blind (deuteranopia, tritanopia, protanopia) user wants to use our application. | The user changes the theme of the application | The user can correctly see the colors of our application.
 |===
 

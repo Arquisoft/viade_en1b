@@ -1,4 +1,4 @@
-import {parseGPX} from "./parser";
+import {parseGPX} from "./../parser";
 import "@testing-library/jest-dom";
 import {text} from './mockRoute'
 

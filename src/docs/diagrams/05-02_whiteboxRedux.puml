@@ -9,6 +9,7 @@ rectangle Redux {
             [UserReducer] as userReducer
             [RootReducer] as rootReducer
             [LoadReducer] as loadReducer
+            [LocaleReducer] as localeReducer
         }
         [State] as state
     }
@@ -18,6 +19,7 @@ rectangle Redux {
     [RouteActions] as routeActions
     [UserActions] as userActions
     [LoadActions] as loadActions
+    [LocaleActions] as localeActions
 }
 }
 
