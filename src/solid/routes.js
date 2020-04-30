@@ -556,8 +556,12 @@ export async function getNotifications(userWebId) {
 
   let i = 0;
   for (i; i < notificationFiles.length; i++) {
-    let notification = await getNotification(fc, notificationFiles[i]);
-    notifications.push(notification);
+    try {
+      let notification = await getNotification(fc, notificationFiles[i]);
+      notifications.push(notification);
+    } catch {
+      console.log("Please be polite and don´t try to make our app crash");
+    }
   }
 
   return notifications;
