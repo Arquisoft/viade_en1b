@@ -1,18 +1,22 @@
 .buttons {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
   grid-row: 2 / 3;
 }
 
 .buttons button {
   margin: 1em;
+  height: 40px;
+}
+
+.images {
+  height: 20%;
+  grid-row: 3 / 4;
 }
 
 .comments {
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
 .comments ul {
@@ -22,6 +26,7 @@
   margin: 0;
   padding: 0;
   text-align: left;
+  height: 100%;
 }
 
 .comments ul li {
@@ -33,4 +38,3 @@
 .description {
   text-align: left;
 }
-

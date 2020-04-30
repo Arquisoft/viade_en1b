@@ -1,6 +1,5 @@
 import React, { useReducer } from "react";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
-import { FormattedMessage } from "react-intl";
 import "./SlideShow.css";
 
 const Slideshow = (props) => {
@@ -15,7 +14,6 @@ const Slideshow = (props) => {
     }
   };
 
-  const picturesTags = props.images.map((image) => <img alt="animg" src={image}></img>);
   const [state, dispatch] = useReducer(reducer, { picture: 0 });
 
   const previousButton =
@@ -52,11 +50,9 @@ const Slideshow = (props) => {
     );
 
   const pictures =
-    props.images.length === 0 ? (
-      <FormattedMessage id="NoMediaElements" />
-    ) : (
-      picturesTags
-    );
+    props.images.length === 0
+      ? "There are no media elements"
+      : props.images[state.picture];
 
   const buttons =
     props.images.length === 0 ? null : (

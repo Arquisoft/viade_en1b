@@ -1,0 +1,9 @@
+.comments {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  scroll-behavior: auto;
+  margin: 0;
+  padding: 0;
+}

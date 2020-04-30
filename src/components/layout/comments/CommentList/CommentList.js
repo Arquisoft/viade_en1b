@@ -1,5 +1,6 @@
 import React from "react";
 import Comment from "../comment/Comment";
+import style from "./CommentsList.module.css";
 
 export const CommentList = (props) => {
   const { comments } = props;
@@ -13,6 +14,10 @@ export const CommentList = (props) => {
       ></Comment>
     );
   });
-  return <div data-testid="comments">{commentComponents}</div>;
+  return (
+    <div className={style.comments} data-testid="comments">
+      {commentComponents}
+    </div>
+  );
 };
 export default CommentList;
