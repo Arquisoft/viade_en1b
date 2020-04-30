@@ -101,7 +101,11 @@ export function getSharedFolder(userWebId) {
  * @param {string} url - The url to read
  */
 async function readToJson(url) {
-  return JSON.parse(await fc.readFile(url));
+  try {
+    return JSON.parse(await fc.readFile(url));
+  } catch {
+    console.log("[ERROR] Tried to read non-json file: " + url);
+  }
 }
 
 /**
@@ -110,18 +114,22 @@ async function readToJson(url) {
  * @param {string} routeFilename - The name of the file of the route.
  */
 async function getRouteObjectFromPodRoute(route, routeFilename) {
-  return {
-    id: routeFilename.split(".")[0],
-    name: route.name,
-    description: route.description,
-    author: route.author,
-    comments: await readComments(route.comments),
-    positions: route.points.map((point) => {
-      return [point.latitude, point.longitude];
-    }),
-    media: await readMedia(route.media),
-    sharedWith: [],
-  };
+  try {
+    return {
+      id: routeFilename.split(".")[0],
+      name: route.name,
+      description: route.description,
+      author: route.author,
+      comments: await readComments(route.comments),
+      positions: route.points.map((point) => {
+        return [point.latitude, point.longitude];
+      }),
+      media: await readMedia(route.media),
+      sharedWith: [],
+    };
+  } catch {
+    console.log("[ERROR] Route does not follow the specification: " + routeFilename.
+  }
 }
 
 /**
@@ -235,9 +243,13 @@ export async function getRouteFromPod(fileName, userWebId) {
   let url = getRoutesFolder(userWebId);
   let folder = await fc.readFolder(url);
   if (folder.files.some((f) => f.name === fileName)) {
-    let podRoute = await readToJson(url + fileName);
-    return getRouteObjectFromPodRoute(podRoute, fileName);
-  }
+    try {
+      let podRoute = await readToJson(url + fileName);
+      return getRouteObjectFromPodRoute(podRoute, fileName);
+    } catch {
+      console.log("Skipped reading a wrong route: " + fileName);
+      return null;
+    }
   return null;
 }
 
@@ -252,11 +264,13 @@ export async function getRoutesFromPod(userWebId) {
   // Own routes
   await createFolderIfAbsent(routesFolderUrl);
   let routesFolder = await fc.readFolder(routesFolderUrl);
-  let routesFiles = routesFolder.files.filter((f) => !/\.acl$/.test(f.name));
+  let routesFiles = routesFolder.files.filter((f) => /\.jsonld$/.test(f.name));
   let i = 0;
   for (i; i < routesFiles.length; i++) {
     let route = await getRouteFromPod(routesFiles[i].name, userWebId);
-    routes.push(route);
+    if (route !== null) {
+      routes.push(route);
+    }
   }
 
   // Now read shared routes
