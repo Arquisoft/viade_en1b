@@ -101,7 +101,12 @@ export function getSharedFolder(userWebId) {
  * @param {string} url - The url to read
  */
 async function readToJson(url) {
-  return JSON.parse(await fc.readFile(url));
+  try {
+    return JSON.parse(await fc.readFile(url));
+  } catch {
+    console.log("[ERROR] Tried to read non-json file: " + url);
+    return null;
+  }
 }
 
 /**
@@ -110,18 +115,22 @@ async function readToJson(url) {
  * @param {string} routeFilename - The name of the file of the route.
  */
 async function getRouteObjectFromPodRoute(route, routeFilename) {
-  return {
-    id: routeFilename.split(".")[0],
-    name: route.name,
-    description: route.description,
-    author: route.author,
-    comments: await readComments(route.comments),
-    positions: route.points.map((point) => {
-      return [point.latitude, point.longitude];
-    }),
-    media: await readMedia(route.media),
-    sharedWith: [],
-  };
+  try {
+    return {
+      id: routeFilename.split(".")[0],
+      name: route.name,
+      description: route.description,
+      author: route.author,
+      comments: await readComments(route.comments),
+      positions: route.points.map((point) => {
+        return [point.latitude, point.longitude];
+      }),
+      media: await readMedia(route.media),
+      sharedWith: [],
+    };
+  } catch {
+    console.log("[ERROR] Route does not follow the specification: " + routeFilename);
+  }
 }
 
 /**
@@ -235,8 +244,13 @@ export async function getRouteFromPod(fileName, userWebId) {
   let url = getRoutesFolder(userWebId);
   let folder = await fc.readFolder(url);
   if (folder.files.some((f) => f.name === fileName)) {
-    let podRoute = await readToJson(url + fileName);
-    return getRouteObjectFromPodRoute(podRoute, fileName);
+    try {
+      let podRoute = await readToJson(url + fileName);
+      return getRouteObjectFromPodRoute(podRoute, fileName);
+    } catch {
+      console.log("[ERROR] Skipped reading a wrong route: " + fileName);
+      return null;
+    }
   }
   return null;
 }
@@ -252,11 +266,13 @@ export async function getRoutesFromPod(userWebId) {
   // Own routes
   await createFolderIfAbsent(routesFolderUrl);
   let routesFolder = await fc.readFolder(routesFolderUrl);
-  let routesFiles = routesFolder.files.filter((f) => !/\.acl$/.test(f.name));
+  let routesFiles = routesFolder.files.filter((f) => /\.jsonld$/.test(f.name));
   let i = 0;
   for (i; i < routesFiles.length; i++) {
     let route = await getRouteFromPod(routesFiles[i].name, userWebId);
-    routes.push(route);
+    if (route !== null) {
+      routes.push(route);
+    }
   }
 
   // Now read shared routes
@@ -267,23 +283,29 @@ export async function getRoutesFromPod(userWebId) {
   for (let i = 0; i < sharedFiles.length; i++) {
     if(!sharedFiles[i].url.includes(".acl"))
     {
-      let file = JSON.parse(await fc.readFile(sharedFiles[i].url));
-      let routesUris = file.routes;
-      // All routes uris of a file (of a friend)
-      routesUris = routesUris.map((route) => route["@id"]);
-      let routeObjects = routesUris.map(async (route) => {
-        let parsed = JSON.parse(await fc.readFile(route));
-        let fileName = route.split("/");
-        fileName = fileName[fileName.length - 1];
-        let object = await getRouteObjectFromPodRoute(
-          parsed,
-          fileName
-        );
-        return object;
-      });
-      await Promise.all(routeObjects).then((objects) =>
-        objects.map((object) => routes.push(object))
-      );
+      let file = await readToJson(sharedFiles[i].url);
+      if (file !== null) {
+        let routesUris = file.routes;
+        try {
+          // All routes uris of a file (of a friend)
+          routesUris = routesUris.map((route) => route["@id"]);
+          let routeObjects = routesUris.map(async (route) => {
+            let parsed = JSON.parse(await fc.readFile(route));
+            let fileName = route.split("/");
+            fileName = fileName[fileName.length - 1];
+            let object = await getRouteObjectFromPodRoute(
+              parsed,
+              fileName
+            );
+            return object;
+          });
+          await Promise.all(routeObjects).then((objects) =>
+            objects.map((object) => routes.push(object))
+          );
+        } catch {
+          console.log("[ERROR] Some shared route was wrong.");
+        }
+      }
     }
   }
   return routes;
@@ -385,9 +407,13 @@ export async function checkInboxForSharedRoutes(userWebId) {
   for (i; i < folder.files.length; i++) {
     if(!folder.files[i].url.includes(".acl")){
       let notification = await fc.readFile(folder.files[i].url);
-      let routeUri = getRouteUriFromShareNotification(JSON.parse(notification));
-      await addRouteUriToShared(userWebId, routeUri);
-      await fc.deleteFile(folder.files[i].url);
+      try{
+        let routeUri = getRouteUriFromShareNotification(JSON.parse(notification));
+        await addRouteUriToShared(userWebId, routeUri);
+        await fc.deleteFile(folder.files[i].url);
+      } catch{
+        console.log("Please, be polite and don´t try to make our app crash.")
+      }
     }
   }
 }
@@ -532,8 +558,12 @@ export async function getNotifications(userWebId) {
 
   let i = 0;
   for (i; i < notificationFiles.length; i++) {
-    let notification = await getNotification(fc, notificationFiles[i]);
-    notifications.push(notification);
+    try {
+      let notification = await getNotification(fc, notificationFiles[i]);
+      notifications.push(notification);
+    } catch {
+      console.log("Please be polite and don´t try to make our app crash");
+    }
   }
 
   return notifications;
