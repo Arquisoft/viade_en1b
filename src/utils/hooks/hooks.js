@@ -8,6 +8,7 @@ export function useNotifications(userWebId) {
     if (userWebId != null) {
       getNotifications(userWebId).then((notifications) => {
         setNotifications(notifications);
+        console.log(notifications);
       });
     }
   }, [userWebId]);

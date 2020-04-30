@@ -26,7 +26,7 @@
   height: 68vh;
 }
 
-.notificationsListContainer *:hover {
+.notificationsListContainer *:hover:not(.acceptAllButton) {
   background-color: transparent !important;
   color: black !important;
   cursor: default;
@@ -35,4 +35,24 @@
 
 .card:hover {
   cursor: default;
+}
+
+.notificationsEmpty {
+  height: 0;
+}
+.btn-primary {
+  background-color: blue !important;
+}
+
+.acceptAllButton {
+  width: 20% !important;
+  text-align: center;
+}
+
+.acceptAllButton:hover {
+  background-color: green;
+}
+
+.acceptAllButtonDisabled {
+  display: none;
 }
