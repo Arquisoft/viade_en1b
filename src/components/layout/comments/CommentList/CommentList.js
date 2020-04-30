@@ -13,6 +13,6 @@ export const CommentList = (props) => {
       ></Comment>
     );
   });
-  return <div>{commentComponents}</div>;
+  return <div data-testid="comments">{commentComponents}</div>;
 };
 export default CommentList;

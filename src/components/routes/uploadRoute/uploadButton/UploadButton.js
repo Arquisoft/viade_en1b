@@ -28,8 +28,9 @@ const UploadButton = (props) => {
         switch (ext.toLowerCase()) {
             case 'gpx':
                 return true;
+            default:
+                return false;
         }
-        return false;
     };
 
     const handleSingleFileChanged = (e) => {
