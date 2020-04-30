@@ -43,6 +43,5 @@ export const getOwnRoutesNumber = (routes, userWebID) => {
  * @param {*} userWebId  user logged in id
  */
 export const getSharedRoutesNumber = (routes, userWebId) => {
-  console.log({routes, userWebId});
   return routes.length - getOwnRoutesNumber(routes, userWebId);
 };
