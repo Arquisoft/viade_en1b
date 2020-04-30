@@ -5,7 +5,7 @@ export function useNotifications(userWebId) {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    if (userWebId !== null) {
+    if (userWebId != null) {
       getNotifications(userWebId).then((notifications) => {
         setNotifications(notifications);
       });
@@ -18,7 +18,7 @@ export function useNotifications(userWebId) {
 export function useComments(selectedRoute) {
   const [comments, setComments] = useState([]);
   useEffect(() => {
-    if (selectedRoute !== null) {
+    if (selectedRoute != null) {
       setComments(selectedRoute.comments);
     }
   }, [selectedRoute]);
