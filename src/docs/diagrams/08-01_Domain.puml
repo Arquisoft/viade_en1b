@@ -5,7 +5,7 @@ class Route {
     String _description
 }
 
-class GeoCoordinate {
+class Position {
     double latitude
     double longitude
     double _elevation
@@ -13,10 +13,14 @@ class GeoCoordinate {
 
 User "1" -- "*" Route : has
 User "1" -- "*" User : friends
-Route -> "*" GeoCoordinate
+Route -> "+" Position
 Route -left-> "*" Comment
 Comment -up-> "1" User
-Route -down-> "*" Image
-Route -down-> "*" Video
+Route -down-> "*" Media
+
+legend right
+_attribute = optional
+attribute = compulsory
+endlegend
 
 @enduml
