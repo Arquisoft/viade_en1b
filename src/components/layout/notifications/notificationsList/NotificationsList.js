@@ -5,6 +5,7 @@ import { useNotifications } from "../../../../utils/hooks/hooks";
 import { Button } from "react-bootstrap";
 import { checkInboxForSharedRoutes } from "../../../../solid/routes";
 import { FormattedMessage } from "react-intl";
+import { FaBellSlash } from "react-icons/fa";
 
 export function NotificationsList(props) {
   const { userWebId, loadRoutes } = props;
@@ -39,16 +40,20 @@ export function NotificationsList(props) {
       <div
         data-testid="notificationslist-divcomponent"
         className={
-          notifications.length == 0
+          notifications.length === 0
             ? style.notificationsEmpty
             : style.notificationsList
         }
       >
-        {notificationsComponent}
+        {notifications.length === 0 ? (
+          <FaBellSlash></FaBellSlash>
+        ) : (
+          notificationsComponent
+        )}
       </div>{" "}
       <Button
         className={
-          notifications.length == 0
+          notifications.length === 0
             ? style.acceptAllButtonDisabled
             : style.acceptAllButton
         }
