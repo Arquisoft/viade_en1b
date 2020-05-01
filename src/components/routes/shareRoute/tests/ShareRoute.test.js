@@ -39,7 +39,7 @@ let initState = {
 
   route: {
 
-    selectedRoute: selectedRoute
+    selectedRoute
   },
   auth: {userWebId: "https://viandetest2020.solid.community/profile/card#me"},
   user:{
@@ -87,7 +87,7 @@ describe("Everything renders correctly", () => {
     expect(screen.queryByTestId("modalCancelButton")).toBeInTheDocument();
     expect(screen.queryByTestId("card0")).toBeInTheDocument();
     expect(screen.queryByTestId("card1")).toBeInTheDocument();
-})
+});
       });
 });
 

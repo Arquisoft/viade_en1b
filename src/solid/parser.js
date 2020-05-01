@@ -53,7 +53,7 @@ export function getNewCommentsFile(routeUrl) {
  */
 export function getNewComment(author, commentText, year, month, day) {
   return {
-    author: author,
+    author,
     text: commentText,
     dateCreated: year + "-" + month + "-" + day,
   };

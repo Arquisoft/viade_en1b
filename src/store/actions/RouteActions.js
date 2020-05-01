@@ -2,7 +2,7 @@ export const deleteRoute = (route, userWebId) => {
   return {
     type: "DELETE_ROUTE",
     payload: {
-      route: route,
+      route,
       uri: userWebId,
     },
   };
@@ -12,8 +12,8 @@ export const shareRoute = (route, friends) => {
   return {
     type: "SHARE_ROUTE",
     payload: {
-      route: route,
-      friends: friends,
+      route,
+      friends,
     },
   };
 };
@@ -22,9 +22,9 @@ export const unshareRoute = (authorWebId, routeId, userWebId) => {
   return {
     type: "UNSHARE_ROUTE",
     payload: {
-      authorWebId: authorWebId,
-      routeId: routeId,
-      userWebId: userWebId,
+      authorWebId,
+      routeId,
+      userWebId,
     },
   };
 };
@@ -47,9 +47,9 @@ export const uploadRoute = (route, routes, webId) => {
   return {
     type: "UPLOAD_ROUTE",
     payload: {
-      route: route,
-      routes: routes,
-      webId: webId,
+      route,
+      routes,
+      webId,
     },
   };
 };
