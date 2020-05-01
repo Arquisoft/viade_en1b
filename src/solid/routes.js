@@ -512,6 +512,10 @@ export async function clearRouteFromPod(routeId, userWebId) {
   let folder = await fc.readFolder(url);
   let fileName = routeId + ".jsonld";
   if (folder.files.some((f) => f.name === fileName)) {
+    let content = await readToJson(url+fileName);
+    let media = await readMedia(content.media);
+    await fc.delete(getRouteCommentsFile(userWebId, fileName));
+    media.forEach(async (res) => await fc.delete(res));
     await fc.delete(url + fileName);
   }
 }
