@@ -27,7 +27,7 @@
   position: relative;
 }
 
-.notificationsListContainer *:hover:not(.acceptAllButton) {
+.notificationsListContainer *:hover:not(.acceptAllButton *) {
   background-color: transparent !important;
   color: black !important;
   cursor: default;
@@ -54,10 +54,12 @@
   text-align: center;
 }
 
-.acceptAllButton:hover {
-  background-color: green;
+.acceptAllButton * {
+  width: 90%;
+  padding: 1em 0.5em;
+  text-align: center;
+  cursor: pointer;
 }
-
 .acceptAllButtonDisabled {
   display: none;
 }

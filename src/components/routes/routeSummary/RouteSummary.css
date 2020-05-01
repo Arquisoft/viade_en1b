@@ -18,7 +18,7 @@
   flex: row auto;
 }
 
-.card:hover {
+.card:hover:not(.notification) {
   background-color: var(--color-primary);
   opacity: 0.8;
   color: var(--color-secondary);

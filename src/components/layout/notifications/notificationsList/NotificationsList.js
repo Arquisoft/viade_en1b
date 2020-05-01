@@ -48,23 +48,26 @@ export function NotificationsList(props) {
         {notifications.length === 0 ? (
           <FaBellSlash></FaBellSlash>
         ) : (
-            notificationsComponent
-          )}
+          notificationsComponent
+        )}
       </div>{" "}
-      <div className={
-        notifications.length === 0
-          ? style.acceptAllButtonDisabled
-          : style.acceptAllButton
-      }>
+      <div
+        className={
+          notifications.length === 0
+            ? style.acceptAllButtonDisabled
+            : style.acceptAllButton
+        }
+      >
         <ViadeModal
           data-testid="notificationslist-button"
           onOpen={handleOnClick}
           disabled={false}
           toggleText={<FormattedMessage id="Accepts" />}
-          handleClose={() => { }}
-          onSave={() => { }}
+          handleClose={() => {}}
+          onSave={() => {}}
           closeText={<FormattedMessage id="Close" />}
-        ><FormattedMessage id="AcceptsMessage" />
+        >
+          <FormattedMessage id="AcceptsMessage" />
         </ViadeModal>
       </div>
     </div>
