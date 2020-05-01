@@ -1,7 +1,15 @@
-const localeReducer = (state = { locale: "en" }, action = {}) => {
+const localeReducer = (
+  state = { id: "English", text: "English", locale: "en" },
+  action = {}
+) => {
   switch (action.type) {
     case "CHANGE_LOCALE_LANGUAGE_SUCCESS":
-      return { ...state, locale: action.locale };
+      return {
+        ...state,
+        id: action.payload.id,
+        text: action.payload.text,
+        locale: action.payload.locale,
+      };
     default:
       return state;
   }
