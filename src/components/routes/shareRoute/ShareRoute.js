@@ -12,6 +12,10 @@ import { deepClone, filterUnsharedFriends } from "../../../utils/functions";
 import { Badge } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 
+/**
+ * Component to share routes with your solid friends
+ * @param {*} props 
+ */
 export function ShareRoute(props) {
   const { selectedRoute, shareRoute, userWebId } = props;
   const friendsToShow = (sharedWith) =>
@@ -93,13 +97,13 @@ export function ShareRoute(props) {
         </Badge>
       </span>
     ) : (
-      <span data-testid="share-route-share-button-plain">Share</span>
-    );
+        <span data-testid="share-route-share-button-plain">Share</span>
+      );
 
   return (
     <ViadeModal
       data-testid="share-route-modal"
-      onOpen={() => {}}
+      onOpen={() => { }}
       disabled={!checkAuthority()}
       saveDisabled={activeSelectedFriends === 0}
       toggleText={<FormattedMessage id="Share" />}

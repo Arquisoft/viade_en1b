@@ -5,6 +5,9 @@ import { faBook } from "@fortawesome/free-solid-svg-icons";
 import "./Footer.css";
 import { FormattedMessage } from "react-intl";
 
+/**
+ * Component to show the footer of the web application with some information about the development team
+ */
 export const Footer = () => {
   return (
     <div data-testid="footer" id="footer">

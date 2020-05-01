@@ -3,6 +3,13 @@ import { TileLayer, Map, Polyline, LayersControl } from "react-leaflet";
 import "./MyMap.css";
 import FullScreenControl from "react-leaflet-fullscreen";
 import "react-leaflet-fullscreen/dist/styles.css";
+
+/**
+ * Component to show the map in which the route will be represented
+ * @param {*} center 
+ * @param {*} positions 
+ * @param {*} style 
+ */
 export const myMap = (center, positions, style) => {
   return (
     <div

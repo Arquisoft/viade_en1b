@@ -12,6 +12,10 @@ import {
   getSharedRoutesNumber,
 } from "../../../utils/functions";
 
+/**
+ * Component to show the user's profile
+ * @param {*} props 
+ */
 export function MyProfile(props) {
   let email = props.userEmail ? <p>{props.userEmail}</p> : null;
   let emailLoading = props.loading === true ? <p>Loading...</p> : null;

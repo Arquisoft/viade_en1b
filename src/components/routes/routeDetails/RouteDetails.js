@@ -12,6 +12,10 @@ import { CommentList } from "../../layout/comments/CommentList/CommentList";
 import { useComments } from "../../../utils/hooks/hooks";
 import Slideshow from "../../layout/slideshow/Slideshow";
 
+/**
+ * Component to show the details of the selected route
+ * @param {*} props 
+ */
 export const RouteDetails = (props) => {
   const { selectedRoute, deleteRoute, userWebId, unshareRoute } = props;
   let comments = useComments(selectedRoute);
