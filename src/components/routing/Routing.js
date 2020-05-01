@@ -10,6 +10,10 @@ import Settings from "../layout/settings/Settings";
 import ShareRoute from "../routes/shareRoute/ShareRoute";
 import Notifications from "../layout/notifications/Notifications";
 
+/**
+ * Component to link paths to other components
+ * @param {*} props 
+ */
 export default function Routing(props) {
   const { navBar } = props;
   return (

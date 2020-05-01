@@ -23,9 +23,12 @@ import { FormattedMessage } from "react-intl";
 import ThemePicker from "../theme/ThemePicker";
 import {
   createBaseStructure,
-  checkInboxForSharedRoutes,
 } from "../../../solid/routes";
 
+/**
+ * Component to select the differents views of the web application
+ * @param {*} props 
+ */
 export const MyNavBar = (props) => {
   const links = [
     {
@@ -67,12 +70,12 @@ export const MyNavBar = (props) => {
       props.loadEmailRequest();
       if(id===null) { //just for testing is needed, fucking travis
         createBaseStructure(forTestingPurposes).then((response) => {
-          checkInboxForSharedRoutes(forTestingPurposes);
+          //checkInboxForSharedRoutes(forTestingPurposes);
         });
       }
       else{
         createBaseStructure(id).then((response) => {
-          checkInboxForSharedRoutes(id);
+          //checkInboxForSharedRoutes(id);
         });
       }
       props.loadRoutesRequest();

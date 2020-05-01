@@ -5,6 +5,10 @@ import { BsCheck } from "react-icons/bs";
 import { Redirect } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
+/**
+ * Component to show the friend list
+ * @param {*} props 
+ */
 export const FriendList = (props) => {
   //Function used by the non-checked version of the component
   const onClick = (friend) => {

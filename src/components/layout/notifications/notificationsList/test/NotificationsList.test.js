@@ -1,7 +1,7 @@
 import { render, queryByTestId, waitForElement, queryAllByTestId, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import React from 'react'
-import { NotificationsList } from "../NotificationsList";
+import React from "react";
+import {NotificationsList} from "../NotificationsList";
 import { IntlProvider } from "react-intl";
 import { locales } from "../../../../../utils/locales";
 

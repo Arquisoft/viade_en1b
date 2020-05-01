@@ -4,6 +4,7 @@ rectangle Solid as solid {
     [Auth]
     [Routes]
     [ProfileInfo]
+    [Parser]
 }
 
 [Redux] as redux
