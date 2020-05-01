@@ -27,7 +27,7 @@ export const App = (props) => {
 
   const navBar =
     useLoggedIn() === true ? (
-      <MyNavBar data-testid="theNavBar" brandName="Viade_en1b"></MyNavBar>
+      <MyNavBar data-testid="theNavBar" brandName="ViaDe_en1b"></MyNavBar>
     ) : null;
 
   return (

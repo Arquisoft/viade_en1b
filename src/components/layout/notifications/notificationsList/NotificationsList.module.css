@@ -1,0 +1,65 @@
+.notificationsListContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 5em auto;
+  align-items: center;
+  justify-items: center;
+  width: 100vh;
+  overflow: hidden;
+  height: 70vh;
+}
+
+.notificationsListContainer * {
+  text-align: left;
+  width: 70%;
+  opacity: 1;
+  margin-top: 1em;
+}
+
+.notificationsList {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  align-items: center;
+  height: 100%;
+  position: relative;
+}
+
+.notificationsListContainer *:hover:not(.acceptAllButton *) {
+  background-color: transparent !important;
+  color: black !important;
+  cursor: default;
+  opacity: 1 !important;
+}
+
+.card:hover {
+  cursor: default;
+}
+.notificationsEmpty {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notificationsEmpty svg {
+  transform: scale(8);
+  fill: var(--color-primary);
+}
+
+.acceptAllButton {
+  width: 20% !important;
+  text-align: center;
+}
+
+.acceptAllButton * {
+  width: 90%;
+  padding: 1em 0.5em;
+  text-align: center;
+  cursor: pointer;
+}
+.acceptAllButtonDisabled {
+  display: none;
+}

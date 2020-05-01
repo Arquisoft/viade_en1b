@@ -12,7 +12,7 @@ This section contains all the relevant information about different topics of the
 include::diagrams/08-01_Domain.puml[]
 ----
 
-Expressed using RDF, represents a user route, which can be shared, loaded, etc. It follows the https://arquisoft.github.io/viadeSpec/#dataModel[Viade specification].
+Expressed using JsonLD, represents a user route, which can be shared, loaded, etc. It follows the https://arquisoft.github.io/viadeSpec/#dataModel[Viade specification].
 
 - Name: name of the route
 - Description (optional): some information about the specific route
@@ -35,11 +35,6 @@ Expressed using RDF, represents a user route, which can be shared, loaded, etc. 
 ==== Media
 
 ===== Image
-
-- ContentUrl: direction for the resource
-- PublishedDate: in datetime format
-
-===== Video
 
 - ContentUrl: direction for the resource
 - PublishedDate: in datetime format

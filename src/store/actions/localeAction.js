@@ -1,3 +1,3 @@
 export default function changeLocale(locale) {
-  return { type: "CHANGE_LOCALE_LANGUAGE_SUCCESS", locale };
+  return { type: "CHANGE_LOCALE_LANGUAGE_SUCCESS", payload: locale };
 }

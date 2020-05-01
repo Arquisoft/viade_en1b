@@ -1,6 +1,5 @@
 import React, { useReducer } from "react";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
-import { FormattedMessage } from "react-intl";
 import "./SlideShow.css";
 
 const Slideshow = (props) => {
@@ -51,11 +50,9 @@ const Slideshow = (props) => {
     );
 
   const pictures =
-    props.images.length === 0 ? (
-      <FormattedMessage id="NoMediaElements" />
-    ) : (
-      props.images[state.picture]
-    );
+    props.images.length === 0
+      ? "There are no media elements"
+      : props.images[state.picture];
 
   const buttons =
     props.images.length === 0 ? null : (
@@ -75,4 +72,4 @@ const Slideshow = (props) => {
   );
 };
 
-export default Slideshow;
+export default React.memo(Slideshow);

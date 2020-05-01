@@ -8,6 +8,11 @@ import { LoggedIn, LoggedOut } from "@solid/react";
 import { Redirect } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
+/**
+ * Component to show the dashboard, showing the list of routes
+ * and a map to show the selected route
+ * @param {*} props 
+ */
 function Dashboard(props) {
   const { routes } = props;
   const { selectedRoute } = props;

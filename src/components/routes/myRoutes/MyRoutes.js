@@ -7,6 +7,11 @@ import { showRoute } from "../../../store/actions/RouteActions";
 import { LoggedIn, LoggedOut } from "@solid/react";
 import { Redirect } from "react-router-dom";
 
+
+/**
+ * Component to show the routes of a user, its own routes and also the ones that other users shared with him
+ * @param {*} props 
+ */
 export function MyRoutes(props) {
   const { routes } = props;
   const { selectedRoute } = props;

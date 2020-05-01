@@ -12,9 +12,12 @@ import { deepClone, filterUnsharedFriends } from "../../../utils/functions";
 import { Badge } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 
+/**
+ * Component to share routes with your solid friends
+ * @param {*} props 
+ */
 export function ShareRoute(props) {
-  const { selectedRoute } = props;
-  const { shareRoute } = props;
+  const { selectedRoute, shareRoute, userWebId } = props;
   const friendsToShow = (sharedWith) =>
     filterUnsharedFriends(props.friends, sharedWith).map((friend) => ({
       ...friend,
@@ -63,6 +66,11 @@ export function ShareRoute(props) {
     }
   };
 
+  const checkAuthority = () => {
+    let username = userWebId.split("//")[1].split("/")[0];
+    return selectedRoute.author === username;
+  };
+
   const handleOnClick = (key) => {
     state.friends[key].checked = !state.friends[key].checked;
     let shared = deepClone(state.friendsToShareWith);
@@ -89,19 +97,19 @@ export function ShareRoute(props) {
         </Badge>
       </span>
     ) : (
-      <span data-testid="share-route-share-button-plain">Share</span>
-    );
+        <span data-testid="share-route-share-button-plain">Share</span>
+      );
 
   return (
     <ViadeModal
       data-testid="share-route-modal"
-      onOpen={() => {}}
-      disabled={false}
+      onOpen={() => { }}
+      disabled={!checkAuthority()}
       saveDisabled={activeSelectedFriends === 0}
       toggleText={<FormattedMessage id="Share" />}
       handleClose={handleClose}
       onSave={handleOnSave}
-      title={<FormattedMessage id="ShareModalTitle" />}
+      title={<FormattedMessage data-testid="share-modal-title" id="ShareModalTitle" />}
       closeText={<FormattedMessage id="Close" />}
       saveText={shareButtonText}
     >

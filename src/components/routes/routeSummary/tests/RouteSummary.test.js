@@ -1,5 +1,6 @@
 import React from "react";
-import { render, fireEvent, queryByTestId } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
+import {queryByTestId} from "@testing-library/dom";
 import "@testing-library/jest-dom";
 import { RouteSummary } from "../RouteSummary";
 import { locales } from "../../../../utils/locales";

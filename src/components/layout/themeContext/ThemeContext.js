@@ -4,6 +4,8 @@ export const themes = {
   green: {
     "--color-secondary": "white",
     "--color-primary": "#008080",
+    "--color-tertiary": "white",
+
     name: "Green",
   },
   dark: {

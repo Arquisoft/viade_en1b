@@ -2,6 +2,10 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import "./RouteSummary.css";
 
+/**
+ * Component to summarize the content of a route
+ * @param {*} props 
+ */
 export const RouteSummary = (props) => {
     const {route} = props;
     const {onClickHandle} = props;

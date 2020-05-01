@@ -1,19 +1,34 @@
 import React from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
-import { BsPerson, BsArrowBarUp, BsMap, BsCompass } from "react-icons/bs";
+import {
+  BsPerson,
+  BsArrowBarUp,
+  BsMap,
+  BsCompass,
+  BsBell,
+} from "react-icons/bs";
 import "./NavBar.css";
 import { LogoutButton } from "@solid/react";
 import { LinkContainer } from "react-router-bootstrap";
-import {loadFriendsRequest,  loadEmailRequest} from "../../../store/actions/UserActions";
+import {
+  loadFriendsRequest,
+  loadEmailRequest,
+} from "../../../store/actions/UserActions";
 import { updateWebId } from "../../../store/actions/AuthActions";
-import { loadRoutesRequest } from "../../../store/actions/RouteActions";
+import { loadRoutesRequest, clearRoute } from "../../../store/actions/RouteActions";
 import { contentLoaded } from "../../../store/actions/LoadActions";
 import { connect } from "react-redux";
 import { getWebId } from "../../../solid/auth";
 import { FormattedMessage } from "react-intl";
 import ThemePicker from "../theme/ThemePicker";
-//import { createBaseStructure, checkInboxForSharedRoutes } from "../../../solid/routes";
+import {
+  createBaseStructure,
+} from "../../../solid/routes";
 
+/**
+ * Component to select the differents views of the web application
+ * @param {*} props 
+ */
 export const MyNavBar = (props) => {
   const links = [
     {
@@ -37,15 +52,32 @@ export const MyNavBar = (props) => {
       icon: <BsArrowBarUp className="icon"></BsArrowBarUp>,
       testId: "navbar-upload-route",
     },
+    {
+      id: 3,
+      text: "Notifications",
+      href: "/notifications",
+      icon: <BsBell className="icon"></BsBell>,
+      testId: "navbar-notifications",
+    },
   ];
+
+  const forTestingPurposes = "http://testing.inrupt.net/profile/card#me";
 
   if (!props.loaded) {
     getWebId().then((id) => {
       props.updateWebId(id);
       props.loadFriendsRequest();
       props.loadEmailRequest();
-      //createBaseStructure(id);
-      //checkInboxForSharedRoutes(id);
+      if(id===null) { //just for testing is needed, fucking travis
+        createBaseStructure(forTestingPurposes).then((response) => {
+          //checkInboxForSharedRoutes(forTestingPurposes);
+        });
+      }
+      else{
+        createBaseStructure(id).then((response) => {
+          //checkInboxForSharedRoutes(id);
+        });
+      }
       props.loadRoutesRequest();
       props.contentLoaded();
     });
@@ -97,6 +129,7 @@ export const MyNavBar = (props) => {
                     key={link.id}
                     href={link.href}
                     className="nav-link"
+                    onClick={props.clearRoute}
                   >
                     {link.icon}
                     <FormattedMessage id={link.text} />
@@ -117,6 +150,7 @@ export const MyNavBar = (props) => {
                   data-testid={element.testId}
                   key={element.id}
                   href={element.href}
+                  onClick={props.clearRoute}
                 >
                   {element.id === 2 ? (
                     <LogoutButton>{element.text}</LogoutButton>
@@ -148,6 +182,7 @@ const mapDispatchToProps = (dispatch) => {
     loadEmailRequest: () => dispatch(loadEmailRequest()),
     loadRoutesRequest: () => dispatch(loadRoutesRequest()),
     contentLoaded: () => dispatch(contentLoaded()),
+    clearRoute: () => dispatch(clearRoute()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MyNavBar);

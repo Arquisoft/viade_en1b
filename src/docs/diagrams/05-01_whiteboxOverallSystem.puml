@@ -6,6 +6,7 @@ rectangle ViaDe {
     [Middlewares] as middlewares
     [Redux] as store 
     [Solid] as solid
+    [Utils]
 }
 
 database "User's POD" as pod

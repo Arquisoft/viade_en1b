@@ -3,8 +3,16 @@ import ViadeModal from "../modal/Modal.js";
 import { connect } from "react-redux";
 import "../comments/Comments.css";
 import { FormattedMessage } from "react-intl";
+import { FaComment } from "react-icons/fa";
+import { uploadComment } from "../../../solid/routes";
+import {
+  loadRoutesRequest,
+  clearRoute,
+} from "../../../store/actions/RouteActions.js";
+
 export function Comments(props) {
   const [state, setState] = useState({});
+  const { userWebId } = props;
 
   const CommentButtonText = (
     <span data-testid="Leave-Cooment-text">
@@ -18,6 +26,17 @@ export function Comments(props) {
     if (state.comment !== null && state.comment !== "") {
       //Call whatever function to save the comment
       // The comment is save in state.comment
+      let routeUri =
+        "https://" +
+        props.selectedRoute.author +
+        "/viade/comments/" +
+        props.selectedRoute.id +
+        ".jsonld";
+
+      uploadComment(userWebId, routeUri, state.comment).then((response) => {
+        props.loadRoutesRequest();
+        props.clearRoute();
+      });
     }
   };
   const handlerTextArea = (event) => {
@@ -31,7 +50,7 @@ export function Comments(props) {
         className={props.style}
         data-testid="Modal-component"
         disabled={false}
-        toggleText={<FormattedMessage id="CommentsButtonTitle" />}
+        toggleText={<FaComment></FaComment>}
         title={
           <FormattedMessage
             id="CommentsModelTitle"
@@ -63,7 +82,15 @@ export function Comments(props) {
 const mapStateToProps = (theState) => {
   return {
     selectedRoute: theState.route.selectedRoute,
+    userWebId: theState.auth.userWebId,
   };
 };
 
-export default connect(mapStateToProps)(Comments);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadRoutesRequest: () => dispatch(loadRoutesRequest()),
+    clearRoute: () => dispatch(clearRoute()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Comments);

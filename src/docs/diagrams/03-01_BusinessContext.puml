@@ -1,13 +1,15 @@
 @startuml Business Context
-rectangle ViaDe
-rectangle "Other User ViaDe" as ViaDe2
+rectangle Viade
+rectangle "Other User Viade" as ViaDe2
 database "User's POD" as pod
 
 () "Maps API" as imaps
 
-:User: --> ViaDe : View routes on the \n map & share routes
-ViaDe --> pod : Store routes
-pod --> ViaDe : Load stored routes
-ViaDe -right-> imaps : Get the API maps services
-ViaDe -left-> ViaDe2 : Share information \n about the route
+:User: <--> Viade : View routes on the \n map & share routes
+Viade --> pod : Store routes
+pod --> Viade : Load stored routes
+Viade <-right- imaps : Get the API maps services
+Viade -left-> ViaDe2 : Share information \n about the route
+
 @enduml
+

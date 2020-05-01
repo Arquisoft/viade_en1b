@@ -7,15 +7,14 @@ import {
 } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { RouteDetails } from "../RouteDetails";
-import { testStoreMultiple, testStore } from "../../../../utils/index";
-import { authReducer } from "../../../../store/reducers/AuthReducer";
-import { routeReducer } from "../../../../store/reducers/RouteReducer";
+import { testStore } from "../../../../utils/index";
 import { Provider } from "react-redux";
 import { locales } from "../../../../utils/locales";
 import { IntlProvider } from "react-intl";
+import rootReducer from "../../../../store/reducers/RootReducer";
 
 const initState = {
-  auth: { userWebId: "" },
+  auth: { userWebId: "http://testing.inrupt.net/profile/card#me" },
   route: {
     selectedRoute: {
       id: 0,
@@ -47,10 +46,10 @@ const initState = {
     ],
   },
   localeReducer: {},
+  loadReducer: {}
 };
 
-const store = testStore(routeReducer, initState);
-console.log(store);
+const store = testStore(rootReducer, initState);
 const selectedRoute = {
   id: 0,
   name: "Hiking Naranco ",
@@ -64,15 +63,15 @@ const selectedRoute = {
   ],
   description:
     "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing",
-  images: [
+  media: [
     "https://source.unsplash.com/random/600x600",
     "https://source.unsplash.com/random/602x602",
   ],
-  videos: ["futuro video 1", "futuro video 2"],
+  comments: []
 };
-let routeDetails = null;
 let rerenderFunc = () => {};
-let mock = jest.fn();
+
+const unshare = jest.fn();
 
 beforeEach(() => {
   render(
@@ -80,9 +79,10 @@ beforeEach(() => {
       <IntlProvider key={"en"} locale={"en"} messages={locales["en"]}>
         <RouteDetails
           deleteRoute={() => {}}
-          _store={store}
-          userWebId=""
+          //_store={store}
+          userWebId = "http://testing.inrupt.net/profile/card#me"
           selectedRoute={selectedRoute}
+          unshareRoute = {unshare}
         ></RouteDetails>
       </IntlProvider>
     </Provider>
@@ -97,6 +97,7 @@ describe("The component is rendered correctly", () => {
       expect(
         screen.queryByTestId("route-details-button-delete")
       ).not.toBeNull();
+      expect(screen.queryByTestId("route-details-image")).not.toBeNull();
     });
   });
 });

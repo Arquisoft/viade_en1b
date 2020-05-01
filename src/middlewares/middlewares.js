@@ -3,16 +3,17 @@ import { getFriends, getName } from "rdf-query/rdf-query";
 import {
   loadEmailError,
   loadEmailSuccess,
-  loadFriendsSuccess
+  loadFriendsSuccess,
 } from "../store/actions/UserActions";
 import { getRoutesFromPod } from "../solid/routes";
 import {
   loadRoutesSuccess,
-  loadRoutesError
+  loadRoutesError,
 } from "../store/actions/RouteActions";
 
 export const myLogger = (store) => (next) => (action) => {
   console.groupCollapsed(action.type);
+  //Dont delete this console logs, they are for testing purposes
   next(action);
   console.groupEnd();
 };
@@ -61,9 +62,10 @@ export const asyncProfileFetch = (store) => (next) => (action) => {
                 literal === null ? "noName" : literal.value
               );
               for (let i = 0; i < friendsNames.length; i++) {
+
                 let friend = {
-                  name: friendsNames[i],
-                  uri: friendsUri[i]
+                  name: friendsNames[parseInt(i)],
+                  uri: friendsUri[parseInt(i)],
                 };
                 friendsObjects.push(friend);
               }

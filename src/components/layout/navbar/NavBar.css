@@ -45,6 +45,15 @@ nav.navbar span {
   transition: all 200ms ease-in-out;
 }
 
+.nav-link[href="#/notifications"] {
+  visibility: hidden;
+  display: flex;
+}
+
+.nav-link[href="#/notifications"] svg {
+  visibility: visible;
+  margin: 0.2em auto;
+}
 .active {
   color: var(--color-secondary) !important;
   font-weight: bold;
@@ -63,4 +72,14 @@ nav.navbar span {
   display: flex;
   align-items: flex-start;
   padding: 0;
+}
+
+@media (max-width: 991px) {
+  .nav-link[href="#/notifications"] {
+    visibility: visible;
+    display: inline;
+  }
+  .nav-link[href="#/notifications"] svg {
+    visibility: visible;
+  }
 }

@@ -19,7 +19,11 @@ const state = {
   auth: {},
   user: {},
   control: {},
-  localeReducer: {},
+  localeReducer: {
+    id: "English",
+    text: "English",
+    locale: "en",
+  },
 };
 beforeEach(() => {
   const mockTheme = jest.fn();

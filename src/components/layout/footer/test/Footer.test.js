@@ -13,7 +13,6 @@ describe("Footer component", () => {
         <Footer></Footer>
       </IntlProvider>
     );
-    console.log(container);
     wrapper = container;
   });
 

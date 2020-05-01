@@ -11,7 +11,7 @@ import { HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { testStore } from "../../../../utils";
 import rootReducer from "../../../../store/reducers/RootReducer";
-import { locales } from "../../../../utils/locales"
+import { locales } from "../../../../utils/locales";
 import { IntlProvider } from "react-intl";
 let rendered = null;
 const state = {
@@ -33,7 +33,7 @@ beforeEach(() => {
     <Provider store={store}>
       <IntlProvider key={"en"} locale={"en"} messages={locales["en"]}>
       <HashRouter>
-        <Navbar></Navbar>
+        <Navbar userWebId="http://piratillajudoka.inrupt.net/profile/card#me"></Navbar>
       </HashRouter>
       </IntlProvider>
     </Provider>
@@ -51,6 +51,7 @@ describe("Navbar is correctly rendered", () => {
       expect(queryByTestId(rendered, "navbar-brand")).not.toBeNull();
       expect(queryByTestId(rendered, "navbar-settingsks")).not.toBeNull();
       expect(queryByTestId(rendered, "navbar-dashboard")).not.toBeNull();
+      expect(queryByTestId(rendered, "navbar-notifications")).not.toBeNull();
     });
   });
 
@@ -63,6 +64,10 @@ describe("Navbar is correctly rendered", () => {
       let logout = queryByTestId(rendered, "navbar-logout");
       let settings = queryByTestId(rendered, "navbar-settings");
       let dashboard = queryByTestId(rendered, "navbar-dashboard");
+      let notifications = queryByTestId(rendered, "navbar-notifications");
+
+      fireEvent.click(notifications);
+      expect(getCurrentPage()).toEqual("notifications");
 
       fireEvent.click(routes);
       expect(getCurrentPage()).toEqual("routes");

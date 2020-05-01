@@ -5,15 +5,15 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr;
   grid-template-areas:
-    "routes routes info info"
-    "routes routes info info"
-    "routes routes info info";
+    "routes info info info"
+    "routes info info info"
+    "routes info info info";
 
   max-height: 90vh;
   width: 100%;
   justify-items: center;
   align-items: start;
-  max-width: 80%;
+
   margin: 0 auto;
 }
 
@@ -25,9 +25,10 @@
   grid-column: 2 / 5;
   padding: 2em;
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr 3fr;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr 1fr 5fr;
   width: 100%;
+  height: 90vh;
 }
 
 .routeList {
@@ -46,6 +47,7 @@
 .routeList svg {
   position: absolute;
   top: 50%;
+  fill: var(--color-primary);
   transform: translateY(-50%);
 }
 
