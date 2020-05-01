@@ -1,20 +1,43 @@
 .buttons {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
   grid-row: 2 / 3;
 }
 
 .buttons button {
   margin: 1em;
+  height: 40px;
+}
+
+.images {
+  width: 100%;
+  grid-row: 1 / 3;
+  grid-column: 3 / 5;
 }
 
 .comments {
+  grid-row: 3 / 5;
+  grid-column: 1 / 5;
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
+.comments button {
+  position: absolute;
+  left: 90%;
+  top: 85%;
+  border-radius: 50%;
+  transform: scale(2);
+}
+
+.comments button svg {
+  margin: 0;
+  transform: scale(1.2);
+}
+
+.comments button:hover {
+  cursor: pointer;
+}
 .comments ul {
   list-style: none;
   grid-row: 3 / 5;
@@ -22,6 +45,7 @@
   margin: 0;
   padding: 0;
   text-align: left;
+  height: 100%;
 }
 
 .comments ul li {
@@ -33,4 +57,3 @@
 .description {
   text-align: left;
 }
-

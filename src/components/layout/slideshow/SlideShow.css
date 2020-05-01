@@ -1,27 +1,38 @@
-#slideshow-container{
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
+#slideshow-container {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  transition: all 200ms ease-in;
 }
 
+#slideshow-photos {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+}
 
-#slideshow-container img{
-    width: 30%;
-    z-index: 2;
+#slideshow-container img {
+  height: 200px;
 }
 
 #slideshow-buttons {
-    margin: 0 auto;
-    width: 50%;
-    display: flex;
-    transition: opacity 200ms ease-in-out;
+  margin: 0 auto;
+  width: 50%;
+  display: flex;
+  transition: opacity 200ms ease-in-out;
 }
 
-#slideshow-buttons button{
-    margin: 1em;
-    width: 100%;
+#slideshow-buttons button {
+  margin: 1em;
+  width: 100%;
 }
 
-#slideshow-buttons button:disabled{
-    opacity: .3;
+#slideshow-buttons button:disabled {
+  opacity: 0.3;
 }

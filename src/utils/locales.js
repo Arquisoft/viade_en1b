@@ -64,6 +64,8 @@ export const locales = {
     Unshare: "Unshare",
     Share: "Share",
     CommentsTitle: "Comments",
+    DeleteTitle: "Confirmation",
+    DeleteMessage: "Are you sure you want to delete this route?",
     //RouteList.js
     NoRoutes: "Your routes will be displayed here",
     //ShareRoute.js
@@ -82,6 +84,7 @@ export const locales = {
     //Notifications
     Notifications: "Notifications",
     Accepts: "Accept all",
+    AcceptsMessage: "Now you can see all the routes that your friends had shared with you",
   },
   es: {
     //NavBar.js
@@ -124,7 +127,7 @@ export const locales = {
     //Settings.js
     SettingsTitle: "Ajustes",
     Language: "Idiomas",
-    English: "Ingles",
+    English: "Inglés",
     Spanish: "Español",
     LanguageAvailable: "Idiomas Disponibles",
     Technical: "Información técnica",
@@ -133,7 +136,7 @@ export const locales = {
     ThisPage: "ESTA PÁGINA",
     HowToUse: "Como usar esta aplicación / Nuestro equipo",
     HowToUseDescription:
-      "Si te a surgido alguna duda sobre como usar esta aplicación o quieres saber más sobre quienes somos, hemos creado una página web extra para esto.",
+      "Si te ha surgido alguna duda sobre como usar esta aplicación o quieres saber más sobre quienes somos, hemos creado una página web extra para esto.",
     Here: "Aqui esta la pagina web",
     //Slideshow.js
     NoMediaElements: "No hay imágenes",
@@ -148,6 +151,8 @@ export const locales = {
     Unshare: "Descompartir",
     Share: "Compartir",
     CommentsTitle: "Comentarios",
+    DeleteTitle: "Confirmación",
+    DeleteMessage: "¿Estas seguro de querer borrar la ruta?",
     //RouteList.js
     NoRoutes: "Tus rutas se mostraran aquí",
     //ShareRoute.js
@@ -166,5 +171,6 @@ export const locales = {
     //Notifications
     Notifications: "Notificaciones",
     Accepts: "Aceptar todas",
+    AcceptsMessage: "Ya puedes ver las rutas que te han compartido tus amigos",
   },
 };

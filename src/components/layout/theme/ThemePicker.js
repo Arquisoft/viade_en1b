@@ -9,9 +9,9 @@ import { FormattedMessage } from "react-intl";
  */
 const ThemePicker = () => {
   const { theme, changeTheme } = useContext(ThemeContext);
-  const buttons = Object.keys(themes).map((key) => {
+  const buttons = Object.keys(themes).map((key, index) => {
     return (
-      <Dropdown.Item onClick={() => changeTheme(themes[key])}>
+      <Dropdown.Item key={index} onClick={() => changeTheme(themes[key])}>
         {themes[key].name}
       </Dropdown.Item>
     );
@@ -20,7 +20,7 @@ const ThemePicker = () => {
   return (
     <Dropdown className={style.picker}>
       <Dropdown.Toggle variant="success" id="dropdown-basic">
-        <FormattedMessage id="Themes"/>: {theme.name}
+        <FormattedMessage id="Themes" />: {theme.name}
       </Dropdown.Toggle>
 
       <Dropdown.Menu>{buttons}</Dropdown.Menu>

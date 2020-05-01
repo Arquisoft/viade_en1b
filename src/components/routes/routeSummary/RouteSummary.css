@@ -7,7 +7,7 @@
 
   align-items: flex-start;
   height: 100px;
-  width: 200px;
+  width: 100%;
 }
 
 .card-body {
@@ -15,9 +15,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  flex: row auto;
 }
 
-.card:hover {
+.card:hover:not(.notification) {
   background-color: var(--color-primary);
   opacity: 0.8;
   color: var(--color-secondary);

@@ -6,14 +6,14 @@
   justify-items: center;
   width: 100vh;
   overflow: hidden;
-  height: 100%;
+  height: 70vh;
 }
 
 .notificationsListContainer * {
   text-align: left;
   width: 70%;
   opacity: 1;
-  margin: 1em 0;
+  margin-top: 1em;
 }
 
 .notificationsList {
@@ -23,10 +23,11 @@
   flex-direction: column;
   overflow-y: auto;
   align-items: center;
-  height: 68vh;
+  height: 100%;
+  position: relative;
 }
 
-.notificationsListContainer *:hover {
+.notificationsListContainer *:hover:not(.acceptAllButton *) {
   background-color: transparent !important;
   color: black !important;
   cursor: default;
@@ -35,4 +36,30 @@
 
 .card:hover {
   cursor: default;
+}
+.notificationsEmpty {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notificationsEmpty svg {
+  transform: scale(8);
+  fill: var(--color-primary);
+}
+
+.acceptAllButton {
+  width: 20% !important;
+  text-align: center;
+}
+
+.acceptAllButton * {
+  width: 90%;
+  padding: 1em 0.5em;
+  text-align: center;
+  cursor: pointer;
+}
+.acceptAllButtonDisabled {
+  display: none;
 }

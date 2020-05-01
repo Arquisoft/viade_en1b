@@ -1,11 +1,17 @@
 p.notificationText.card-text {
   width: 100%;
   margin-top: 5em;
+  cursor: auto;
 }
 
 .card-body {
   margin-top: 2em;
 }
+
+.notification:hover {
+  cursor: auto;
+}
+
 .notificationCardBody {
   width: 100% !important;
   margin-top: 5em;
