@@ -52,7 +52,7 @@ export const locales = {
       "As you might have any doubt of how to use this application or you might want to know more about us, we have created a support webpage for these two purpose.",
     Here: "Here is the webpage.",
     //Slideshow.js
-    NoMediaElemts: "There are no media elements",
+    NoMediaElements: "There are no media elements",
     //RouteDetails.js
     NoDescription: "There is not description for this route",
     Description: "Description",
@@ -136,7 +136,7 @@ export const locales = {
       "Si te a surgido alguna duda sobre como usar esta aplicación o quieres saber más sobre quienes somos, hemos creado una página web extra para esto.",
     Here: "Aqui esta la pagina web",
     //Slideshow.js
-    NoMediaElemts: "No hay imágenes",
+    NoMediaElements: "No hay imágenes",
     //RouteDetails.js
     NoDescription: " No hay ninguna descripción para esta ruta",
     NoImages: "No hay imagenes para esta ruta",
