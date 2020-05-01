@@ -1,15 +1,17 @@
 @startuml
 
-node "Viade" {
-
-}
-
-database "POD" {
-    
-}
+node "Viade"
+database "POD"
+interface "Maps API" as maps
 actor User
+
 Viade <-[#blue]up- POD:JsonLD
-Viade -up-> POD:Http
+Viade -up-> POD:HTTP
+
 User -> Viade:HTTP
 User <-[#blue]up- Viade:HTTP
+
+Viade-right-> maps:HTTP
+Viade <-[#blue]right- maps:HTTP
+
 @enduml
