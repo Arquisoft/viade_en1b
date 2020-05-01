@@ -146,6 +146,7 @@ export const MyNavBar = (props) => {
                   data-testid={element.testId}
                   key={element.id}
                   href={element.href}
+                  onClick={props.clearRoute}
                 >
                   {element.id === 2 ? (
                     <LogoutButton>{element.text}</LogoutButton>
