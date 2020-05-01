@@ -6,6 +6,10 @@ import Loader from "react-loader-spinner";
 import { ThemeContext } from "../../layout/themeContext/ThemeContext";
 import { FormattedMessage } from "react-intl";
 
+/**
+ * Component to show the list of routes contained in the user's pod
+ * @param {*} props 
+ */
 export const RouteList = (props) => {
   const theme = useContext(ThemeContext);
   const { routes } = props;

@@ -11,6 +11,11 @@ import ViadeModal from "../../layout/modal/Modal";
 import parseGPX from "../../../parser/parser";
 import { FormattedMessage } from "react-intl";
 
+/**
+ * Component to upload routes to the logged user pod with a form
+ * It will ask for a name, a description, a comment, a route file and some photos
+ * The name and file field are mandatory to upload any route, the rest are optional
+ */
 export class UploadRoute extends React.Component {
   state = {
     name: "",

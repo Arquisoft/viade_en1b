@@ -3,6 +3,10 @@ import { Form } from "react-bootstrap";
 import { BsUpload } from "react-icons/bs";
 import "./UploadButton.css";
 
+/**
+ * Component to make each of the buttons to upload content
+ * @param {*} props 
+ */
 const UploadButton = (props) => {
 
     const [state, setState] = useState({
