@@ -1,0 +1,127 @@
+Report will be saved in reports/load-testing/183220_25_04_2020.json
+Started phase 0, duration: 60s @ 18:32:20(+0200) 2020-04-25
+Report @ 18:32:30(+0200) 2020-04-25
+Elapsed time: 10 seconds
+  Scenarios launched:  199
+  Scenarios completed: 0
+  Requests completed:  0
+  Mean response/sec: 20.06
+  Response time (msec):
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ECONNREFUSED: 199
+
+Report @ 18:32:40(+0200) 2020-04-25
+Elapsed time: 20 seconds
+  Scenarios launched:  200
+  Scenarios completed: 0
+  Requests completed:  0
+  Mean response/sec: 20
+  Response time (msec):
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ECONNREFUSED: 200
+
+Report @ 18:32:50(+0200) 2020-04-25
+Elapsed time: 30 seconds
+  Scenarios launched:  200
+  Scenarios completed: 0
+  Requests completed:  0
+  Mean response/sec: 20
+  Response time (msec):
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ECONNREFUSED: 200
+
+Report @ 18:33:00(+0200) 2020-04-25
+Elapsed time: 40 seconds
+  Scenarios launched:  200
+  Scenarios completed: 0
+  Requests completed:  0
+  Mean response/sec: 20
+  Response time (msec):
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ECONNREFUSED: 200
+
+Report @ 18:33:10(+0200) 2020-04-25
+Elapsed time: 50 seconds
+  Scenarios launched:  200
+  Scenarios completed: 0
+  Requests completed:  0
+  Mean response/sec: 20
+  Response time (msec):
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ECONNREFUSED: 200
+
+Report @ 18:33:20(+0200) 2020-04-25
+Elapsed time: 1 minute, 0 seconds
+  Scenarios launched:  200
+  Scenarios completed: 0
+  Requests completed:  0
+  Mean response/sec: 20
+  Response time (msec):
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ECONNREFUSED: 200
+
+Report @ 18:33:21(+0200) 2020-04-25
+Elapsed time: 1 minute, 0 seconds
+  Scenarios launched:  1
+  Scenarios completed: 0
+  Requests completed:  0
+  Mean response/sec: 2
+  Response time (msec):
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ECONNREFUSED: 1
+
+All virtual users finished
+Summary report @ 18:33:21(+0200) 2020-04-25
+  Scenarios launched:  1200
+  Scenarios completed: 0
+  Requests completed:  0
+  Mean response/sec: 19.86
+  Response time (msec):
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Scenario counts:
+    MyRoutes: 577 (48.083%)
+    Dashboard: 623 (51.917%)
+  Errors:
+    ECONNREFUSED: 1200
+
+Log file: reports/load-testing/183220_25_04_2020.json
+Report generated: reports/load-testing/183220_25_04_2020.html
