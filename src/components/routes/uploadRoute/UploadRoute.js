@@ -223,7 +223,6 @@ export class UploadRoute extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     routes: state.route.routes,
     userWebId: state.auth.userWebId,

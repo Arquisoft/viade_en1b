@@ -1,10 +1,6 @@
 import React from "react";
-import {
-  render,
-  fireEvent,
-  queryByTestId,
-  waitForElement,
-} from "@testing-library/react";
+import {render} from "@testing-library/react";
+import {queryByTestId} from "@testing-library/dom";
 import "@testing-library/jest-dom";
 import { RouteList } from "../RouteList";
 import { locales } from "../../../../utils/locales";

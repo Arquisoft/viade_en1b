@@ -104,7 +104,6 @@ async function readToJson(url) {
   try {
     return JSON.parse(await fc.readFile(url));
   } catch {
-    console.log("[ERROR] Tried to read non-json file: " + url);
     return null;
   }
 }
@@ -150,9 +149,7 @@ async function getRouteObjectFromPodRoute(route, routeFilename) {
       media: await readMedia(route.media),
       sharedWith: [],
     };
-  } catch {
-    console.log("[ERROR] Route does not follow the specification: " + routeFilename);
-  }
+  } catch { }
 }
 
 /**
@@ -230,7 +227,7 @@ export async function createBaseStructure(userWebId) {
   let i = 0;
   for (i; i < folders.length; i++) {
     await createFolderIfAbsent(folders[i]);
-    await createOwnAcl(folders[i]);
+    await createOwnAcl(folders[parseInt(i)]);
   }
   await createPublicPermissions(getInboxFolder(userWebId), [READ, APPEND]);
   await createPublicPermissions(getCommentsFolder(userWebId), [READ, APPEND]);
@@ -249,7 +246,6 @@ export async function getRouteFromPod(fileName, userWebId) {
       let podRoute = await readToJson(url + fileName);
       return getRouteObjectFromPodRoute(podRoute, fileName);
     } catch {
-      console.log("[ERROR] Skipped reading a wrong route: " + fileName);
       return null;
     }
   }
@@ -282,9 +278,9 @@ export async function getRoutesFromPod(userWebId) {
   await createFolderIfAbsent(sharedFolderUri);
   let sharedFiles = (await fc.readFolder(sharedFolderUri)).files;
   for (let i = 0; i < sharedFiles.length; i++) {
-    if(!sharedFiles[i].url.includes(".acl"))
+    if(!sharedFiles[parseInt(i)].url.includes(".acl"))
     {
-      let file = await readToJson(sharedFiles[i].url);
+      let file = await readToJson(sharedFiles[parseInt(i)].url);
       if (file !== null) {
         let routesUris = file.routes;
         try {
@@ -303,9 +299,7 @@ export async function getRoutesFromPod(userWebId) {
           await Promise.all(routeObjects).then((objects) =>
             objects.map((object) => routes.push(object))
           );
-        } catch {
-          console.log("[ERROR] Some shared route was wrong.");
-        }
+        } catch {}
       }
     }
   }
@@ -406,15 +400,13 @@ export async function checkInboxForSharedRoutes(userWebId) {
   let folder = await fc.readFolder(url);
   let i = 0;
   for (i; i < folder.files.length; i++) {
-    if(!folder.files[i].url.includes(".acl")){
-      let notification = await fc.readFile(folder.files[i].url);
+    if(!folder.files[parseInt(i)].url.includes(".acl")){
+      let notification = await fc.readFile(folder.files[parseInt(i)].url);
       try{
         let routeUri = getRouteUriFromShareNotification(JSON.parse(notification));
         await addRouteUriToShared(userWebId, routeUri);
         await fc.deleteFile(folder.files[i].url);
-      } catch{
-        console.log("Please, be polite and don´t try to make our app crash.");
-      }
+      } catch{ }
     }
   }
 }
@@ -467,14 +459,14 @@ export async function uploadRouteToPod(routeObject, userWebId) {
   // Adding media
   for (let i = 0; i < resources.length; i++) {
     let uri = resourcesFolder + resources[i].name;
-    await fc.createFile(uri, resources[i], resources[i].type);
-    resourcesCreated.push({ uri: uri, name: resources[i].name });
+    await fc.createFile(uri, resources[parseInt(i)], resources[parseInt(i)].type);
+    resourcesCreated.push({ uri: uri, name: resources[parseInt(i)].name });
   }
   let newRoute = getFormattedRoute(routeObject, userWebId, newRouteName);
 
   // Writting media references
   for (let i = 0; i < resourcesCreated.length; i++) {
-    newRoute.media.push(resourcesCreated[i]);
+    newRoute.media.push(resourcesCreated[parseInt(i)]);
   }
   let url = getRoutesFolder(userWebId);
   let routeUrl = url + newRouteName;
@@ -560,11 +552,9 @@ export async function getNotifications(userWebId) {
   let i = 0;
   for (i; i < notificationFiles.length; i++) {
     try {
-      let notification = await getNotification(fc, notificationFiles[i]);
+      let notification = await getNotification(fc, notificationFiles[parseInt(i)]);
       notifications.push(notification);
-    } catch {
-      console.log("Please be polite and don´t try to make our app crash");
-    }
+    } catch { }
   }
 
   return notifications;

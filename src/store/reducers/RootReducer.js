@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   route: routeReducer,
   user: userReducer,
   control: loadReducer,
-  localeReducer: localeReducer,
+  localeReducer,
 });
 
 export default rootReducer;

@@ -27,10 +27,10 @@ const UploadButton = (props) => {
     const file = useRef()
 
     const checkFileIsGPX = (file) => {
-        var parts = file.split('.');
+        var parts = file.split(".");
         var ext = parts[parts.length - 1];
         switch (ext.toLowerCase()) {
-            case 'gpx':
+            case "gpx":
                 return true;
             default:
                 return false;

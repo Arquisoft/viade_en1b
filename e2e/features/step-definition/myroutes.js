@@ -38,8 +38,8 @@ Given('We log in', function () {
         driver.findElement(By.xpath("/html/body/div/div[2]/div[1]/div[1]/div/form/div[2]/div/input")).sendKeys("uO257611__");
         var loginButton = driver.findElement(By.xpath("/html/body/div/div[2]/div[1]/div[1]/div/form/button"));
         loginButton.click();
-      })
-  })
+      });
+  });
 });
 
 When('We push the My routes button', function () {
@@ -65,11 +65,11 @@ When('We push the My routes button', function () {
               var buttonUpload = driver.findElement(By.xpath("/html/body/div/div/nav/div/div/span[2]/a"));
               buttonUpload.click();
             }
-          )
+          );
         }
         return isHandleCount1;
       });
-    })
+    });
   });
 });
 
@@ -97,11 +97,11 @@ Then('We can see the routes', function () {
               var routeList = driver.findElement(By.xpath("/html/body/div/div/nav/div/div/span[2]/a"));
               expect(routeList!=null);
             }
-          )
+          );
         }
         return isHandleCount1;
       });
-    })
+    });
   });
 });
 

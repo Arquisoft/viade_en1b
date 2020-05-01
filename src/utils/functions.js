@@ -12,7 +12,6 @@ const findInHashByUri = (hash, friend) => {
  * @param  {*} array
  */
 export const deepClone = (array) => {
-  console.log(array);
   let aux = array.map((item) => ({ ...item }));
   return aux;
 };
