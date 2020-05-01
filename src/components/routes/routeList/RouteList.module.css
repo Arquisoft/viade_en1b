@@ -18,7 +18,7 @@
   text-align: center;
 }
 .noRoutes svg {
-  fill: var(--color-primary);
+  fill: red;
   transform: scale(5);
 }
 

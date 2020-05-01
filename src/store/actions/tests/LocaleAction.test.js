@@ -3,15 +3,17 @@ import localeReducer from "../../reducers/LocaleReducer";
 import changeLocale from "../localeAction";
 
 describe("Locale actions", () => {
+  test("change locales action", () => {
+    const store = testStore(localeReducer, undefined);
 
-    test("change locales action", () => {
-        const store = testStore(localeReducer, undefined);
-
-        const expectedState = {
-            locale: "es"
-        };
-        store.dispatch(changeLocale("es"));
-        expect(store.getState()).toEqual(expectedState);
-    });
-
+    const expectedState = {
+      id: "Spanish",
+      text: "Spanish",
+      locale: "es",
+    };
+    store.dispatch(
+      changeLocale({ id: "Spanish", text: "Spanish", locale: "es" })
+    );
+    expect(store.getState()).toEqual(expectedState);
+  });
 });

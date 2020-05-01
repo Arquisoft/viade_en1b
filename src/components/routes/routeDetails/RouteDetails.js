@@ -24,6 +24,9 @@ export const RouteDetails = (props) => {
       let username = userWebId.split("//")[1].split("/")[0];
       return selectedRoute.author === username;
     };
+    const pictures = selectedRoute.media.map((e, key) => (
+      <img key={key} src={e} alt="something"></img>
+    ));
     const deleteFunction = () => {
       return checkAuthority()
         ? deleteRoute(selectedRoute, userWebId)
@@ -42,8 +45,8 @@ export const RouteDetails = (props) => {
     ) : (
       <FormattedMessage id="NoDescription" />
     );
-    const images = selectedRoute.media ? (
-      <Slideshow images={selectedRoute.media}></Slideshow>
+    const images = pictures ? (
+      <Slideshow images={pictures}></Slideshow>
     ) : (
       <FormattedMessage id="NoImages" />
     );
@@ -56,11 +59,16 @@ export const RouteDetails = (props) => {
           </h3>
           <p data-testid="route-details-description">{description}</p>
         </div>
-        <div className={style.description}>
+        <div className={style.images}>
           <h3>
             <FormattedMessage id="Images"></FormattedMessage>
           </h3>
-          <p data-testid="route-details-images">{images}</p>
+          <p
+            className="route-details-images"
+            data-testid="route-details-images"
+          >
+            {images}
+          </p>
         </div>
 
         <div className={style.buttons}>

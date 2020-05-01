@@ -15,7 +15,7 @@ import {
   loadEmailRequest,
 } from "../../../store/actions/UserActions";
 import { updateWebId } from "../../../store/actions/AuthActions";
-import { loadRoutesRequest } from "../../../store/actions/RouteActions";
+import { loadRoutesRequest, clearRoute } from "../../../store/actions/RouteActions";
 import { contentLoaded } from "../../../store/actions/LoadActions";
 import { connect } from "react-redux";
 import { getWebId } from "../../../solid/auth";
@@ -129,6 +129,7 @@ export const MyNavBar = (props) => {
                     key={link.id}
                     href={link.href}
                     className="nav-link"
+                    onClick={props.clearRoute}
                   >
                     {link.icon}
                     <FormattedMessage id={link.text} />
@@ -149,6 +150,7 @@ export const MyNavBar = (props) => {
                   data-testid={element.testId}
                   key={element.id}
                   href={element.href}
+                  onClick={props.clearRoute}
                 >
                   {element.id === 2 ? (
                     <LogoutButton>{element.text}</LogoutButton>
@@ -180,6 +182,7 @@ const mapDispatchToProps = (dispatch) => {
     loadEmailRequest: () => dispatch(loadEmailRequest()),
     loadRoutesRequest: () => dispatch(loadRoutesRequest()),
     contentLoaded: () => dispatch(contentLoaded()),
+    clearRoute: () => dispatch(clearRoute()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MyNavBar);

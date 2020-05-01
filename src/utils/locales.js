@@ -124,7 +124,7 @@ export const locales = {
     //Settings.js
     SettingsTitle: "Ajustes",
     Language: "Idiomas",
-    English: "Ingles",
+    English: "Inglés",
     Spanish: "Español",
     LanguageAvailable: "Idiomas Disponibles",
     Technical: "Información técnica",

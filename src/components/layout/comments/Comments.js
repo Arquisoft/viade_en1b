@@ -3,6 +3,7 @@ import ViadeModal from "../modal/Modal.js";
 import { connect } from "react-redux";
 import "../comments/Comments.css";
 import { FormattedMessage } from "react-intl";
+import { FaComment } from "react-icons/fa";
 import { uploadComment } from "../../../solid/routes";
 import {
   loadRoutesRequest,
@@ -49,7 +50,7 @@ export function Comments(props) {
         className={props.style}
         data-testid="Modal-component"
         disabled={false}
-        toggleText={<FormattedMessage id="CommentsButtonTitle" />}
+        toggleText={<FaComment></FaComment>}
         title={
           <FormattedMessage
             id="CommentsModelTitle"
