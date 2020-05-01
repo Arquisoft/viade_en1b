@@ -1,13 +1,28 @@
+/**
+ * Returns the hash of a friend
+ * @param  {*} hash
+ * @param  {*} friend
+ */
 const findInHashByUri = (hash, friend) => {
   return hash[friend];
 };
 
+/**
+ * Creates a real copy of an array
+ * @param  {*} array
+ */
 export const deepClone = (array) => {
   console.log(array);
   let aux = array.map((item) => ({ ...item }));
   return aux;
 };
 
+
+/**
+ * Filter unshared friends
+ * @param  {*} allFriends
+ * @param  {*} alreadyShared
+ */
 export const filterUnsharedFriends = (allFriends, alreadyShared) => {
   let aux = [];
   let hash = {};
@@ -27,7 +42,7 @@ export const filterUnsharedFriends = (allFriends, alreadyShared) => {
 };
 
 /**
- *
+ * Get the number of routes of the user that is logged in
  * @param {*} routes
  * @param {*} userWebID user logged in id
  */
@@ -38,7 +53,7 @@ export const getOwnRoutesNumber = (routes, userWebID) => {
 };
 
 /**
- *
+ * Get the number of routes that the user that is logged in has shared
  * @param {*} routes
  * @param {*} userWebId  user logged in id
  */

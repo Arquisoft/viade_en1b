@@ -1,5 +1,10 @@
 import GPX from "./parser/gpx";
 
+/**
+ * Parse the .gpx file into an array of positions.
+ * It will parse only the first track
+ * @param  {*} file
+ */
 export const parseGPX = (file) =>
 {
     const gpx = GPX.parse(file);
