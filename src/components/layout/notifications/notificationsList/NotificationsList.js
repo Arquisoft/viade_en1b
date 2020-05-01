@@ -1,12 +1,12 @@
 import React from "react";
-import {Notification} from "../notification/Notification";
+import { Notification } from "../notification/Notification";
 import { connect } from "react-redux";
 import style from "./NotificationsList.module.css";
 import { useNotifications } from "../../../../utils/hooks/hooks";
-import { Button } from "react-bootstrap";
 import { checkInboxForSharedRoutes } from "../../../../solid/routes";
 import { loadRoutesRequest } from "../../../../store/actions/RouteActions";
 import { FormattedMessage } from "react-intl";
+import ViadeModal from "../../../layout/modal/Modal";
 
 export function NotificationsList(props) {
   const { userWebId, loadRoutes } = props;
@@ -23,17 +23,26 @@ export function NotificationsList(props) {
   });
   return (
     <div
-      data-testid = "notificationslist-div"
+      data-testid="notificationslist-div"
       className={
         style.notificationsListContainer
           ? style.notificationsListContainer
           : "notification-list-div"
       }
     >
-      <h1><FormattedMessage id="Notifications"/></h1>
-      <Button data-testid="notificationslist-button" onClick={handleOnClick}><FormattedMessage id="Accepts"/></Button>
+      <h1><FormattedMessage id="Notifications" /></h1>
+      <ViadeModal
+        data-testid="notificationslist-button"
+        onOpen={handleOnClick}
+        disabled={false}
+        toggleText={<FormattedMessage id="Accepts" />}
+        handleClose={() => { }}
+        onSave={() => { }}
+        closeText={<FormattedMessage id="Close" />}
+      ><FormattedMessage id="AcceptsMessage" />
+      </ViadeModal>
 
-      <div data-testid = "notificationslist-divcomponent" className={style.notificationsList}>{notificationsComponent}</div>
+      <div data-testid="notificationslist-divcomponent" className={style.notificationsList}>{notificationsComponent}</div>
     </div>
   );
 }

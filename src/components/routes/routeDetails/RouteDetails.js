@@ -1,6 +1,5 @@
 import React from "react";
 import style from "./RouteDetails.module.css";
-import { Button } from "react-bootstrap";
 
 import { connect } from "react-redux";
 import { deleteRoute } from "../../../store/actions/RouteActions";
@@ -11,6 +10,7 @@ import { unshareRoute } from "../../../store/actions/RouteActions";
 import { CommentList } from "../../layout/comments/CommentList/CommentList";
 import { useComments } from "../../../utils/hooks/hooks";
 import Slideshow from "../../layout/slideshow/Slideshow";
+import ViadeModal from "../../layout/modal/Modal";
 
 export const RouteDetails = (props) => {
   const { selectedRoute, deleteRoute, userWebId, unshareRoute } = props;
@@ -36,13 +36,13 @@ export const RouteDetails = (props) => {
     const description = selectedRoute.description ? (
       selectedRoute.description
     ) : (
-      <FormattedMessage id="NoDescription" />
-    );
+        <FormattedMessage id="NoDescription" />
+      );
     const images = selectedRoute.media ? (
       <Slideshow images={selectedRoute.media}></Slideshow>
     ) : (
-      <FormattedMessage id="NoImages" />
-    );
+        <FormattedMessage id="NoImages" />
+      );
 
     return (
       <div className={props.style ? props.style : style.details}>
@@ -60,13 +60,19 @@ export const RouteDetails = (props) => {
         </div>
 
         <div className={style.buttons}>
-          <Button
-            data-testid="route-details-button-delete"
+          <ViadeModal
             id="deleteButton"
-            onClick={() => deleteFunction()}
-          >
-            {buttonText()}
-          </Button>
+            data-testid="route-details-button-delete"
+            onOpen={() => { }}
+            disabled={false}
+            toggleText={buttonText()}
+            title={<FormattedMessage id="DeleteTitle" />}
+            handleClose={() => { }}
+            onSave={deleteFunction}
+            closeText={<FormattedMessage id="Close" />}
+            saveText={buttonText()}
+          ><FormattedMessage id="DeleteTitle" />
+          </ViadeModal>
           {
             <ShareRoute
               data-testid="route-details-button-share"
