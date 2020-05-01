@@ -94,6 +94,14 @@ Its main responsabilities are:
 * Obtaining the comments of a route.
 * Managing permissions of files.
 
+This module has been tested by using
+https://github.com/otto-aa/solid-local-pod[solid-local-pod], a Nodejs library
+intended to serve a pod over localhost. While this covers all the activities our
+application does with routes, the many different configurations and
+unpredictability of real Solid PODs of real users can't be fully covered by the
+functionality of this module, but we have tried to make it as resilient as
+posible while adjusting to the specification.
+
 Parser::
 Its main responsabilities are:
 * Translating an internal route to JsonLD and viceversa.
