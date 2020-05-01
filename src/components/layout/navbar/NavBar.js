@@ -25,6 +25,10 @@ import {
   createBaseStructure,
 } from "../../../solid/routes";
 
+/**
+ * Component to select the differents views of the web application
+ * @param {*} props 
+ */
 export const MyNavBar = (props) => {
   const links = [
     {

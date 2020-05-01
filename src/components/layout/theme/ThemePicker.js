@@ -3,6 +3,10 @@ import { ThemeContext, themes } from "../themeContext/ThemeContext";
 import style from "./ThemePicker.module.css";
 import { Dropdown } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
+
+/**
+ * Component to select different themes to personalize the application
+ */
 const ThemePicker = () => {
   const { theme, changeTheme } = useContext(ThemeContext);
   const buttons = Object.keys(themes).map((key) => {

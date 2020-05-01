@@ -4,6 +4,10 @@ import "./Login.css";
 import { Redirect } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
+/**
+ * Component for the user to log in
+ * @param {*} props 
+ */
 function Login(props) {
   return (
     <div id="login-container">
