@@ -2,11 +2,15 @@ title A user shares a route with a friend - Activity Diagram
 
 start
 
+:Go to "My Routes section";
+
 :Select a route to share;
+
+:Click "Share" button;
 
 :Select a friend;
 
-:Add the route to friend's POD;
+:Click "Share" and the route is added to friend's POD;
 
 stop
 
