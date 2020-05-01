@@ -136,7 +136,7 @@ export const locales = {
     ThisPage: "ESTA PÁGINA",
     HowToUse: "Como usar esta aplicación / Nuestro equipo",
     HowToUseDescription:
-      "Si te a surgido alguna duda sobre como usar esta aplicación o quieres saber más sobre quienes somos, hemos creado una página web extra para esto.",
+      "Si te ha surgido alguna duda sobre como usar esta aplicación o quieres saber más sobre quienes somos, hemos creado una página web extra para esto.",
     Here: "Aqui esta la pagina web",
     //Slideshow.js
     NoMediaElements: "No hay imágenes",
