@@ -1,6 +1,6 @@
 .buttons {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   grid-row: 2 / 3;
 }
 
