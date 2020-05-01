@@ -2,10 +2,10 @@ import React from "react";
 import { Notification } from "../notification/Notification";
 import style from "./NotificationsList.module.css";
 import { useNotifications } from "../../../../utils/hooks/hooks";
-import { Button } from "react-bootstrap";
 import { checkInboxForSharedRoutes } from "../../../../solid/routes";
 import { FormattedMessage } from "react-intl";
 import { FaBellSlash } from "react-icons/fa";
+import ViadeModal from "../../../layout/modal/Modal";
 
 export function NotificationsList(props) {
   const { userWebId, loadRoutes } = props;
@@ -48,20 +48,25 @@ export function NotificationsList(props) {
         {notifications.length === 0 ? (
           <FaBellSlash></FaBellSlash>
         ) : (
-          notificationsComponent
-        )}
+            notificationsComponent
+          )}
       </div>{" "}
-      <Button
-        className={
-          notifications.length === 0
-            ? style.acceptAllButtonDisabled
-            : style.acceptAllButton
-        }
-        data-testid="notificationslist-button"
-        onClick={handleOnClick}
-      >
-        <FormattedMessage id="Accepts" />
-      </Button>
+      <div className={
+        notifications.length === 0
+          ? style.acceptAllButtonDisabled
+          : style.acceptAllButton
+      }>
+        <ViadeModal
+          data-testid="notificationslist-button"
+          onOpen={handleOnClick}
+          disabled={false}
+          toggleText={<FormattedMessage id="Accepts" />}
+          handleClose={() => { }}
+          onSave={() => { }}
+          closeText={<FormattedMessage id="Close" />}
+        ><FormattedMessage id="AcceptsMessage" />
+        </ViadeModal>
+      </div>
     </div>
   );
 }

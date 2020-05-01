@@ -1,7 +1,7 @@
 import { render, queryByTestId, waitForElement, queryAllByTestId, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import React from "react";
-import {NotificationsList} from "../NotificationsList";
+import { NotificationsList } from "../NotificationsList";
 import { IntlProvider } from "react-intl";
 import { locales } from "../../../../../utils/locales";
 
@@ -13,12 +13,12 @@ describe("Notifications list component", () => {
     let component;
 
     beforeEach(() => {
-        const {container, rerender} = render(<IntlProvider messages={locales["en"]} locale="en"><NotificationsList userWebId = {mockWebId} loadRoutes = {mockLoad}></NotificationsList></IntlProvider>);
+        const { container, rerender } = render(<IntlProvider messages={locales["en"]} locale="en"><NotificationsList userWebId={mockWebId} loadRoutes={mockLoad}></NotificationsList></IntlProvider>);
         component = container;
     });
 
     describe("renders correctly", () => {
-        test("div",() => {
+        test("div", () => {
             expect(component).not.toBeNull();
             expect(queryByTestId(component, "notificationslist-div")).not.toBeNull();
         });
@@ -28,7 +28,9 @@ describe("Notifications list component", () => {
         });
         test("button", () => {
             expect(component).not.toBeNull();
-            expect(queryByTestId(component, "notificationslist-button")).not.toBeNull();
+            waitForElement(() => {
+                expect(queryByTestId(component, "notificationslist-button")).not.toBeNull();
+            });
         });
     });
 
