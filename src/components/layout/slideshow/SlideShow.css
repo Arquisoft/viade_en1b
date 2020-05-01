@@ -4,6 +4,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 300px;
+  transition: all 200ms ease-in;
 }
 
 #slideshow-photos {
@@ -16,7 +18,7 @@
 }
 
 #slideshow-container img {
-  width: 20%;
+  height: 200px;
 }
 
 #slideshow-buttons {

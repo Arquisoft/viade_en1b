@@ -7,7 +7,7 @@
 
   align-items: flex-start;
   height: 100px;
-  width: 350px;
+  width: 100%;
 }
 
 .card-body {
@@ -15,6 +15,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  flex: row auto;
 }
 
 .card:hover {

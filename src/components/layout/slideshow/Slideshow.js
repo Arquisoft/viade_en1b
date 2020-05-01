@@ -72,4 +72,4 @@ const Slideshow = (props) => {
   );
 };
 
-export default Slideshow;
+export default React.memo(Slideshow);
