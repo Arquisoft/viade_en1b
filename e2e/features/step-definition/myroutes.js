@@ -65,11 +65,11 @@ When('We push the My routes button', function () {
               var buttonUpload = driver.findElement(By.xpath("/html/body/div/div/nav/div/div/span[2]/a"));
               buttonUpload.click();
             }
-          )
+          );
         }
         return isHandleCount1;
       });
-    })
+    });
   });
 });
 

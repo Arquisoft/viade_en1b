@@ -11,7 +11,7 @@ import { HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { testStore } from "../../../../utils";
 import rootReducer from "../../../../store/reducers/RootReducer";
-import { locales } from "../../../../utils/locales"
+import { locales } from "../../../../utils/locales";
 import { IntlProvider } from "react-intl";
 let rendered = null;
 const state = {

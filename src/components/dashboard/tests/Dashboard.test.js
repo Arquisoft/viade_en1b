@@ -1,5 +1,6 @@
-import { render, waitForElement } from "@testing-library/react";
+import { render, waitForElement,  } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import {queryByTestId} from "@testing-library/dom";
 import React from "react";
 import Dashboard from "../Dashboard";
 import { testStore } from "../../../utils";
