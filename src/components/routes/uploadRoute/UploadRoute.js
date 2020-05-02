@@ -127,7 +127,7 @@ export class UploadRoute extends React.Component {
               <Form.Label htmlFor="name">
                 <FormattedMessage id="NameOfTheRoute" />
               </Form.Label>
-              <FormattedMessage id="CreateGroupFormPlaceholder">
+              <FormattedMessage id="RouteNamePlaceholder">
                 {(placeholder) => (
                   <Form.Control
                     id="name"
