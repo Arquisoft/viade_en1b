@@ -610,7 +610,7 @@ export async function unshareRoute(authorWebId, routeId, userWebId) {
 
 /**
  *
- * @param {*} userWebId
+ * @param {string} userWebId
  */
 export async function getGroups(userWebId) {
   let groupsFolder = await fc.readFolder(getGroupsFolder(userWebId));
@@ -642,9 +642,9 @@ export async function getGroupFromPod(fileName, userWebId) {
 
 /**
  *
- * @param {*} userWebId
- * @param {*} groupName
- * @param {*} friends
+ * @param {string} userWebId
+ * @param {string} groupName
+ * @param {Array<string>} friends
  */
 export async function createGroup(userWebId, groupName, friends) {
   let content = getFormattedGroup(groupName, friends);
@@ -654,3 +654,4 @@ export async function createGroup(userWebId, groupName, friends) {
   console.log({ groupUrl, content });
   await fc.createFile(groupUrl, JSON.stringify(content), "application/ld+json");
 }
+

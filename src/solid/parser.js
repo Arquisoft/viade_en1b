@@ -1,10 +1,9 @@
 import { getRouteCommentsFile } from "./routes";
 
-
 /**
  * Return a group file for a specific name and uris
- * @param {*} groupName Name of the group
- * @param {*} friendsUris Uris of the friends
+ * @param {string} groupName Name of the group
+ * @param {Array<string>} friendsUris Uris of the friends
  */
 export function getFormattedGroup(groupName, friendsUris) {
   let content = {
@@ -29,9 +28,9 @@ export function getFormattedGroup(groupName, friendsUris) {
 }
 
 /**
- * 
- * @param {*} podGroup 
- * @param {*} fileName 
+ *
+ * @param {object} podGroup
+ * @param {string} fileName
  */
 export function getGroupObjectFromPodRoute(podGroup) {
   let content = {
