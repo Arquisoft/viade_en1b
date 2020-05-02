@@ -56,9 +56,8 @@ export class UploadRoute extends React.Component {
         parseado = parseGPX(evt.target.result);
         self.state.positions = parseado;
       };
-      reader.onerror = function (evt) { };
-    }
-    else {
+      reader.onerror = function (evt) {};
+    } else {
       alert("Incorrect file type, please input a .gpx file");
       self.state.file = "";
     }
@@ -101,10 +100,12 @@ export class UploadRoute extends React.Component {
   }
 
   isEmpty = () => {
-    return !(this.state.name !== "" && this.state.file !== "" && this.checkFileIsGPX(this.state.file));
+    return !(
+      this.state.name !== "" &&
+      this.state.file !== "" &&
+      this.checkFileIsGPX(this.state.file)
+    );
   };
-
-
 
   componentDidUpdate() {
     if (this.state.reset) this.setState(this.resetState());
@@ -116,8 +117,6 @@ export class UploadRoute extends React.Component {
     this.props.loadRoutes.bind(this);
     this.setState({ ...this.state, reset: true });
   }
-
-
 
   render() {
     return (
@@ -180,7 +179,7 @@ export class UploadRoute extends React.Component {
             <ViadeModal
               disabled={this.isEmpty()}
               toggleText={<FormattedMessage id="Submit" />}
-              onSave={() => { }}
+              onSave={() => {}}
               title={<FormattedMessage id="Submited" />}
               closeText={<FormattedMessage id="Close" />}
               handleClose={() => {

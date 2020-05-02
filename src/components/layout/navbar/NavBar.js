@@ -15,19 +15,20 @@ import {
   loadEmailRequest,
 } from "../../../store/actions/UserActions";
 import { updateWebId } from "../../../store/actions/AuthActions";
-import { loadRoutesRequest, clearRoute } from "../../../store/actions/RouteActions";
+import {
+  loadRoutesRequest,
+  clearRoute,
+} from "../../../store/actions/RouteActions";
 import { contentLoaded } from "../../../store/actions/LoadActions";
 import { connect } from "react-redux";
 import { getWebId } from "../../../solid/auth";
 import { FormattedMessage } from "react-intl";
 import ThemePicker from "../theme/ThemePicker";
-import {
-  createBaseStructure,
-} from "../../../solid/routes";
+import { createBaseStructure } from "../../../solid/routes";
 
 /**
  * Component to select the differents views of the web application
- * @param {*} props 
+ * @param {*} props
  */
 export const MyNavBar = (props) => {
   const links = [
@@ -68,12 +69,12 @@ export const MyNavBar = (props) => {
       props.updateWebId(id);
       props.loadFriendsRequest();
       props.loadEmailRequest();
-      if(id===null) { //just for testing is needed, fucking travis
+      if (id === null) {
+        //just for testing is needed, fucking travis
         createBaseStructure(forTestingPurposes).then((response) => {
           //checkInboxForSharedRoutes(forTestingPurposes);
         });
-      }
-      else{
+      } else {
         createBaseStructure(id).then((response) => {
           //checkInboxForSharedRoutes(id);
         });
@@ -98,6 +99,12 @@ export const MyNavBar = (props) => {
     },
     {
       id: 2,
+      text: <FormattedMessage id="MyGroups" />,
+      href: "/profile/groups",
+      testId: "navbar-groups",
+    },
+    {
+      id: 3,
       text: <FormattedMessage id="LogOut" />,
       href: "#/",
       testId: "navbar-logout",
@@ -152,7 +159,7 @@ export const MyNavBar = (props) => {
                   href={element.href}
                   onClick={props.clearRoute}
                 >
-                  {element.id === 2 ? (
+                  {element.id === 3 ? (
                     <LogoutButton>{element.text}</LogoutButton>
                   ) : (
                     <LinkContainer to={element.href}>

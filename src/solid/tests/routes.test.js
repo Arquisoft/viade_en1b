@@ -370,5 +370,33 @@ describe("Solid Routes", () => {
         expect(sharedRoutesFileJSON.routes.length).toEqual(0);
     });
 
+  test("Handle groups", async() => {
+    let groupsFolderUrl = solid.getGroupsFolder(userWebId);
+    if (await fc.itemExists(groupsFolderUrl)) {
+      await fc.deleteFolder(groupsFolderUrl);
+    }
+    await solid.createFolderIfAbsent(groupsFolderUrl);
+
+    let friends = [friendWebId];
+    let friendGroupName = "friendGroup";
+    await solid.createGroup(userWebId, friendGroupName, friends);
+    let folder = await fc.readFolder(groupsFolderUrl);
+    let friendsFile = folder.files[0].url;
+    expect(await fc.itemExists(friendsFile)).toBeTruthy();
+
+    expect(await solid.getGroupFromPod("fakeFile", userWebId)).toBeNull();
+
+    let groupObject = await solid.getGroupFromPod(folder.files[0].name, userWebId);
+    expect(groupObject.name).toEqual(friendGroupName);
+    expect(groupObject.friends[0]).toEqual(friendWebId);
+
+    let fakeFileName = "fakeGroupsFile.txt";
+    await fc.createFile(groupsFolderUrl + fakeFileName, "test content, not a jsonld", "text/text");
+    expect(await solid.getGroupFromPod(fakeFileName, userWebId)).toBeNull();
+
+    let groupsObject = await solid.getGroups(userWebId);
+    expect(groupsObject[0].name).toEqual(groupObject.name);
+  });
+
 });
 

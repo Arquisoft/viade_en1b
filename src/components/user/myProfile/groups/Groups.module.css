@@ -1,0 +1,19 @@
+.badge {
+  background-color: var(--color-secondary);
+  color: black;
+  margin: 0.3em;
+}
+.friendsExpanded {
+  width: 100% !important;
+}
+.friendsExpanded h1 {
+  display: none;
+}
+.cardExpanded {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.form {
+  margin-top: 0;
+}
