@@ -49,9 +49,10 @@ describe("Navbar is correctly rendered", () => {
       expect(queryByTestId(rendered, "navbar-my-profile")).not.toBeNull();
       expect(queryByTestId(rendered, "navbar-logout")).not.toBeNull();
       expect(queryByTestId(rendered, "navbar-brand")).not.toBeNull();
-      expect(queryByTestId(rendered, "navbar-settingsks")).not.toBeNull();
+      expect(queryByTestId(rendered, "navbar-settings")).not.toBeNull();
       expect(queryByTestId(rendered, "navbar-dashboard")).not.toBeNull();
       expect(queryByTestId(rendered, "navbar-notifications")).not.toBeNull();
+      expect(queryByTestId(rendered, "navbar-groups")).not.toBeNull();
     });
   });
 
@@ -65,6 +66,10 @@ describe("Navbar is correctly rendered", () => {
       let settings = queryByTestId(rendered, "navbar-settings");
       let dashboard = queryByTestId(rendered, "navbar-dashboard");
       let notifications = queryByTestId(rendered, "navbar-notifications");
+      let groups = queryByTestId(rendered, "navbar-groups");
+
+      fireEvent.click(groups);
+      expect(getCurrentPage()).toEqual("groups");
 
       fireEvent.click(notifications);
       expect(getCurrentPage()).toEqual("notifications");
