@@ -56,13 +56,12 @@ export const routeReducer = (state = initState, action) => {
         ...state,
         selectedRoute: action.payload,
       };
-    case "SHARE_ROUTE":      
-      
+    case "SHARE_ROUTE":
       let friends = action.payload.friends;
-     
       if (friends[0]) {
         getWebId().then((userWebID) => {
           friends.forEach((friend) => {
+            console.log(friend);
             shareRouteToPod(
               userWebID,
               getRoutesFolder(userWebID) + action.payload.route.id + ".jsonld",
@@ -73,7 +72,7 @@ export const routeReducer = (state = initState, action) => {
           });
         });
       }
-      //console.log(newRoutes);
+
       return { ...state };
     case "UNSHARE_ROUTE":
       unshareRoute(

@@ -100,7 +100,7 @@ export const MyNavBar = (props) => {
     {
       id: 2,
       text: "My groups",
-      href: "/profile/group",
+      href: "/profile/groups",
       testId: "navbar-groups",
     },
     {

@@ -14,7 +14,10 @@ import {
 export const myLogger = (store) => (next) => (action) => {
   console.groupCollapsed(action.type);
   //Dont delete this console logs, they are for testing purposes
+  console.log(action.payload);
+  console.log({ previous: store.getState() });
   next(action);
+  console.log({ actual: store.getState() });
   console.groupEnd();
 };
 export const asyncRouteFetch = (store) => (next) => (action) => {
@@ -62,7 +65,6 @@ export const asyncProfileFetch = (store) => (next) => (action) => {
                 literal === null ? "noName" : literal.value
               );
               for (let i = 0; i < friendsNames.length; i++) {
-
                 let friend = {
                   name: friendsNames[parseInt(i)],
                   uri: friendsUri[parseInt(i)],

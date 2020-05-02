@@ -81,10 +81,17 @@ export const locales = {
     UploadImages: "Choose images",
     UploadVideos: "Choose videos",
     Submit: "Submit",
+    //Groups
+    CreateGroup: "Create",
+    CreateGroupModalTitle: "Create group",
+    CreateGroupFormPlaceholder: "Group name",
+    ShareGroup: "Share to group",
+    ShareGroupModalTitle: "Pick some groups",
     //Notifications
     Notifications: "Notifications",
     Accepts: "Accept all",
-    AcceptsMessage: "Now you can see all the routes that your friends had shared with you",
+    AcceptsMessage:
+      "Now you can see all the routes that your friends had shared with you",
   },
   es: {
     //NavBar.js
@@ -168,6 +175,12 @@ export const locales = {
     UploadImages: "Escoge imágenes",
     UploadVideos: "Escoge vídeos",
     Submit: "Enviar",
+    //Groups
+    CreateGroup: "Crear",
+    CreateGroupModalTitle: "Crear Grupo",
+    CreateGroupFormPlaceholder: "Nombre del grupo",
+    ShareGroup: "Compartir con grupo",
+    ShareGroupModalTitle: "Escoge algún grupo",
     //Notifications
     Notifications: "Notificaciones",
     Accepts: "Aceptar todas",

@@ -1,18 +1,9 @@
 import React from "react";
 import style from "./GroupList.module.css";
 import { useGroups } from "../../../../utils/hooks/hooks";
-import { shareRoute } from "../../../../store/actions/RouteActions";
-import { connect } from "react-redux";
 
-export function GroupList() {
-  let groups = [
-    { name: "group1", friends: [] },
-    { name: "group2", friends: [] },
-    { name: "group3", friends: [] },
-    { name: "group4", friends: [] },
-    { name: "group5", friends: [] },
-    { name: "group6", friends: [] },
-  ]; /*useGroups()*/
+export function GroupList(props) {
+  let groups = useGroups(props.userWebId);
   let groupList = groups.map((group, key) => {
     return <li key={key}>{group.name}</li>;
   });
@@ -24,18 +15,4 @@ export function GroupList() {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    userWebId: state.auth.userWebId,
-    selectedRoute: state.route.selectedRoute,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    shareRoute: (selectedRoute, friends) =>
-      dispatch(shareRoute(selectedRoute, friends)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(GroupList);
+export default GroupList;
