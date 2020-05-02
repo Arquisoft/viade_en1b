@@ -9,10 +9,11 @@ import MyRoutes from "../routes/myRoutes/MyRoutes";
 import Settings from "../layout/settings/Settings";
 import ShareRoute from "../routes/shareRoute/ShareRoute";
 import Notifications from "../layout/notifications/Notifications";
+import Groups from "../user/myProfile/groups/Groups";
 
 /**
  * Component to link paths to other components
- * @param {*} props 
+ * @param {*} props
  */
 export default function Routing(props) {
   const { navBar } = props;
@@ -52,6 +53,11 @@ export default function Routing(props) {
               changeLanguage={() => {}}
             />
           )}
+        ></Route>
+        <Route
+          exact
+          path="/profile/groups"
+          render={() => <Groups></Groups>}
         ></Route>
         <Route
           exact

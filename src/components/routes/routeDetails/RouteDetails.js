@@ -11,10 +11,11 @@ import { CommentList } from "../../layout/comments/CommentList/CommentList";
 import { useComments } from "../../../utils/hooks/hooks";
 import Slideshow from "../../layout/slideshow/Slideshow";
 import ViadeModal from "../../layout/modal/Modal";
+import ShareRouteGroup from "../shareRoute/shareRouteGroup/ShareRouteGroup";
 
 /**
  * Component to show the details of the selected route
- * @param {*} props 
+ * @param {*} props
  */
 export const RouteDetails = (props) => {
   const { selectedRoute, deleteRoute, userWebId, unshareRoute } = props;
@@ -43,13 +44,13 @@ export const RouteDetails = (props) => {
     const description = selectedRoute.description ? (
       selectedRoute.description
     ) : (
-        <FormattedMessage id="NoDescription" />
-      );
+      <FormattedMessage id="NoDescription" />
+    );
     const images = pictures ? (
       <Slideshow images={pictures}></Slideshow>
     ) : (
-        <FormattedMessage id="NoImages" />
-      );
+      <FormattedMessage id="NoImages" />
+    );
 
     return (
       <div className={props.style ? props.style : style.details}>
@@ -75,17 +76,18 @@ export const RouteDetails = (props) => {
           <ViadeModal
             id="deleteButton"
             data-testid="route-details-button-delete"
-            onOpen={() => { }}
+            onOpen={() => {}}
             disabled={false}
             toggleText={buttonText()}
             title={<FormattedMessage id="DeleteTitle" />}
-            handleClose={() => { }}
+            handleClose={() => {}}
             onSave={deleteFunction}
             closeText={<FormattedMessage id="Close" />}
             saveText={buttonText()}
-          ><FormattedMessage id="DeleteMessage" />
+          >
+            <FormattedMessage id="DeleteMessage" />
           </ViadeModal>
-        {
+
           <ShareRoute
             data-testid="route-details-button-share"
             id="shareButton"
@@ -93,23 +95,24 @@ export const RouteDetails = (props) => {
           >
             <FormattedMessage id="Share" />
           </ShareRoute>
-        }
+
+          <ShareRouteGroup />
+        </div>
+        <div className={style.comments}>
+          <h3>
+            <FormattedMessage id="CommentsTitle" />
+          </h3>
+          {commentList}
+          <Comments
+            style={style.commentsButton}
+            data-testid="Comments-button"
+          ></Comments>
+        </div>
       </div>
-      <div className={style.comments}>
-        <h3>
-          <FormattedMessage id="CommentsTitle" />
-        </h3>
-        {commentList}
-        <Comments
-          style={style.commentsButton}
-          data-testid="Comments-button"
-        ></Comments>
-      </div>
-      </div >
     );
   }
 
-return <div></div>;
+  return <div></div>;
 };
 
 const mapDispatchToProps = (dispatch) => {

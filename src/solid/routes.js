@@ -15,11 +15,7 @@ import {
 const SolidAclUtils = require("solid-acl-utils");
 // You could also use SolidAclUtils.Permissions.READ instead of following
 // This is just more convenient
-const {
-  AclApi,
-  Permissions,
-  Agents,
-} = SolidAclUtils;
+const { AclApi, Permissions, Agents } = SolidAclUtils;
 const { READ, WRITE, APPEND } = Permissions;
 
 /**
@@ -159,7 +155,7 @@ async function getRouteObjectFromPodRoute(route, routeFilename) {
       media: await readMedia(route.media),
       sharedWith: [],
     };
-  } catch { }
+  } catch {}
 }
 
 /**
@@ -187,7 +183,9 @@ export async function createOwnAcl(folderURI) {
  * @param {object} permissions - The permissions object to check.
  */
 function hasPermissions(permissions) {
-  if (permissions.length === 0) { return false; }
+  if (permissions.length === 0) {
+    return false;
+  }
   return true;
 }
 
@@ -205,7 +203,9 @@ export async function createPublicPermissions(folderURI, permissions) {
     let hasAlreadyThePermissions = acl.getPermissionsFor(Agents.PUBLIC);
     let alreadyPermissions = Array.from(
       hasAlreadyThePermissions.permissions
-    ).map((permission) => {return permission;});
+    ).map((permission) => {
+      return permission;
+    });
 
     if (!hasPermissions(alreadyPermissions)) {
       acl.addRule(permissions, Agents.PUBLIC);
@@ -289,8 +289,7 @@ export async function getRoutesFromPod(userWebId) {
   await createFolderIfAbsent(sharedFolderUri);
   let sharedFiles = (await fc.readFolder(sharedFolderUri)).files;
   for (let i = 0; i < sharedFiles.length; i++) {
-    if(!sharedFiles[parseInt(i)].url.includes(".acl"))
-    {
+    if (!sharedFiles[parseInt(i)].url.includes(".acl")) {
       let file = await readToJson(sharedFiles[parseInt(i)].url);
       if (file !== null) {
         let routesUris = file.routes;
@@ -301,10 +300,7 @@ export async function getRoutesFromPod(userWebId) {
             let parsed = JSON.parse(await fc.readFile(route));
             let fileName = route.split("/");
             fileName = fileName[fileName.length - 1];
-            let object = await getRouteObjectFromPodRoute(
-              parsed,
-              fileName
-            );
+            let object = await getRouteObjectFromPodRoute(parsed, fileName);
             return object;
           });
           await Promise.all(routeObjects).then((objects) =>
@@ -333,14 +329,13 @@ export async function shareRouteToPod(
   receiverName
 ) {
   // give permission to targetUserWebId
-
+  console.log(receiverName);
   const aclApi = new AclApi(auth.fetch, { autoSave: true });
   let acl;
   try {
     acl = await aclApi.loadFromFileUrl(routeUri);
     await acl.addRule(READ, targetUserWebId);
   } catch {}
-
   let url = getInboxFolder(targetUserWebId);
   // Sending the notification
   let notificationUrl = url + uuidv4() + ".jsonld";
@@ -411,13 +406,15 @@ export async function checkInboxForSharedRoutes(userWebId) {
   let folder = await fc.readFolder(url);
   let i = 0;
   for (i; i < folder.files.length; i++) {
-    if(!folder.files[parseInt(i)].url.includes(".acl")){
+    if (!folder.files[parseInt(i)].url.includes(".acl")) {
       let notification = await fc.readFile(folder.files[parseInt(i)].url);
-      try{
-        let routeUri = getRouteUriFromShareNotification(JSON.parse(notification));
+      try {
+        let routeUri = getRouteUriFromShareNotification(
+          JSON.parse(notification)
+        );
         await addRouteUriToShared(userWebId, routeUri);
         await fc.deleteFile(folder.files[i].url);
-      } catch{ }
+      } catch {}
     }
   }
 }
@@ -470,7 +467,11 @@ export async function uploadRouteToPod(routeObject, userWebId) {
   // Adding media
   for (let i = 0; i < resources.length; i++) {
     let uri = resourcesFolder + resources[i].name;
-    await fc.createFile(uri, resources[parseInt(i)], resources[parseInt(i)].type);
+    await fc.createFile(
+      uri,
+      resources[parseInt(i)],
+      resources[parseInt(i)].type
+    );
     resourcesCreated.push({ uri: uri, name: resources[parseInt(i)].name });
   }
   let newRoute = getFormattedRoute(routeObject, userWebId, newRouteName);
@@ -542,7 +543,7 @@ export async function clearRouteFromPod(routeId, userWebId) {
   let folder = await fc.readFolder(url);
   let fileName = routeId + ".jsonld";
   if (folder.files.some((f) => f.name === fileName)) {
-    let content = await readToJson(url+fileName);
+    let content = await readToJson(url + fileName);
     let media = await readMedia(content.media);
     await fc.delete(getRouteCommentsFile(userWebId, fileName));
     media.forEach(async (res) => await fc.delete(res));
@@ -567,9 +568,12 @@ export async function getNotifications(userWebId) {
   let i = 0;
   for (i; i < notificationFiles.length; i++) {
     try {
-      let notification = await getNotification(fc, notificationFiles[parseInt(i)]);
+      let notification = await getNotification(
+        fc,
+        notificationFiles[parseInt(i)]
+      );
       notifications.push(notification);
-    } catch { }
+    } catch {}
   }
 
   return notifications;
@@ -605,8 +609,8 @@ export async function unshareRoute(authorWebId, routeId, userWebId) {
 }
 
 /**
- * 
- * @param {*} userWebId 
+ *
+ * @param {*} userWebId
  */
 export async function getGroups(userWebId) {
   let groupsFolder = await fc.readFolder(getGroupsFolder(userWebId));
@@ -637,20 +641,16 @@ export async function getGroupFromPod(fileName, userWebId) {
 }
 
 /**
- * 
- * @param {*} userWebId 
- * @param {*} groupName 
- * @param {*} friends 
+ *
+ * @param {*} userWebId
+ * @param {*} groupName
+ * @param {*} friends
  */
 export async function createGroup(userWebId, groupName, friends) {
   let content = getFormattedGroup(groupName, friends);
-  let groupFolder = getRoutesFolder(userWebId);
+  let groupFolder = getGroupsFolder(userWebId);
   groupName = groupName.replace(/ /g, "_");
-  let groupUrl = groupFolder + groupName + uuidv4() + ".jsonld"; 
-  await fc.createFile(
-    groupUrl,
-    JSON.stringify(content),
-    "application/ld+json"
-  );
+  let groupUrl = groupFolder + groupName + uuidv4() + ".jsonld";
+  console.log({ groupUrl, content });
+  await fc.createFile(groupUrl, JSON.stringify(content), "application/ld+json");
 }
-

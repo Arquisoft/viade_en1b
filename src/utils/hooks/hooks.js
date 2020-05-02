@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getNotifications } from "../../solid/routes";
+import { getNotifications, getGroups } from "../../solid/routes";
 
 export function useNotifications(userWebId) {
   const [notifications, setNotifications] = useState([]);
@@ -24,4 +24,15 @@ export function useComments(selectedRoute) {
     }
   }, [selectedRoute]);
   return comments;
+}
+export function useGroups(userWebId) {
+  const [groups, setGroups] = useState([]);
+  useEffect(() => {
+    if (userWebId != null) {
+      getGroups(userWebId).then((groups) => {
+        setGroups(groups);
+      });
+    }
+  }, [userWebId]);
+  return groups;
 }

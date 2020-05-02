@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 
 /**
  * Component to show the friend list
- * @param {*} props 
+ * @param {*} props
  */
 export const FriendList = (props) => {
   //Function used by the non-checked version of the component
