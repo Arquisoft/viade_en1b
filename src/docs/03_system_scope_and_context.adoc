@@ -40,5 +40,17 @@ include::diagrams/03-02_TechnicalContext.puml[]
 | Users | People wanting to store and share their routes with control over their storage.
 | Viade | Our application that is supposed to be interoperable thanks to the use of Solid.
 | POD | Each user has a personal pod which stores all his information.
+| Maps API | Request are made to obtain the map so it can be rendered for the routes to be shown.
 |===
+
+==== Used APIs
+
+The communication with the Solid API is done through the following libraries:
+
+- https://github.com/solid/solid-auth-client[solid-auth-client]: Authentication of users and handling of their credentials.
+- https://github.com/Otto-AA/solid-acl-utils[solid-acl-utils]: Generation and handling of `.acl` files for managing POD permissions.
+- https://github.com/jeff-zucker/solid-file-client[solid-file-client]: Creation, retrieval and manipulation of files and folders in PODs.
+- https://www.npmjs.com/package/rdf-query[rdf-query]: Obtaining RDF information from PODs, mainly used for processing user profiles.
+
+The communication with the maps API is done through the https://leafletjs.com/[Leaflet] library.
 
