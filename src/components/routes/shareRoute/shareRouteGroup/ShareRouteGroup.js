@@ -66,7 +66,7 @@ export function ShareRouteGroup(props) {
       <ViadeModal
         data-testid="share-group-modal"
         onOpen={() => {}}
-        disabled={false}
+        disabled={groups.length == 0}
         saveDisabled={false}
         toggleText={<FormattedMessage id="ShareGroup" />}
         handleClose={handleClose}

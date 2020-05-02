@@ -49,7 +49,9 @@ export function Groups(props) {
         </Badge>
       </span>
     ) : (
-      <span data-testid="share-route-share-button-plain">Create</span>
+      <span data-testid="share-route-share-button-plain">
+        <FormattedMessage id="CreateGroup" />
+      </span>
     );
   const changeHandlerGroupName = (e) => {
     setState({ ...state, groupName: e.target.value });
@@ -75,14 +77,18 @@ export function Groups(props) {
         closeText={<FormattedMessage id="Close" />}
         saveText={shareButtonText}
       >
-        <Form>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Control
-              value={state.groupName}
-              onChange={changeHandlerGroupName}
-              type="text"
-              placeholder="Name of the group"
-            />
+        <Form className={style.form}>
+          <Form.Group>
+            <FormattedMessage id="CreateGroupFormPlaceholder">
+              {(placeholder) => (
+                <Form.Control
+                  value={state.groupName}
+                  onChange={changeHandlerGroupName}
+                  type="text"
+                  placeholder={placeholder}
+                />
+              )}
+            </FormattedMessage>
           </Form.Group>
         </Form>
         <FriendList

@@ -1,18 +1,48 @@
 .groupListContainer {
-  display: flex;
-  flex-direction: column;
   margin: 5em auto;
-  align-items: center;
+  margin-bottom: 0;
   justify-items: center;
   width: 100vh;
   overflow: hidden;
   height: 70vh;
 }
 
+.groupListContainer svg {
+  transform: scale(5);
+  margin-bottom: 3em;
+}
+
+.noGroupsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .groupListContainer ul {
+  grid-column: 1 / 2;
+  grid-row: 1 / 1;
+  margin-top: 2em;
   list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: auto;
+  height: 100%;
 }
 
 .groupListContainer ul li {
-  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 150%;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+}
+
+.groupListContainer button {
+  grid-column: 2 / 3;
+  grid-row: 1 / 1;
 }

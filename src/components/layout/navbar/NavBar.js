@@ -99,7 +99,7 @@ export const MyNavBar = (props) => {
     },
     {
       id: 2,
-      text: "My groups",
+      text: <FormattedMessage id="MyGroups" />,
       href: "/profile/groups",
       testId: "navbar-groups",
     },

@@ -6,7 +6,8 @@
 
 .buttons button {
   margin: 1em;
-  height: 40px;
+  height: 60px;
+  width: 100px;
 }
 
 .images {

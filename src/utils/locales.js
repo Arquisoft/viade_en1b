@@ -85,6 +85,8 @@ export const locales = {
     CreateGroup: "Create",
     CreateGroupModalTitle: "Create group",
     CreateGroupFormPlaceholder: "Group name",
+    NoGroups: "You have no groups. Created groups will be displayed here",
+    MyGroups: "My groups",
     ShareGroup: "Share to group",
     ShareGroupModalTitle: "Pick some groups",
     //Notifications
@@ -179,8 +181,10 @@ export const locales = {
     CreateGroup: "Crear",
     CreateGroupModalTitle: "Crear Grupo",
     CreateGroupFormPlaceholder: "Nombre del grupo",
+    NoGroups: "No tienes grupos. Los grupos creados te aparecerán aquí",
     ShareGroup: "Compartir con grupo",
     ShareGroupModalTitle: "Escoge algún grupo",
+    MyGroups: "Mis grupos",
     //Notifications
     Notifications: "Notificaciones",
     Accepts: "Aceptar todas",
