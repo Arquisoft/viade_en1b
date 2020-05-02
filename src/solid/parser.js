@@ -1,4 +1,48 @@
 import { getRouteCommentsFile } from "./routes";
+
+
+/**
+ * Return a group file for a specific name and uris
+ * @param {*} groupName Name of the group
+ * @param {*} friendsUris Uris of the friends
+ */
+export function getFormattedGroup(groupName, friendsUris) {
+  let content = {
+    "@context": {
+      "@version": 1.1,
+      xsd: "http://www.w3.org/2001/XMLSchema#",
+      schema: "http://schema.org/",
+      users: {
+        "@container": "@list",
+        "@id": "schema:person",
+      },
+      url: {
+        "@type": "xs:string",
+        "@id": "schema:url",
+      }
+    },
+    name: groupName,
+    users: [],
+  }
+  friendsUris.forEach((friendUri) => content.users.push({url: friendUri}));
+  return content;
+}
+
+/**
+ * 
+ * @param {*} podGroup 
+ * @param {*} fileName 
+ */
+export function getGroupObjectFromPodRoute(podGroup) {
+  let content = {
+    name: podGroup.name,
+    friends: []
+  };
+  podGroup.users.forEach((user) => content.friends.push(user.url));
+  return content;
+}
+
+
 /**
  * Returns a new notification in JSON form.
  */

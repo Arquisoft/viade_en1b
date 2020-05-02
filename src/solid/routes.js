@@ -9,6 +9,8 @@ import {
   getNewNotification,
   getNewSharedRoutesFileContent,
   getNotification,
+  getGroupObjectFromPodRoute,
+  getFormattedGroup,
 } from "./parser";
 const SolidAclUtils = require("solid-acl-utils");
 // You could also use SolidAclUtils.Permissions.READ instead of following
@@ -36,6 +38,14 @@ export async function createFolderIfAbsent(path) {
       await fc.createFolder(path);
     }
   } catch {}
+}
+
+/**
+ * Returns a string containing the URI of the routes folder for the given user.
+ * @param {string} userWebId - The full web ID of the user's pod.
+ */
+export function getGroupsFolder(userWebId) {
+  return userWebId.split("/profile")[0] + "/" + appName + "/groups/";
 }
 
 /**
@@ -223,6 +233,7 @@ export async function createBaseStructure(userWebId) {
     getInboxFolder(userWebId),
     getResourcesFolder(userWebId),
     getSharedFolder(userWebId),
+    getGroupsFolder(userWebId),
   ];
   let i = 0;
   for (i; i < folders.length; i++) {
@@ -589,6 +600,56 @@ export async function unshareRoute(authorWebId, routeId, userWebId) {
   await fc.createFile(
     sharedUserFiles[0].url,
     JSON.stringify(sharedUserFileContent),
+    "application/ld+json"
+  );
+}
+
+/**
+ * 
+ * @param {*} userWebId 
+ */
+export async function getGroups(userWebId) {
+  let groupsFolder = await fc.readFolder(getGroupsFolder(userWebId));
+  let groupsFiles = groupsFolder.files.filter((f) => /\.jsonld$/.test(f.name));
+  let i = 0;
+  let groups = [];
+  for (i; i < groupsFiles.length; i++) {
+    let group = await getGroupFromPod(groupsFiles[i].name, userWebId);
+    if (group !== null) {
+      groups.push(group);
+    }
+  }
+  return groups;
+}
+
+export async function getGroupFromPod(fileName, userWebId) {
+  let url = getGroupsFolder(userWebId);
+  let folder = await fc.readFolder(url);
+  if (folder.files.some((f) => f.name === fileName)) {
+    try {
+      let podGroup = await readToJson(url + fileName);
+      return getGroupObjectFromPodRoute(podGroup);
+    } catch {
+      return null;
+    }
+  }
+  return null;
+}
+
+/**
+ * 
+ * @param {*} userWebId 
+ * @param {*} groupName 
+ * @param {*} friends 
+ */
+export async function createGroup(userWebId, groupName, friends) {
+  let content = getFormattedGroup(groupName, friends);
+  let groupFolder = getRoutesFolder(userWebId);
+  groupName = groupName.replace(/ /g, "_");
+  let groupUrl = groupFolder + groupName + uuidv4() + ".jsonld"; 
+  await fc.createFile(
+    groupUrl,
+    JSON.stringify(content),
     "application/ld+json"
   );
 }
