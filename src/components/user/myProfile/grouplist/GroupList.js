@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 export function GroupList(props) {
   let groups = useGroups(props.userWebId);
   let groupList =
-    groups.length == 0 ? (
+    groups.length === 0 ? (
       <span className={style.noGroupsContainer}>
         <FaUsers></FaUsers>
         <FormattedMessage id="NoGroups"></FormattedMessage>
