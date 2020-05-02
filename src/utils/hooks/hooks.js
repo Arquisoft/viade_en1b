@@ -25,3 +25,16 @@ export function useComments(selectedRoute) {
   }, [selectedRoute]);
   return comments;
 }
+export function useGroups(userWebId) {
+  const [groups, setGroups] = useState({});
+  /*  useEffect(() => {
+    getGroups(userWebId).then(
+      (groups) => {
+        setGroups(groups);
+      },
+      [userWebId]
+    );
+  });
+  */
+  return groups;
+}

@@ -1,0 +1,18 @@
+.groupListContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 2em;
+  align-items: center;
+  border: 2px solid black;
+  width: 100vw;
+  height: 100vh;
+}
+
+.groupListContainer ul {
+  list-style: none;
+}
+
+.groupListContainer ul li {
+  width: 80%;
+}
