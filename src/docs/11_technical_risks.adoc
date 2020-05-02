@@ -25,7 +25,7 @@ application for the managing, in a decentralized way, of the routes of an user.
 
 |Viade spec
 |All the teams must agree in a specification in order to achieve the
-interoperability between different viade applications, and this specification is
+interoperability between different Viade applications, and this specification is
 still in process, so some parts of the application and this documentation are
 subject to future changes caused by changes in the inter-group specification.
 |It is difficult to agree on something so specific with so many people: for the
@@ -38,8 +38,8 @@ adapting application and documentation when major specification changes occur.
 |Description |Motivation
 |Route parser
 |When parsing a route with more than one track, only the first one is taken into account because of simplicity.
-| Reading friend comments | Currently, if you want to see new friend comments you need to refresh the application. The use of websockets should have been considered but we did not use them.
+| Reading friend comments | Currently, if you want to see new friend comments you need to refresh the application. The use of web sockets should have been considered but we did not use them.
 | Videos | Because of simplicity, we only allow users to upload images of their routes.
-| Friend groups | Because time limitations, in our application the feature of friend groups was not implemented. 
+| Friend groups | Because time limitations, in our application the feature of friend groups was not implemented.
 |===
 

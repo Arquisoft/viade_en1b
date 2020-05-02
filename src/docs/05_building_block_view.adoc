@@ -84,7 +84,7 @@ ProfileInfo::
 It has methods to get the user's mail and the list of friends.
 
 Routes::
-Its main responsabilities are:
+Its main responsibilities are:
 * Uploading a route.
 * Getting routes from the POD.
 * Deleting stored routes, either all or individually.
@@ -100,7 +100,7 @@ intended to serve a pod over localhost. While this covers all the activities our
 application does with routes, the many different configurations and
 unpredictability of real Solid PODs of real users can't be fully covered by the
 functionality of this module, but we have tried to make it as resilient as
-posible while adjusting to the specification.
+possible while adjusting to the specification.
 
 Parser::
 Its main responsabilities are:
