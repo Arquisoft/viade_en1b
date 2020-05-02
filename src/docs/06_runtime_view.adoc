@@ -35,7 +35,7 @@ include::diagrams/06-02_shareRoute.puml[]
 ==== Comment a route
 A user will be able to post a comment in a route.
 
-. First, the user will click in the desired route to comment.
+. First, the user will click on the desired route to comment.
 . Then, the user will write his comment.
 . Finally, when the comment its written and saved, the route will have the comment in it.
 
@@ -87,7 +87,7 @@ include::diagrams/06-06_ChangeLanguage.puml[]
 Although our main audience/users will not have any vision deficiency (color-blindness), we have implemented a small support for those who have it. Also, we have added some extra customization themes.
 In order to change the theme the user needs to do the following steps:
 
-. First click in "Themes" in the NavBar.
+. First click on "Themes" in the NavBar.
 . A new drop down menu will appear with all the possible theme options.
 . Select the desired theme.
 
