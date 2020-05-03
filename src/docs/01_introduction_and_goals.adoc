@@ -25,6 +25,7 @@ The aim of the project is to create a decentralized routes management system bas
 |2| Privacy    | Users must be the owners of their own data. | As a user, I want to be able to choose where I want my own data to be.
 |3| Effectiveness | Users must be able to share their routes according to the functionalities of the system. | As a user, I want to be able to share my routes with my contacts.
 |4| Interoperability | The system must be able to communicate with other similar SOLID apps | As a user, I want to be able to share the routes loaded in my application with other similar SOLID apps.
+|5| Accessibility | We do not want to exclude people to use our app. | People with disabilities must be able to use our app in a propper way. 
 
 |===
 
