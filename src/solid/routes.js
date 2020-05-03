@@ -200,9 +200,7 @@ function hasPermissions(permissions) {
  */
 export async function createPublicPermissions(folderURI, permissions) {
   const aclApi = new AclApi(auth.fetch, { autoSave: true });
-  let acl = (err) {
-    // Error
-  };
+  let acl = {};
   try {
     acl = await aclApi.loadFromFileUrl(folderURI);
 
