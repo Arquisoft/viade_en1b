@@ -72,16 +72,8 @@ describe("Solid Routes", () => {
     let folders = [];
 
     beforeAll(async () => {
-        mkdirp(userPod.basePath, function (err) {
-            if (err) {
-                console.error(err);
-            }
-        });
-        mkdirp(friendPod.basePath, function (err) {
-            if (err) {
-                console.error(err);
-            }
-        });
+        mkdirp(userPod.basePath, function (err) { });
+        mkdirp(friendPod.basePath, function (err) { });
         folders = [
             solid.getRootFolder(userWebId),
             solid.getRoutesFolder(userWebId),
@@ -118,11 +110,9 @@ describe("Solid Routes", () => {
     test("Delete one route from POD", async () => {
 
         await solid.clearRoutesFromPod(userWebId);
-        let routes = await solid.getRoutesFromPod(userWebId);
-        expect(routes.length).toEqual(0);
 
         await solid.clearRouteFromPod(firstRouteFilename, userWebId);
-        routes = await solid.getRoutesFromPod(userWebId);
+        let routes = await solid.getRoutesFromPod(userWebId);
         expect(routes.length).toEqual(0);
 
         await solid.uploadRouteToPod(firstRoute, userWebId);
@@ -206,7 +196,7 @@ describe("Solid Routes", () => {
             await fc.createFolder(solid.getInboxFolder(friendWebId));
         }
 
-        // Delete user's routes
+        // Delete user's routes folder
         if (await fc.itemExists(solid.getRoutesFolder(userWebId))) {
             await fc.deleteFolder(solid.getRoutesFolder(userWebId));
         }
@@ -397,6 +387,8 @@ describe("Solid Routes", () => {
     let groupsObject = await solid.getGroups(userWebId);
     expect(groupsObject[0].name).toEqual(groupObject.name);
   });
+
+
 
 });
 
