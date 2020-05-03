@@ -157,7 +157,7 @@ export function getFormattedRoute(routeObject, userWebId, fileName) {
     description: routeObject.description,
     media: [],
     comments: getRouteCommentsFile(userWebId, fileName),
-    waypoints: routeObject.positions,
+    waypoints: [],
     points: routeObject.positions.map((position) => {
       return { latitude: position[0], longitude: position[1] };
     }),
