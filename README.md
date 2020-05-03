@@ -15,6 +15,8 @@ More information about how this project has been setup is available [in the wiki
 
 [Check it out!](https://arquisoft.github.io/viade_en1b/)
 
+> Remember to add https://arquisoft.github.io to your trusted apps in SOLID.
+
 ## Contributors
 
 - Marcos Álvarez García — [alvarezGarciaMarcos](https://github.com/alvarezGarciaMarcos)
@@ -74,6 +76,8 @@ If you want to test the application in your local machine, you will need run a d
 
 1. Run `npm start`.
 2. Go to your browser and navigate to `http://localhost:3000/viade_en1b`.
+
+> Remember to add http://localhost:3000 to your trusted apps in SOLID.
 
 ### Building the application
 
