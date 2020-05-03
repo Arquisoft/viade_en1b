@@ -7,10 +7,10 @@ import {
   shareRoute,
   loadRoutesRequest,
   loadRoutesSuccess,
-  loadRoutesError
+  loadRoutesError,
+  unshareRoute
 } from "../RouteActions";
 import rootReducer from "../../reducers/RootReducer";
-import { deepClone } from "../../../utils/functions";
 
 
 describe("Route actions", () => {
@@ -41,7 +41,8 @@ describe("Route actions", () => {
       selectedRoute: null
     },
     auth: {},
-    user: {}
+    user: {},
+    localeReducer: {},
   };
 
   const initNewState = {
@@ -53,6 +54,7 @@ describe("Route actions", () => {
     },
     auth: {},
     user: {},
+    localeReducer: {},
   };
 
   test("show route action", () => {
@@ -121,32 +123,58 @@ describe("Route actions", () => {
       route: routesReducerState,
       auth: {},
       user: {},
-      control: {}
+      control: {},
+      localeReducer: {},
     };
 
-    const mockFriends = ['marcos'];
-
-    let stateRoutes = deepClone(initialState.route.routes);
-    let sharedRouteId = uploadedRoute.id;
-
-    let alreadyShared = stateRoutes.filter(
-      route => route.id == uploadedRoute.id
-    )[0].sharedWith;
-    let sharedRoute = {
-      ...uploadedRoute,
-      sharedWith: mockFriends.concat(alreadyShared)
-    };
-    let newRoutes = stateRoutes;
-    newRoutes[sharedRouteId] = sharedRoute;
-
-    routesReducerState = {...routesReducerState, routes:newRoutes};
-    const expected = {...initialState, route:routesReducerState};
+    const mockFriends = ["marcos"];
 
     const store = testStore(rootReducer, initialState);
     store.dispatch(shareRoute(uploadedRoute, mockFriends));
-    const newState = store.getState();
+    const newState = store.getState().route;
 
-    expect(newState).toStrictEqual(expected);
+    expect(newState).toEqual(routesReducerState);
+  });
+
+  test("unshare action", () => {
+    let routesReducerState = {
+      routes: [{
+        id: 0,
+        name: "Hiking Naranco ",
+        file: undefined,
+        author: "César",
+        positions: [
+          [43.360383711, -5.850650009],
+          [43.35763791, -5.842024025],
+          [43.360976539, -5.831938919],
+          [43.366405318, -5.837775406],
+          [43.361382154, -5.844255623]
+        ],
+        description:
+          "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing",
+        images: [
+          "https://source.unsplash.com/random/600x600",
+          "https://source.unsplash.com/random/602x602"
+        ],
+        videos: ["futuro video 1", "futuro video 2"],
+        sharedWith: []
+      }],
+      selectedRoute: null
+    };
+
+    let initialState = {
+      route: routesReducerState,
+      auth: {},
+      user: {},
+      control: {},
+      localeReducer: {},
+    };
+    const store = testStore(rootReducer, initialState);
+    const mockAuthorWebId = "https://themrcesi.inrupt.net/profile/card#me";
+    const mockRouteId = 0;
+    store.dispatch(unshareRoute(mockAuthorWebId, mockRouteId, mockAuthorWebId));
+    const newRoutes = initialState.route.routes.filter((r) => r.id !== mockRouteId);
+    expect(store.getState().route.routes).toEqual(newRoutes);
   });
 
   test("delete route action", () => {
@@ -156,7 +184,7 @@ describe("Route actions", () => {
     };
     const store = testStore(rootReducer, initState);
 
-    store.dispatch(deleteRoute(uploadedRoute));
+    store.dispatch(deleteRoute(uploadedRoute, "https://themrcesi.inrupt.net/profile/card#me"));
     const newState = store.getState().route;
 
     expect(newState).toStrictEqual(expectedState);

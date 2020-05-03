@@ -8,7 +8,13 @@ import PageNotFound from "../layout/pageNotFound/PageNotFound";
 import MyRoutes from "../routes/myRoutes/MyRoutes";
 import Settings from "../layout/settings/Settings";
 import ShareRoute from "../routes/shareRoute/ShareRoute";
+import Notifications from "../layout/notifications/Notifications";
+import Groups from "../user/myProfile/groups/Groups";
 
+/**
+ * Component to link paths to other components
+ * @param {*} props
+ */
 export default function Routing(props) {
   const { navBar } = props;
   return (
@@ -16,11 +22,16 @@ export default function Routing(props) {
       {navBar}
       <Switch>
         <Route exact path="/404" component={PageNotFound} />
-        <Route exact path="/" render={props => <Login {...props} />}></Route>
+        <Route exact path="/" render={(props) => <Login {...props} />}></Route>
         <Route
           exact
           path="/profile"
           render={() => <MyProfile {...props} />}
+        ></Route>
+        <Route
+          exact
+          path="/notifications"
+          render={() => <Notifications {...props} />}
         ></Route>
         <Route
           exact
@@ -42,6 +53,11 @@ export default function Routing(props) {
               changeLanguage={() => {}}
             />
           )}
+        ></Route>
+        <Route
+          exact
+          path="/profile/groups"
+          render={() => <Groups></Groups>}
         ></Route>
         <Route
           exact

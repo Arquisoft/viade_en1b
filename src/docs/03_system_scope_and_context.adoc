@@ -2,7 +2,7 @@
 == System Scope and Context
 
 Our routes application will be managed following the SOLID standards. In other
-words, this tool will be decentralized which means that This application will allow each user to store and share their own personal
+words, this tool will be decentralized which means that this application will allow each user to store and share their own personal
 routes without fearing any company using their data in ways they have not approved. However, we have some limitations, for example it would be more difficult
 to use and manage. Despite of this facts, this application is supposed to be interoperable, which means that it does not matter which application you use
 the data is the same for all of them.
@@ -18,11 +18,12 @@ include::diagrams/03-01_BusinessContext.puml[]
 [options="header", cols="0,4"]
 |===
 |Element | Role
-| User | User of the application
-| Viade | Our application of ViaDe
-| User's POD | Personal storage of the user
-| Other User Viade | External application which the user can share and receive routes
-| imaps | API of the maps
+| Arrow | Flow of information.
+| User | User of the application.
+| Viade | Our application of Viade.
+| User's POD | Personal storage of the user.
+| Other User Viade | External application which the user can share and receive routes.
+| Maps API | API of the maps, served by https://www.openstreetmap.org/about[OpenStreetMap].
 |===
 
 === Technical Context
@@ -36,9 +37,20 @@ include::diagrams/03-02_TechnicalContext.puml[]
 |Partner | Role
 | Red arrow | Request made to a system, in order to know the direction of the requests.
 | Blue arrow | Response that a system provides for a given request, in order to know the direction of the information.
-
 | Users | People wanting to store and share their routes with control over their storage.
 | Viade | Our application that is supposed to be interoperable thanks to the use of Solid.
-| POD | Each user has a personal pod which stores all his information
+| POD | Each user has a personal pod which stores all his information.
+| Maps API | Request are made to obtain the map so it can be rendered for the routes to be shown.
 |===
+
+==== Used APIs
+
+The communication with the Solid API is done through the following libraries:
+
+- https://github.com/solid/solid-auth-client[solid-auth-client]: Authentication of users and handling of their credentials.
+- https://github.com/Otto-AA/solid-acl-utils[solid-acl-utils]: Generation and handling of `.acl` files for managing POD permissions.
+- https://github.com/jeff-zucker/solid-file-client[solid-file-client]: Creation, retrieval and manipulation of files and folders in PODs.
+- https://www.npmjs.com/package/rdf-query[rdf-query]: Obtaining RDF information from PODs, mainly used for processing user profiles.
+
+The communication with the maps API is done through the https://leafletjs.com/[Leaflet] library.
 

@@ -14,6 +14,10 @@ rectangle "GUI Components" as react {
         [Settings] as settings
         [SlideShow] as ss
         [ThemeContext] as tc 
+        [Theme] as th
+        [Comments] as comments
+        [Notifications] as notifications
+        [Groups] as groups
     }
     folder "routes" as routes {
         [MyRoutes] as mr 

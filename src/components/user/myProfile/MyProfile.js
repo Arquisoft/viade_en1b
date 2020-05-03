@@ -6,10 +6,23 @@ import FriendList from "./FriendList.js";
 import { Button, Badge } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { FormattedMessage } from "react-intl";
+import {
+  getOwnRoutesNumber,
+  getSharedRoutesNumber,
+} from "../../../utils/functions";
 
+/**
+ * Component to show the user's profile
+ * @param {*} props 
+ */
 export function MyProfile(props) {
   let email = props.userEmail ? <p>{props.userEmail}</p> : null;
   let emailLoading = props.loading === true ? <p>Loading...</p> : null;
+  const { routes } = props;
+  const {userWebId} = props;
+  let own = getOwnRoutesNumber(routes, userWebId);
+  let shared = getSharedRoutesNumber(routes, userWebId);
 
   return (
     <div id="generalComponent">
@@ -26,7 +39,7 @@ export function MyProfile(props) {
           <div id="allData">
             <div id="profileData">
               <h1>
-                Hello,{" "}
+                <FormattedMessage id="Greetings" />,{" "}
                 <b>
                   <Value src="user.name" />
                 </b>
@@ -36,20 +49,30 @@ export function MyProfile(props) {
               {emailLoading}
               <p>
                 <Badge variant="dark">
-                  <Value src="user.vcard_role" />
-                  CEO
+                  {<Value src="user.vcard_role" /> ? (
+                    <Value src="user.vcard_role" />
+                  ) : (
+                    <FormattedMessage id="CEO" />
+                  )}
                 </Badge>
               </p>
               <a href={useWebId()}>
-                Solid profile <BsBoxArrowUpRight></BsBoxArrowUpRight>
+                <FormattedMessage id="SolidProfile" />{" "}
+                <BsBoxArrowUpRight></BsBoxArrowUpRight>
               </a>
             </div>
             <div id="profileData">
               <Button variant="primary">
-                Routes <Badge variant="light">4</Badge>
+                <FormattedMessage id="Routes" />
+                <Badge variant="light">
+                  {own}
+                </Badge>
               </Button>
               <Button variant="primary">
-                Shared routes <Badge variant="light">2</Badge>
+                <FormattedMessage id="SharedRoutes" />{" "}
+                <Badge variant="light">
+                  {shared}
+                </Badge>
               </Button>
             </div>
           </div>
@@ -63,12 +86,14 @@ export function MyProfile(props) {
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     userEmail: state.user.email,
     emailLoading: state.user.emailLoading,
     emailError: state.user.emailError,
-    friends: state.user.friends
+    friends: state.user.friends,
+    routes: state.route.routes,
+    userWebId: state.auth.userWebId
   };
 };
 

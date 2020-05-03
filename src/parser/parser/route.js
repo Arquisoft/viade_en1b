@@ -1,5 +1,5 @@
-import Waypoint from './waypoint';
-import Link from './link';
+import Waypoint from "./waypoint";
+import Link from "./link";
 
 export default class Route {
   constructor(object) {
@@ -14,14 +14,14 @@ export default class Route {
       if (!Array.isArray(object.link)) {
         this.link = [object.link];
       }
-      this.link = object.link.map(l => new Link(l));
+      this.link = object.link.map((l) => new Link(l));
     }
 
     if (object.rtept) {
       if (!Array.isArray(object.rtept)) {
         this.rtept = [object.rtept];
       }
-      this.rtept = object.rtept.map(pt => new Waypoint(pt));
+      this.rtept = object.rtept.map((pt) => new Waypoint(pt));
     }
   }
 }

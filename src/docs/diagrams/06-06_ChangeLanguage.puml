@@ -1,0 +1,11 @@
+title A user wnats to change the application language - Activity Diagram 
+
+start
+
+:Click on "Settings" on the navbar;
+
+:Click on "Available Languages";
+
+:Select the desired language;
+
+stop

@@ -5,17 +5,14 @@ This section contains all the relevant information about different topics of the
 
 === Domain Concepts
 
-==== Client
-
-The person or system that runs our decentralized application, using for example a web browser like Firefox.
-
-==== Pod
-
-The personal repository of the user, which follows the https://solid.github.io/specification/[Solid specification] and stores information like their routes, comments and media associated with a route.
-
 ==== Route
 
-Expressed using RDF, represents a user route, which can be shared, loaded, etc. It follows the https://arquisoft.github.io/viadeSpec/#dataModel[Viade specification].
+[plantuml,"Route domain system",png]
+----
+include::diagrams/08-01_Domain.puml[]
+----
+
+Expressed using JsonLD, represents a user route, which can be shared, loaded, etc. It follows the https://arquisoft.github.io/viadeSpec/#dataModel[Viade specification].
 
 - Name: name of the route
 - Description (optional): some information about the specific route
@@ -28,8 +25,6 @@ Expressed using RDF, represents a user route, which can be shared, loaded, etc. 
 - Latitude: in decimal degrees format
 - Longitude: in decimal degrees format
 - Elevation (optional): in meters
-- Name (optional): specific label for the point, in case it is a special point
-- PhysicalAddress
 
 ==== UserComment
 
@@ -43,13 +38,6 @@ Expressed using RDF, represents a user route, which can be shared, loaded, etc. 
 
 - ContentUrl: direction for the resource
 - PublishedDate: in datetime format
-- Author: IRI to the pod profile of the user that published the comment
-
-===== Video
-
-- ContentUrl: direction for the resource
-- PublishedDate: in datetime format
-- Author: IRI to the pod profile of the user that published the comment
 
 === User Experience
 

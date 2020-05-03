@@ -4,8 +4,9 @@ rectangle ViaDe {
     [GUI Components] as react
     [Parser] as parser 
     [Middlewares] as middlewares
-    [Store] as store 
+    [Redux] as store 
     [Solid] as solid
+    [Utils]
 }
 
 database "User's POD" as pod

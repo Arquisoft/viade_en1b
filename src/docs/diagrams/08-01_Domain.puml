@@ -1,0 +1,26 @@
+@startuml
+
+class Route {
+    String name
+    String _description
+}
+
+class Position {
+    double latitude
+    double longitude
+    double _elevation
+}
+
+User "1" -- "*" Route : has
+User "1" -- "*" User : friends
+Route -> "+" Position
+Route -left-> "*" Comment
+Comment -up-> "1" User
+Route -down-> "*" Media
+
+legend right
+_attribute = optional
+attribute = compulsory
+endlegend
+
+@enduml

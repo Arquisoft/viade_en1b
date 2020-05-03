@@ -1,4 +1,4 @@
-import Link from './link';
+import Link from "./link";
 
 export default class Waypoint {
   constructor(object) {
@@ -26,7 +26,7 @@ export default class Waypoint {
       if (!Array.isArray(object.link)) {
         object.link = [object.link];
       }
-      this.link = object.link.map(l => new Link(l));
+      this.link = object.link.map((l) => new Link(l));
     }
   }
 }

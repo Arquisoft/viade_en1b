@@ -1,0 +1,98 @@
+.dashboard {
+  position: absolute;
+  top: 4em;
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr 2fr;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+    "route route map map"
+    "route route map map"
+    "route route map map"
+    "route route map map";
+
+  max-height: 90vh;
+  width: 100%;
+  justify-items: center;
+  align-items: start;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.mapContainer {
+  height: 65vh;
+  width: 75vw;
+  margin-left: 5em;
+  margin-top: 1em;
+  grid-area: map;
+}
+
+.myMap {
+  height: 100%;
+  width: 100%;
+}
+
+.routeList {
+  margin-top: 2em;
+  padding: 1em;
+  overflow: scroll;
+  max-height: 70%;
+  grid-column: 1 / 2;
+  height: 100vh;
+}
+
+.routeList * {
+  margin-bottom: 10px;
+}
+
+.routeList svg {
+  margin: auto 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: var(--color-primary);
+}
+
+.titleHolder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0;
+  height: 15%;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+p {
+  font-style: italic;
+}
+
+@media (max-width: 800px) {
+  .dashboard {
+    padding-top: 5em;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 10% 50% auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  #titleHolder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    grid-column: 1 / 5;
+    grid-row: 1 / 1;
+    background-color: white;
+    margin: 0 auto;
+    margin-top: 5em;
+    height: 150%;
+    width: 90%;
+    padding: 0.5em 0;
+
+    border-radius: 5px;
+  }
+}

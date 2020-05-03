@@ -1,56 +1,85 @@
-nav.navbar{
-    background-color: var(--color-primary) !important;
+nav.navbar {
+  background-color: var(--color-primary) !important;
+  color: var(--color-tertiary) !important;
 }
 
-.navbar-brand{
-    color: var(--color-secondary) !important;
+.navbar-brand {
+  color: var(--color-secondary) !important;
 }
 
-.icon{
-    font-size: 2em;
-    margin: .2em;
-    
+.icon {
+  font-size: 2em;
+  margin: 0.2em;
 }
 
-nav.navbar img{
-    width: 20%;
-    transform: scale(2.6);
-    padding-right: 1em;
-    
+nav.navbar img {
+  width: 20%;
+  transform: scale(2.6);
+  padding-right: 1em;
 }
 
-nav.navbar span{
-    padding: 0;
-    margin: 0;
+nav.navbar span {
+  padding: 0;
+  margin: 0;
 }
 
-#basic-nav-dropdown{
-    display:block !important;
-    opacity:0;
-    pointer-events:none;  
+#basic-nav-dropdown {
+  display: block !important;
+  opacity: 0;
+  pointer-events: none;
 }
 
-
-.nav-link{
-    transition: all 200ms ease-in-out;
-    
+.show {
+  background-color: var(--color-primary);
+  opacity: 1;
 }
 
-.active{
-    color: var(--color-secondary) !important;
-    font-weight: bold;
+.show a:hover {
+  background-color: transparent !important;
+  opacity: 1;
 }
 
-.nav-link:hover{
-    color: var(--color-secondary) !important;
-    
+.nav-link:not(.show):not(.active) {
+  color: var(--color-tertiary) !important;
+  opacity: 0.5;
+  transition: all 200ms ease-in-out;
 }
 
-.solid.auth.logout{
-    background-color: transparent !important;
-    color: black !important;
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    padding: 0;
+.nav-link[href="#/notifications"] {
+  visibility: hidden;
+  display: flex;
+}
+
+.nav-link[href="#/notifications"] svg {
+  visibility: visible;
+  margin: 0.2em auto;
+}
+.active {
+  color: var(--color-secondary) !important;
+  font-weight: bold;
+  transform: scale(1.1);
+}
+
+.nav-link:hover {
+  color: var(--color-secondary) !important;
+  opacity: 1 !important;
+}
+
+.solid.auth.logout {
+  background-color: transparent !important;
+  color: var(--color-secondary) !important;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  padding: 0;
+}
+
+@media (max-width: 991px) {
+  .nav-link[href="#/notifications"] {
+    visibility: visible;
+    display: inline;
+  }
+  .nav-link[href="#/notifications"] svg {
+    visibility: visible;
+  }
 }

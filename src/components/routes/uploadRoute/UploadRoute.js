@@ -9,7 +9,13 @@ import {
 import UploadButton from "./uploadButton/UploadButton";
 import ViadeModal from "../../layout/modal/Modal";
 import parseGPX from "../../../parser/parser";
+import { FormattedMessage } from "react-intl";
 
+/**
+ * Component to upload routes to the logged user pod with a form
+ * It will ask for a name, a description, a comment, a route file and some photos
+ * The name and file field are mandatory to upload any route, the rest are optional
+ */
 export class UploadRoute extends React.Component {
   state = {
     name: "",
@@ -19,6 +25,8 @@ export class UploadRoute extends React.Component {
     reset: false,
     positions: [],
     comments: "",
+    images: [],
+    videos: [],
   };
   changeHandlerRoute(e) {
     this.setState({
@@ -26,29 +34,46 @@ export class UploadRoute extends React.Component {
     });
   }
 
+  checkFileIsGPX = (file) => {
+    var parts = file.split(".");
+    var ext = parts[parts.length - 1];
+    switch (ext.toLowerCase()) {
+      case "gpx":
+        return true;
+      default:
+        return false;
+    }
+  };
+
   changeHandlerFiles(e) {
     let file = e.target.files[0];
     let parseado = null;
     const self = this;
-    if (file) {
+    if (file && this.checkFileIsGPX(file.name)) {
       var reader = new FileReader();
       reader.readAsText(file, "UTF-8");
       reader.onload = function (evt) {
         parseado = parseGPX(evt.target.result);
-        //console.log(self.state);
-        //console.log(parseado);
         self.state.positions = parseado;
-        //console.log(self.state);
       };
       reader.onerror = function (evt) {};
+    } else {
+      alert("Incorrect file type, please input a .gpx file");
+      self.state.file = "";
     }
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
   }
 
   //This is part of the state, and states should not be tested.
   //This behaviour is tested in the upload button
   changeHandlerImages(e) {
     let docs = [];
-    Array.from(e.target.files).forEach((file) => docs.push(file.name));
+    Array.from(e.target.files).forEach((file) => {
+      docs.push(file);
+    });
+
     this.setState({ ...this.state, images: docs });
   }
 
@@ -56,7 +81,7 @@ export class UploadRoute extends React.Component {
   //This behaviour is tested in the upload button
   changeHandlerVideos(e) {
     let docs = [];
-    Array.from(e.target.files).forEach((file) => docs.push(file.name));
+    Array.from(e.target.files).forEach((file) => docs.push(file));
     this.setState({ ...this.state, videos: docs });
   }
 
@@ -68,12 +93,18 @@ export class UploadRoute extends React.Component {
       author: "",
       positions: [],
       reset: false,
-      comments: [],
+      comments: "",
+      images: [],
+      videos: [],
     };
   }
 
   isEmpty = () => {
-    return this.state.name === "" && this.state.description === "";
+    return !(
+      this.state.name !== "" &&
+      this.state.file !== "" &&
+      this.checkFileIsGPX(this.state.file)
+    );
   };
 
   componentDidUpdate() {
@@ -81,11 +112,9 @@ export class UploadRoute extends React.Component {
   }
 
   submitForm() {
-    console.log(this.state);
     this.props.uploadRoute.bind(this);
     this.props.uploadRoute(this.state, this.props.routes, this.props.userWebId);
     this.props.loadRoutes.bind(this);
-    this.props.loadRoutes();
     this.setState({ ...this.state, reset: true });
   }
 
@@ -95,53 +124,76 @@ export class UploadRoute extends React.Component {
         <Form className={style.form}>
           <div id="form-info">
             <Form.Group htmlFor="routeName">
-              <Form.Label htmlFor="name">Name of the route</Form.Label>
-              <Form.Control
-                id="name"
-                onChange={this.changeHandlerRoute.bind(this)}
-                placeholder="Route name"
-                value={this.state.name}
-                type="text"
-              />
+              <Form.Label htmlFor="name">
+                <FormattedMessage id="NameOfTheRoute" />
+              </Form.Label>
+              <FormattedMessage id="RouteNamePlaceholder">
+                {(placeholder) => (
+                  <Form.Control
+                    id="name"
+                    onChange={this.changeHandlerRoute.bind(this)}
+                    placeholder={placeholder}
+                    value={this.state.name}
+                    type="text"
+                  />
+                )}
+              </FormattedMessage>
             </Form.Group>
 
             <Form.Group htmlFor="routeDescription">
-              <Form.Label htmlFor="description">Description</Form.Label>
-              <Form.Control
-                id="description"
-                onChange={this.changeHandlerRoute.bind(this)}
-                value={this.state.description}
-                as="textarea"
-                rows="4"
-                placeholder="Add a description"
-              />
+              <Form.Label htmlFor="description">
+                <FormattedMessage id="Description" />
+              </Form.Label>
+              <FormattedMessage id="DescriptionPlaceholder">
+                {(placeholder) => (
+                  <Form.Control
+                    id="description"
+                    onChange={this.changeHandlerRoute.bind(this)}
+                    value={this.state.description}
+                    as="textarea"
+                    rows="4"
+                    placeholder={placeholder}
+                  />
+                )}
+              </FormattedMessage>
             </Form.Group>
 
             <Form.Group htmlFor="routeDescription">
-              <Form.Label htmlFor="comments">Comment</Form.Label>
-              <Form.Control
-                id="comments"
-                onChange={this.changeHandlerRoute.bind(this)}
-                value={this.state.comments}
-                as="textarea"
-                rows="4"
-                placeholder="Add a comment"
-              />
+              <Form.Label htmlFor="comments">
+                <FormattedMessage id="Comments" />
+              </Form.Label>
+              <FormattedMessage id="CommentPlaceholder">
+                {(placeholder) => (
+                  <Form.Control
+                    id="comments"
+                    onChange={this.changeHandlerRoute.bind(this)}
+                    value={this.state.comments}
+                    as="textarea"
+                    rows="4"
+                    placeholder={placeholder}
+                  />
+                )}
+              </FormattedMessage>
             </Form.Group>
 
             <ViadeModal
               disabled={this.isEmpty()}
-              toggleText="Submit"
+              toggleText={<FormattedMessage id="Submit" />}
               onSave={() => {}}
-              title="Submitted"
-              closeText="Close"
+              title={<FormattedMessage id="Submited" />}
+              closeText={<FormattedMessage id="Close" />}
               handleClose={() => {
+                setTimeout(() => {
+                  this.props.loadRoutes();
+                }, 3000);
                 this.setState(this.resetState());
               }}
               onOpen={this.submitForm.bind(this)}
               change
             >
-              <p>Your route has been submited</p>
+              <p>
+                <FormattedMessage id="SubmitedRoute" />
+              </p>
             </ViadeModal>
           </div>
 
@@ -151,7 +203,16 @@ export class UploadRoute extends React.Component {
               reset={this.state.reset}
               onChange={this.changeHandlerFiles.bind(this)}
               id="file"
-              text="Choose a route"
+              file={true}
+              text={<FormattedMessage id="UploadButton" />}
+            ></UploadButton>
+            <UploadButton
+              className={style.uploadButton}
+              reset={this.state.reset}
+              onChange={this.changeHandlerImages.bind(this)}
+              id="images"
+              images={true}
+              text={<FormattedMessage id="UploadImages" />}
             ></UploadButton>
           </div>
         </Form>

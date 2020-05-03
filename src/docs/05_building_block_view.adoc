@@ -22,9 +22,10 @@ Contained Building Blocks::
 | Building block       | Description
 | GUI components module             | Offers an interface to the system for the final user.
 | Parser module | Provides methods to parse files.
-| Redux module | Redux store in charge of state of the whole application.
+| Redux module | Redux module in charge of state of the whole application.
 | Middlewares module | Middlewares to perform async operations.
 | Solid module        | Offers an interface to the Solid POD.
+| Utils module  | Contains some utility methods needed in the application.
 |==============================
 
 === Redux module
@@ -55,12 +56,14 @@ Reducers::
 * LoadReducer: It is used to know when the user data has already been loaded.
 * RouteReducer: It manages all the information related to the user's routes.
 * UserReducer: It is used to manage the user's information once it is logged in.
+* LocaleReducer: It contains the information about the current locale.
 * RootReducer: It combines all the previous reducers into one. (Redux standard)
 
 Actions::
 * AuthActions: It only has one action in charge of updating the local userWebId once the user logs in the app.
 * LoadActions: It has one action in order to change a property once the user logs in.
 * RouteActions: All the actions related to the routes: show a route in the map, upload a route, delete a route and share a route.
+* LocaleActions: It just has one action in order to change the locale.
 * UserActions: Actions in charge of loading the user data: friends, email, name...
 
 === SOLID module
@@ -72,25 +75,39 @@ include::diagrams/05-03_whiteboxSolid.puml[]
 
 Responsibility::
 
-Redux module was in charge of managing the local state of the application. However, this SOLID module is actually in charge of managing the real data of the user from the POD.
+Redux module was in charge of managing the local state of the application. However, this SOLID module is actually in charge of managing the real data of the user from and to the POD.
 
-Files::
-* Auth.js: it has one method to obtain the user's web id.
-* ProfileInfo.js: it has methods to get the user's mail and the list of friends.
-* Routes.js: it has all the methods needed to obtain the routes data from the user POD: read, write, share, delete.
+Auth::
+It has one method to obtain the user's web id.
 
-==== Routes module
+ProfileInfo::
+It has methods to get the user's mail and the list of friends.
 
-Responsibilities:
-
-* Converting a route to json-ld and uploading it.
-* Getting routes from the POD and converting them to json.
+Routes::
+Its main responsibilities are:
+* Uploading a route.
+* Getting routes from the POD.
 * Deleting stored routes, either all or individually.
 * Sharing a route via a notification to another user's inbox folder.
 * Reading the inbox folder and adding the referred routes to the shared ones.
 * Adding a comment to a route.
 * Obtaining the comments of a route.
 * Managing permissions of files.
+
+This module has been tested by using
+https://github.com/otto-aa/solid-local-pod[solid-local-pod], a Nodejs library
+intended to serve a pod over localhost. While this covers all the activities our
+application does with routes, the many different configurations and
+unpredictability of real Solid PODs of real users can't be fully covered by the
+functionality of this module, but we have tried to make it as resilient as
+possible while adjusting to the specification.
+
+Parser::
+Its main responsabilities are:
+* Translating an internal route to JsonLD and viceversa.
+* Giving the correct format for a notifications.
+* Getting the correct format for comments.
+* Getting the correct format of a basic ACL file.
 
 === GUI components module
 

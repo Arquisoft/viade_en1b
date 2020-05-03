@@ -1,34 +1,103 @@
 import React from "react";
-import "./Settings.css";
-import { DropdownButton, Dropdown,  ToggleButton, ButtonGroup } from "react-bootstrap";
+import style from "./Settings.module.css";
+import { DropdownButton, Dropdown } from "react-bootstrap";
+import { connect } from "react-redux";
+import changeLocale from "../../../store/actions/localeAction";
+import { FormattedMessage } from "react-intl";
 
-export default function Settings(props) {
+export function Settings(props) {
+  const { changeLanguage, locale } = props;
 
-    const {changeTheme} = props;
-    const {changeLanguage} = props;
+  const handleLanguageChange = (lang) => {
+    changeLanguage(lang);
+  };
+  return (
+    <div className={style.settings}>
+      <h2 className={style.settingsTitle} data-testid="settings-title">
+        <FormattedMessage id="SettingsTitle" />
+      </h2>
 
-    return(
-        <div className="GeneralComponent">
-            <h2 data-testid="settings-title"> Settings </h2>
-            <h1 data-testid="settings-themes"> Themes</h1>
-            <ButtonGroup toggle  >
-                <ToggleButton data-testid="settings-theme-normal" type="radio" name="radio" defaultChecked value="Normal" onClick={() => changeTheme("normal")}>
-                    Normal
-                    </ToggleButton>
-                <ToggleButton data-testid="settings-theme-dark" type="radio" name="radio" value="Dark" onClick={() => changeTheme("dark")}>
-                    Dark
-                </ToggleButton>
-                <ToggleButton data-testid="settings-theme-blind" type="radio" name="radio" value="Colorblind" onClick={() => changeTheme("blind")}>
-                    Colorblind
-                </ToggleButton>
-
-            </ButtonGroup>
-            <h1 data-testid="settings-language"> Language </h1>
-            <DropdownButton data-testid="settings-language-dropdown" id="dropdown-basic-button" title="Available Languages">
-                <Dropdown.Item data-testid="settings-language-english" onClick={() => changeLanguage("english")} active href="#"> English</Dropdown.Item>
-                <Dropdown.Item data-testid="settings-language-spanish" onClick={() => changeLanguage("spanish")} href="#"> Spanish </Dropdown.Item>
-            </DropdownButton>
-        </div>
-    );
-
+      <div className={style.language}>
+        <h2 data-testid="settings-language">
+          <FormattedMessage id="Language" />
+        </h2>
+        <DropdownButton
+          data-testid="settings-language-dropdown"
+          id="dropdown-basic-button"
+          title={<FormattedMessage id={locale.id} />}
+        >
+          <Dropdown.Item
+            data-testid="settings-language-english"
+            onClick={() => {
+              handleLanguageChange({
+                id: "English",
+                text: "English",
+                locale: "en",
+              });
+            }}
+            href="#"
+          >
+            <FormattedMessage id="English" />
+          </Dropdown.Item>
+          <Dropdown.Item
+            data-testid="settings-language-spanish"
+            onClick={() => {
+              handleLanguageChange({
+                id: "Spanish",
+                text: "Spanish",
+                locale: "es",
+              });
+            }}
+            href="#"
+          >
+            <FormattedMessage id="Spanish" />
+          </Dropdown.Item>
+        </DropdownButton>
+      </div>
+      <div className={style.technicalInfo}>
+        <h2>
+          <FormattedMessage id="Technical" />
+        </h2>
+        <p>
+          <FormattedMessage id="TechnicalDescription" />
+          <a
+            href="https://arquisoft.github.io/viade_en1b/docs/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FormattedMessage id="ThisPage" />
+          </a>
+        </p>
+      </div>
+      <div className={style.howToUse}>
+        <h2>
+          <FormattedMessage id="HowToUse" />
+        </h2>
+        <p>
+          <FormattedMessage id="HowToUseDescription" /> <br></br>
+          <a
+            href="https://lamasumas.github.io/Solid/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FormattedMessage id="Here" />
+          </a>
+        </p>
+      </div>
+    </div>
+  );
 }
+const mapStateToProps = (state) => {
+  return {
+    locale: state.localeReducer,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeLanguage: (locale) => dispatch(changeLocale(locale)),
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(React.memo(Settings));

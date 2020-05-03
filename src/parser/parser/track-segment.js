@@ -1,4 +1,4 @@
-import Waypoint from './waypoint';
+import Waypoint from "./waypoint";
 
 export default class TrackSegment {
   constructor(object) {
@@ -6,7 +6,7 @@ export default class TrackSegment {
       if (!Array.isArray(object.trkpt)) {
         object.trkpt = [object.trkpt];
       }
-      this.trkpt = object.trkpt.map(pt => new Waypoint(pt));
+      this.trkpt = object.trkpt.map((pt) => new Waypoint(pt));
     }
     this.extensions = object.extensions;
   }
