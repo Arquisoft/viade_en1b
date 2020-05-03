@@ -69,6 +69,25 @@ describe("Solid Routes", () => {
 
   const fc = new FC(auth);
 
+  async function deleteFolderIfExists(folder) {
+    if (await fc.itemExists(folder)) {
+      await fc.deleteFolder(folder);
+    }
+  }
+
+  async function recreateInboxFolder(userWebId) {
+    if (await fc.itemExists(solid.getInboxFolder(userWebId))) {
+      await fc.deleteFolder(solid.getInboxFolder(userWebId));
+      await fc.createFolder(solid.getInboxFolder(userWebId));
+    }
+  }
+
+  async function uploadRouteToPod(route, userWebId) {
+    await solid.uploadRouteToPod(firstRoute, userWebId);
+    let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
+    return routeUri.split(/\.acl$/)[0]; // In case it got the .acl
+  }
+
   let folders = [];
 
   beforeAll(async () => {
@@ -200,9 +219,7 @@ describe("Solid Routes", () => {
     expect(sharedRoutes.length).toEqual(0);
 
     // Upload route and get its uri
-    await solid.uploadRouteToPod(firstRoute, userWebId);
-    let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
-    routeUri = routeUri.split(/\.acl$/)[0]; // In case it got the .acl
+    let routeUri = await uploadRouteToPod(firstRoute, userWebId);
 
     await solid.shareRouteToPod(
       userWebId,
@@ -248,9 +265,7 @@ describe("Solid Routes", () => {
     await deleteFolderIfExists(solid.getCommentsFolder(userWebId));
 
     // Upload route and get its uri
-    await solid.uploadRouteToPod(firstRoute, userWebId);
-    let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
-    routeUri = routeUri.split( /\.acl$/ )[0]; // In case it got the .acl
+    let routeUri = await uploadRouteToPod(firstRoute, userWebId);
     let routeFilename = routeUri.match( /[^/]*$/ )[0];
 
     const commentText = "Test comment";
@@ -278,9 +293,7 @@ describe("Solid Routes", () => {
     await fc.createFolder(solid.getInboxFolder(friendWebId));
 
     // Upload route and get its uri
-    await solid.uploadRouteToPod(firstRoute, userWebId);
-    let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
-    routeUri = routeUri.split(/\.acl$/)[0]; // In case it got the .acl
+    let routeUri = await uploadRouteToPod(firstRoute, userWebId);
 
     // Share so notification is created
     await solid.shareRouteToPod(
@@ -313,9 +326,7 @@ describe("Solid Routes", () => {
     await recreateInboxFolder(friendWebId);
 
     // Upload route and get its uri
-    await solid.uploadRouteToPod(firstRoute, userWebId);
-    let routeUri = (await fc.readFolder(solid.getRoutesFolder(userWebId))).files[0].url;
-    routeUri = routeUri.split(/\.acl$/)[0]; // In case it got the .acl
+    let routeUri = await uploadRouteToPod(firstRoute, userWebId);
     let routeId = routeUri.split("/");
     routeId = routeId[routeId.length - 1];
     routeId = routeId.split(/\./)[0];
@@ -370,19 +381,6 @@ describe("Solid Routes", () => {
     let groupsObject = await solid.getGroups(userWebId);
     expect(groupsObject[0].name).toEqual(groupObject.name);
   });
-
-  async function deleteFolderIfExists(folder) {
-    if (await fc.itemExists(folder)) {
-      await fc.deleteFolder(folder);
-    }
-  }
-
-  async function recreateInboxFolder(userWebId) {
-    if (await fc.itemExists(solid.getInboxFolder(userWebId))) {
-      await fc.deleteFolder(solid.getInboxFolder(userWebId));
-      await fc.createFolder(solid.getInboxFolder(userWebId));
-    }
-  }
 
 });
 
