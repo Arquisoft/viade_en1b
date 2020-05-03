@@ -304,21 +304,13 @@ describe("Solid Routes", () => {
   test("Unshare route", async() => {
 
     // Delete user routes folder
-    if (await fc.itemExists(solid.getRoutesFolder(userWebId))) {
-      await fc.deleteFolder(solid.getRoutesFolder(userWebId));
-    }
+    await deleteFolderIfExists(solid.getRoutesFolder(userWebId));
 
     // Recreate friend shared folder
-    if (await fc.itemExists(solid.getSharedFolder(friendWebId))) {
-      await fc.deleteFolder(solid.getSharedFolder(friendWebId));
-    }
+    await deleteFolderIfExists(solid.getSharedFolder(friendWebId));
 
     // Recreate friend inbox folder
-    if (await fc.itemExists(solid.getInboxFolder(friendWebId))) {
-      await fc.deleteFolder(solid.getInboxFolder(friendWebId));
-    }
-
-    await solid.createFolderIfAbsent(solid.getInboxFolder(friendWebId));
+    await recreateInboxFolder(friendWebId);
 
     // Upload route and get its uri
     await solid.uploadRouteToPod(firstRoute, userWebId);
