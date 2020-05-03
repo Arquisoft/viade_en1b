@@ -245,9 +245,9 @@ describe("Solid Routes", () => {
     await solid.checkInboxForSharedRoutes(friendWebId);
 
     sharedRoutes = await solid.getRoutesFromPod(friendWebId);
-    expect(sharedRoutes.length).toEqual(1);
-    expect(sharedRoutes[0].name).toEqual(firstRouteName);
     expect(sharedRoutes[0].author).toEqual(firstRouteAuthor);
+    expect(sharedRoutes[0].name).toEqual(firstRouteName);
+    expect(sharedRoutes.length).toEqual(1);
     let inboxFolder = solid.getInboxFolder(friendWebId);
     let notifications = (await fc.readFolder(inboxFolder)).files;
     expect(notifications.length).toEqual(0); // Error
