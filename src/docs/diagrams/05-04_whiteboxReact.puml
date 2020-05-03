@@ -17,6 +17,7 @@ rectangle "GUI Components" as react {
         [Theme] as th
         [Comments] as comments
         [Notifications] as notifications
+        [Groups] as groups
     }
     folder "routes" as routes {
         [MyRoutes] as mr 
