@@ -157,7 +157,9 @@ async function getRouteObjectFromPodRoute(route, routeFilename) {
       media: await readMedia(route.media),
       sharedWith: [],
     };
-  } catch {}
+  } catch (err) {
+    // Error
+  }
 }
 
 /**
@@ -198,7 +200,9 @@ function hasPermissions(permissions) {
  */
 export async function createPublicPermissions(folderURI, permissions) {
   const aclApi = new AclApi(auth.fetch, { autoSave: true });
-  let acl = {};
+  let acl = (err) {
+    // Error
+  };
   try {
     acl = await aclApi.loadFromFileUrl(folderURI);
 
@@ -212,7 +216,9 @@ export async function createPublicPermissions(folderURI, permissions) {
     if (!hasPermissions(alreadyPermissions)) {
       acl.addRule(permissions, Agents.PUBLIC);
     }
-  } catch {}
+  } catch (err) {
+    // Error
+  }
 }
 
 /**
@@ -308,7 +314,9 @@ export async function getRoutesFromPod(userWebId) {
           await Promise.all(routeObjects).then((objects) =>
             objects.map((object) => routes.push(object))
           );
-        } catch {}
+        } catch (err) {
+          // Error
+        }
       }
     }
   }
@@ -336,7 +344,9 @@ export async function shareRouteToPod(
   try {
     acl = await aclApi.loadFromFileUrl(routeUri);
     await acl.addRule(READ, targetUserWebId);
-  } catch {}
+  } catch (err) {
+    // Error
+  }
   let url = getInboxFolder(targetUserWebId);
   // Sending the notification
   let notificationUrl = url + uuidv4() + ".jsonld";
@@ -353,7 +363,9 @@ export async function shareRouteToPod(
       getRouteCommentsFile(userWebId, commentsFile)
     );
     await acl.addRule([READ, APPEND, WRITE], targetUserWebId);
-  } catch {}
+  } catch (err) {
+    // Error
+  }
 
   //Give permissions to resources
   let routeContent = await readToJson(routeUri);
@@ -363,7 +375,9 @@ export async function shareRouteToPod(
       acl = await aclApi.loadFromFileUrl(mediaUri);
       await acl.addRule([READ], targetUserWebId);
     }
-  } catch {}
+  } catch (err) {
+    // Error
+  }
 }
 
 /**
@@ -415,7 +429,9 @@ export async function checkInboxForSharedRoutes(userWebId) {
         );
         await addRouteUriToShared(userWebId, routeUri);
         await fc.deleteFile(folder.files[i].url);
-      } catch {}
+      } catch (err) {
+        // Error
+      }
     }
   }
 }
@@ -574,7 +590,9 @@ export async function getNotifications(userWebId) {
         notificationFiles[parseInt(i)]
       );
       notifications.push(notification);
-    } catch {}
+    } catch (err) {
+      // Error
+    }
   }
 
   return notifications;
