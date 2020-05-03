@@ -15,12 +15,10 @@ export function ShareRouteGroup(props) {
   const [state, setState] = useState({ groups: [] });
   const groups = useGroups(userWebId);
   useEffect(() => {
-    console.log(groups);
     const checkedGroups = groups.map((group) => ({
       ...group,
       checked: false,
     }));
-    console.log(checkedGroups);
     setState({ ...state, groups: checkedGroups });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [groups]);

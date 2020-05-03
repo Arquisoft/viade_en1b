@@ -39,6 +39,7 @@
 .comments button:hover {
   cursor: pointer;
 }
+
 .comments ul {
   list-style: none;
   grid-row: 3 / 5;
