@@ -64,10 +64,10 @@ describe("All renders correctly with normal settings", () => {
   test("on save function is triggered", () => {
     fireEvent.click(queryByTestId(modal, "modalButton"));
     waitForDomChange(() => {
-      expect(queryByTestId(modal, "modalSaveButton")).not.toBeNull();
-      expect(queryByTestId(modal, "modalSaveButton")).toBe("Save");
       expect(queryByTestId(modal, "modalCloseButton")).not.toBeNull();
       expect(queryByTestId(modal, "modalCloseButton")).toBe("Close");
+      expect(queryByTestId(modal, "modalSaveButton")).not.toBeNull();
+      expect(queryByTestId(modal, "modalSaveButton")).toBe("Save");
       fireEvent.click(queryByTestId(modal, "modalSaveButton"));
       expect(mock).toBeCalled();
     });
