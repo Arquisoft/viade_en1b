@@ -40,6 +40,7 @@ adapting application and documentation when major specification changes occur.
 |When parsing a route with more than one track, only the first one is taken into account because of simplicity.
 | Reading friend comments | Currently, if you want to see new friend comments you need to refresh the application. The use of web sockets should have been considered but we did not use them.
 | Videos | Because of simplicity, we only allow users to upload images of their routes.
-| Friend groups | Because time limitations, in our application the feature of friend groups was not implemented.
+| Deleting friends groups | Because time limitations, in our application the feature of deleting friend groups was not implemented.
+| Deleting routes | When deleting a route, we do not check whether it has been shared or not, so in case it has been shared we do not delete it from friend´s pod.
 |===
 
