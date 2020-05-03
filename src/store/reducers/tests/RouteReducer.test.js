@@ -2,17 +2,21 @@ import {routeReducer} from "../RouteReducer";
 import "@testing-library/jest-dom";
 import { uploadRoute } from "../../actions/RouteActions";
 
+import {
+  getRoute0,
+  getRoute1,
+  getRoute2,
+  getRoute3,
+  getRoute4
+} from "../../../test/exampleRoutes";
+
 describe("Routes Reducer", () => {
 
-    const route0 = { id: 0, name: "Hiking Naranco", author: "César", positions: [[43.360383711, -5.840650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing", images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: [] };
-    const route1 = { id: 1, name: "Hiking Ruta de las Xanas", author: "Marcos", positions: [[43.360383711, -5.840650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] };
-    const route2 = { id: 2, name: "Senda del Oso", author: "César", positions: [[43.360383711, -5.840650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] };
-    let route3 = JSON.parse(JSON.stringify(route0));
-    route3.id = 3;
-    route3.description = "";
-    route3.images = [];
-    route3.videos = [];
-    const route4 = JSON.parse(JSON.stringify(route2));
+    const route0 = getRoute0();
+    const route1 = getRoute1();
+    const route2 = getRoute2();
+    const route3 = getRoute3();
+    const route4 = getRoute4();
 
     const routes = [
         route0,
