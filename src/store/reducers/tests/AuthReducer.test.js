@@ -7,13 +7,13 @@ describe("Auth Reducer", () => {
     const initState = {
         userWebId: null
     };
-   
+
     test("Should return default state", () => {
         const newState = authReducer(undefined, {});
         expect(newState).toEqual(initState);
     });
 
-    describe("Should return state if receiving type", () =>{
+    describe("Should return state if receiving type", () => {
         const id = "testId";
 
         test("Type UPDATE_WEB_ID", () => {
@@ -24,6 +24,6 @@ describe("Auth Reducer", () => {
             const expected = {...initState, userWebId:id};
             expect(newState).toEqual(expected);
         });
-        
+
     });
 });

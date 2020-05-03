@@ -2,7 +2,6 @@ ignore:
   - "src/index.js"
   - "src/parser/parser/bound.js"
   - "src/parser/parser/copyright.js"
-  - "src/parser/parser/gpx.js"
   - "src/parser/parser/link.js"
   - "src/parser/parser/metadata.js"
   - "src/parser/parser/person.js"

@@ -61,7 +61,6 @@ export const routeReducer = (state = initState, action) => {
       if (friends[0]) {
         getWebId().then((userWebID) => {
           friends.forEach((friend) => {
-            console.log(friend);
             shareRouteToPod(
               userWebID,
               getRoutesFolder(userWebID) + action.payload.route.id + ".jsonld",

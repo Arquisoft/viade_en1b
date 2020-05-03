@@ -2,18 +2,32 @@ import {routeReducer} from "../RouteReducer";
 import "@testing-library/jest-dom";
 import { uploadRoute } from "../../actions/RouteActions";
 
+import {
+  getRoute0,
+  getRoute1,
+  getRoute2,
+  getRoute3,
+  getRoute4
+} from "../../../test/exampleRoutes";
+
 describe("Routes Reducer", () => {
 
+    const route0 = getRoute0();
+    const route1 = getRoute1();
+    const route2 = getRoute2();
+    const route3 = getRoute3();
+    const route4 = getRoute4();
+
     const routes = [
-        { id: 0, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing", images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: [] },
-        { id: 1, name: "Hiking Ruta de las Xanas", author: "Marcos", positions: [[43.360383711, -5.850],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
-        { id: 2, name: "Senda del Oso", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
-        { id: 3, name: "Hiking Naranco", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
-        { id: 4, name: "Senda del Oso", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
+        route0,
+        route1,
+        route2,
+        route3,
+        route4,
     ];
 
     const initState = {
-        routes : routes,
+        routes,
         selectedRoute: null
     };
 
@@ -23,7 +37,7 @@ describe("Routes Reducer", () => {
         routesLoading: false,
         routesError: null
     };
-   
+
     test("Should return default state", () => {
         const newState = routeReducer(undefined, {});
         expect(newState).toEqual({
@@ -35,8 +49,9 @@ describe("Routes Reducer", () => {
     });
 
     describe("Should return state if receiving type", () => {
-        const route = { id: 5, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing", images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: [] };
-        
+        const route = JSON.parse(JSON.stringify(route0));
+        route.id = 5;
+
         test("Type SHOW_ROUTE", () => {
             const newState = routeReducer(initState, {
                 type : "SHOW_ROUTE",
@@ -47,7 +62,7 @@ describe("Routes Reducer", () => {
         });
 
         test("Type UPLOAD_ROUTE", () => {
-            const newState = routeReducer(initState, uploadRoute(routes,routes,"https://themrcesi.inrupt.net/profile/card#me"));          
+            const newState = routeReducer(initState, uploadRoute(routes,routes,"https://themrcesi.inrupt.net/profile/card#me"));
             const expected = {...initState};
             expect(newState).toEqual(expected);
         });
@@ -75,34 +90,34 @@ describe("Routes Reducer", () => {
         });
 
         test("Type SHARE_ROUTE", () => {
-            let route = { id: 0, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing", images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: [] };
+            let route = JSON.parse(JSON.stringify(route0));
             const newState = routeReducer(initState, {
                 type : "SHARE_ROUTE",
                 payload: { route, friends: ["marcos"]}
             });
             const routes = [
-                { id: 0, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing", images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: ["marcos"] },
-                { id: 1, name: "Hiking Ruta de las Xanas", author: "Marcos", positions: [[43.360383711, -5.850],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
-                { id: 2, name: "Senda del Oso", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
-                { id: 3, name: "Hiking Naranco", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
-                { id: 4, name: "Senda del Oso", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
+                route0,
+                route1,
+                route2,
+                route3,
+                route4,
             ];
-        
+
             expect(newState).toEqual(initState);
         });
 
         test("Type UNSHARE_ROUTE", () => {
-            let mockRoute = { id: 0, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing", images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: [] };
+            let mockRoute = route0;
             const mockAuthorWebId = "https://elbicho.solid.community/profile/card#me";
             const newState = routeReducer(initState, {
                 type : "UNSHARE_ROUTE",
                 payload: { routeId: mockRoute.id, authorWebId: mockAuthorWebId, userWebId: mockAuthorWebId}
             });
             const routes = [
-                { id: 1, name: "Hiking Ruta de las Xanas", author: "Marcos", positions: [[43.360383711, -5.850],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
-                { id: 2, name: "Senda del Oso", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
-                { id: 3, name: "Hiking Naranco", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
-                { id: 4, name: "Senda del Oso", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
+              route1,
+              route2,
+              route3,
+              route4,
             ];
             expect(newState.routes).toEqual(routes);
 
@@ -114,7 +129,7 @@ describe("Routes Reducer", () => {
             const newState = routeReducer(initNewState, {
                 type: "LOAD_ROUTES_REQUEST",
                 payload: mockPayload
-            })
+            });
 
             const expected = {
                 routes: [],
@@ -130,7 +145,7 @@ describe("Routes Reducer", () => {
             const newState = routeReducer(initNewState, {
                 type: "LOAD_ROUTES_SUCCESS",
                 payload: mockPayload
-            })
+            });
 
             const expected = {
                 routes: mockPayload,
@@ -157,6 +172,6 @@ describe("Routes Reducer", () => {
 
             expect(newState).toStrictEqual(expected);
         });
-        
+
     });
 });

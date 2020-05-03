@@ -9,7 +9,6 @@
     "route route map map"
     "route route map map"
     "route route map map";
-
   max-height: 90vh;
   width: 100%;
   justify-items: center;
@@ -71,12 +70,12 @@ p {
 
 @media (max-width: 800px) {
   .dashboard {
-    padding-top: 5em;
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 10% 50% auto;
     margin: 0;
     padding: 0;
+    padding-top: 5em;
   }
 
   #titleHolder {
@@ -92,7 +91,6 @@ p {
     height: 150%;
     width: 90%;
     padding: 0.5em 0;
-
     border-radius: 5px;
   }
 }

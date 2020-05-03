@@ -33,7 +33,9 @@ export async function createFolderIfAbsent(path) {
     if (!(await fc.itemExists(path))) {
       await fc.createFolder(path);
     }
-  } catch {}
+  } catch (err) {
+    // Folder was not created
+  }
 }
 
 /**
@@ -329,7 +331,6 @@ export async function shareRouteToPod(
   receiverName
 ) {
   // give permission to targetUserWebId
-  console.log(receiverName);
   const aclApi = new AclApi(auth.fetch, { autoSave: true });
   let acl;
   try {
@@ -651,7 +652,6 @@ export async function createGroup(userWebId, groupName, friends) {
   let groupFolder = getGroupsFolder(userWebId);
   groupName = groupName.replace(/ /g, "_");
   let groupUrl = groupFolder + groupName + uuidv4() + ".jsonld";
-  console.log({ groupUrl, content });
   await fc.createFile(groupUrl, JSON.stringify(content), "application/ld+json");
 }
 
