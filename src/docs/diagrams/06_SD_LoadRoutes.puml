@@ -8,6 +8,7 @@ participant RouteActions as ra
 participant RouteReducer as rr
 participant RouteMiddleware as rm
 participant Solid.js as s
+participant parser.js as pa
 database POD as p
 
 activate nb
@@ -27,7 +28,10 @@ destroy rr
 loop for each user´s routes
     s -> p: readFile()
     activate p
-    p --> s: route
+    p --> pa: route in JsonLd
+    activate pa
+    pa --> s: route in json
+    destroy pa
 end
 destroy p
 ...
@@ -56,6 +60,7 @@ destroy rr
 end
 destroy rm
 rs --> nb: state
+destroy rs
 legend right
 line = method
 dash line = data
