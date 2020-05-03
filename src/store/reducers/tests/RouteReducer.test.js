@@ -4,12 +4,18 @@ import { uploadRoute } from "../../actions/RouteActions";
 
 describe("Routes Reducer", () => {
 
+    const route0 = { id: 0, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing", images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: [] };
+    const route1 = { id: 1, name: "Hiking Ruta de las Xanas", author: "Marcos", positions: [[43.360383711, -5.850],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] };
+    const route2 = { id: 2, name: "Senda del Oso", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] };
+    const route3 = { id: 3, name: "Hiking Naranco", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] };
+    const route4 = { id: 4, name: "Senda del Oso", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] };
+
     const routes = [
-        { id: 0, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing", images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: [] },
-        { id: 1, name: "Hiking Ruta de las Xanas", author: "Marcos", positions: [[43.360383711, -5.850],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
-        { id: 2, name: "Senda del Oso", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
-        { id: 3, name: "Hiking Naranco", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
-        { id: 4, name: "Senda del Oso", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
+        route0,
+        route1,
+        route2,
+        route3,
+        route4,
     ];
 
     const initState = {
@@ -23,7 +29,7 @@ describe("Routes Reducer", () => {
         routesLoading: false,
         routesError: null
     };
-   
+
     test("Should return default state", () => {
         const newState = routeReducer(undefined, {});
         expect(newState).toEqual({
@@ -36,7 +42,7 @@ describe("Routes Reducer", () => {
 
     describe("Should return state if receiving type", () => {
         const route = { id: 5, name: "Hiking Naranco ", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "A beautiful landscape for a beautiful country like Spain. Vegetation is incredible, wildlife is amazing", images: ["https://source.unsplash.com/random/600x600", "https://source.unsplash.com/random/602x602"], videos: ["futuro video 1", "futuro video 2"], sharedWith: [] };
-        
+
         test("Type SHOW_ROUTE", () => {
             const newState = routeReducer(initState, {
                 type : "SHOW_ROUTE",
@@ -47,7 +53,7 @@ describe("Routes Reducer", () => {
         });
 
         test("Type UPLOAD_ROUTE", () => {
-            const newState = routeReducer(initState, uploadRoute(routes,routes,"https://themrcesi.inrupt.net/profile/card#me"));          
+            const newState = routeReducer(initState, uploadRoute(routes,routes,"https://themrcesi.inrupt.net/profile/card#me"));
             const expected = {...initState};
             expect(newState).toEqual(expected);
         });
@@ -87,7 +93,7 @@ describe("Routes Reducer", () => {
                 { id: 3, name: "Hiking Naranco", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
                 { id: 4, name: "Senda del Oso", author: "César", positions: [[43.360383711, -5.850650009],[43.35763791, -5.842024025],[43.360976539, -5.831938919],[43.366405318, -5.837775406],[43.361382154, -5.844255623]], description: "", images: [], videos: [], sharedWith: [] },
             ];
-        
+
             expect(newState).toEqual(initState);
         });
 
@@ -157,6 +163,6 @@ describe("Routes Reducer", () => {
 
             expect(newState).toStrictEqual(expected);
         });
-        
+
     });
 });
