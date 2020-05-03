@@ -125,7 +125,7 @@ describe("Routes Reducer", () => {
             const newState = routeReducer(initNewState, {
                 type: "LOAD_ROUTES_REQUEST",
                 payload: mockPayload
-            })
+            });
 
             const expected = {
                 routes: [],
