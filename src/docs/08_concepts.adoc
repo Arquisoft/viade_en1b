@@ -37,7 +37,7 @@ Expressed using JsonLD, represents a user route, which can be shared, loaded, et
 ===== Image
 
 - ContentUrl: direction for the resource
-- PublishedDate: in datetime format
+- PublishedDate (optional): in datetime format
 
 === User Experience
 

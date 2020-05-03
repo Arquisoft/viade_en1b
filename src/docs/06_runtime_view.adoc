@@ -122,34 +122,6 @@ If everything worked, a load routes success actions is dispatched from the store
 On the other hand, if an error occurred while loading the routes, an error action is dispatched and the state is updated.
 . Finally, the state is received by the NavBar (whole application).
 
-==== Loading user's email
-
-[plantuml,"Loading email",png]
-----
-include::diagrams/06_SD_LoadEmail.puml[]
-----
-
-It follows the same structure as the previous diagram:
-
-. It sends a request to load the email.
-. The middleware is in charge of loading it asynchronously.
-. If everything worked, a load email success is sent and the state is updated with the email. If an error occurred, a load email error is sent and the state is updated.
-. Finally, the NavBar (whole application) receives the updated state.
-
-==== Loading user's friends
-
-[plantuml,"Loading friends",png]
-----
-include::diagrams/06_SD_LoadFriends.puml[]
-----
-
-Again, it follows the same structure as the previous diagrams:
-
-. It sends a request to load the friends.
-. The middleware is in charge of loading them asynchronously.
-. If everything worked, a load friends success is sent and the state is updated with the friends. If an error occurred, a load friends error is sent and the state is updated.
-. Finally, the NavBar (whole application) receives the updated state.
-
 ==== Displaying a route in the map
 
 [plantuml,"Display route",png]
@@ -157,9 +129,50 @@ Again, it follows the same structure as the previous diagrams:
 include::diagrams/06_SD_DisplayRoute.puml[]
 ----
 
-In this diagram we can perfectly observe the redux architecture:
+In this diagram we can perfectly observe again the redux architecture:
 
 . The user clicks on a route and an event is triggered.
 . An action is dispatched and the reducer updates the state.
 . Once the state is updated, the map component receives the positions of the route and the route is displayed.
+
+==== Uploading a route
+
+[plantuml,"Upload route",png]
+----
+include::diagrams/06_SD_UploadRoute.puml[]
+----
+
+. Firstly, the user enter in UploadRoute and fills in the data about a route.
+. Behind that action, the GPXParser parses the file into an array of latitudes and longitudes.
+. Then, all the Redux process starts.
+. The RouteReducer calls uploadRouteToPod and before writing the route in the pod we ask the parser to give us the route in JsonLD.
+. Finally, the route in JsonLD is written in the POD.
+
+==== Sharing a route with a friend
+
+[plantuml,"Sharing a route",png]
+----
+include::diagrams/06_SD_ShareRoutes.puml[]
+----
+
+In this diagram, we do not take into account the previous actions before the actual method of sharing in order to make the diagram as simple as possible, and focus on the SOLID part.
+ 
+. First of all, we see that the RouteReducer calls the method for sharing a route.
+. Then, we ask the parser for a notification in the correct format.
+. The notification is written in friend´s viade/inbox.
+
+==== Accepting a notification
+
+[plantuml,"Accepting a notification",png]
+----
+include::diagrams/06_SD_AcceptNotification.puml[]
+----
+
+After a route has been shared with us, we need to do the following actions:
+
+. We need to go to the Notifications view and click "Accept all".
+. Then, we check /viade/inbox for new notifications.
+. We read the new notification from the POD and we ask the parser to give us the routeUri.
+. Finally, the routeUri is written in the corresponding file in /viade/shared.
+
 

@@ -1,0 +1,29 @@
+title Load routes - Sequence Diagram
+
+@startuml
+
+participant RouteReducer as rra
+participant SolidA.js as sa 
+participant parserA.js as pa
+database UserPOD as poa
+database FriendsPOD as pb
+
+
+activate rra
+rra -> sa: shareRouteToPod(userWebId, routeUri, friendUri, userName, friendName)
+activate sa
+sa -> pa: getNewNotification(routeUri, userName, friendName)
+activate pa
+pa --> sa : notification in jsonld
+destroy pa
+sa -> poa: givePermissions(friendUri)
+sa -> pb: write notification in /viade/inbox
+destroy sa
+destroy rra
+
+legend right
+line = method
+dash line = data
+endlegend
+
+@enduml

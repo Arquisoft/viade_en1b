@@ -1,0 +1,47 @@
+title Load routes - Sequence Diagram
+
+@startuml
+
+actor User as u
+participant UploadRoute as ur
+participant GPXParser as gpx
+participant ReduxStore as rs 
+participant RouteActions as ra
+participant RouteReducer as rr 
+participant solid.js as s 
+participant parser.js as p 
+database POD as pod
+
+activate u 
+u -> ur: enters UploadRoute view
+activate ur
+ur -> ur: fills in data about route
+ur -> gpx: parseFile(file)
+activate gpx
+gpx --> ur: positions
+destroy gpx
+ur -> rs: uploadRoute(userWebId, route)
+activate rs
+rs -> ra: dispactch(uploadRoute(userWebId, route))
+activate ra
+ra -> rr: uploadRoute(userWebId, route)
+destroy ra
+activate rr
+rr -> s: uploadRouteToPod(userWebId, route)
+activate s
+s -> p: getFormattedRoute(route)
+activate p
+p --> s: route in jsonld
+destroy p
+s -> pod: write route
+destroy s
+rr --> rs: new state
+destroy rr
+destroy rs
+
+legend right
+line = method
+dash line = data
+endlegend
+
+@enduml

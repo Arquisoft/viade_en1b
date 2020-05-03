@@ -1,0 +1,36 @@
+title Load routes - Sequence Diagram
+
+@startuml
+
+actor Friend as ub  
+participant NotificationsB as nb 
+participant SolidB.js as sb
+participant parserB.js as parserb
+database POD as pb
+
+activate ub
+ub -> nb: enters Notification and clicks Accept all
+activate nb
+nb -> sb: checkInboxForSharedRoutes(friendUri)
+activate sb
+sb -> pb: reads notification
+activate pb
+pb --> sb: notification
+sb -> parserb: getRouteUriFromNotification(notification)
+activate parserb
+parserb --> sb: routeUri
+destroy parserb
+sb -> pb: addRouteUriToShared(routeUri)
+destroy pb
+destroy sb
+
+
+
+
+
+legend right
+line = method
+dash line = data
+endlegend
+
+@enduml

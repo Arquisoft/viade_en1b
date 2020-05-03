@@ -41,8 +41,8 @@ Given("We put our page {string}, we put the credentials username {string} and pa
         driver.findElement(By.xpath("/html/body/div/div[2]/div[1]/div[1]/div/form/div[2]/div/input")).sendKeys(string3);
         var loginButton = driver.findElement(By.xpath("/html/body/div/div[2]/div[1]/div[1]/div/form/button"));
         loginButton.click();
-      })
-  })
+      });
+  });
 });
 
 
@@ -69,11 +69,11 @@ When("We push the Upload Route button", function () {
               var buttonUpload = driver.findElement(By.xpath("/html/body/div/div/nav/div/div/span[3]/a"));
               buttonUpload.click();
             }
-          )
+          );
         }
         return isHandleCount1;
       });
-    })
+    });
   });
 });
 
