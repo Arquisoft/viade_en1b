@@ -33,7 +33,9 @@ export async function createFolderIfAbsent(path) {
     if (!(await fc.itemExists(path))) {
       await fc.createFolder(path);
     }
-  } catch {}
+  } catch (err) {
+    // Folder was not created
+  }
 }
 
 /**
