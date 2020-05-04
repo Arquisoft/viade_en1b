@@ -150,7 +150,7 @@ include::diagrams/06_SD_UploadRoute.puml[]
 
 ==== Sharing a route with a friend
 
-[plantuml,"Sharing a route",png]
+[plantuml,"Share a route",png]
 ----
 include::diagrams/06_SD_ShareRoutes.puml[]
 ----

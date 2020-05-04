@@ -5,8 +5,6 @@
 
 # VIADE EN1B
 
-This repository contains a skeleton of the VIADE project.
-
 This project is an assignment for the [Software Architecture course](https://arquisoft.github.io/) following [these requirements](https://labra.solid.community/public/SoftwareArchitecture/AssignmentDescription/).
 
 More information about how this project has been setup is available [in the wiki](https://github.com/Arquisoft/viade_en1b/wiki).
@@ -85,7 +83,7 @@ If you want to build the application you need to run `npm run build` and all the
 
 ### Running unit tests
 
-If you have any development server running, close it please, because tests need the port 3000 in order to run (solid stuff :smile:).
+If you have any development server running, close it please, because tests need the port 3000 in order to run.
 
 To execute the unit tests, you need to run `npm test`.
 
