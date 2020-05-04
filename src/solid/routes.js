@@ -352,7 +352,7 @@ export async function shareRouteToPod(
   let commentsFile = routeUri.split("/");
   commentsFile = commentsFile[commentsFile.length - 1];
   try {
-    console.log("anter de acl comment", {userWebId, commentsFile, getRouteCommentsFile(userWebId, commentsFile)});
+    console.log("anter de acl comment", {userWebId, commentsFile, routeCommentsFile: getRouteCommentsFile(userWebId, commentsFile)});
     acl = await aclApi.loadFromFileUrl(
       getRouteCommentsFile(userWebId, commentsFile)
     );
@@ -377,7 +377,6 @@ export async function shareRouteToPod(
   } catch (err) {
     console.log(err)
   }
-
   let url = getInboxFolder(targetUserWebId);
   // Sending the notification
   let notificationUrl = url + uuidv4() + ".jsonld";
