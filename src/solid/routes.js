@@ -340,11 +340,44 @@ export async function shareRouteToPod(
   const aclApi = new AclApi(auth.fetch, { autoSave: true });
   let acl;
   try {
+    console.log("antes de leer acl ruta", {userWebId, routeUri, targetUserWebId});
     acl = await aclApi.loadFromFileUrl(routeUri);
+    console.log("acl ruta leído", {acl});
     await acl.addRule(READ, targetUserWebId);
+    console.log("regla añadida al acl ruta", {acl});
   } catch (err) {
-    // Error
+    console.log(err);
   }
+  // Giving permissions to receiver to write comments
+  let commentsFile = routeUri.split("/");
+  commentsFile = commentsFile[commentsFile.length - 1];
+  try {
+    console.log("anter de acl comment", {userWebId, commentsFile, getRouteCommentsFile(userWebId, commentsFile)});
+    acl = await aclApi.loadFromFileUrl(
+      getRouteCommentsFile(userWebId, commentsFile)
+    );
+    console.log("después de leer acl comment", {acl});
+    await acl.addRule([READ, APPEND, WRITE], targetUserWebId);
+    console.log("regla añadida comment", {acl});
+  } catch (err) {
+    console.log(err);
+  }
+
+  //Give permissions to resources
+  let routeContent = await readToJson(routeUri);
+  try {
+    for (let media of routeContent.media) {
+      let mediaUri = media["@id"];
+      console.log("anter de acl media", {mediaUri});
+      acl = await aclApi.loadFromFileUrl(mediaUri);
+      console.log("después de acl media", {acl});
+      await acl.addRule([READ], targetUserWebId);
+      console.log("despues añadr permisos ", {acl});
+    }
+  } catch (err) {
+    console.log(err)
+  }
+
   let url = getInboxFolder(targetUserWebId);
   // Sending the notification
   let notificationUrl = url + uuidv4() + ".jsonld";
@@ -353,29 +386,6 @@ export async function shareRouteToPod(
     JSON.stringify(getNewNotification(routeUri, sharerName, receiverName)),
     "application/ld+json"
   );
-  // Giving permissions to receiver to write comments
-  let commentsFile = routeUri.split("/");
-  commentsFile = commentsFile[commentsFile.length - 1];
-  try {
-    acl = await aclApi.loadFromFileUrl(
-      getRouteCommentsFile(userWebId, commentsFile)
-    );
-    await acl.addRule([READ, APPEND, WRITE], targetUserWebId);
-  } catch (err) {
-    // Error
-  }
-
-  //Give permissions to resources
-  let routeContent = await readToJson(routeUri);
-  try {
-    for (let media of routeContent.media) {
-      let mediaUri = media["@id"];
-      acl = await aclApi.loadFromFileUrl(mediaUri);
-      await acl.addRule([READ], targetUserWebId);
-    }
-  } catch (err) {
-    // Error
-  }
 }
 
 /**
