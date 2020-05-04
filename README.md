@@ -13,7 +13,9 @@ More information about how this project has been setup is available [in the wiki
 
 [Check it out!](https://arquisoft.github.io/viade_en1b/)
 
-> Remember to add https://arquisoft.github.io to your trusted apps in SOLID.
+> Remember to add https://arquisoft.github.io to your trusted apps in SOLID (Read, Append, Write and Control).
+
+> In case you experience any error related to ACLs, it is SOLID stuff, please create a new POD to test all the functionalities of our application.
 
 ## Contributors
 
