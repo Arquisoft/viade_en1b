@@ -77,7 +77,7 @@ If you want to test the application in your local machine, you will need run a d
 1. Run `npm start`.
 2. Go to your browser and navigate to `http://localhost:3000/viade_en1b`.
 
-> Remember to add http://localhost:3000 to your trusted apps in SOLID.
+> Remember to add http://localhost:3000 to your trusted apps in SOLID (Read, Write, Append, Control).
 
 ### Building the application
 
