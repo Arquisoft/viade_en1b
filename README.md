@@ -106,7 +106,7 @@ First of all you need to run the development server with `npm start`.
 In Windows, you must run the following commands:
 1. `mkdir .\reports\load-testing` (only the first time)
 2. `npx artillery run ./load-testing/dashboard.yml -o .\reports\load-testing\reportName.json`
-3. `npx artillery report /reports/load-testing/report.json -o .\reports\load-testing\reportName.html`
+3. `npx artillery report ./reports/load-testing/report.json -o .\reports\load-testing\reportName.html`
 
 The report will be in `/reports/load-testing`. Enjoy it!
 
