@@ -9,14 +9,14 @@ image:10-QualityTree.png["Quality Tree"]
 
 === Quality Scenarios
 
-[options="header", cols="0,3,3,3"]
+[options="header", cols="0,3,3,3,3"]
 |===
-| Quality attribute | Stimulus | Response | Response measure
-| Learnability | A new user wants to learn how to use our application. | The user reads our manual and he perfectly knows how to use our application. | He will not need more than two minutes to read the manual.
-| Usability | A user tries to upload a route file with a non-valid format. | Our application shows a message informing about the invalid use. | The message should appear in less than one second.
-| Performance | A user wants to display a route in the map. | The route is correctly displayed in the map. | The route should be displayed in the map in less than one second.
+| Quality attribute | Stimulus | Response | Response measure | Priority 
+| Learnability | A new user wants to learn how to use our application. | The user reads our manual and he perfectly knows how to use our application. | He will not need more than two minutes to read the manual. | High, Medium 
+| Usability | A user tries to upload a route file with a non-valid format. | Our application shows a message informing about the invalid use. | The message should appear in less than one second. | High, High
+| Performance | A user wants to display a route in the map. | The route is correctly displayed in the map. | The route should be displayed in the map in less than one second. | Medium, High
 | Interoperability | A user of another team signs in to our application. | Routes should be correctly loaded. | Routes are loaded in less than 5 seconds.
-| Privacy | A user signs in to our application. | The log in is done by the SOLID platform and we do not know his credentials. | The users should be able to sign in in less than 5 seconds. 
-| Accessibility | A color blind (deuteranopia, tritanopia, protanopia) user wants to use our application. | The user changes the theme of the application | The user can correctly see the colors of our application.
+| Privacy | A user signs in to our application. | The log in is done by the SOLID platform and we do not know his credentials. | The users should be able to sign in in less than 5 seconds. | Medium, High
+| Accessibility | A color blind (deuteranopia, tritanopia, protanopia) user wants to use our application. | The user changes the theme of the application | The user can correctly see the colors of our application. | High, Medium
 |===
 
