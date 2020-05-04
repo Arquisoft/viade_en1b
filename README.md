@@ -83,7 +83,7 @@ If you want to build the application you need to run `npm run build` and all the
 
 ### Running unit tests
 
-If you have any development server running, close it please, because tests need the port 3000 in order to run (solid stuff :smile:).
+If you have any development server running, close it please, because tests need the port 3000 in order to run.
 
 To execute the unit tests, you need to run `npm test`.
 
