@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/viade_en1b/static/css/main.940d6c3c.chunk.css",
+    "main.js": "/viade_en1b/static/js/main.43e0fe03.chunk.js",
+    "runtime-main.js": "/viade_en1b/static/js/runtime-main.88d57bd4.js",
+    "static/css/2.856d6754.chunk.css": "/viade_en1b/static/css/2.856d6754.chunk.css",
+    "static/js/2.4ab9edbd.chunk.js": "/viade_en1b/static/js/2.4ab9edbd.chunk.js",
+    "index.html": "/viade_en1b/index.html",
+    "precache-manifest.545c4082797b832a407ccad70c13f20b.js": "/viade_en1b/precache-manifest.545c4082797b832a407ccad70c13f20b.js",
+    "service-worker.js": "/viade_en1b/service-worker.js",
+    "static/js/2.4ab9edbd.chunk.js.LICENSE.txt": "/viade_en1b/static/js/2.4ab9edbd.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.88d57bd4.js",
+    "static/css/2.856d6754.chunk.css",
+    "static/js/2.4ab9edbd.chunk.js",
+    "static/css/main.940d6c3c.chunk.css",
+    "static/js/main.43e0fe03.chunk.js"
+  ]
+}
