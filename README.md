@@ -15,7 +15,7 @@ More information about how this project has been setup is available [in the wiki
 
 > Remember to add https://arquisoft.github.io to your trusted apps in SOLID (Read, Append, Write and Control).
 
-> In case you experience any error related to ACLs, it is SOLID stuff, please create a new POD to test all the functionalities of our application.
+> In case you experiment any error related to ACLs, it is SOLID stuff, please create a new POD to test all the functionalities of our application.
 
 ## Contributors
 
